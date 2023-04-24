@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <title>Connectify - Log In</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+<header>
+  <nav>
+    <h1><a href="home.html" class="logo">Connectify</a></h1>
+    <div>
+      <a href="signup.html" class="btn btn-signup">Sign Up</a>
+    </div>
+  </nav>
+</header>
+<div class="login-wrapper">
+  <div class="login-container">
+    <p class="login-msg"></p>
+    <h2>Log In</h2>
+    <form id="login-form" action="#" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div>
+        <input type="submit" value="Log In" class="btn btn-login">
+      </div>
+    </form>
+  </div>
+</div>
+<script src="login.js"></script>
+</body>
+</html>
