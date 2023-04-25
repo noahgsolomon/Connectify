@@ -1,0 +1,142 @@
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    color: #1e90ff;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #1e90ff;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+header {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+.logo {
+    color: dodgerblue;
+    font-size: 2.5rem;
+    transition: 0.3s;
+}
+
+.logo:hover{
+    color: #64a3ff;
+    font-size: 2.45rem;
+}
+
+.container {
+    display: flex;
+}
+
+.left-sidebar {
+    background-color: #f5f5f5;
+    width: 8%;
+    min-width: 50px;
+    height: 100vh;
+    position: fixed;
+}
+
+.add-post-btn {
+    font-size: 2rem;
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+    background-color: dodgerblue;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-post-btn:hover {
+    background-color: #64a3ff;
+}
+
+.center-content {
+    margin-left: 15%;
+    padding: 1rem;
+    width: 60%;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.post p {
+    margin-bottom: 0;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.like-btn,
+.bookmark-btn {
+    background-color: #1e90ff;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.like-btn:hover,
+.bookmark-btn:hover {
+    background-color: #64a3ff;
+}
+
+
+@media (min-width: 1000px) {
+    .left-sidebar{
+        width: 80px;
+    }
+    .center-content {
+        width: 600px;
+    }
+}

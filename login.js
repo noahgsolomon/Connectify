@@ -17,18 +17,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(model),
+                    credentials: 'include'
                 });
-                console.log(await response.text());
+                const responseBody = await response.text();
 
                 if (response.ok) {
                     const loginMessage = document.querySelector('.login-msg');
                     loginMessage.innerHTML = 'Successfully logged in!';
                     loginMessage.style.color = 'green';
-                    const cookies = response.headers.get('Set-Cookie');
-                    if (cookies) {
-                        console.log(cookies);
-                        return getSessionIdFromCookie(cookies);
-                    }
+                    const sessionId = responseBody;
+                    console.log("Session ID:", sessionId);
+                    return sessionId;
                 }
                 else {
                     const loginMessage = document.querySelector('.login-msg');
@@ -41,9 +40,24 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         };
 
+        function setCookie(name, value, days, sameSite = 'Lax') {
+            let expires = '';
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = '; expires=' + date.toUTCString();
+            }
+            document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=' + sameSite;
+        }
+
         (async () => {
             const sessionId = await login().catch(error => console.error(error));
-
+            if (sessionId) {
+                console.log(sessionId);
+                setCookie('JSESSIONID', sessionId, 7); // Store the session ID in a cookie for 7 days
+                // Redirect the user to the dashboard page
+                window.location.href = 'dashboard.html';
+            }
         })();
 
 
