@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const url = 'http://localhost:8080/';
     function getSessionIdFromCookie() {
         const name = 'session_id' + '=';
         console.log(document.cookie);
@@ -49,9 +48,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    async function addLike(postId, liked){
+    async function addLikeBookmark(postId, liked, bookmarked){
         const url = `http://localhost:8080/posts/${postId}`
-        const bookmarked = await getLikeBookmark(postId, 'bookmarked') | false;
         console.log(bookmarked);
         let model = {
             liked: liked,
@@ -65,47 +63,30 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         console.log(response.body);
     }
-    async function addBookmark(postId, bookmarked){
-        const url = `http://localhost:8080/posts/${postId}`
-        const liked = await getLikeBookmark(postId, 'liked') | false;
-        console.log(liked);
-        let model = {
-            liked: liked,
-            bookmark: bookmarked
-        }
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(model),
-            credentials: 'include'
-        });
-        console.log(response.body);
-    }
-    async function getLikeBookmark(postId, type) {
+
+    async function getLikeBookmark(postId) {
         const url = `http://localhost:8080/post-interactions/${postId}`;
-        const model = {
-            type: type
-        };
         const response = await fetch(url, {
-            method: 'POST',
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            body: type,
             credentials: 'include'
         });
 
         if (response.ok) {
             const data = await response.json(); // Parse the JSON data
             console.log(data);
-            return data.result; // Access the boolean value
+            return {
+                liked: data.liked,
+                bookmark: data.bookmark
+            };
         } else {
             console.error('Error fetching data:', response.statusText);
             throw EvalError
         }
     }
 
-
     (async () => {
-       const postListString = await getPosts(sessionId);
+       const postListString = await getPosts();
        if (postListString){
            const postList = JSON.parse(postListString);
            const main = document.querySelector('.center-content');
@@ -141,14 +122,23 @@ document.addEventListener("DOMContentLoaded", function() {
                const postActions = document.createElement('div');
                postActions.className = 'post-actions';
 
+               const likedBookmarked = await getLikeBookmark(post.id);
+
                const likeButton = document.createElement('button');
                likeButton.className = 'btn like-btn';
-               likeButton.textContent = 'Like';
+               if (!likedBookmarked.liked){
+                   likeButton.textContent = 'Like';
+               }
+               else {
+                   likeButton.style.backgroundColor = '#d72f56';
+                   likeButton.textContent = 'Liked';
+                   likeButton.setAttribute('data-clicked', 'true');
+               }
+
 
 
                likeButton.addEventListener('click', (event) => {
                    const buttonElement = event.currentTarget;
-                   addLike(post.id, true);
                    const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
                    if (!isClicked) {
                        buttonElement.style.backgroundColor = '#d72f56';
@@ -159,15 +149,31 @@ document.addEventListener("DOMContentLoaded", function() {
                        buttonElement.textContent = 'Like';
                        buttonElement.setAttribute('data-clicked', 'false');
                    }
+
+                   let bookmarkStatus = false;
+                   if (bookmarkButton.textContent === 'Bookmarked'){
+                       bookmarkStatus = true;
+                   }
+                   let likeStatus = false;
+                   if (likeButton.textContent === 'Liked'){
+                       likeStatus = true;
+                   }
+                   addLikeBookmark(post.id, likeStatus, bookmarkStatus);
                });
 
                const bookmarkButton = document.createElement('button');
                bookmarkButton.className = 'btn bookmark-btn';
-               bookmarkButton.textContent = 'Bookmark';
+               if (!likedBookmarked.bookmark){
+                   bookmarkButton.textContent = 'Bookmark';
+               }
+               else {
+                   bookmarkButton.style.backgroundColor = '#be773f';
+                   bookmarkButton.textContent = 'Bookmarked';
+                   bookmarkButton.setAttribute('data-clicked', 'true');
+               }
 
                bookmarkButton.addEventListener('click', (event) => {
                    const buttonElement = event.currentTarget;
-                   addBookmark(post.id, true);
                    const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
                    if (!isClicked) {
                        buttonElement.style.backgroundColor = '#be773f';
@@ -178,6 +184,15 @@ document.addEventListener("DOMContentLoaded", function() {
                        buttonElement.textContent = 'Bookmark';
                        buttonElement.setAttribute('data-clicked', 'false');
                    }
+                   let bookmarkStatus = false;
+                   if (bookmarkButton.textContent === 'Bookmarked'){
+                       bookmarkStatus = true;
+                   }
+                   let likeStatus = false;
+                   if (likeButton.textContent === 'Liked'){
+                       likeStatus = true;
+                   }
+                   addLikeBookmark(post.id, likeStatus, bookmarkStatus);
                });
 
                postMeta.append(author);
