@@ -2,9 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Connectify - Sign Up</title>
+    <link rel="stylesheet" href="signup.css">
 </head>
 <body>
-
+<header>
+    <nav>
+        <h1><a href="home.html" class="logo">Connectify</a></h1>
+        <div>
+            <a href="login.html" class="btn btn-login">Log In</a>
+        </div>
+    </nav>
+</header>
+<div class="signup-wrapper">
+    <div class="signup-container">
+        <p class="signup-msg"></p>
+        <h2>Sign Up</h2>
+        <form id="signup-form" action="#" method="post" novalidate>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <div>
+                <input type="submit" value="Sign Up" class="btn btn-signup">
+            </div>
+        </form>
+    </div>
+</div>
+<script src="signup.js"></script>
 </body>
 </html>

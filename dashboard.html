@@ -36,6 +36,23 @@
 <!--                <button class="btn bookmark-btn">Bookmark</button>-->
 <!--            </div>-->
 <!--        </div>-->
+        <div id="postModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>Create a new post</h2>
+                </div>
+                <div class="modal-body">
+                    <form id="postForm" novalidate>
+                        <input type="text" id="postTitle" name="postTitle" maxlength="100" placeholder="Title" required>
+                        <textarea id="postBody" name="postBody" rows="5" maxlength="500" placeholder="Body" required></textarea>
+                        <p><span id="charCount">0</span>/500</p>
+                        <input type="submit" value="Post" class="btn">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="slideMessage" class="slide-message"></div>
     </main>
 </div>
 <script src="dashboard.js"></script>
