@@ -61,6 +61,29 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function myUsername() {
+        const url = `http://localhost:8080/post-interactions/getUsername`;
+        try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include'
+        })
+        const responseBody = response.text();
+        if (response.ok) {
+            return responseBody;
+        } else {
+            console.log('error grabbing username');
+            return responseBody;
+        }
+
+    }catch (error) {
+            console.error(error);
+            return 'error';
+
+        }
+    }
+
     async function createPost(title, body){
         const model = {
             title: title,
@@ -72,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(model),
                 credentials: "include"
-            })
+            });
             const responseBody = await response.json();
             console.log(responseBody);
             if (response.ok) {
@@ -91,8 +114,72 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function getInbox(){
+        try {
+        const response = await fetch('http://localhost:8080/inbox', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            credentials: "include"
+        });
+
+        const responseBody = await response.text();
+        console.log(responseBody);
+        if (response.ok) {
+            return responseBody;
+        } else {
+            console.log('error');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+    }
+
+    async function getMessageLog(user) {
+        try {
+            const response = await fetch(`http://localhost:8080/inbox/${user}`, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+                credentials: 'include'
+            });
+            const responseBody = await response.text();
+            console.log(responseBody);
+
+            return responseBody;
+
+        } catch (error){
+            console.log(error);
+            throw error;
+        }
+    }
+
+    async function sendMessage(user, message){
+        const model = {
+            receiver: user,
+            message: message
+        }
+        try{
+            const response = await fetch("http://localhost:8080/inbox/send", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(model),
+                credentials: 'include'
+            });
+
+            const responseBody = await response.text();
+            console.log(responseBody);
+
+            return responseBody;
+
+        }catch(error){
+            console.log(error);
+        }
+
+    }
+
     (async () => {
         const postListString = await getPosts();
+        const inboxListString = await getInbox();
         if (postListString) {
             const postList = JSON.parse(postListString);
             postList.reverse();
@@ -214,6 +301,122 @@ document.addEventListener("DOMContentLoaded", function() {
                 main.append(postElement);
             }
         }
+        if (inboxListString){
+            const inboxList = JSON.parse(inboxListString);
+            inboxList.reverse();
+            const inboxPanel = document.querySelector(".inbox-panel");
+            for (const inbox of inboxList){
+                const inboxElement = document.createElement("div");
+                inboxElement.className = "inbox-item";
+
+                if (inbox.unread){
+                    inboxElement.className = 'inbox-item unread';
+                }
+
+                const user = document.createElement("div");
+                user.className = 'inbox-user';
+                user.textContent = inbox.user;
+
+                const lastMessage = document.createElement("div");
+                lastMessage.className = 'inbox-last-message';
+                lastMessage.textContent = inbox.last_message;
+
+                const formatDateAndTime = (dateString) => {
+                    const dateObj = new Date(dateString);
+                    const now = new Date();
+                    const timeDifference = now - dateObj;
+                    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+                    const formattedDate = dateObj.toLocaleDateString();
+                    const formattedTime = dateObj.toLocaleTimeString
+                        ([], { hour12: true, hour: '2-digit', minute: '2-digit' });
+
+                    if (timeDifference < twentyFourHours) {
+                        return `${formattedTime}`;
+                    } else {
+                        return `${formattedDate}`;
+                    }
+                };
+
+                const timeSent = document.createElement("div");
+                timeSent.className = 'inbox-timestamp';
+                timeSent.textContent = formatDateAndTime(inbox.timeSent);
+
+                const messageLog = document.querySelector('.message-log');
+                const backBtn = document.querySelector('.back-btn');
+                const messageLogContent = document.querySelector('.message-log-content');
+
+                async function openMessageLog(event) {
+                    console.log('qdkdqwkldn');
+                    if (inbox.unread){
+                        inboxElement.className = 'inbox-item';
+                    }
+                    const target = event.currentTarget;
+                    const user = target.querySelector('.inbox-user').textContent;
+
+                    const messageLogUsername = document.createElement("div");
+                    messageLogUsername.className = 'message-log-username';
+                    messageLogUsername.textContent = user;
+
+                    const messageListString = await getMessageLog(user);
+                    const messageList = JSON.parse(messageListString);
+                    for (const message of messageList) {
+                        const messageFormat = document.createElement("div");
+                        if (message.sender === user){
+                            messageFormat.className = 'message received';
+                        }
+                        else {
+                            messageFormat.className = 'message sent';
+                        }
+                        messageFormat.textContent = message.message;
+
+                        const messageTime = document.createElement("span");
+                        messageTime.className = 'message-time';
+                        messageTime.textContent = formatDateAndTime(message.timeSent);
+
+                        messageFormat.append(messageTime);
+                        messageLogContent.append(messageFormat);
+                    }
+
+                    function handleClick() {
+                        const inputValue = inputField.value;
+                        sendMessage(user, inputValue);
+
+                        const sentMessage = document.createElement("div");
+                        sentMessage.className = 'message sent';
+                        sentMessage.textContent = inputValue;
+
+                        const messageTime = document.createElement("span");
+                        messageTime.className = 'message-time';
+                        messageTime.textContent = formatDateAndTime(new Date());
+
+                        sentMessage.append(messageTime);
+                        messageLogContent.append(sentMessage);
+                        inputField.value = '';
+                    }
+
+                    const inputField = document.querySelector('.inbox-message-input');
+                    const sendButton = document.querySelector('.send-message-btn');
+                    sendButton.addEventListener('click', handleClick);
+
+                    messageLog.style.display = 'block';
+                }
+
+                function closeMessageLog() {
+                    messageLog.style.display = 'none';
+                }
+
+                inboxElement.addEventListener('click', openMessageLog);
+
+                backBtn.addEventListener('click', closeMessageLog);
+
+
+                inboxElement.append(user);
+                inboxElement.append(lastMessage);
+                inboxElement.append(timeSent);
+                inboxPanel.append(inboxElement);
+            }
+        }
 
     })();
 
@@ -294,4 +497,44 @@ document.addEventListener("DOMContentLoaded", function() {
         this.reset();
 
     });
+
+    const inboxPanel = document.querySelector(".inbox-panel");
+    const inboxBtn = document.querySelector(".inbox-btn");
+    const overlay = document.querySelector(".overlay");
+
+    function addInboxPanel() {
+            overlay.style.display = "block";
+            inboxPanel.style.display = "block";
+    }
+    function removeInboxPanel(){
+        inboxPanel.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    inboxBtn.addEventListener("click", addInboxPanel);
+    overlay.addEventListener("click", removeInboxPanel);
+
+    document.querySelector('.inbox-search').addEventListener('keyup', function (event) {
+        const searchValue = event.target.value.trim().toLowerCase();
+        const inboxItems = document.querySelectorAll('.inbox-item');
+
+        if (searchValue === '') {
+            // Display all inbox items when search input is empty
+            inboxItems.forEach(item => item.style.display = 'flex');
+            return;
+        }
+
+        // Show or hide inbox items based on the matching username
+        inboxItems.forEach(item => {
+            const username = item.querySelector('.inbox-user').textContent.trim().toLowerCase();
+
+            if (username.includes(searchValue)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+
 });

@@ -26,7 +26,7 @@ a:hover {
 
 header {
     background-color: #fff;
-    padding: 1rem 2rem;
+    padding: 0 10%;
     border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
@@ -236,3 +236,174 @@ nav a {
     opacity: 0;
     transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
+
+.inbox-panel {
+    background-color: #f5f5f5;
+    width: 500px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: none;
+}
+
+.inbox-search {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+}
+
+.inbox-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.inbox-user {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.inbox-last-message {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 0.25rem;
+}
+
+.inbox-timestamp {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.unread::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #0080ff;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+/* Message log styles */
+.message-log {
+    display: none;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.message-log-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.back-btn {
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.message-log-username {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.message-log-content {
+    flex-grow: 1;
+    padding: 0.5rem;
+    overflow-y: auto;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.message {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.message-time {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999;
+}
+
+.message.sent {
+    text-align: right;
+}
+
+.message.received {
+    text-align: left;
+}
+
+.message-log-input {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fff;
+}
+
+.inbox-message-input {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+}
+
+.send-message-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+@media (min-width: 801px) {
+    .inbox-panel{
+        width: 500px;
+    }
+}
+
+@media (max-width: 800px) {
+    .inbox-panel{
+        width: 250px;
+    }
+}
+
