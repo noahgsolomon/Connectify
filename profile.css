@@ -1,0 +1,155 @@
+/* profile.css */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+header {
+    background-color: #3f51b5;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 50px);
+}
+
+.profile-card {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-emoji {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.profile-country,
+.profile-bio,
+.profile-category{
+    font-size: 24px;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.edit-form label {
+    font-size: 18px;
+}
+
+.edit-form input[type="text"] {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+
+.edit-form input[type="text"]:focus {
+    border-color: #3f51b5;
+}
+
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-fields > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+
+.save-btn {
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.edit-btn {
+    border: none;
+    color: #323236;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.edit-btn:hover{
+    background-color: #d3d3d3;
+}
+
+.cancel-btn{
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: #ff8e8e;
+    transition: 0.5s;
+}
+
+.cancel-btn:hover{
+    background-color: #e57272;
+}

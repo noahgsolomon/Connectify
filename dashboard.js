@@ -61,29 +61,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    async function myUsername() {
-        const url = `http://localhost:8080/post-interactions/getUsername`;
-        try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include'
-        })
-        const responseBody = response.text();
-        if (response.ok) {
-            return responseBody;
-        } else {
-            console.log('error grabbing username');
-            return responseBody;
-        }
-
-    }catch (error) {
-            console.error(error);
-            return 'error';
-
-        }
-    }
-
     async function createPost(title, body){
         const model = {
             title: title,
@@ -347,7 +324,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const messageLogContent = document.querySelector('.message-log-content');
 
                 async function openMessageLog(event) {
-                    console.log('qdkdqwkldn');
                     if (inbox.unread){
                         inboxElement.className = 'inbox-item';
                     }

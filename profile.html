@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <title>Profile</title>
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+<header>
+  <h1><a href="home.html" class="logo">Connectify</a></h1>
+  <nav>
+    <a href="dashboard.html" class="dashboard-btn">Dashboard</a>
+  </nav>
+</header>
+<div class="overlay"></div>
+
+<div class="container">
+  <div class="profile-card">
+    <button class="edit-btn">Edit</button>
+    <button class="cancel-btn" style="display: none">Cancel</button>
+    <div class="profile-info">
+      <div class="profile-emoji">
+        😎
+      </div>
+      <h2 class="profile-name">John Doe</h2>
+      <p class="profile-country">Country: United States</p>
+      <p class="profile-bio">Bio: Web developer and tech enthusiast.</p>
+      <p class="profile-category"></p>
+    </div>
+
+    <form class="edit-form" style="display: none;" novalidate>
+      <div class="form-fields">
+        <div>
+          <label for="country">Country:</label>
+          <input type="text" id="country" name="country">
+        </div>
+        <div>
+          <label for="bio">Bio:</label>
+          <input type="text" id="bio" name="bio">
+        </div>
+      </div>
+      <button class="save-btn" type="submit">Save</button>
+    </form>
+
+  </div>
+</div>
+<script src="profile.js"></script>
+</body>
+</html>

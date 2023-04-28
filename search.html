@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <title>Search</title>
+  <link rel="stylesheet" href="search.css">
+</head>
+<body>
+<header>
+  <h1><a href="home.html" class="logo">Connectify</a></h1>
+  <nav>
+    <a href="dashboard.html" class="dashboard-btn">Dashboard</a>
+  </nav>
+</header>
+<div class="overlay"></div>
+
+<div class="search-container">
+  <div class="search-content">
+  <input type="text" class="search-bar" placeholder="Search users...">
+  </div>
+</div>
+<div class="container">
+  <div class="profile-card" style="display: none">
+    <div class="profile-info">
+      <div class="profile-emoji">
+        😎
+      </div>
+      <h2 class="profile-name">John Doe</h2>
+      <p class="profile-country">Country: United States</p>
+      <p class="profile-bio">Bio: Web developer and tech enthusiast.</p>
+      <p class="profile-category"></p>
+    </div>
+  </div>
+</div>
+<script src="search.js"></script>
+</body>
+</html>
