@@ -3,7 +3,7 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: whitesmoke;
 }
 
 header {
@@ -132,6 +132,7 @@ nav a {
     height: 25px;
     border-radius: 5px;
     transition: 0.5s;
+    margin-bottom: 10px;
 }
 
 .edit-btn:hover{
@@ -152,4 +153,34 @@ nav a {
 
 .cancel-btn:hover{
     background-color: #e57272;
+}
+
+.card-color{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 10px;
+    float: left;
+    transition: 0.4s;
+    border: 1px solid rgba(220, 220, 220, 0.4);
+}
+
+.card-color:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
+}
+
+.bg-color{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 10px;
+    float: left;
+    transition: 0.4s;
+    border: 1px solid rgba(220, 220, 220, 0.4);
+}
+
+.bg-color:hover{
+    cursor: pointer;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
 }

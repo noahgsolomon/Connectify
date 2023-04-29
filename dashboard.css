@@ -333,6 +333,10 @@ nav a {
     cursor: pointer;
 }
 
+body.no-scroll {
+    overflow-y: hidden;
+}
+
 .message-log-username {
     margin: 0;
     font-size: 1rem;
@@ -341,6 +345,7 @@ nav a {
 
 .message-log-content {
     flex-grow: 1;
+    max-height: 500px;
     padding: 0.5rem;
     overflow-y: auto;
     background-color: #fff;
@@ -395,15 +400,16 @@ nav a {
     cursor: pointer;
 }
 
+
 @media (min-width: 801px) {
     .inbox-panel{
-        width: 500px;
+        width: 650px;
     }
 }
 
 @media (max-width: 800px) {
     .inbox-panel{
-        width: 250px;
+        width: 400px;
     }
 }
 

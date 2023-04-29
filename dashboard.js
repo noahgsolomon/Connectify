@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (inboxListString){
             const inboxList = JSON.parse(inboxListString);
             inboxList.reverse();
-            const inboxPanel = document.querySelector(".inbox-panel");
+            const inboxItems = document.querySelector(".inbox-items");
             for (const inbox of inboxList){
                 const inboxElement = document.createElement("div");
                 inboxElement.className = "inbox-item";
@@ -322,75 +322,141 @@ document.addEventListener("DOMContentLoaded", function() {
                 const messageLog = document.querySelector('.message-log');
                 const backBtn = document.querySelector('.back-btn');
                 const messageLogContent = document.querySelector('.message-log-content');
-
+                const messageLogInput = document.querySelector('.message-log-input');
                 async function openMessageLog(event) {
+                    document.body.classList.add('no-scroll');
+                    inboxItems.innerHTML = '';
+                    const sendButton = document.createElement('button');
+                    sendButton.className = 'send-message-btn';
+                    sendButton.textContent = 'Send';
+                    const messageFieldInput = document.createElement('input');
+                    messageFieldInput.type = 'text';
+                    messageFieldInput.className = 'inbox-message-input';
+                    messageFieldInput.placeholder = 'Type your message...';
+
+                    messageLogInput.append(messageFieldInput);
+                    messageLogInput.append(sendButton);
+
                     if (inbox.unread){
                         inboxElement.className = 'inbox-item';
                     }
                     const target = event.currentTarget;
                     const user = target.querySelector('.inbox-user').textContent;
 
-                    const messageLogUsername = document.createElement("div");
-                    messageLogUsername.className = 'message-log-username';
+                    const messageLogUsername = document.querySelector(".message-log-username");
                     messageLogUsername.textContent = user;
 
                     const messageListString = await getMessageLog(user);
                     const messageList = JSON.parse(messageListString);
-                    for (const message of messageList) {
+
+                    for (let i = 0; i < messageList.length; i++) {
                         const messageFormat = document.createElement("div");
-                        if (message.sender === user){
+                        if (messageList[i].sender === user){
                             messageFormat.className = 'message received';
                         }
                         else {
                             messageFormat.className = 'message sent';
                         }
-                        messageFormat.textContent = message.message;
+                        messageFormat.textContent = messageList[i].message;
 
                         const messageTime = document.createElement("span");
                         messageTime.className = 'message-time';
-                        messageTime.textContent = formatDateAndTime(message.timeSent);
+                        messageTime.textContent = formatDateAndTime(messageList[i].timeSent);
 
                         messageFormat.append(messageTime);
                         messageLogContent.append(messageFormat);
                     }
 
+                    setTimeout(() => {
+                        messageLogContent.scrollTop = messageLogContent.scrollHeight;
+                    }, 0);
+
                     function handleClick() {
                         const inputValue = inputField.value;
-                        sendMessage(user, inputValue);
+                        if (inputValue.trim() !== '') {
+                            sendMessage(user, inputValue);
 
-                        const sentMessage = document.createElement("div");
-                        sentMessage.className = 'message sent';
-                        sentMessage.textContent = inputValue;
+                            const sentMessage = document.createElement("div");
+                            sentMessage.className = 'message sent';
+                            sentMessage.textContent = inputValue;
 
-                        const messageTime = document.createElement("span");
-                        messageTime.className = 'message-time';
-                        messageTime.textContent = formatDateAndTime(new Date());
+                            const messageTime = document.createElement("span");
+                            messageTime.className = 'message-time';
+                            messageTime.textContent = formatDateAndTime(new Date());
 
-                        sentMessage.append(messageTime);
-                        messageLogContent.append(sentMessage);
-                        inputField.value = '';
+                            sentMessage.append(messageTime);
+                            messageLogContent.append(sentMessage);
+                            inputField.value = '';
+
+                            setTimeout(() => {
+                                messageLogContent.scrollTop = messageLogContent.scrollHeight;
+                            }, 0);
+                        }
                     }
 
+                    function closeMessageLog() {
+                        document.body.classList.remove('no-scroll');
+                        messageLogContent.innerHTML = '';
+                        messageLogInput.innerHTML = '';
+                        messageLog.style.display = 'none';
+
+                        // Add the inbox rendering logic back in
+                        inboxItems.innerHTML = '';
+
+                        for (const inbox of inboxList) {
+                            const inboxElement = document.createElement("div");
+                            inboxElement.className = "inbox-item";
+
+                            if (inbox.unread) {
+                                inboxElement.className = 'inbox-item unread';
+                            }
+
+                            const user = document.createElement("div");
+                            user.className = 'inbox-user';
+                            user.textContent = inbox.user;
+
+                            const lastMessage = document.createElement("div");
+                            lastMessage.className = 'inbox-last-message';
+                            lastMessage.textContent = inbox.last_message;
+
+                            const timeSent = document.createElement("div");
+                            timeSent.className = 'inbox-timestamp';
+                            timeSent.textContent = formatDateAndTime(inbox.timeSent);
+
+                            inboxElement.append(user);
+                            inboxElement.append(lastMessage);
+                            inboxElement.append(timeSent);
+                            inboxItems.append(inboxElement);
+
+                            inboxElement.addEventListener('click', openMessageLog);
+                        }
+                    }
+
+                    backBtn.addEventListener('click', () => {
+                        closeMessageLog();
+                    });
+
                     const inputField = document.querySelector('.inbox-message-input');
-                    const sendButton = document.querySelector('.send-message-btn');
                     sendButton.addEventListener('click', handleClick);
 
+                    inputField.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter') {
+                            event.preventDefault(); // Prevent default behavior of submitting the form
+                            handleClick();
+                        }
+                    });
                     messageLog.style.display = 'block';
-                }
-
-                function closeMessageLog() {
-                    messageLog.style.display = 'none';
                 }
 
                 inboxElement.addEventListener('click', openMessageLog);
 
-                backBtn.addEventListener('click', closeMessageLog);
+
 
 
                 inboxElement.append(user);
                 inboxElement.append(lastMessage);
                 inboxElement.append(timeSent);
-                inboxPanel.append(inboxElement);
+                inboxItems.append(inboxElement);
             }
         }
 
@@ -481,16 +547,18 @@ document.addEventListener("DOMContentLoaded", function() {
     function addInboxPanel() {
             overlay.style.display = "block";
             inboxPanel.style.display = "block";
+        document.body.classList.add('no-scroll');
     }
     function removeInboxPanel(){
         inboxPanel.style.display = "none";
         overlay.style.display = "none";
+        document.body.classList.remove('no-scroll');
     }
 
     inboxBtn.addEventListener("click", addInboxPanel);
     overlay.addEventListener("click", removeInboxPanel);
 
-    document.querySelector('.inbox-search').addEventListener('keyup', function (event) {
+    document.querySelector('.inbox-search').addEventListener('input', function (event) {
         const searchValue = event.target.value.trim().toLowerCase();
         const inboxItems = document.querySelectorAll('.inbox-item');
 

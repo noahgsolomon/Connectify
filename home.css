@@ -43,9 +43,14 @@ a:hover {
     background-color: #229954;
 }
 
-.btn-login {
-    margin-left: 0.5rem;
+.btn-dashboard {
+    background-color: #ff8e8e;
 }
+
+.btn-dashboard:hover{
+    background-color: #ea6363;
+}
+
 
 /* Header styles */
 header {

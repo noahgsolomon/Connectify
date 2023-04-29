@@ -106,3 +106,7 @@ nav a {
 .search-result:hover {
     background-color: #e6e6e6;
 }
+
+.message-status{
+    color: #52ff52;
+}

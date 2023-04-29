@@ -62,6 +62,32 @@ document.addEventListener("DOMContentLoaded", function() {
             return [];
         }
     }
+
+    async function sendMessage(user, message){
+        const model = {
+            receiver: user,
+            message: message
+        }
+        try{
+            const response = await fetch("http://localhost:8080/inbox/send", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(model),
+                credentials: 'include'
+            });
+
+            const responseBody = await response.text();
+            console.log(responseBody);
+
+            return responseBody;
+
+        }catch(error){
+            console.log(error);
+        }
+
+    }
+
+
     const profile = async (user) => {
         try {
             const response = await fetch(`http://localhost:8080/${user}`, {
@@ -84,6 +110,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const userDetails = JSON.parse(profileJson);
         const profileCard = document.querySelector('.profile-card');
         const emojiFace = emojiList[Math.round(Math.random() * 15)];
+        const body = document.querySelector('body');
+        const sendMessageButton = document.querySelector('.send-message-btn');
+        const messageField = document.querySelector('.message-bar');
 
         const emoji = document.querySelector('.profile-emoji');
         emoji.textContent = emojiFace;
@@ -95,6 +124,24 @@ document.addEventListener("DOMContentLoaded", function() {
         bio.textContent = userDetails.bio;
         const category = document.querySelector(".profile-category");
         category.textContent = userDetails.topCategory + ' enthusiast';
+        profileCard.style.backgroundColor = userDetails.cardColor;
+        body.style.backgroundColor = userDetails.backgroundColor;
+        if (!userDetails.cardColor){
+            profileCard.style.backgroundColor = 'white';
+        }
+        if (!userDetails.backgroundColor){
+            body.style.backgroundColor = 'whitesmoke'
+        }
+
+        sendMessageButton.addEventListener('click', async() => {
+            const messageStatus = document.querySelector('.message-status');
+            const message = messageField.value;
+            messageField.value = '';
+            const messageResponse = await sendMessage(userDetails.username, message);
+            if (messageResponse){
+                messageStatus.textContent = 'sent message!';
+            }
+        });
 
         profileCard.style.display = 'block';
     };

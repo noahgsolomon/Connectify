@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
         '😘', '🥰', '😗'];
     const emojiFace = emojiList[Math.round(Math.random() * 15)];
 
-
+    const profileCard = document.querySelector('.profile-card');
+    const body = document.querySelector('body');
     const profile = async () => {
         try {
             const response = await fetch("http://localhost:8080/profile", {
@@ -22,10 +23,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    const updateProfile = async (country, bio) => {
+    const updateProfile = async (country, bio, cardColor, backgroundColor) => {
         const model = {
             country: country,
-            bio: bio
+            bio: bio,
+            cardColor: cardColor,
+            backgroundColor: backgroundColor
         }
         try{
             const response = await fetch("http://localhost:8080/profile", {
@@ -54,9 +57,20 @@ document.addEventListener("DOMContentLoaded", function() {
         const country = document.querySelector(".profile-country");
         country.textContent = 'Country: ' + userDetails.country;
         const bio = document.querySelector(".profile-bio");
-        bio.textContent = userDetails.bio;
+        bio.textContent = 'Bio: ' + userDetails.bio;
         const category = document.querySelector(".profile-category");
         category.textContent = userDetails.topCategory + ' enthusiast';
+        profileCard.style.backgroundColor = userDetails.cardColor;
+        body.style.backgroundColor = userDetails.backgroundColor;
+
+        if (!userDetails.cardColor){
+            profileCard.style.backgroundColor = 'white';
+        }
+        if (!userDetails.backgroundColor){
+            body.style.backgroundColor = 'whitesmoke'
+        }
+
+        profileCard.style.display = 'block';
 
     })();
 
@@ -68,6 +82,22 @@ document.addEventListener("DOMContentLoaded", function() {
         const editForm = document.querySelector('.edit-form');
         const countryInput = document.querySelector('#country');
         const bioInput = document.querySelector('#bio');
+        const cardColors = document.querySelectorAll('.card-color');
+        const backgroundColors = document.querySelectorAll('.bg-color');
+        const initialCardColor = profileCard.style.backgroundColor;
+        const initialBackgroundColor = body.style.backgroundColor;
+
+        for (const color of cardColors){
+            color.addEventListener('click', () => {
+                profileCard.style.backgroundColor = color.style.backgroundColor;
+            });
+        }
+
+        for (const color of backgroundColors){
+            color.addEventListener('click', () => {
+                body.style.backgroundColor = color.style.backgroundColor;
+            });
+        }
 
         cancelBtn.style.display = 'block';
 
@@ -76,6 +106,8 @@ document.addEventListener("DOMContentLoaded", function() {
         cancelBtn.addEventListener('click', () =>{
             editForm.style.display = 'none';
             cancelBtn.style.display = 'none';
+            profileCard.style.backgroundColor = initialCardColor;
+            body.style.backgroundColor = initialBackgroundColor;
         });
 
 
@@ -86,8 +118,9 @@ document.addEventListener("DOMContentLoaded", function() {
             const updatedCountry = countryInput.value.trim();
             const updatedBio = bioInput.value.trim();
 
-            const newProfile = await updateProfile(updatedCountry, updatedBio);
+            const newProfile = await updateProfile(updatedCountry, updatedBio, profileCard.style.backgroundColor, body.style.backgroundColor);
             const userDetails = JSON.parse(newProfile);
+            console.log(userDetails);
 
             const emoji = document.querySelector('.profile-emoji');
             emoji.textContent = emojiFace;
@@ -99,6 +132,8 @@ document.addEventListener("DOMContentLoaded", function() {
             bio.textContent = 'Bio: ' + userDetails.bio;
             const category = document.querySelector(".profile-category");
             category.textContent = userDetails.topCategory + ' enthusiast';
+            profileCard.style.backgroundColor = userDetails.cardColor;
+            body.style.backgroundColor = userDetails.backgroundColor;
 
 
             editForm.style.display = 'none';
