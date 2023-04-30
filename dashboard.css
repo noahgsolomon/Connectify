@@ -400,6 +400,22 @@ body.no-scroll {
     cursor: pointer;
 }
 
+.post-search{
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+.post-search:focus{
+    border: 1px solid #0080ff;
+}
+
 
 @media (min-width: 801px) {
     .inbox-panel{

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     async function getPosts() {
-        const url = 'http://localhost:8080/feed';
+        const url = 'http://localhost:8080/posts';
 
         try {
             const response = await fetch(url, {
@@ -574,6 +574,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (username.includes(searchValue)) {
                 item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+
+    document.querySelector('.post-search').addEventListener('input', function (event) {
+        const searchValue = event.target.value.trim().toLowerCase();
+        const posts = document.querySelectorAll('.post');
+
+        if (searchValue === '') {
+            // Display all inbox items when search input is empty
+            posts.forEach(item => item.style.display = 'block');
+            return;
+        }
+
+        // Show or hide inbox items based on the matching username
+        posts.forEach(item => {
+            const title = item.querySelector('h2').textContent.trim().toLowerCase();
+            const body = item.querySelector('p').textContent.trim().toLowerCase();
+            const postContent = title + body;
+            if (postContent.includes(searchValue)) {
+                item.style.display = 'block';
             } else {
                 item.style.display = 'none';
             }

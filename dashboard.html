@@ -26,7 +26,10 @@
     </aside>
 
     <main class="center-content">
-<!--        <div class="post">-->
+        <label>
+            <input type="text" class="post-search" placeholder="Search...">
+        </label>
+        <!--        <div class="post">-->
 <!--            <h2>Post Title</h2>-->
 <!--            <p>Post content...</p>-->
 <!--            <div class="post-meta">-->
@@ -46,8 +49,8 @@
                 </div>
                 <div class="modal-body">
                     <form id="postForm" novalidate>
-                        <input type="text" id="postTitle" name="postTitle" maxlength="100" placeholder="Title" required>
-                        <textarea id="postBody" name="postBody" rows="5" maxlength="500" placeholder="Body" required></textarea>
+                        <label for="postTitle"></label><input type="text" id="postTitle" name="postTitle" maxlength="100" placeholder="Title" required>
+                        <label for="postBody"></label><textarea id="postBody" name="postBody" rows="5" maxlength="500" placeholder="Body" required></textarea>
                         <p><span id="charCount">0</span>/500</p>
                         <input type="submit" value="Post" class="btn">
                     </form>
@@ -58,7 +61,9 @@
     </main>
 
     <aside class="inbox-panel">
-        <input type="text" class="inbox-search" placeholder="Search...">
+        <label>
+            <input type="text" class="inbox-search" placeholder="Search...">
+        </label>
         <div class="inbox-items">
 <!--            <div class="inbox-item">-->
 <!--                <div class="inbox-user">John Doe</div>-->

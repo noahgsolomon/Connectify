@@ -34,6 +34,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     const signUpMessage = document.querySelector('.signup-msg');
                     signUpMessage.innerHTML = 'Credentials invalid';
                     signUpMessage.style.color = 'red';
+                    setTimeout(() => {
+                        signUpMessage.textContent = '';
+                    }, 2000);
                     signUpForm.reset();
                 }
             } catch (error) {
