@@ -31,7 +31,7 @@ nav a {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 50px);
+    margin: 100px 50px 0;
 }
 
 .profile-card {
@@ -139,9 +139,8 @@ nav a {
     background-color: #d3d3d3;
 }
 
-.cancel-btn{
+.cancel-popup-btn{
     border: none;
-    font-weight: bold;
     font-size: 1rem;
     cursor: pointer;
     width: 100px;
@@ -151,7 +150,7 @@ nav a {
     transition: 0.5s;
 }
 
-.cancel-btn:hover{
+.cancel-popup-btn:hover{
     background-color: #e57272;
 }
 
@@ -184,3 +183,185 @@ nav a {
     cursor: pointer;
     box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
 }
+
+.posts{
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 1rem;
+    width: 250px;
+
+}
+
+.post h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.post p {
+    word-break: break-word;
+    max-width: 25ch;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #262626;
+}
+
+.post-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.post-edit-btn,
+.post-del-btn {
+    background-color: #007aff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.post-edit-btn:hover,
+.post-del-btn:hover {
+    background-color: #005bd6;
+}
+
+.post-del-btn {
+    background-color: #e74c3c;
+}
+
+.post-del-btn:hover {
+    background-color: #c0392b;
+}
+
+.post-save-btn {
+    background-color: #2ecc71;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-left: 8px; /* Add space between the save button and other buttons */
+}
+
+.post-save-btn:hover {
+    background-color: #27ae60;
+}
+
+.author{
+    margin: 20px;
+}
+
+.slide-message {
+    visibility: hidden;
+    min-width: 250px;
+    padding: 16px;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    opacity: 0;
+    transition: visibility 0s 0.3s, opacity 0.3s linear;
+}
+
+.slide-message.show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s linear;
+}
+
+.slide-message.hide {
+    opacity: 0;
+    transition: visibility 0s 0.3s, opacity 0.3s linear;
+}
+
+.confirm-delete-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.confirm-delete-popup {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-delete-popup h3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+
+.confirm-delete-popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.confirm-delete-popup-buttons button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.confirm-delete-popup-buttons .cancel-popup-btn {
+    background-color: #b2b2b2;
+    color: #fff;
+    padding-bottom: 30px;
+}
+
+.confirm-delete-popup-buttons .delete-btn {
+    padding-right: 30px;
+    padding-left: 30px;
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.confirm-delete-popup-buttons .cancel-popup-btn:hover {
+    background-color: #989898;
+    color: #fff;
+}
+
+.confirm-delete-popup-buttons .delete-btn:hover {
+    background-color: #c43c2e;
+    color: #fff;
+}
+
+

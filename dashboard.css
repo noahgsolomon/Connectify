@@ -98,6 +98,7 @@ nav a {
 }
 
 .post p {
+    word-break: break-word;
     margin-bottom: 0;
 }
 
