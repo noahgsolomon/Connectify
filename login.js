@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const login = async () => {
             try {
                 const model = { username, password };
-                const response = await fetch('https://connectifymedia.herokuapp.com/login/', {
+                const response = await fetch('https://connectifymedia.herokuapp.com/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json'},
                     body: JSON.stringify(model),
