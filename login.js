@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 const model = { username, password };
                 const response = await fetch('https://connectifymedia.herokuapp.com/login/', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': '*'},
                     body: JSON.stringify(model),
                     credentials: 'include'
                 });
