@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })();
 
     async function getPosts(user) {
-        const url = `http://localhost:8080/posts/${user}`;
+        const url = `https://connectifymedia.herokuapp.com/posts/${user}`;
 
         try {
             const response = await fetch(url, {
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function addLikeBookmark(postId, liked, bookmarked) {
-        const url = `http://localhost:8080/posts/${postId}`
+        const url = `https://connectifymedia.herokuapp.com/posts/${postId}`
         console.log(bookmarked);
         let model = {
             liked: liked,
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function getLikeBookmark(postId) {
-        const url = `http://localhost:8080/post-interactions/${postId}`;
+        const url = `https://connectifymedia.herokuapp.com/post-interactions/${postId}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function fetchUsers() {
         try {
-            const response = await fetch("http://localhost:8080/users", {
+            const response = await fetch("https://connectifymedia.herokuapp.com/users", {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
             message: message
         }
         try{
-            const response = await fetch("http://localhost:8080/inbox/send", {
+            const response = await fetch("https://connectifymedia.herokuapp.com/inbox/send", {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(model),
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const profile = async (user) => {
         try {
-            const response = await fetch(`http://localhost:8080/${user}`, {
+            const response = await fetch(`https://connectifymedia.herokuapp.com/${user}`, {
                 method: "GET",
                 headers: {"Content-Type":"application/json"},
                 credentials: "include"

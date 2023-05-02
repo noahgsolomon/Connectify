@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
     async function getPosts() {
-        const url = 'http://localhost:8080/posts';
+        const url = 'https://connectifymedia.herokuapp.com/posts';
 
         try {
             const response = await fetch(url, {
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function addLikeBookmark(postId, liked, bookmarked) {
-        const url = `http://localhost:8080/posts/${postId}`
+        const url = `https://connectifymedia.herokuapp.com/posts/${postId}`
         console.log(bookmarked);
         let model = {
             liked: liked,
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function getLikeBookmark(postId) {
-        const url = `http://localhost:8080/post-interactions/${postId}`;
+        const url = `https://connectifymedia.herokuapp.com/${postId}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
             body: body
         }
         try {
-            const response = await fetch('http://localhost:8080/create-post', {
+            const response = await fetch('https://connectifymedia.herokuapp.com/create-post', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(model),
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function createComment(postID, content){
         try{
-            const response = await fetch(`http://localhost:8080/comment/${postID}`, {
+            const response = await fetch(`https://connectifymedia.herokuapp.com/comment/${postID}`, {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: content,
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function getPostComments(postID){
         try{
-            const response = await fetch(`http://localhost:8080/comment/${postID}`, {
+            const response = await fetch(`https://connectifymedia.herokuapp.com/comment/${postID}`, {
                 method: 'GET',
                 headers: {'Content-Type':'application/json'},
                 credentials: "include"
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function getInbox(){
         try {
-        const response = await fetch('http://localhost:8080/inbox', {
+        const response = await fetch('https://connectifymedia.herokuapp.com/inbox', {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
             credentials: "include"
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function getMessageLog(user) {
         try {
-            const response = await fetch(`http://localhost:8080/inbox/${user}`, {
+            const response = await fetch(`https://connectifymedia.herokuapp.com/inbox/${user}`, {
                 method: 'GET',
                 headers: {'Content-Type': 'application/json'},
                 credentials: 'include'
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
             message: message
         }
         try{
-            const response = await fetch("http://localhost:8080/inbox/send", {
+            const response = await fetch("https://connectifymedia.herokuapp.com/inbox/send", {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(model),

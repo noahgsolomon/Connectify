@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
     const loginForm = document.getElementById("login-form");
-    const url = 'http://localhost:8080/';
 
     loginForm.addEventListener("submit", function(event) {
         // Prevent the default form submission behavior
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const login = async () => {
             try {
                 const model = { username, password };
-                const response = await fetch(url + 'login', {
+                const response = await fetch('https://connectifymedia.herokuapp.com/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(model),
