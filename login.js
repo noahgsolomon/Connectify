@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const responseBody = await response.text();
 
                 if (response.ok) {
+                    console.log(responseBody);
                     const loginMessage = document.querySelector('.login-msg');
                     loginMessage.innerHTML = 'Successfully logged in!';
                     loginMessage.style.color = 'green';
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     return sessionId;
                 }
                 else {
+                    console.log(responseBody);
                     const loginMessage = document.querySelector('.login-msg');
                     loginMessage.innerHTML = 'User does not exist';
                     loginMessage.style.color = 'red';
