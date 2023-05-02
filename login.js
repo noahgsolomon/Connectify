@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 if (response.ok) {
                     console.log(responseBody);
+                    console.log(responseBody);
                     const loginMessage = document.querySelector('.login-msg');
                     loginMessage.innerHTML = 'Successfully logged in!';
                     loginMessage.style.color = 'green';
@@ -33,6 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     return sessionId;
                 }
                 else {
+                    console.log(responseBody);
                     console.log(responseBody);
                     const loginMessage = document.querySelector('.login-msg');
                     loginMessage.innerHTML = 'User does not exist';
@@ -54,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
                 expires = '; expires=' + date.toUTCString();
             }
-            document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=' + sameSite;
+            document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=' + sameSite + '; Secure; HttpOnly';
         }
 
         (async () => {
@@ -66,10 +68,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 window.location.href = 'dashboard.html';
             }
         })();
-
-
-        // If you want to submit the form after processing the values, uncomment the line below
-        // loginForm.submit();
     });
 });
 
