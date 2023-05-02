@@ -280,7 +280,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         if (inboxListString){
             const inboxList = JSON.parse(inboxListString);
-            inboxList.reverse();
+            inboxList.sort((a, b) =>  new Date(b.timeSent) - new Date(a.timeSent));
+            console.log(inboxList);
             const inboxItems = document.querySelector(".inbox-items");
             for (const inbox of inboxList){
                 const inboxElement = document.createElement("div");
@@ -375,15 +376,14 @@ document.addEventListener("DOMContentLoaded", function() {
                         const inputValue = inputField.value;
                         if (inputValue.trim() !== '') {
                             sendMessage(user, inputValue);
-
                             const sentMessage = document.createElement("div");
                             sentMessage.className = 'message sent';
                             sentMessage.textContent = inputValue;
+                            console.log(inputValue);
 
                             const messageTime = document.createElement("span");
                             messageTime.className = 'message-time';
                             messageTime.textContent = formatDateAndTime(new Date());
-
                             sentMessage.append(messageTime);
                             messageLogContent.append(sentMessage);
                             inputField.value = '';
@@ -391,17 +391,25 @@ document.addEventListener("DOMContentLoaded", function() {
                             setTimeout(() => {
                                 messageLogContent.scrollTop = messageLogContent.scrollHeight;
                             }, 0);
+
+                            const inboxIndex = inboxList.findIndex(item => item.user === user);
+                            if (inboxIndex !== -1) {
+                                console.log(inboxIndex);
+                                inboxList[inboxIndex].last_message = inputValue;
+                                inboxList[inboxIndex].timeSent = new Date();
+                            }
                         }
                     }
 
-                    function closeMessageLog() {
+                    async function closeMessageLog() {
                         document.body.classList.remove('no-scroll');
                         messageLogContent.innerHTML = '';
                         messageLogInput.innerHTML = '';
                         messageLog.style.display = 'none';
 
-                        // Add the inbox rendering logic back in
                         inboxItems.innerHTML = '';
+
+                        inboxList.sort((a, b) =>  new Date(b.timeSent) - new Date(a.timeSent));
 
                         for (const inbox of inboxList) {
                             const inboxElement = document.createElement("div");
@@ -430,6 +438,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
                             inboxElement.addEventListener('click', openMessageLog);
                         }
+
+                        sendButton.removeEventListener('click', handleClick);
+                        inputField.removeEventListener('keydown', handleKeyDown);
                     }
 
                     backBtn.addEventListener('click', () => {
@@ -438,25 +449,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     const inputField = document.querySelector('.inbox-message-input');
                     sendButton.addEventListener('click', handleClick);
+                    inputField.addEventListener('keydown', handleKeyDown);
 
-                    inputField.addEventListener('keydown', (event) => {
+                    function handleKeyDown(event) {
                         if (event.key === 'Enter') {
                             event.preventDefault(); // Prevent default behavior of submitting the form
-                            handleClick();
+                            handleClick(inbox);
                         }
-                    });
+                    }
+
                     messageLog.style.display = 'block';
                 }
-
-                inboxElement.addEventListener('click', openMessageLog);
-
-
 
 
                 inboxElement.append(user);
                 inboxElement.append(lastMessage);
                 inboxElement.append(timeSent);
                 inboxItems.append(inboxElement);
+                inboxElement.addEventListener('click', openMessageLog);
             }
         }
 
@@ -594,7 +604,8 @@ document.addEventListener("DOMContentLoaded", function() {
         posts.forEach(item => {
             const title = item.querySelector('h2').textContent.trim().toLowerCase();
             const body = item.querySelector('p').textContent.trim().toLowerCase();
-            const postContent = title + body;
+            const username = item.querySelector('.author').textContent.trim().toLowerCase();
+            const postContent = title + body + username;
             if (postContent.includes(searchValue)) {
                 item.style.display = 'block';
             } else {
