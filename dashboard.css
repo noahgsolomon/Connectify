@@ -204,6 +204,16 @@ nav a {
     color: #333;
 }
 
+.comment-info {
+    margin-top: 0.25rem;
+}
+
+.comment-time {
+    color: #888;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
 
 @media (min-width: 1000px) {
     .left-sidebar{
@@ -280,6 +290,11 @@ nav a {
 
 #postForm input[type="submit"] {
     margin-bottom: 0;
+}
+
+#postForm .btn:hover{
+    cursor: pointer;
+    background-color: #44a4ff;
 }
 
 .slide-message {

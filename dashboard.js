@@ -1,5 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+
+    const formatDateAndTime = (dateString) => {
+        const dateObj = new Date(dateString);
+        const now = new Date();
+        const timeDifference = now - dateObj;
+        const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+        const formattedDate = dateObj.toLocaleDateString();
+        const formattedTime = dateObj.toLocaleTimeString
+        ([], { hour12: true, hour: '2-digit', minute: '2-digit' });
+
+        if (timeDifference < twentyFourHours) {
+            return `${formattedTime}`;
+        } else {
+            return `${formattedDate}`;
+        }
+    };
     async function getPosts() {
         const url = 'http://localhost:8080/posts';
 
@@ -219,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 author.className = 'author';
                 author.textContent = post.username;
 
-                const formatDateAndTime = (dateString) => {
+                const formatDateAndTimePost = (dateString) => {
                     const dateObj = new Date(dateString);
                     const formattedDate = dateObj.toLocaleDateString();
                     const formattedTime = dateObj.toLocaleTimeString();
@@ -227,9 +244,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 };
 
                 const date = document.createElement('span');
-                const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
+                const formattedLastModifiedDate = formatDateAndTimePost(post.lastModifiedDate);
                 date.className = 'date';
-                date.textContent = 'Date: ' + formattedLastModifiedDate;
+                date.textContent = formattedLastModifiedDate;
 
                 const postActions = document.createElement('div');
                 postActions.className = 'post-actions';
@@ -320,11 +337,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (commentField.value !== ''){
                     await createComment(post.id, commentField.value);
                     commentField.value = '';
+
+                        if (seeComments.style.display === 'none'){
+                            comments.innerHTML = '';
+                            await postComments();
+                        }
                     }
-                    if (seeComments.style.display === 'none'){
-                        comments.innerHTML = '';
-                        await postComments();
-                    }
+
                 }
 
                 commentButton.addEventListener('click', uploadComment);
@@ -338,16 +357,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const seeComments = document.createElement("div");
                 seeComments.className = 'see-comments-container';
-                seeComments.textContent = 'see all x comments...';
+                seeComments.textContent = 'see all comments...';
 
                 const comments = document.createElement("div");
                 comments.className = 'comments';
 
+
+                const commentsString = await getPostComments(post.id);
+                console.log(commentsString)
+                if (commentsString === '[]'){
+                    seeComments.style.display = 'none';
+                }
                 const postComments = async () => {
-                    const commentsString = await getPostComments(post.id);
-                    if (commentsString){
                         seeComments.style.display = 'none';
-                        const commentsList = JSON.parse(commentsString);
+                        const updatedCommentsString = await getPostComments(post.id);
+                        const commentsList = JSON.parse(updatedCommentsString);
                         for (const comment of commentsList){
                             console.log(comment.content);
                             console.log(comment.user);
@@ -362,11 +386,19 @@ document.addEventListener("DOMContentLoaded", function() {
                             commentText.className = 'comment-text';
                             commentText.textContent = comment.content;
 
+                            const commentTime = document.createElement('span');
+                            commentTime.className = 'comment-time';
+                            commentTime.textContent = formatDateAndTime(comment.date);
+
+                            const commentInfo = document.createElement("div");
+                            commentInfo.className = 'comment-info';
+
                             commentBox.append(commentAuthor);
                             commentBox.append(commentText);
+                            commentInfo.append(commentTime);
+                            commentBox.append(commentInfo);
                             comments.append(commentBox);
                         }
-                    }
                 }
 
                 seeComments.addEventListener('click', postComments);
@@ -410,23 +442,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 const lastMessage = document.createElement("div");
                 lastMessage.className = 'inbox-last-message';
                 lastMessage.textContent = inbox.last_message;
-
-                const formatDateAndTime = (dateString) => {
-                    const dateObj = new Date(dateString);
-                    const now = new Date();
-                    const timeDifference = now - dateObj;
-                    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
-                    const formattedDate = dateObj.toLocaleDateString();
-                    const formattedTime = dateObj.toLocaleTimeString
-                        ([], { hour12: true, hour: '2-digit', minute: '2-digit' });
-
-                    if (timeDifference < twentyFourHours) {
-                        return `${formattedTime}`;
-                    } else {
-                        return `${formattedDate}`;
-                    }
-                };
 
                 const timeSent = document.createElement("div");
                 timeSent.className = 'inbox-timestamp';
