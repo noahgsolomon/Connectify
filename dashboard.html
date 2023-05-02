@@ -29,18 +29,46 @@
         <label>
             <input type="text" class="post-search" placeholder="Search...">
         </label>
-        <!--        <div class="post">-->
-<!--            <h2>Post Title</h2>-->
-<!--            <p>Post content...</p>-->
-<!--            <div class="post-meta">-->
-<!--                <span class="author">Author: John Doe</span>-->
-<!--                <span class="date">Date: 2023-04-24</span>-->
-<!--            </div>-->
-<!--            <div class="post-actions">-->
-<!--                <button class="btn like-btn">Like</button>-->
-<!--                <button class="btn bookmark-btn">Bookmark</button>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="post">
+            <h2>Post Title</h2>
+            <p>Post content...</p>
+            <div class="post-meta">
+                <span class="author">John Doe</span>
+                <span class="date">2023-04-24</span>
+            </div>
+            <div class="post-actions">
+                <button class="btn like-btn">Like</button>
+                <button class="btn bookmark-btn">Bookmark</button>
+            </div>
+            <div class="comment-container">
+                <input type="text" placeholder="Comment here..." class="comment-field">
+                <button class="comment-btn">💬</button>
+            </div>
+            <div class="see-comments-container">See all x comments...</div>
+            <div class="comments">
+                <div class="comment">
+                    <span class="comment-author">Alice:</span>
+                    <span class="comment-text">This is an amazing post! Thanks for sharing.</span>
+                </div>
+                <div class="comment">
+                    <span class="comment-author">Bob:</span>
+                    <span class="comment-text">I totally agree with Alice. Great job!</span>
+                </div>
+                <div class="comment">
+                    <span class="comment-author">Charlie:</span>
+                    <span class="comment-text">I have a question about this topic. Can you please explain...</span>
+                </div>
+                <div class="comment">
+                    <span class="comment-author">David:</span>
+                    <span class="comment-text">This post has been really helpful. Thank you!</span>
+                </div>
+                <div class="comment">
+                    <span class="comment-author">Eve:</span>
+                    <span class="comment-text">Can't wait for more posts like this one!</span>
+                </div>
+            </div>
+        </div>
+
         <div id="postModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">

@@ -132,6 +132,78 @@ nav a {
     background-color: #64a3ff;
 }
 
+.comment-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.comment-field {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.comment-field:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5);
+}
+
+.comment-btn {
+    background-color: #1e90ff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.comment-btn:hover {
+    background-color: #64a3ff;
+}
+
+.see-comments-container {
+    font-size: 0.9rem;
+    color: #1e90ff;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+}
+
+.see-comments-container:hover{
+    cursor: pointer;
+}
+
+.comments {
+    margin-top: 1rem;
+}
+
+.comment {
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.comment-text {
+    color: #333;
+}
+
 
 @media (min-width: 1000px) {
     .left-sidebar{

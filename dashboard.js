@@ -91,6 +91,46 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function createComment(postID, content){
+        try{
+            const response = await fetch(`http://localhost:8080/comment/${postID}`, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: content,
+                credentials: "include"
+            });
+
+            const responseBody = await response.text();
+            console.log(responseBody);
+            if (response.ok){
+                showSlideMessage("uploaded comment!", "green");
+                return responseBody;
+            }
+            showSlideMessage("comment could not be posted", "red");
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function getPostComments(postID){
+        try{
+            const response = await fetch(`http://localhost:8080/comment/${postID}`, {
+                method: 'GET',
+                headers: {'Content-Type':'application/json'},
+                credentials: "include"
+            });
+            const responseBody = await response.text();
+            console.log(responseBody);
+            if (response.ok){
+                return responseBody;
+            }
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
     async function getInbox(){
         try {
         const response = await fetch('http://localhost:8080/inbox', {
@@ -264,6 +304,76 @@ document.addEventListener("DOMContentLoaded", function() {
                     addLikeBookmark(post.id, likeStatus, bookmarkStatus);
                 });
 
+                const commentContainer = document.createElement("div");
+                commentContainer.className = 'comment-container';
+
+                const commentField = document.createElement("input");
+                commentField.type = 'text';
+                commentField.placeholder = 'Comment here...';
+                commentField.className = 'comment-field';
+
+                const commentButton = document.createElement("button");
+                commentButton.className = 'comment-btn';
+                commentButton.textContent = '💬';
+
+                const uploadComment = async ()=> {
+                    if (commentField.value !== ''){
+                    await createComment(post.id, commentField.value);
+                    commentField.value = '';
+                    }
+                    if (seeComments.style.display === 'none'){
+                        comments.innerHTML = '';
+                        await postComments();
+                    }
+                }
+
+                commentButton.addEventListener('click', uploadComment);
+                commentField.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter'){
+                        event.preventDefault();
+                        uploadComment();
+                    }
+                });
+
+
+                const seeComments = document.createElement("div");
+                seeComments.className = 'see-comments-container';
+                seeComments.textContent = 'see all x comments...';
+
+                const comments = document.createElement("div");
+                comments.className = 'comments';
+
+                const postComments = async () => {
+                    const commentsString = await getPostComments(post.id);
+                    if (commentsString){
+                        seeComments.style.display = 'none';
+                        const commentsList = JSON.parse(commentsString);
+                        for (const comment of commentsList){
+                            console.log(comment.content);
+                            console.log(comment.user);
+                            const commentBox = document.createElement("div");
+                            commentBox.className = 'comment'
+
+                            const commentAuthor = document.createElement("span");
+                            commentAuthor.className = 'comment-author';
+                            commentAuthor.textContent = comment.user;
+
+                            const commentText = document.createElement("span");
+                            commentText.className = 'comment-text';
+                            commentText.textContent = comment.content;
+
+                            commentBox.append(commentAuthor);
+                            commentBox.append(commentText);
+                            comments.append(commentBox);
+                        }
+                    }
+                }
+
+                seeComments.addEventListener('click', postComments);
+
+                commentContainer.append(commentField);
+                commentContainer.append(commentButton);
+
                 postMeta.append(author);
                 postMeta.append(date);
 
@@ -274,7 +384,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 postElement.append(contentElement);
                 postElement.append(postMeta);
                 postElement.append(postActions);
-
+                postElement.append(commentContainer);
+                postElement.append(seeComments);
+                postElement.append(comments);
                 main.append(postElement);
             }
         }
