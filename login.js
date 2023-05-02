@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json'},
                     body: JSON.stringify(model),
-                    credentials: 'include'
+                    credentials: 'same-origin'
                 });
                 const responseBody = await response.text();
 
