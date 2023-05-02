@@ -63,7 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
             const sessionId = await login().catch(error => console.error(error));
             if (sessionId) {
                 console.log(sessionId);
-                setCookie('JSESSIONID', sessionId, 7); // Store the session ID in a cookie for 7 days
                 // Redirect the user to the dashboard page
                 window.location.href = 'dashboard.html';
             }
