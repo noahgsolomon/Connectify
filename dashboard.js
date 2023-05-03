@@ -26,10 +26,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const url = 'https://connectifymedia.herokuapp.com/posts';
 
         try {
+            const sessionId = getCookie('JSESSIONID');
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Cookie': `JSESSIONID=${sessionId}`
                 },
                 credentials: "include"
             });
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
             throw error;
         }
     }
+
 
     async function addLikeBookmark(postId, liked, bookmarked) {
         const url = `https://connectifymedia.herokuapp.com/posts/${postId}`
