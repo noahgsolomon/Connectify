@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const body = document.querySelector('body');
     const profile = async () => {
         try {
-            const response = await fetch("https://connectifymedia.herokuapp.com/profile", {
+            const response = await fetch("http://localhost:8080/profile", {
                 method: "GET",
                 headers: {"Content-Type":"application/json"},
                 credentials: "include"
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function getMyPosts() {
-        const url = `https://connectifymedia.herokuapp.com/my-posts`;
+        const url = `http://localhost:8080/my-posts`;
 
         try {
             const response = await fetch(url, {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function getPost(id){
         try {
-            const response = await fetch(`https://connectifymedia.herokuapp.com/post/${id}`, {
+            const response = await fetch(`http://localhost:8080/post/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 body: body,
                 title: title
             }
-            const response = await fetch(`https://connectifymedia.herokuapp.com/post/${id}`, {
+            const response = await fetch(`http://localhost:8080/post/${id}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(model),
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const deletePost = async (id) => {
         try {
-            const response = await fetch(`https://connectifymedia.herokuapp.com/post/${id}`, {
+            const response = await fetch(`http://localhost:8080/post/${id}`, {
                 method: 'DELETE',
                 headers: {'Content-Type': 'application/json'},
                 credentials: "include"
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function() {
             backgroundColor: backgroundColor
         }
         try{
-            const response = await fetch("https://connectifymedia.herokuapp.com/profile", {
+            const response = await fetch("http://localhost:8080/profile", {
                 method: "PUT",
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(model),
