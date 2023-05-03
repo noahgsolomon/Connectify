@@ -1,10 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    function getCookie(name) {
-        const value = '; ' + document.cookie;
-        const parts = value.split('; ' + name + '=');
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
 
     const formatDateAndTime = (dateString) => {
         const dateObj = new Date(dateString);
@@ -26,12 +21,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const url = 'http://localhost:8080/posts';
 
         try {
-            const sessionId = getCookie('JSESSIONID');
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Cookie': `JSESSIONID=${sessionId}`
+                    'Content-Type': 'application/json'
                 },
                 credentials: "include"
             });
@@ -48,15 +41,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-
     async function addLikeBookmark(postId, liked, bookmarked) {
-        const url = `http://localhost:8080/posts/${postId}`
         console.log(bookmarked);
         let model = {
             liked: liked,
             bookmark: bookmarked
         }
-        const response = await fetch(url, {
+        const response = await fetch(`http://localhost:8080/posts/${postId}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(model),
@@ -66,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function getLikeBookmark(postId) {
-        const url = `http://localhost:8080/${postId}`;
+        const url = `http://localhost:8080/post-interactions/${postId}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
@@ -158,23 +149,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function getInbox(){
         try {
-        const response = await fetch('http://localhost:8080/inbox', {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
-        });
+            const response = await fetch('http://localhost:8080/inbox', {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+                credentials: "include"
+            });
 
-        const responseBody = await response.text();
-        console.log(responseBody);
-        if (response.ok) {
-            return responseBody;
-        } else {
-            console.log('error');
+            const responseBody = await response.text();
+            console.log(responseBody);
+            if (response.ok) {
+                return responseBody;
+            } else {
+                console.log('error');
+            }
+        } catch (error) {
+            console.error(error);
+            throw error;
         }
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
     }
 
     async function getMessageLog(user) {
@@ -343,8 +334,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const uploadComment = async ()=> {
                     if (commentField.value !== ''){
-                    await createComment(post.id, commentField.value);
-                    commentField.value = '';
+                        await createComment(post.id, commentField.value);
+                        commentField.value = '';
 
                         if (seeComments.style.display === 'none'){
                             comments.innerHTML = '';
@@ -377,36 +368,36 @@ document.addEventListener("DOMContentLoaded", function() {
                     seeComments.style.display = 'none';
                 }
                 const postComments = async () => {
-                        seeComments.style.display = 'none';
-                        const updatedCommentsString = await getPostComments(post.id);
-                        const commentsList = JSON.parse(updatedCommentsString);
-                        for (const comment of commentsList){
-                            console.log(comment.content);
-                            console.log(comment.user);
-                            const commentBox = document.createElement("div");
-                            commentBox.className = 'comment'
+                    seeComments.style.display = 'none';
+                    const updatedCommentsString = await getPostComments(post.id);
+                    const commentsList = JSON.parse(updatedCommentsString);
+                    for (const comment of commentsList){
+                        console.log(comment.content);
+                        console.log(comment.user);
+                        const commentBox = document.createElement("div");
+                        commentBox.className = 'comment'
 
-                            const commentAuthor = document.createElement("span");
-                            commentAuthor.className = 'comment-author';
-                            commentAuthor.textContent = comment.user;
+                        const commentAuthor = document.createElement("span");
+                        commentAuthor.className = 'comment-author';
+                        commentAuthor.textContent = comment.user;
 
-                            const commentText = document.createElement("span");
-                            commentText.className = 'comment-text';
-                            commentText.textContent = comment.content;
+                        const commentText = document.createElement("span");
+                        commentText.className = 'comment-text';
+                        commentText.textContent = comment.content;
 
-                            const commentTime = document.createElement('span');
-                            commentTime.className = 'comment-time';
-                            commentTime.textContent = formatDateAndTime(comment.date);
+                        const commentTime = document.createElement('span');
+                        commentTime.className = 'comment-time';
+                        commentTime.textContent = formatDateAndTime(comment.date);
 
-                            const commentInfo = document.createElement("div");
-                            commentInfo.className = 'comment-info';
+                        const commentInfo = document.createElement("div");
+                        commentInfo.className = 'comment-info';
 
-                            commentBox.append(commentAuthor);
-                            commentBox.append(commentText);
-                            commentInfo.append(commentTime);
-                            commentBox.append(commentInfo);
-                            comments.append(commentBox);
-                        }
+                        commentBox.append(commentAuthor);
+                        commentBox.append(commentText);
+                        commentInfo.append(commentTime);
+                        commentBox.append(commentInfo);
+                        comments.append(commentBox);
+                    }
                 }
 
                 seeComments.addEventListener('click', postComments);
@@ -690,8 +681,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const overlay = document.querySelector(".overlay");
 
     function addInboxPanel() {
-            overlay.style.display = "block";
-            inboxPanel.style.display = "block";
+        overlay.style.display = "block";
+        inboxPanel.style.display = "block";
         document.body.classList.add('no-scroll');
     }
     function removeInboxPanel(){
