@@ -431,6 +431,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 inboxElement.className = "inbox-item";
 
                 if (inbox.unread){
+                    console.log('hello')
                     inboxElement.className = 'inbox-item unread';
                 }
 
@@ -540,10 +541,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         for (const inbox of inboxList) {
                             const inboxElement = document.createElement("div");
                             inboxElement.className = "inbox-item";
-
-                            if (inbox.unread) {
-                                inboxElement.className = 'inbox-item unread';
-                            }
 
                             const user = document.createElement("div");
                             user.className = 'inbox-user';
