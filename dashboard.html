@@ -13,22 +13,23 @@
 <header>
     <h1><a href="index.html" class="logo">Connectify</a></h1>
     <nav>
-        <a href="profile.html" class="profile-btn">Profile</a>
-        <a href="search.html" class="search-btn">Search</a>
-        <a href="#" class="inbox-btn">Inbox</a>
+        <a href="profile.html" class="profile-btn">😀</a>
+        <a href="search.html" class="search-btn">🔎</a>
+        <a href="#" class="inbox-btn">💬</a>
     </nav>
 </header>
 <div class="overlay"></div>
 
 <div class="container">
-    <aside class="left-sidebar">
         <button class="add-post-btn">+</button>
-    </aside>
 
     <main class="center-content">
         <label>
             <input type="text" class="post-search" placeholder="Search...">
         </label>
+        <div class="post-wrapper">
+
+        </div>
 <!--        <div class="post">-->
 <!--            <h2>Post Title</h2>-->
 <!--            <p>Post content...</p>-->
@@ -80,14 +81,19 @@
                         <label for="postTitle"></label><input type="text" id="postTitle" name="postTitle" maxlength="100" placeholder="Title" required>
                         <label for="postBody"></label><textarea id="postBody" name="postBody" rows="5" maxlength="500" placeholder="Body" required></textarea>
                         <p><span id="charCount">0</span>/500</p>
-                        <input type="submit" value="Post" class="btn">
+                        <input type="submit" value="🚀" class="btn">
                     </form>
                 </div>
             </div>
         </div>
         <div id="slideMessage" class="slide-message"></div>
+<!--        <div class="page-number-container">-->
+<!--            <div class="page-number page-1">1</div>-->
+<!--            <div class="page-number page-2">2</div>-->
+<!--            <div class="page-number page-3">3</div>-->
+<!--            <div class="page-number page-4">4</div>-->
+<!--        </div>-->
     </main>
-
     <aside class="inbox-panel">
         <label>
             <input type="text" class="inbox-search" placeholder="Search...">
