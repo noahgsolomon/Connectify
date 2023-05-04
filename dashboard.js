@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    const main = document.querySelector('.center-content');
 
+    const slideMessage = document.createElement('div');
+    slideMessage.className = 'slide-message';
+    slideMessage.id = 'slideMessage';
+    main.append(slideMessage);
     const formatDateAndTime = (dateString) => {
         const dateObj = new Date(dateString);
         const now = new Date();
@@ -429,7 +434,6 @@ document.addEventListener("DOMContentLoaded", function() {
             postList.reverse();
 
             const postWrapper = document.querySelector('.post-wrapper');
-            const main = document.querySelector('.center-content');
             const pageNumber = Math.ceil(postList.length / 10);
             let currentPage = 0;
             const count = 0;
@@ -458,7 +462,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 });
             }
-            main.append(pageNumberContainer);
+            if (postList.length > 10){
+                main.append(pageNumberContainer)
+            }
         }
         if (inboxListString){
             const inboxList = JSON.parse(inboxListString);
@@ -672,7 +678,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function showSlideMessage(message, color, duration = 2000) {
-        const slideMessage = document.getElementById("slideMessage");
         slideMessage.innerHTML = message;
         slideMessage.classList.remove("hide");
         slideMessage.classList.add("show");

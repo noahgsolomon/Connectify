@@ -14,24 +14,6 @@ body {
     min-height: 100vh;
 }
 
-.login-wrapper {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 1rem;
-}
-
-.login-container {
-    max-width: 500px; /* Increased maximum width */
-    width: 100%; /* Added width */
-    padding: 2rem;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    transition: all 0.3s ease; /* Added transition */
-}
-
 a {
     text-decoration: none;
     color: #333;
@@ -52,72 +34,193 @@ a:hover {
 }
 
 .btn:hover {
-    background-color: #2980b9;
+    background-color: #64a3ff;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 0 10%;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+nav a:hover {
     color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-.btn-signup {
-    background-color: #27ae60;
+.login-btn:hover{
+    background-color: #f3e8a6;
 }
 
-.btn-signup:hover {
-    background-color: #229954;
+
+nav a:active {
+    background-color: #1e90ff;
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.logo {
+    color: #333;
+    font-size: 2.5rem;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.logo:hover {
+    color: #1e90ff;
+}
+
+
+.signup-btn:hover{
+    background-color: #8cc1f6;
+}
+
+
+
+.login-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.login-container {
+    max-width: 500px; /* Increased maximum width */
+    width: 100%; /* Added width */
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Added transition */
 }
 
 .btn-login {
     margin-left: 0.5rem;
 }
 
-/* Header styles */
-header {
-    background-color: #fff;
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-}
 
-nav {
+.login-wrapper {
+    flex-grow: 1;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 10%;
+    padding: 0 1rem;
 }
 
-nav h1 {
-    font-size: 1.5rem;
-    color: #1e90ff;
+.login-container {
+    max-width: 50%;
+    width: 100%;
+    padding: 2rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
 
-nav a {
-    margin-left: 1rem;
+.login-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1200px) {
+    .login-container {
+        max-width: 60%;
+    }
+}
+
+@media (max-width: 992px) {
+    .login-container {
+        max-width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        max-width: 90%;
+    }
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+    border-color: #1e90ff;
+    background-color: #fff;
+}
+
+form input[type="submit"] {
+    background-color: #1e90ff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
 }
 
-.logo {
-    color: dodgerblue;
-    font-size: 2.5rem;
-    transition: 0.3s;
+form input[type="submit"]:hover {
+    background-color: #64a3ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-.logo:hover{
-    color: #64a3ff;
-    font-size: 2.45rem;
+form input[type="submit"]:active {
+    background-color: #1e90ff;
+    box-shadow: none;
+    transform: translateY(0);
 }
-
 
 .login-container {
     max-width: 400px;
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .login-container h2 {
     font-size: 2rem;
     text-align: center;
     margin-bottom: 1.5rem;
+    color: #1e90ff;
+    font-weight: 600;
 }
 
 .login-container .login-msg {
@@ -133,30 +236,8 @@ form div {
 }
 
 form label {
-    font-size: 1.1rem;
+    font-size: 18px;
+    font-weight: bold;
     margin-bottom: 0.25rem;
     display: block;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"] {
-    outline: none;
-    padding: 0.5rem;
-    font-size: 1.1rem;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: Roboto, sans-serif; /* Set the input font to Roboto */
-    transition: border-color 0.3s ease; /* Add transition to the border color */
-}
-
-form input[type="text"]:focus,
-form input[type="email"]:focus,
-form input[type="password"]:focus {
-    border-color: #007AFF; /* Change the focus border color to a MacBook blue */
-}
-
-.btn:hover{
-    cursor: pointer;
 }

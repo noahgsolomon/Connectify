@@ -20,81 +20,80 @@ a:hover {
     color: #1e90ff;
 }
 
-.btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #1e90ff;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #2980b9;
-    color: #fff;
-}
-
-.btn-signup {
-    background-color: #27ae60;
-}
-
-.btn-signup:hover {
-    background-color: #229954;
-}
-
-.btn-dashboard {
-    background-color: #ff8e8e;
-}
-
-.btn-dashboard:hover{
-    background-color: #ea6363;
-}
-
-
-/* Header styles */
 header {
-    background-color: #fff;
-    padding: 1rem 0;
+    background-color: #f0f0f0;
+    padding: 0 10%;
     border-bottom: 1px solid #ddd;
-}
-
-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-nav h1 {
-    font-size: 1.5rem;
-    color: #1e90ff;
 }
 
 nav a {
+    display: inline-block;
     margin-left: 1rem;
-    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
 }
+
+nav a:hover {
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.logo {
+    color: #333;
+    font-size: 2.5rem;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.logo:hover {
+    color: #1e90ff;
+}
+
+.dashboard-btn:hover{
+    background-color: #fd8d8d;
+}
+
+.login-btn:hover{
+    background-color: #f3e8a6;
+}
+
+.signup-btn:hover{
+    background-color: #8cc1f6;
+}
+
+
 
 /* Main content styles */
 main {
     max-width: 1100px;
     margin: 2rem auto;
     padding: 1rem;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    background-color: #f8f8f8;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
 }
 
-h2 {
+main h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: #333;
 }
 
-p, ul {
+main p, ul {
     font-size: 1.1rem;
     margin-bottom: 1rem;
+    color: #666;
 }
 
 ul {
@@ -107,31 +106,71 @@ li {
 
 /* Footer styles */
 footer {
-    text-align: center;
-    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     padding: 1rem 0;
     background-color: #1e90ff;
     color: #fff;
 }
 
-.logo {
-    color: dodgerblue;
-    font-size: 2.5rem;
-    transition: 0.3s;
+.footer-sections {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1100px;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
-.logo:hover{
-    color: #64a3ff;
-    font-size: 2.45rem;
+.footer-links,
+.footer-contact {
+    flex: 1;
+    min-width: 250px;
+    padding: 0 1rem;
+}
+
+footer h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+}
+
+footer .rights-reserved{
+    text-align: center;
 }
 
 /* Section styles */
 section {
     margin-bottom: 2rem;
     padding: 1rem;
-    background-color: #fff;
+    background-color: #f4f4f4;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 1rem;
     transition: transform 0.3s ease;
 }
 
@@ -178,6 +217,7 @@ cite {
     font-weight: bold;
     text-align: right;
     margin-top: 0.5rem;
+    color: #333;
 }
 
 /* Features section */
@@ -193,11 +233,12 @@ cite {
     min-width: 250px;
     padding: 1rem;
     background-color: #f9f9f9;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .features h3 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+    color: #333;
 }

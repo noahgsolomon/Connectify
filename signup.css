@@ -12,25 +12,90 @@ body {
     background-color: #f0f0f0; /* Updated background color */
 }
 
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+a:hover {
+    color: #1e90ff;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 0 10%;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+nav a:hover {
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.login-btn:hover{
+    background-color: #f3e8a6;
+}
+
+
+nav a:active {
+    background-color: #1e90ff;
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.logo {
+    color: #333;
+    font-size: 2.5rem;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.logo:hover {
+    color: #1e90ff;
+}
+
 .signup-wrapper {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 1rem; /* Added padding */
+    padding: 0 1rem;
 }
 
 .signup-container {
-    max-width: 50%; /* Changed to percentage */
+    max-width: 50%;
     width: 100%;
     padding: 2rem;
     background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
     transition: all 0.3s ease;
 }
 
-/* Updated media queries for responsive behavior */
+.signup-container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
 @media (max-width: 1200px) {
     .signup-container {
         max-width: 60%;
@@ -48,103 +113,52 @@ body {
         max-width: 90%;
     }
 }
-/* ... */
 
 form input[type="text"],
 form input[type="email"],
 form input[type="password"] {
-    outline: none;
-    padding: 0.5rem;
-    font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
     width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: Roboto, sans-serif; /* Set the input font to Roboto */
-    transition: border-color 0.3s ease; /* Add transition to the border color */
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
 form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus {
-    border-color: #007AFF; /* Change the focus border color to a MacBook blue */
+    border-color: #1e90ff;
+    background-color: #fff;
 }
 
 form input[type="submit"] {
+    background-color: #1e90ff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    border: none;
     width: 100%;
     margin-top: 1rem;
 }
 
-a {
-    text-decoration: none;
-    color: #333;
+form input[type="submit"]:hover {
+    background-color: #64a3ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-a:hover {
-    color: #1e90ff;
-}
-
-.btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
+form input[type="submit"]:active {
     background-color: #1e90ff;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #2980b9;
-    color: #fff;
-}
-
-.btn-signup {
-    background-color: #27ae60;
-}
-
-.btn-signup:hover {
-    background-color: #229954;
-}
-
-.btn-login {
-    margin-left: 0.5rem;
-}
-
-/* Header styles */
-header {
-    background-color: #fff;
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 10%;
-}
-
-nav h1 {
-    font-size: 1.5rem;
-    color: #1e90ff;
-}
-
-nav a {
-    margin-left: 1rem;
-    font-size: 1rem;
-}
-
-.logo {
-    color: dodgerblue;
-    font-size: 2.5rem;
-    transition: 0.3s;
-}
-
-.logo:hover{
-    color: #64a3ff;
-    font-size: 2.45rem;
+    box-shadow: none;
+    transform: translateY(0);
 }
 
 .signup-container {
@@ -152,13 +166,15 @@ nav a {
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .signup-container h2 {
     font-size: 2rem;
     text-align: center;
     margin-bottom: 1.5rem;
+    color: #1e90ff;
+    font-weight: 600;
 }
 
 .signup-container .signup-msg {
@@ -174,11 +190,8 @@ form div {
 }
 
 form label {
-    font-size: 1.1rem;
+    font-size: 18px;
+    font-weight: bold;
     margin-bottom: 0.25rem;
     display: block;
-}
-
-.btn:hover{
-    cursor: pointer;
 }

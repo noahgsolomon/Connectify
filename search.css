@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -76,20 +78,30 @@ nav a:active {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    align-items: center;
+    text-align: center;
 }
 
 .profile-emoji {
-    font-size: 3rem;
-    text-align: center;
+    font-size: 5rem;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .profile-info {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
 
 .profile-name {
     font-size: 48px;
     font-weight: bold;
+    color: #1e90ff;
 }
 
 @media (max-width: 1000px) {
@@ -103,6 +115,26 @@ nav a:active {
 .profile-category{
     font-size: 24px;
 }
+
+.profile-bio {
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.profile-category {
+    background-color: #1e90ff;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
 .search-bar {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -151,13 +183,14 @@ nav a:active {
     margin-bottom: 1rem;
     border-radius: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, box-shadow 0.2s;
     width: 70%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Nunito Sans', sans-serif;
 }
 
 .search-result:hover {
-    background-color: #f0f0f0;
+    background-color: #eef1ff;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -165,56 +198,70 @@ nav a:active {
     margin: 0;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
+    color: #1e90ff;
 }
 
 .search-result p {
     margin-top: 0.5rem;
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #666;
+    color: #333;
+    font-weight: 400;
 }
 
-.message-status{
-    color: #52ff52;
+.message-status {
+    color: #68c95c;
+    font-weight: bold;
 }
 
-.message-bar{
+.message-bar {
     width: 150px;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     outline: none;
     box-sizing: border-box;
     transition: 0.3s;
+    background-color: #f4f4f4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.message-bar:focus{
+.message-bar:focus {
     background-color: #efefef;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.send-message-btn{
+.send-message-btn {
     background-color: #4892ee;
     width: 75px;
     color: whitesmoke;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    border-radius: 10px;
     outline: none;
     box-sizing: border-box;
     transition: 0.3s;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.send-message-btn:hover{
+.send-message-btn:hover {
     background-color: #99c8ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
-.posts{
+.send-message-btn:active {
+    background-color: #4892ee;
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.posts {
     max-width: 800px;
     margin: 0 auto;
     display: flex;
@@ -222,25 +269,37 @@ nav a:active {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    gap: 20px;
 }
 
 .post {
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
     margin: 1rem;
     width: 250px;
+    transition: all 0.3s ease;
+}
+
+.post:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 .post h2 {
     margin-top: 0;
     margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    color: #1e90ff;
 }
 
 .post p {
     word-break: break-word;
     margin-bottom: 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
 }
 
 .post-meta {
@@ -261,18 +320,55 @@ nav a:active {
 .bookmark-btn {
     background-color: #1e90ff;
     color: #fff;
-    padding: 0.5rem;
-    border-radius: 5px;
-    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .like-btn:hover,
 .bookmark-btn:hover {
     background-color: #64a3ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-.author{
+.like-btn:active,
+.bookmark-btn:active {
+    background-color: #1e90ff;
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.author {
     margin: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.page-number-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.page-number-container > div {
+    font-family: 'Roboto', sans-serif;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.page-number-container > div:hover {
+    background-color: #d0d0d0;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

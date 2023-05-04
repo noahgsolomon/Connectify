@@ -1,8 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const emojiList = ['😀', '😁', '😂', '🤣', '😃', '😄',
-        '😅', '😆', '😉', '😊', '😋','😎','😍',
-        '😘', '🥰', '😗'];
-    const emojiFace = emojiList[Math.round(Math.random() * 15)];
+    const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
+        '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰',
+        '😗', '😙', '😚', '☺️', '🙂', '🤗', '🤩', '🤔', '🤨', '😐', '😑', '😶',
+        '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '😛',
+        '😜', '😝', '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '☹️', '🙁', '😖',
+        '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩', '🤯', '😬', '😰', '😱',
+        '🥵', '🥶', '😳', '🤪', '😵', '😡', '😠', '🤬', '😷', '🤒', '🤕', '🤢', '🤮',
+        '🤧', '😇', '🤠', '🤡', '🥳', '🥴', '🥺', '🤥', '🤫', '🤭', '🧐', '🤓', '😈',
+        '👿', '👹', '👺', '💀', '👻', '👽', '🤖', '💩', '😺', '😸', '😹', '😻', '😼',
+        '😽', '🙀', '😿', '😾', '👶', '👧', '🧒', '👦', '👩', '🧑', '👨', '👵', '🧓',
+        '👴', '👲', '👳‍♀️', '👳‍♂️', '🧕', '🧔', '👱‍♂️', '👱‍♀️', '👨‍🦰', '👩‍🦰', '👨‍🦱', '👩‍🦱', '👨‍🦲',
+        '👩‍🦲', '👨‍🦳', '👩‍🦳', '🦸‍♀️', '🦸‍♂️', '🦹‍♀️', '🦹‍♂️', '👮‍♀️', '👮‍♂️', '👷‍♀️', '👷‍♂️', '💂‍♀️', '💂‍♂️', '🕵️‍♀️',
+        '🕵️‍','👩‍⚕️', '👨‍⚕️', '👩‍🌾', '👨‍🌾', '👩‍🍳', '👨‍🍳', '👩‍🎓', '👨‍🎓', '👩‍🎤', '👨‍🎤', '👩‍🏫', '👨‍🏫', '👩‍🏭',
+        '👨‍🏭', '👩‍💻', '👨‍💻', '👩‍💼', '👨‍💼', '👩‍🔧', '👨‍🔧', '👩‍🔬', '👨‍🔬', '👩‍🎨', '👨‍🎨', '👩‍🚒', '👨‍🚒', '👩‍✈️',
+        '👨‍✈️', '👩‍🚀', '👨‍🚀', '👩‍⚖️', '👨‍⚖️', '👰', '🤵', '👸', '🤴', '🤶', '🎅', '🧙‍♀️', '🧙‍♂️', '🧝‍♀️',
+        '🧝‍♂️', '🧛‍♀️', '🧛‍♂️', '🧟‍♀️', '🧟‍♂️', '🧞‍♀️', '🧞‍♂️', '🧜‍♀️', '🐨', '🐯', '🦁', '🐮', '🐷', '🐽',
+        '🐸', '🐵', '🙈', '🙉', '🙊', '🐒', '🐔', '🐧', '🐦', '🐤', '🐣', '🐥', '🦆', '🦢',
+        '🦅', '🦉', '🦚', '🦜', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐚',
+        '🐞', '🐜', '🦗', '🕷', '🕸', '🦂', '🦟', '🦠', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙',
+        '🦑', '🦐', '🦀', '🐡', '🐠'];
+    const emoji = document.querySelector('.profile-emoji');
 
     const profileCard = document.querySelector('.profile-card');
     const body = document.querySelector('body');
@@ -128,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
 
             const responseBody = await response.text();
-
             if (response.ok){
                 showSlideMessage("Post Deleted!", "green");
                 return responseBody;
@@ -142,12 +158,13 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    const updateProfile = async (country, bio, cardColor, backgroundColor) => {
+    const updateProfile = async (country, bio, cardColor, backgroundColor, profilePic) => {
         const model = {
             country: country,
             bio: bio,
             cardColor: cardColor,
-            backgroundColor: backgroundColor
+            backgroundColor: backgroundColor,
+            profilePic: profilePic
         }
         try{
             const response = await fetch("http://localhost:8080/profile", {
@@ -174,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const userDetails = JSON.parse(profileJson);
 
             const emoji = document.querySelector('.profile-emoji');
-            emoji.textContent = emojiFace;
+            emoji.textContent = userDetails.profilePic;
             const profileName = document.querySelector('.profile-name');
             profileName.textContent = userDetails.username;
             const country = document.querySelector(".profile-country");
@@ -226,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     const postDelBtn = document.createElement('button');
                     postDelBtn.className = 'post-del-btn';
-                    postDelBtn.textContent = 'Delete';
+                    postDelBtn.textContent = '🔥🗑️';
 
                     postEditBtn.addEventListener('click', () => {
 
@@ -241,14 +258,16 @@ document.addEventListener("DOMContentLoaded", function() {
                         const titleContainer = document.createElement('div');
                         titleContainer.style.display = 'flex'
 
-                        const textareaElement = document.createElement('textarea');
-                        textareaElement.value = content;
-                        textareaElement.rows = 5;
+                        const contentTextAreaElement = document.createElement('textarea');
+                        contentTextAreaElement.className = 'content-text-area';
+                        contentTextAreaElement.value = content;
+                        contentTextAreaElement.rows = 5;
 
                         const titleTextAreaElement = document.createElement('textarea');
+                        titleTextAreaElement.className = 'title-text-area';
                         titleTextAreaElement.value = title;
 
-                        inputContainer.appendChild(textareaElement);
+                        inputContainer.appendChild(contentTextAreaElement);
                         titleContainer.appendChild(titleTextAreaElement);
 
                         postElement.replaceChild(inputContainer, contentElement);
@@ -259,13 +278,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         const postSaveBtn = document.createElement('button');
                         postSaveBtn.className = 'post-save-btn';
-                        postSaveBtn.textContent = 'Save';
+                        postSaveBtn.textContent = '✅';
 
                         postActions.append(postSaveBtn);
 
                         postSaveBtn.addEventListener('click', async () => {
-                            await updatePost(post.id, textareaElement.value, titleTextAreaElement.value);
-                            console.log(textareaElement.value);
+                            await updatePost(post.id, contentTextAreaElement.value, titleTextAreaElement.value);
+                            console.log(contentTextAreaElement.value);
                             console.log(titleTextAreaElement.value);
                             const savedPostJson = await getPost(post.id);
                             const savedPost = JSON.parse(savedPostJson);
@@ -336,6 +355,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const cancelBtn = document.querySelector('.cancel-popup-btn');
 
     function handleEditButtonClick() {
+
+        emoji.style.cursor = 'pointer';
+
         const editForm = document.querySelector('.edit-form');
         const countryInput = document.querySelector('#country');
         const bioInput = document.querySelector('#bio');
@@ -367,6 +389,10 @@ document.addEventListener("DOMContentLoaded", function() {
             body.style.backgroundColor = initialBackgroundColor;
         });
 
+        emoji.addEventListener('click', () => {
+            console.log('cock')
+            emoji.textContent = emojiList[Math.round(Math.random() * emojiList.length)];
+        });
 
         // Add an event listener to handle form submission
         editForm.addEventListener('submit', async (e) => {
@@ -375,12 +401,10 @@ document.addEventListener("DOMContentLoaded", function() {
             const updatedCountry = countryInput.value.trim();
             const updatedBio = bioInput.value.trim();
 
-            const newProfile = await updateProfile(updatedCountry, updatedBio, profileCard.style.backgroundColor, body.style.backgroundColor);
+            const newProfile = await updateProfile(updatedCountry, updatedBio, profileCard.style.backgroundColor, body.style.backgroundColor, emoji.textContent);
             const userDetails = JSON.parse(newProfile);
             console.log(userDetails);
 
-            const emoji = document.querySelector('.profile-emoji');
-            emoji.textContent = emojiFace;
             const profileName = document.querySelector('.profile-name');
             profileName.textContent = userDetails.username;
             const country = document.querySelector(".profile-country");
@@ -392,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function() {
             profileCard.style.backgroundColor = userDetails.cardColor;
             body.style.backgroundColor = userDetails.backgroundColor;
 
-
+            emoji.style.cursor = "default";
             editForm.style.display = 'none';
             editForm.reset();
             cancelBtn.style.display = 'none';

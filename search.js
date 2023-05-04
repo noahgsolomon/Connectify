@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const emojiList = ['😀', '😁', '😂', '🤣', '😃', '😄',
-        '😅', '😆', '😉', '😊', '😋','😎','😍',
-        '😘', '🥰', '😗'];
     const body = document.querySelector('body');
 
     const searchContent = document.querySelector('.search-content');
@@ -184,17 +181,141 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function displayPosts(i, postList, postCardColor){
+
+        const main = document.querySelector('.posts');
+        const postElement = document.createElement('div');
+        postElement.className = 'post';
+
+        postElement.style.backgroundColor = postCardColor;
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = postList[i].title;
+
+        const contentElement = document.createElement('p');
+        contentElement.textContent = postList[i].body;
+
+        const postMeta = document.createElement('div')
+        postMeta.className = 'post-meta';
+
+        const author = document.createElement('span');
+        author.className = 'author';
+        author.textContent = postList[i].username;
+
+        const formatDateAndTimePost = (dateString) => {
+            const dateObj = new Date(dateString);
+            const formattedDate = dateObj.toLocaleDateString();
+            const formattedTime = dateObj.toLocaleTimeString();
+            return `${formattedDate} ${formattedTime}`;
+        };
+
+        const date = document.createElement('span');
+        const formattedLastModifiedDate = formatDateAndTimePost(postList[i].lastModifiedDate);
+        date.className = 'date';
+        date.textContent = formattedLastModifiedDate;
+
+        const postActions = document.createElement('div');
+        postActions.className = 'post-actions';
+
+        const likedBookmarked = await getLikeBookmark(postList[i].id);
+
+        const likeButton = document.createElement('button');
+        likeButton.className = 'btn like-btn';
+        if (!likedBookmarked.liked) {
+            likeButton.textContent = '❤';
+        } else {
+            likeButton.style.backgroundColor = '#d72f56';
+            likeButton.textContent = '💖';
+            likeButton.setAttribute('data-clicked', 'true');
+        }
+
+
+        likeButton.addEventListener('click', (event) => {
+            const buttonElement = event.currentTarget;
+            const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
+            if (!isClicked) {
+                buttonElement.style.backgroundColor = '#d72f56';
+                buttonElement.textContent = '💖';
+                buttonElement.setAttribute('data-clicked', 'true');
+            } else {
+                buttonElement.style.backgroundColor = '';
+                buttonElement.textContent = '❤';
+                buttonElement.setAttribute('data-clicked', 'false');
+            }
+
+            let bookmarkStatus = false;
+            if (bookmarkButton.textContent === '📚') {
+                bookmarkStatus = true;
+            }
+            let likeStatus = false;
+            if (likeButton.textContent === '💖') {
+                likeStatus = true;
+            }
+            addLikeBookmark(postList[i].id, likeStatus, bookmarkStatus);
+        });
+
+        const bookmarkButton = document.createElement('button');
+        bookmarkButton.className = 'btn bookmark-btn';
+        if (!likedBookmarked.bookmark) {
+            bookmarkButton.textContent = '💾';
+        } else {
+            bookmarkButton.style.backgroundColor = '#be773f';
+            bookmarkButton.textContent = '📚';
+            bookmarkButton.setAttribute('data-clicked', 'true');
+        }
+
+        bookmarkButton.addEventListener('click', (event) => {
+            const buttonElement = event.currentTarget;
+            const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
+            if (!isClicked) {
+                buttonElement.style.backgroundColor = '#be773f';
+                buttonElement.textContent = '📚';
+                buttonElement.setAttribute('data-clicked', 'true');
+            } else {
+                buttonElement.style.backgroundColor = '';
+                buttonElement.textContent = '💾';
+                buttonElement.setAttribute('data-clicked', 'false');
+            }
+            let bookmarkStatus = false;
+            if (bookmarkButton.textContent === '📚') {
+                bookmarkStatus = true;
+            }
+            let likeStatus = false;
+            if (likeButton.textContent === '💖') {
+                likeStatus = true;
+            }
+            addLikeBookmark(postList[i].id, likeStatus, bookmarkStatus);
+        });
+
+        const likeCount = document.createElement('div');
+        likeCount.className = 'like-count';
+        likeCount.textContent = '10 likes'
+        //TODO add like count feature
+
+        postMeta.append(author);
+        postMeta.append(date);
+
+        postActions.append(likeButton);
+        postActions.append(bookmarkButton);
+
+        postElement.append(titleElement);
+        postElement.append(contentElement);
+        postElement.append(postMeta);
+        postElement.append(postActions);
+        main.append(postElement);
+    }
+
+
     const userProfile = async (user) => {
         const profileJson = await profile(user);
         if (profileJson){
             const userDetails = JSON.parse(profileJson);
             const profileCard = document.querySelector('.profile-card');
-            const emojiFace = emojiList[Math.round(Math.random() * 15)];
             const sendMessageButton = document.querySelector('.send-message-btn');
             const messageField = document.querySelector('.message-bar');
 
             const emoji = document.querySelector('.profile-emoji');
-            emoji.textContent = emojiFace;
+            emoji.textContent = userDetails.profilePic;
             const profileName = document.querySelector('.profile-name');
             profileName.textContent = userDetails.username;
             const country = document.querySelector(".profile-country");
@@ -216,123 +337,37 @@ document.addEventListener("DOMContentLoaded", function() {
             if (postListString) {
                 const postList = JSON.parse(postListString);
                 postList.reverse();
-
+                const pageNumber = Math.ceil(postList.length / 10);
+                let currentPage = 0;
+                const count = 0;
+                const end = Math.min(count + 10, postList.length);
                 const main = document.querySelector('.posts');
-                for (const post of postList) {
-                    const postElement = document.createElement('div');
-                    postElement.className = 'post';
-                    postElement.style.backgroundColor = profileCard.style.backgroundColor;
 
-                    const titleElement = document.createElement('h2');
-                    titleElement.textContent = post.title;
-
-                    const contentElement = document.createElement('p');
-                    contentElement.textContent = post.body;
-
-                    const postMeta = document.createElement('div')
-                    postMeta.className = 'post-meta';
-
-                    const author = document.createElement('span');
-                    author.className = 'author';
-                    author.textContent = post.username;
-
-                    const formatDateAndTime = (dateString) => {
-                        const dateObj = new Date(dateString);
-                        const formattedDate = dateObj.toLocaleDateString();
-                        const formattedTime = dateObj.toLocaleTimeString();
-                        return `${formattedDate} ${formattedTime}`;
-                    };
-
-                    const date = document.createElement('span');
-                    const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
-                    date.className = 'date';
-                    date.textContent = 'Date: ' + formattedLastModifiedDate;
-
-                    const postActions = document.createElement('div');
-                    postActions.className = 'post-actions';
-
-                    const likedBookmarked = await getLikeBookmark(post.id);
-
-                    const likeButton = document.createElement('button');
-                    likeButton.className = 'btn like-btn';
-                    if (!likedBookmarked.liked) {
-                        likeButton.textContent = 'Like';
-                    } else {
-                        likeButton.style.backgroundColor = '#d72f56';
-                        likeButton.textContent = 'Liked';
-                        likeButton.setAttribute('data-clicked', 'true');
-                    }
-
-
-                    likeButton.addEventListener('click', (event) => {
-                        const buttonElement = event.currentTarget;
-                        const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
-                        if (!isClicked) {
-                            buttonElement.style.backgroundColor = '#d72f56';
-                            buttonElement.textContent = 'Liked';
-                            buttonElement.setAttribute('data-clicked', 'true');
-                        } else {
-                            buttonElement.style.backgroundColor = '';
-                            buttonElement.textContent = 'Like';
-                            buttonElement.setAttribute('data-clicked', 'false');
+                for (let i = currentPage * 10; i < end; i++) {
+                    await displayPosts(i, postList, profileCard.style.backgroundColor);
+                }
+                const pageNumberContainer = document.createElement("div");
+                pageNumberContainer.className = 'page-number-container';
+                for (let i = 0; i < pageNumber; i++) {
+                    const pageNumberDiv = document.createElement("div");
+                    pageNumberDiv.className = `page-number page-${i}`;
+                    pageNumberDiv.textContent = i.toString();
+                    pageNumberContainer.appendChild(pageNumberDiv);
+                    pageNumberDiv.addEventListener('click', async () => {
+                        const clickedPage = parseInt(pageNumberDiv.textContent);
+                        if (clickedPage !== currentPage){
+                            currentPage = clickedPage;
+                            main.innerHTML = '';
+                            const start = currentPage * 10;
+                            const end = Math.min(start + 10, postList.length);
+                            for (let j = start; j < end; j++) {
+                                await displayPosts(j, postList, profileCard.style.backgroundColor);
+                            }
                         }
-
-                        let bookmarkStatus = false;
-                        if (bookmarkButton.textContent === 'Bookmarked') {
-                            bookmarkStatus = true;
-                        }
-                        let likeStatus = false;
-                        if (likeButton.textContent === 'Liked') {
-                            likeStatus = true;
-                        }
-                        addLikeBookmark(post.id, likeStatus, bookmarkStatus);
                     });
-
-                    const bookmarkButton = document.createElement('button');
-                    bookmarkButton.className = 'btn bookmark-btn';
-                    if (!likedBookmarked.bookmark) {
-                        bookmarkButton.textContent = 'Bookmark';
-                    } else {
-                        bookmarkButton.style.backgroundColor = '#be773f';
-                        bookmarkButton.textContent = 'Bookmarked';
-                        bookmarkButton.setAttribute('data-clicked', 'true');
-                    }
-
-                    bookmarkButton.addEventListener('click', (event) => {
-                        const buttonElement = event.currentTarget;
-                        const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
-                        if (!isClicked) {
-                            buttonElement.style.backgroundColor = '#be773f';
-                            buttonElement.textContent = 'Bookmarked';
-                            buttonElement.setAttribute('data-clicked', 'true');
-                        } else {
-                            buttonElement.style.backgroundColor = '';
-                            buttonElement.textContent = 'Bookmark';
-                            buttonElement.setAttribute('data-clicked', 'false');
-                        }
-                        let bookmarkStatus = false;
-                        if (bookmarkButton.textContent === 'Bookmarked') {
-                            bookmarkStatus = true;
-                        }
-                        let likeStatus = false;
-                        if (likeButton.textContent === 'Liked') {
-                            likeStatus = true;
-                        }
-                        addLikeBookmark(post.id, likeStatus, bookmarkStatus);
-                    });
-
-                    postMeta.append(author);
-                    postMeta.append(date);
-
-                    postActions.append(likeButton);
-                    postActions.append(bookmarkButton);
-
-                    postElement.append(titleElement);
-                    postElement.append(contentElement);
-                    postElement.append(postMeta);
-                    postElement.append(postActions);
-
-                    main.append(postElement);
+                }
+                if (postList.length > 10){
+                    body.append(pageNumberContainer);
                 }
             }
 
