@@ -316,6 +316,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const emoji = document.querySelector('.profile-emoji');
             emoji.textContent = userDetails.profilePic;
+            if (userDetails.profilePic === undefined){
+                emoji.textContent = '😀'
+            }
             const profileName = document.querySelector('.profile-name');
             profileName.textContent = userDetails.username;
             const country = document.querySelector(".profile-country");

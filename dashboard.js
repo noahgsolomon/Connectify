@@ -6,6 +6,25 @@ document.addEventListener("DOMContentLoaded", function() {
     slideMessage.className = 'slide-message';
     slideMessage.id = 'slideMessage';
     main.append(slideMessage);
+
+    const profile = async () => {
+        try {
+            const response = await fetch("http://localhost:8080/profile", {
+                method: "GET",
+                headers: {"Content-Type":"application/json"},
+                credentials: "include"
+            });
+
+            const responseBody = await response.text();
+            console.log(responseBody);
+            console.log(responseBody);
+            if (response.ok){
+                return responseBody;
+            }
+        } catch (error){
+            console.log(error);
+        }
+    }
     const formatDateAndTime = (dateString) => {
         const dateObj = new Date(dateString);
         const now = new Date();
@@ -215,12 +234,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-    async function displayPosts(i, postList){
+    async function displayPosts(i, postList, profileString){
 
         const postWrapper = document.querySelector('.post-wrapper');
 
         const postElement = document.createElement('div');
         postElement.className = 'post';
+
+        if (profileString){
+            const profileDetails = JSON.parse(profileString);
+            if (profileDetails.cardColor){
+                postElement.style.backgroundColor = profileDetails.cardColor;
+            }
+        }
 
         const titleElement = document.createElement('h2');
         titleElement.textContent = postList[i].title;
@@ -427,6 +453,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     (async () => {
+        const profileString = await profile();
+        if (profileString){
+            const profileDetails = JSON.parse(profileString);
+            if (profileDetails.backgroundColor){
+                document.body.style.backgroundColor = profileDetails.backgroundColor;
+            }
+        }
         const postListString = await getPosts();
         const inboxListString = await getInbox();
         if (postListString) {
@@ -440,7 +473,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const end = Math.min(count + 10, postList.length);
 
             for (let i = currentPage*10; i < end; i++) {
-                await displayPosts(i, postList);
+                await displayPosts(i, postList, profileString);
             }
             const pageNumberContainer = document.createElement("div");
             pageNumberContainer.className = 'page-number-container';
@@ -457,7 +490,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         const start = currentPage * 10;
                         const end = Math.min(start + 10, postList.length);
                         for (let j = start; j < end; j++) {
-                            await displayPosts(j, postList);
+                            await displayPosts(j, postList, profileString);
                         }
                     }
                 });
