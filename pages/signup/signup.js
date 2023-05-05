@@ -1,4 +1,4 @@
-import {signUp} from './api.js'
+import {signUp} from '../../util/api/userapi.js'
 document.addEventListener("DOMContentLoaded", function() {
     const signUpForm = document.getElementById("signup-form");
 

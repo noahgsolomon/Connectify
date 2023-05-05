@@ -1,11 +1,9 @@
 import {
     profile,
-    getMyPosts,
-    getPost,
-    updatePost,
-    deletePost,
     updateProfile
-} from './api.js'
+} from '../../util/api/userapi.js'
+import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
+import {showSlideMessage} from "../../util/status.js";
 
 document.addEventListener("DOMContentLoaded", function() {
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
@@ -32,21 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const profileCard = document.querySelector('.profile-card');
     const body = document.querySelector('body');
-
-    function showSlideMessage(message, color, duration = 2000) {
-        const slideMessage = document.getElementById("slideMessage");
-        slideMessage.innerHTML = message;
-        slideMessage.classList.remove("hide");
-        slideMessage.classList.add("show");
-        slideMessage.style.backgroundColor = color;
-        setTimeout(() => {
-            slideMessage.classList.add("hide");
-            setTimeout(() => {
-                slideMessage.classList.remove("show");
-                slideMessage.classList.add("hide");
-            }, 300);
-        }, duration);
-    }
 
     (async () => {
         const profileJson = await profile();

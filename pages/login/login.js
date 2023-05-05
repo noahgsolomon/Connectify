@@ -1,4 +1,4 @@
-import {login} from "./api.js";
+import {login} from "../../util/api/userapi.js";
 document.addEventListener("DOMContentLoaded", function() {
     const loginForm = document.getElementById("login-form");
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (sessionId) {
                 console.log(sessionId);
                 setCookie('JSESSIONID', sessionId, 7);
-                window.location.href = 'dashboard.html';
+                window.location.href = '../dashboard/dashboard.html';
             }
         })();
     });

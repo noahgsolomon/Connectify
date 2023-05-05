@@ -261,6 +261,12 @@ nav a:active {
     transform: translateY(0);
 }
 
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .posts {
     max-width: 800px;
     margin: 0 auto;
@@ -345,6 +351,102 @@ nav a:active {
     margin: 20px;
     font-size: 0.9rem;
     color: #666;
+}
+
+.comment-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.comment-field {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+}
+
+.comment-field:focus {
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-btn {
+    background-image: linear-gradient(135deg, #1e90ff 0%, #64a3ff 100%);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-btn:hover {
+    filter: brightness(110%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.see-comments-container {
+    font-size: 0.9rem;
+    color: #1e90ff;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.see-comments-container:hover {
+    color: #64a3ff;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+}
+
+.comments {
+    margin-top: 1rem;
+}
+
+.comment {
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: #1e90ff;
+}
+
+.comment-text {
+    color: #333;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+
+.comment-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.25rem;
+}
+
+.comment-time {
+    color: #888;
+    font-size: 0.8rem;
+    opacity: 0.7;
 }
 
 .page-number-container {
