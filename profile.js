@@ -1,3 +1,12 @@
+import {
+    profile,
+    getMyPosts,
+    getPost,
+    updatePost,
+    deletePost,
+    updateProfile
+} from './api.js'
+
 document.addEventListener("DOMContentLoaded", function() {
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
         '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰',
@@ -23,24 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const profileCard = document.querySelector('.profile-card');
     const body = document.querySelector('body');
-    const profile = async () => {
-        try {
-            const response = await fetch("http://localhost:8080/profile", {
-                method: "GET",
-                headers: {"Content-Type":"application/json"},
-                credentials: "include"
-            });
-
-            const responseBody = await response.text();
-            console.log(responseBody);
-            console.log(responseBody);
-            if (response.ok){
-                return responseBody;
-            }
-        } catch (error){
-            console.log(error);
-        }
-    }
 
     function showSlideMessage(message, color, duration = 2000) {
         const slideMessage = document.getElementById("slideMessage");
@@ -55,134 +46,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 slideMessage.classList.add("hide");
             }, 300);
         }, duration);
-    }
-
-    async function getMyPosts() {
-        const url = `http://localhost:8080/my-posts`;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: "include"
-            });
-            const responseBody = await response.text();
-            console.log(responseBody);
-            if (response.ok) {
-                return responseBody;
-            } else {
-                console.log('error');
-            }
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
-    async function getPost(id){
-        try {
-            const response = await fetch(`http://localhost:8080/post/${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: "include"
-            });
-            const responseBody = await response.text();
-            console.log(responseBody);
-            if (response.ok) {
-                return responseBody;
-            } else {
-                console.log('error');
-            }
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
-    const updatePost = async (id, body, title) => {
-        console.log(body);
-        console.log(title)
-        try{
-            const model  = {
-                body: body,
-                title: title
-            }
-            const response = await fetch(`http://localhost:8080/post/${id}`, {
-                method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(model),
-                credentials: "include"
-            });
-
-            const responseBody = await response.text();
-            const responseJson = JSON.parse(responseBody);
-            console.log(responseBody);
-
-            if (response.ok){
-                showSlideMessage("Updated post!", "green");
-                return responseBody;
-            }
-            if (responseJson.status === 'invalid'){
-                showSlideMessage("Inappropriate Content!", "red");
-            }
-        }
-        catch (e) {
-            console.log(e);
-        }
-
-    }
-
-    const deletePost = async (id) => {
-        try {
-            const response = await fetch(`http://localhost:8080/post/${id}`, {
-                method: 'DELETE',
-                headers: {'Content-Type': 'application/json'},
-                credentials: "include"
-            });
-
-            const responseBody = await response.text();
-            if (response.ok){
-                showSlideMessage("Post Deleted!", "green");
-                return responseBody;
-            }
-            else{
-                showSlideMessage("Error deleting post", "red");
-            }
-        }
-        catch (error){
-            console.log(error);
-        }
-    }
-
-    const updateProfile = async (country, bio, cardColor, backgroundColor, profilePic) => {
-        const model = {
-            country: country,
-            bio: bio,
-            cardColor: cardColor,
-            backgroundColor: backgroundColor,
-            profilePic: profilePic
-        }
-        try{
-            const response = await fetch("http://localhost:8080/profile", {
-                method: "PUT",
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(model),
-                credentials: "include"
-            });
-
-            const responseBody = await response.text();
-            console.log(responseBody);
-            if (response.ok){
-                showSlideMessage("Updated profile!", "green");
-            }
-            return responseBody;
-        }catch (error){
-            console.log(error);
-        }
     }
 
     (async () => {
@@ -283,7 +146,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         postActions.append(postSaveBtn);
 
                         postSaveBtn.addEventListener('click', async () => {
-                            await updatePost(post.id, contentTextAreaElement.value, titleTextAreaElement.value);
+                            const updatedPost = await updatePost(post.id, contentTextAreaElement.value, titleTextAreaElement.value);
+                            if (updatedPost){
+                                showSlideMessage("Updated post!", "green");
+                            }
+                            else {
+                                showSlideMessage("Inappropriate Content!", "red");
+                            }
                             console.log(contentTextAreaElement.value);
                             console.log(titleTextAreaElement.value);
                             const savedPostJson = await getPost(post.id);
@@ -313,7 +182,14 @@ document.addEventListener("DOMContentLoaded", function() {
                         // Handle the Delete button click
                         const deleteBtn = document.querySelector('.confirm-delete-popup-buttons .delete-btn');
                         deleteBtn.addEventListener('click', async () => {
-                            await deletePost(post.id);
+                            const deletedPost = await deletePost(post.id);
+                            if (deletedPost){
+                                showSlideMessage("Post Deleted!", "green");
+
+                            }
+                            else {
+                                showSlideMessage("Error deleting post", "red");
+                            }
                             postElement.remove();
                             confirmDeleteContainer.style.display = 'none';
                         });
@@ -402,6 +278,12 @@ document.addEventListener("DOMContentLoaded", function() {
             const updatedBio = bioInput.value.trim();
 
             const newProfile = await updateProfile(updatedCountry, updatedBio, profileCard.style.backgroundColor, body.style.backgroundColor, emoji.textContent);
+            if (newProfile){
+                showSlideMessage("Updated profile!", "green");
+            }
+            else {
+                showSlideMessage("Error updating profile", "red");
+            }
             const userDetails = JSON.parse(newProfile);
             console.log(userDetails);
 

@@ -191,6 +191,19 @@ nav a:active {
     color: #777;
 }
 
+.author {
+    color: #1e90ff;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.author:hover {
+    color: #64a3ff;
+    text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+}
+
 .post-meta a {
     color: #1e90ff;
     transition: color 0.3s ease;
@@ -638,7 +651,6 @@ body.no-scroll {
     display: inline-block;
     padding: 8px;
     border-radius: 12px;
-    background-color: #1e90ff;
     color: whitesmoke;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 60%;
@@ -657,6 +669,14 @@ body.no-scroll {
 
 .message.received {
     text-align: left;
+}
+
+.message.sent .message-content{
+    background-color: #007AFF;
+}
+
+.message.received .message-content{
+    background-color: #a8a8a8;
 }
 
 .message.sent,

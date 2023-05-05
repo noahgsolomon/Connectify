@@ -1,10 +1,30 @@
+import {
+    profile,
+    getUserPosts,
+    fetchUsers,
+    addLikeBookmark,
+    getLikeBookmark,
+    sendMessage,
+    fetchUserProfile,
+} from './api.js'
 document.addEventListener("DOMContentLoaded", function() {
     const body = document.querySelector('body');
 
     const searchContent = document.querySelector('.search-content');
+    const profileEmoji = document.querySelector('.profile-btn');
 
     (async () => {
         const allUsers = await fetchUsers();
+        const myProfileString = await profile();
+        if (myProfileString){
+            const profileDetails = JSON.parse(myProfileString);
+            if (profileDetails.profilePic){
+                profileEmoji.textContent = profileDetails.profilePic;
+            }
+            else {
+                profileEmoji.textContent = '😀';
+            }
+        }
         if (allUsers){
             const usersList = JSON.parse(allUsers);
             const usernameList = usersList.map((user) => user.username);
@@ -56,130 +76,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     })();
-
-    async function getPosts(user) {
-        const url = `http://localhost:8080/posts/${user}`;
-
-        try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: "include"
-            });
-            const responseBody = await response.text();
-            console.log(responseBody);
-            if (response.ok) {
-                return responseBody;
-            } else {
-                console.log('error');
-            }
-        } catch (error) {
-            console.error(error);
-            throw error;
-        }
-    }
-
-    async function addLikeBookmark(postId, liked, bookmarked) {
-        const url = `http://localhost:8080/posts/${postId}`
-        console.log(bookmarked);
-        let model = {
-            liked: liked,
-            bookmark: bookmarked
-        }
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(model),
-            credentials: 'include'
-        });
-        console.log(response.body);
-    }
-
-    async function getLikeBookmark(postId) {
-        const url = `http://localhost:8080/post-interactions/${postId}`;
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include'
-        });
-
-        if (response.ok) {
-            const data = await response.json(); // Parse the JSON data
-            console.log(data);
-            return {
-                liked: data.liked,
-                bookmark: data.bookmark
-            };
-        } else {
-            console.error('Error fetching data:', response.statusText);
-            throw EvalError
-        }
-    }
-
-    async function fetchUsers() {
-        try {
-            const response = await fetch("http://localhost:8080/users", {
-                method: "GET",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-            });
-
-            const users = await response.text();
-            console.log(users);
-            if (response.ok){
-            return users;
-            }
-        } catch (error) {
-            console.log(error);
-            return [];
-        }
-    }
-
-    async function sendMessage(user, message){
-        const model = {
-            receiver: user,
-            message: message
-        }
-        try{
-            const response = await fetch("http://localhost:8080/inbox/send", {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(model),
-                credentials: 'include'
-            });
-
-            const responseBody = await response.text();
-            console.log(responseBody);
-
-            return responseBody;
-
-        }catch(error){
-            console.log(error);
-        }
-
-    }
-
-
-    const profile = async (user) => {
-        try {
-            const response = await fetch(`http://localhost:8080/${user}`, {
-                method: "GET",
-                headers: {"Content-Type":"application/json"},
-                credentials: "include"
-            });
-
-            const responseBody = await response.text();
-            console.log(responseBody);
-            console.log(responseBody);
-            if (response.ok){
-            return responseBody;
-            }
-        } catch (error){
-            console.log(error);
-        }
-    }
 
     async function displayPosts(i, postList, postCardColor){
 
@@ -307,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     const userProfile = async (user) => {
-        const profileJson = await profile(user);
+        const profileJson = await fetchUserProfile(user);
         if (profileJson){
             const userDetails = JSON.parse(profileJson);
             const profileCard = document.querySelector('.profile-card');
@@ -336,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 body.style.backgroundColor = 'whitesmoke'
             }
 
-            const postListString = await getPosts(user);
+            const postListString = await getUserPosts(user);
             if (postListString) {
                 const postList = JSON.parse(postListString);
                 postList.reverse();
