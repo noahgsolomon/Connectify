@@ -7,32 +7,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <title>Profile</title>
-  <link rel="stylesheet" href="../profile/profile.css">
+  <link rel="stylesheet" href="user.css">
 </head>
 <body>
 <header>
   <h1><a href="../index/index.html" class="logo">🌐 Connectify</a></h1>
   <nav>
+    <a href="../profile/profile.html" class="profile-btn"></a>
     <a href="../dashboard/dashboard.html" class="dashboard-btn">🚀</a>
     <a href="../search/search.html" class="search-btn">🔎</a>
-    <a href="../search/search.html" class="profile-btn">🔎</a>
   </nav>
 </header>
-<div class="overlay"></div>
-<div id="slideMessage" class="slide-message"></div>
 <div class="container">
-  <div class="profile-card" style="display: none;">
+  <div class="profile-card" style="display: none">
     <div class="profile-info">
       <div class="profile-emoji">
+        😎
       </div>
-      <h2 class="profile-name"></h2>
-      <p class="profile-country"></p>
-      <p class="profile-bio"></p>
+      <h2 class="profile-name">John Doe</h2>
+      <p class="profile-country">Country: United States</p>
+      <p class="profile-bio">Bio: Web developer and tech enthusiast.</p>
       <p class="profile-category"></p>
+      <div class="message-user">
+        <label>
+          <input type="text" class="message-bar" placeholder="Send message...">
+        </label>
+        <button class="send-message-btn">send</button>
+      </div>
     </div>
   </div>
 </div>
-<div class="posts"></div>
+<div class="post-wrapper">
+  <div class="posts"></div>
+</div>
+
 <script type="module" src="user.js"></script>
 </body>
 </html>

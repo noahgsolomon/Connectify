@@ -1,5 +1,5 @@
 import {
-    profile
+    profileColors
 } from '../../util/api/userapi.js'
 import {
     createPost,
@@ -12,8 +12,6 @@ import {postRender} from "../../util/postUtils.js";
 document.addEventListener("DOMContentLoaded", function() {
 
     const main = document.querySelector('.center-content');
-    const profileEmoji = document.querySelector('.profile-btn');
-
 
     const formatDateAndTime = (dateString) => {
         const dateObj = new Date(dateString);
@@ -32,27 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-
-    const slideMessage = document.createElement('div');
-    slideMessage.className = 'slide-message';
-    slideMessage.id = 'slideMessage';
-    main.append(slideMessage);
-
     (async () => {
-        const profileString = await profile();
-        if (profileString){
-            const profileDetails = JSON.parse(profileString);
-            if (profileDetails.backgroundColor){
-                document.body.style.backgroundColor = profileDetails.backgroundColor;
-            }
-
-            if (profileDetails.profilePic){
-                profileEmoji.textContent = profileDetails.profilePic;
-            }
-            else {
-                profileEmoji.textContent = '😀';
-            }
-        }
+        const profileString = await profileColors();
         const inboxListString = await getInbox();
         const postListString = await getPosts();
         if (postListString) {

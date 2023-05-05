@@ -1,3 +1,8 @@
+import {getUserPosts} from "./postapi.js";
+import {postRender} from "../postUtils.js";
+import {sendMessage} from "./inboxapi.js";
+import {showSlideMessage} from "../status.js";
+
 async function signUp(username, email, password) {
     try{
         const model = {username, email, password};
@@ -66,6 +71,64 @@ async function login(username, password){
         return null;
     } catch (error) {
         console.error(error);
+    }
+}
+
+async function userProfile(user){
+    const profileJson = await fetchUserProfile(user);
+    if (profileJson){
+        const userDetails = JSON.parse(profileJson);
+        const profileCard = document.querySelector('.profile-card');
+        const sendMessageButton = document.querySelector('.send-message-btn');
+        const messageField = document.querySelector('.message-bar');
+
+        const emoji = document.querySelector('.profile-emoji');
+        emoji.textContent = userDetails.profilePic;
+        if (userDetails.profilePic === undefined){
+            emoji.textContent = '😀'
+        }
+        const profileName = document.querySelector('.profile-name');
+        profileName.textContent = userDetails.username;
+        const country = document.querySelector(".profile-country");
+        country.textContent = 'Country: ' + userDetails.country;
+        const bio = document.querySelector(".profile-bio");
+        bio.textContent = userDetails.bio;
+        const category = document.querySelector(".profile-category");
+        category.textContent = userDetails.topCategory + ' enthusiast';
+        profileCard.style.backgroundColor = userDetails.cardColor;
+        document.body.style.backgroundColor = userDetails.backgroundColor;
+        if (!userDetails.cardColor){
+            profileCard.style.backgroundColor = 'white';
+        }
+        if (!userDetails.backgroundColor){
+            document.body.style.backgroundColor = 'whitesmoke'
+        }
+
+        const main = document.querySelector('.posts');
+        const postListString = await getUserPosts(user);
+        if (postListString) {
+            await postRender(postListString, profileJson, main, 'search');
+        }
+
+        sendMessageButton.addEventListener('click', async() => {
+            if (messageField.value !== '') {
+                const messageStatus = document.querySelector('.message-status');
+                const message = messageField.value;
+                messageField.value = '';
+                const messageResponse = await sendMessage(userDetails.username, message);
+                if (messageResponse) {
+                    showSlideMessage("sent message!", "green");
+                    setTimeout(() => {
+                        messageStatus.textContent = '';
+                    }, 2000);
+                }
+            }
+        });
+
+
+
+
+        profileCard.style.display = 'block';
     }
 }
 
@@ -153,11 +216,32 @@ async function fetchUserProfile(user){
     }
 }
 
+async function profileColors(){
+    const profileEmoji = document.querySelector('.profile-btn')
+    const profileString = await profile();
+    if (profileString){
+        const profileDetails = JSON.parse(profileString);
+        if (profileDetails.backgroundColor){
+            document.body.style.backgroundColor = profileDetails.backgroundColor;
+        }
+
+        if (profileDetails.profilePic){
+            profileEmoji.textContent = profileDetails.profilePic;
+        }
+        else {
+            profileEmoji.textContent = '😀';
+        }
+    }
+    return profileString;
+}
+
 export {
     profile,
     login,
     updateProfile,
     fetchUsers,
     fetchUserProfile,
-    signUp
+    signUp,
+    userProfile,
+    profileColors
 };

@@ -1,5 +1,10 @@
 function showSlideMessage(message, color, duration = 2000) {
-    const slideMessage = document.getElementById("slideMessage");
+
+    const slideMessage = document.createElement('div');
+    slideMessage.className = 'slide-message';
+    slideMessage.id = 'slideMessage';
+    document.body.append(slideMessage);
+
     slideMessage.innerHTML = message;
     slideMessage.classList.remove("hide");
     slideMessage.classList.add("show");

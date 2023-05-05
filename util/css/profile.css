@@ -1,0 +1,113 @@
+.profile-card {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.profile-emoji {
+    font-size: 5rem;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.profile-name {
+    font-size: 48px;
+    font-weight: bold;
+    color: #1e90ff;
+}
+
+@media (max-width: 1000px) {
+    .profile-name{
+        font-size: 30px;
+    }
+}
+
+.profile-country,
+.profile-bio,
+.profile-category{
+    font-size: 24px;
+}
+
+.profile-bio {
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.profile-category {
+    background-color: #1e90ff;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
+.message-bar {
+    width: 150px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.3s;
+    background-color: #f4f4f4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-bar:focus {
+    background-color: #efefef;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.send-message-btn {
+    background-color: #4892ee;
+    width: 75px;
+    color: whitesmoke;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.send-message-btn:hover {
+    background-color: #99c8ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.send-message-btn:active {
+    background-color: #4892ee;
+    box-shadow: none;
+    transform: translateY(0);
+}

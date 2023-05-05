@@ -1,5 +1,6 @@
 import {addLikeBookmark, createComment, getLikeBookmark, getPostComments} from "./api/postapi.js";
 import {showSlideMessage} from "./status.js";
+import {fetchUserProfile} from "./api/userapi.js";
 
 
 const formatDateAndTime = (dateString) => {
@@ -47,10 +48,49 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     author.className = 'author';
     author.textContent = postList[i].username;
 
+    const emojiContainer = document.createElement('span');
+
     author.addEventListener('click', (event) => {
         const username = event.target.textContent;
-        author.href = `user.html?username=${username}`;
+        author.href = `../user/user.html?username=${username}`;
     });
+
+    author.addEventListener('mouseover', async (event) => {
+        const username = event.target.textContent;
+        const userString = await fetchUserProfile(username);
+        if (userString) {
+            const userDetails = JSON.parse(userString);
+            let emoji = '';
+            if (userDetails.profilePic !== undefined || userDetails.profilePic !== '') {
+                emoji = userDetails.profilePic;
+            } else {
+                emoji = '😀';
+            }
+
+            emojiContainer.textContent = emoji;
+            emojiContainer.style.position = 'absolute';
+            emojiContainer.style.pointerEvents = 'none';
+            emojiContainer.style.fontSize = '1.2rem'
+            document.body.appendChild(emojiContainer);
+
+            author.addEventListener('mousemove', updateEmojiPosition);
+        }
+    });
+
+    author.addEventListener('mouseout', () => {
+        if (document.body.contains(emojiContainer)) {
+            document.body.removeChild(emojiContainer);
+        }
+        author.removeEventListener('mousemove', updateEmojiPosition);
+    });
+
+    function updateEmojiPosition(event) {
+        const xOffset = 15;
+        const yOffset = 15;
+        emojiContainer.style.left = `${event.pageX + xOffset}px`;
+        emojiContainer.style.top = `${event.pageY + yOffset}px`;
+    }
+
     const formatDateAndTimePost = (dateString) => {
         const dateObj = new Date(dateString);
         const formattedDate = dateObj.toLocaleDateString();
@@ -204,9 +244,30 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
             const commentBox = document.createElement("div");
             commentBox.className = 'comment'
 
-            const commentAuthor = document.createElement("span");
+            const commentAuthor = document.createElement("a");
             commentAuthor.className = 'comment-author';
-            commentAuthor.textContent = comment.user;
+            commentAuthor.style.cursor = 'pointer';
+            commentAuthor.setAttribute('data-username', comment.user);
+
+            const commentUserString = await fetchUserProfile(comment.user);
+            if (commentUserString){
+                const commentUser = JSON.parse(commentUserString);
+                if (commentUser.profilePic){
+                    commentAuthor.textContent = commentUser.profilePic + ` ${comment.user}`;
+                }
+                else {
+                    commentAuthor.textContent = `😀 ${comment.user}`;
+                }
+            }
+            else {
+                commentAuthor.textContent = `😀 ${comment.user}`;
+            }
+
+
+            commentAuthor.addEventListener('click', (event) => {
+                const username = event.target.dataset.username;
+                commentAuthor.href = `../user/user.html?username=${username}`;
+            });
 
             const commentText = document.createElement("span");
             commentText.className = 'comment-text';

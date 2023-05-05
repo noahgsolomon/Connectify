@@ -1,66 +1,4 @@
-/* profile.css */
-body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: whitesmoke;
-    transition: 0.3s ease;
-}
-
-header {
-    background-color: #f0f0f0;
-    padding: 0 10%;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav a {
-    display: inline-block;
-    margin-left: 1rem;
-    padding: 0.5rem 1rem;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: #333;
-    text-decoration: none;
-    border-radius: 8px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.5s ease;
-}
-
-nav a:hover {
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.dashboard-btn:hover{
-    background-color: #fd8d8d;
-}
-
-
-.search-btn:hover{
-    background-color: #6477e5;
-}
-
-nav a:active {
-    background-color: #1e90ff;
-    box-shadow: none;
-    transform: translateY(0);
-}
-
-.logo {
-    color: #333;
-    font-size: 2.5rem;
-    transition: 0.3s;
-    text-decoration: none;
-}
-
-.logo:hover {
-    color: #1e90ff;
-}
+@import "../../util/css/base.css";
 
 .container {
     display: flex;
@@ -380,34 +318,6 @@ nav a:active {
     margin: 20px;
     font-size: 0.9rem;
     color: #666;
-}
-
-.slide-message {
-    visibility: hidden;
-    min-width: 250px;
-    padding: 16px;
-    color: #fff;
-    text-align: center;
-    border-radius: 4px;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    top: 30px;
-    transform: translateX(-50%);
-    background-color: #4CAF50;
-    opacity: 0;
-    transition: visibility 0s 0.3s, opacity 0.3s linear;
-}
-
-.slide-message.show {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.3s linear;
-}
-
-.slide-message.hide {
-    opacity: 0;
-    transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
 
 .confirm-delete-container {

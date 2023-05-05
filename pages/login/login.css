@@ -1,91 +1,8 @@
-/* Login Page */
+@import "../../util/css/base.css";
+
 html, body {
     height: 100%;
     margin: 0;
-}
-
-body {
-    display: flex;
-    line-height: 1.6;
-    flex-direction: column;
-    justify-content: center;
-    font-family: Roboto, sans-serif;
-    background-color: #f5f5f5;
-    min-height: 100vh;
-}
-
-a {
-    text-decoration: none;
-    color: #333;
-}
-
-a:hover {
-    color: #1e90ff;
-}
-
-.btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #1e90ff;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #64a3ff;
-}
-
-header {
-    background-color: #f0f0f0;
-    padding: 0 10%;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav a {
-    display: inline-block;
-    margin-left: 1rem;
-    padding: 0.5rem 1rem;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: #333;
-    text-decoration: none;
-    border-radius: 8px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.5s ease;
-}
-
-nav a:hover {
-    color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.login-btn:hover{
-    background-color: #f3e8a6;
-}
-
-
-nav a:active {
-    background-color: #1e90ff;
-    box-shadow: none;
-    transform: translateY(0);
-}
-
-.logo {
-    color: #333;
-    font-size: 2.5rem;
-    transition: 0.3s;
-    text-decoration: none;
-}
-
-.logo:hover {
-    color: #1e90ff;
 }
 
 
@@ -104,13 +21,13 @@ nav a:active {
 }
 
 .login-container {
-    max-width: 500px; /* Increased maximum width */
-    width: 100%; /* Added width */
+    max-width: 500px;
+    width: 100%;
     padding: 2rem;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    transition: all 0.3s ease; /* Added transition */
+    transition: all 0.3s ease;
 }
 
 .btn-login {
@@ -119,6 +36,7 @@ nav a:active {
 
 
 .login-wrapper {
+    margin-top: 200px;
     flex-grow: 1;
     display: flex;
     justify-content: center;
