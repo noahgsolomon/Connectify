@@ -1,4 +1,4 @@
-import {addLikeBookmark, createComment, getLikeBookmark, getPostComments} from "./api/postapi.js";
+import {addLikeBookmark, createComment, getLikeBookmark, getPostComments, getPostLikeCount} from "./api/postapi.js";
 import {showSlideMessage} from "./status.js";
 import {fetchUserProfile} from "./api/userapi.js";
 
@@ -22,6 +22,9 @@ const formatDateAndTime = (dateString) => {
 
 
 async function displayPosts(i, postList, profileString, postWrapper, call){
+
+    const userDetailList = {
+    }
 
     const postElement = document.createElement('div');
     postElement.className = 'post';
@@ -56,25 +59,32 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     });
 
     author.addEventListener('mouseover', async (event) => {
-        const username = event.target.textContent;
-        const userString = await fetchUserProfile(username);
-        if (userString) {
-            const userDetails = JSON.parse(userString);
-            let emoji = '';
-            if (userDetails.profilePic !== undefined || userDetails.profilePic !== '') {
-                emoji = userDetails.profilePic;
-            } else {
-                emoji = '😀';
-            }
-
-            emojiContainer.textContent = emoji;
-            emojiContainer.style.position = 'absolute';
-            emojiContainer.style.pointerEvents = 'none';
-            emojiContainer.style.fontSize = '1.2rem'
-            document.body.appendChild(emojiContainer);
-
-            author.addEventListener('mousemove', updateEmojiPosition);
+        const username = event.target.textContent.trim();
+        let userDetails = null
+        console.log(userDetailList[username])
+        console.log(userDetailList)
+        if (userDetailList[username] !== undefined){
+            userDetails = userDetailList[username]
         }
+        else {
+            const userString = await fetchUserProfile(username);
+            userDetails = JSON.parse(userString);
+            userDetailList[username] = userDetails
+        }
+        let emoji = '';
+        if (userDetails.profilePic !== undefined || userDetails.profilePic !== '') {
+            emoji = userDetails.profilePic;
+        } else {
+            emoji = '😀';
+        }
+
+        emojiContainer.textContent = emoji;
+        emojiContainer.style.position = 'absolute';
+        emojiContainer.style.pointerEvents = 'none';
+        emojiContainer.style.fontSize = '1.2rem'
+        document.body.appendChild(emojiContainer);
+
+        author.addEventListener('mousemove', updateEmojiPosition);
     });
 
     author.addEventListener('mouseout', () => {
@@ -123,15 +133,18 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         const buttonElement = event.currentTarget;
         const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
         if (!isClicked) {
+            postList[i].likes += 1;
             buttonElement.style.backgroundColor = '#d72f56';
             buttonElement.textContent = '💖';
             buttonElement.setAttribute('data-clicked', 'true');
         } else {
+            postList[i].likes -= 1;
             buttonElement.style.backgroundColor = '';
             buttonElement.textContent = '❤';
             buttonElement.setAttribute('data-clicked', 'false');
         }
 
+        likeCount.textContent = `${postList[i].likes} likes`
         let bookmarkStatus = false;
         if (bookmarkButton.textContent === '📚') {
             bookmarkStatus = true;
@@ -176,10 +189,16 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         addLikeBookmark(postList[i].id, likeStatus, bookmarkStatus);
     });
 
+    const postStats = document.createElement('div')
+    postStats.className = 'post-stats';
+
+
     const likeCount = document.createElement('div');
     likeCount.className = 'like-count';
-    likeCount.textContent = '10 likes'
-    //TODO add like count feature
+    likeCount.textContent = `${postList[i].likes} likes`
+
+    postStats.append(likeCount);
+
 
     const commentContainer = document.createElement("div");
     commentContainer.className = 'comment-container';
@@ -303,6 +322,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     postElement.append(contentElement);
     postElement.append(postMeta);
     postElement.append(postActions);
+    postElement.append(postStats);
     postElement.append(commentContainer);
     postElement.append(seeComments);
     postElement.append(comments);

@@ -32,6 +32,16 @@
     margin-top: 1rem;
 }
 
+.post-stats {
+    font-size: 0.9rem;
+    color: #262626;
+}
+
+.like-count {
+    margin-left: 0.4rem;
+    font-weight: bold;
+}
+
 .author {
     color: #1e90ff;
     font-weight: bold;

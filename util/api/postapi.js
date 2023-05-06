@@ -239,6 +239,24 @@ const deletePost = async (id) => {
         console.log(error);
     }
 }
+
+async function getPostLikeCount(postId) {
+    try {
+        const response = await fetch(`http://localhost:8080/likes/${postId}`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            credentials: "include"
+        });
+
+        const responseBody = await response.text();
+        if (response.ok) {
+            return responseBody;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export {deletePost};
 export {updatePost};
 export {getPost};
@@ -250,3 +268,4 @@ export {getLikeBookmark};
 export {addLikeBookmark};
 export {getUserPosts};
 export {getPosts};
+export {getPostLikeCount};
