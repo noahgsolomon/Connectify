@@ -48,8 +48,6 @@ async function login(username, password){
         const responseBody = await response.text();
 
         if (response.ok) {
-            console.log(responseBody);
-            console.log(responseBody);
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';
@@ -59,8 +57,6 @@ async function login(username, password){
             return responseBody;
         }
         else {
-            console.log(responseBody);
-            console.log(responseBody);
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'User does not exist';
             loginMessage.style.color = 'red';
@@ -113,6 +109,19 @@ async function userProfile(user){
             loggedInUser = JSON.parse(loggedInUser);
         }
 
+        const followDetailContainer = document.querySelector('.followers-following');
+        const followCount = await getFollowCount(user);
+        const followerCountSpan = document.createElement('span');
+        followerCountSpan.className = 'followers-count';
+        followerCountSpan.textContent = `${followCount.followerCount} followers`;
+
+        const followingCountSpan = document.createElement('span');
+        followingCountSpan.className = 'following-count';
+        followingCountSpan.textContent = `${followCount.followingCount} following`;
+
+        followDetailContainer.append(followerCountSpan);
+        followDetailContainer.append(followingCountSpan);
+
         if (loggedInUser.username !== user){
             const messageUser = document.createElement('div');
             messageUser.className = 'message-user';
@@ -127,9 +136,39 @@ async function userProfile(user){
             sendMessageBtn.className = 'send-message-btn';
             sendMessageBtn.textContent = 'Send';
 
+            const userFollow = await isUserFollowed(user);
+
             const followBtn = document.createElement('button');
             followBtn.className = 'follow-btn';
-            followBtn.textContent = 'Follow';
+
+            if (userFollow.followed){
+                followBtn.textContent = 'Unfollow';
+                followBtn.style.backgroundColor = rgbToRGBA(userDetails.backgroundColor, 0.5);
+            }
+            else{
+                followBtn.textContent = 'Follow';
+                followBtn.style.backgroundColor = '#4892ee';
+            }
+
+            followBtn.addEventListener('click', async () => {
+                if (followBtn.textContent === 'Follow'){
+                    await followEvent(user);
+                    followCount.followerCount += 1;
+                    followerCountSpan.textContent = `${followCount.followerCount} followers`;
+                    console.log(hexToRGBA(userDetails.backgroundColor, 0.5))
+                    console.log(userDetails.backgroundColor)
+                    followBtn.style.backgroundColor = rgbToRGBA(userDetails.backgroundColor, 0.5);
+                    followBtn.textContent = 'Unfollow';
+                }
+                else if (followBtn.textContent === 'Unfollow'){
+                    await unfollowEvent(user);
+                    followCount.followerCount -= 1;
+                    followerCountSpan.textContent = `${followCount.followerCount} followers`;
+                    followBtn.style.backgroundColor = '#4892ee';
+                    followBtn.textContent = 'Follow'
+                }
+
+            });
 
             messageLabel.append(messageBar);
             messageUser.append(messageLabel);
@@ -172,8 +211,6 @@ async function profile()  {
         });
 
         const responseBody = await response.text();
-        console.log(responseBody);
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         }
@@ -199,7 +236,6 @@ const updateProfile = async (country, bio, cardColor, backgroundColor, profilePi
         });
 
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok){
             return responseBody;
         }
@@ -217,7 +253,6 @@ async function fetchUsers() {
         });
 
         const users = await response.text();
-        console.log(users);
         if (response.ok){
         return users;
         }
@@ -237,8 +272,6 @@ async function fetchUserProfile(user){
         });
 
         const responseBody = await response.text();
-        console.log(responseBody);
-        console.log(responseBody);
         if (response.ok){
         return responseBody;
         }
@@ -266,6 +299,89 @@ async function profileColors(){
     return profileString;
 }
 
+async function getFollowCount(user) {
+    try {
+        const response = await fetch(`http://localhost:8080/${user}/follow-count`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include'
+        });
+
+        const responseBody = await response.text();
+        if (response.ok) {
+            return JSON.parse(responseBody);
+        }
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+async function followEvent(user){
+    try{
+        const response = await fetch(`http://localhost:8080/${user}/follow`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: "include"
+        });
+        const responseBody = await response.text();
+        console.log(responseBody);
+    }catch (e) {
+        console.log(e);
+    }
+}
+
+async function unfollowEvent(user){
+    try{
+        const response = await fetch(`http://localhost:8080/${user}/unfollow`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: "include"
+        });
+        const responseBody = await response.text();
+        console.log(responseBody);
+    }catch (e) {
+        console.log(e);
+    }
+}
+
+async function isUserFollowed(user){
+    try{
+        const response = await fetch(`http://localhost:8080/${user}/followed`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+            credentials: "include"
+        });
+        const responseBody = await response.text();
+        if (response.ok){
+            return JSON.parse(responseBody);
+        }
+    }catch (e) {
+        console.log(e);
+    }
+}
+
+function hexToRGBA(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function rgbToRGBA(rgb, alpha) {
+    const regex = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
+    const match = regex.exec(rgb);
+    if (match) {
+        const r = parseInt(match[1], 10);
+        const g = parseInt(match[2], 10);
+        const b = parseInt(match[3], 10);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    } else {
+        console.error("Invalid color format:", rgb);
+        return rgb;
+    }
+}
+
 export {
     profile,
     login,
@@ -275,5 +391,6 @@ export {
     signUp,
     userProfile,
     profileColors,
-    loggedInUser
+    loggedInUser,
+    getFollowCount
 };

@@ -1,6 +1,7 @@
 import {userProfile, profileColors} from "../../util/api/userapi.js";
 
-document.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("load", function() {
+
     function getUsernameFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('username');
@@ -11,10 +12,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     const username = getUsernameFromUrl();
-    console.log(username);
 
     (async () => {
         await profileColors();
         await userProfile(username);
+        const page = document.querySelector('.page');
+        page.classList.remove('hidden');
     })();
 });

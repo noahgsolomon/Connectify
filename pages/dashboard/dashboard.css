@@ -1,7 +1,6 @@
 @import '../../util/css/post.css';
 @import '../../util/css/base.css';
 
-
 .profile-btn:hover{
     background-color: #eae07a;
 }

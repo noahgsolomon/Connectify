@@ -30,7 +30,6 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     postElement.className = 'post';
 
     if (profileString){
-        console.log(profileString);
         const profileDetails = JSON.parse(profileString);
         if (profileDetails.cardColor){
             postElement.style.backgroundColor = profileDetails.cardColor;
@@ -61,8 +60,6 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     author.addEventListener('mouseover', async (event) => {
         const username = event.target.textContent.trim();
         let userDetails = null
-        console.log(userDetailList[username])
-        console.log(userDetailList)
         if (userDetailList[username] !== undefined){
             userDetails = userDetailList[username]
         }
@@ -249,7 +246,6 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
 
 
     const commentsString = await getPostComments(postList[i].id);
-    console.log(commentsString)
     if (commentsString === '[]'){
         seeComments.style.display = 'none';
     }
@@ -258,8 +254,6 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         const updatedCommentsString = await getPostComments(postList[i].id);
         const commentsList = JSON.parse(updatedCommentsString);
         for (const comment of commentsList){
-            console.log(comment.content);
-            console.log(comment.user);
             const commentBox = document.createElement("div");
             commentBox.className = 'comment'
 
