@@ -10,7 +10,6 @@ async function getPosts() {
             credentials: "include"
         });
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         } else {
@@ -34,7 +33,6 @@ async function getUserPosts(user) {
             credentials: "include"
         });
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         } else {
@@ -47,7 +45,6 @@ async function getUserPosts(user) {
 }
 
 async function addLikeBookmark(postId, liked, bookmarked) {
-    console.log(bookmarked);
     let model = {
         liked: liked,
         bookmark: bookmarked
@@ -70,8 +67,7 @@ async function getLikeBookmark(postId) {
     });
 
     if (response.ok) {
-        const data = await response.json(); // Parse the JSON data
-        console.log(data);
+        const data = await response.json();
         return {
             liked: data.liked,
             bookmark: data.bookmark
@@ -94,15 +90,7 @@ async function createPost(title, body) {
             body: JSON.stringify(model),
             credentials: "include"
         });
-        const responseBody = await response.json();
-        console.log(responseBody);
-        if (response.ok) {
-            return responseBody;
-        } else {
-            console.log('error');
-            console.log(responseBody);
-            return responseBody;
-        }
+        return await response.json();
     } catch (error) {
         console.error(error);
         return {
@@ -122,7 +110,6 @@ async function createComment(postID, content) {
         });
 
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         }
@@ -139,7 +126,6 @@ async function getPostComments(postID) {
             credentials: "include"
         });
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         }
@@ -160,12 +146,10 @@ async function getMyPosts() {
             credentials: "include"
         });
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
-        } else {
-            console.log('error');
         }
+
     } catch (error) {
         console.error(error);
         throw error;
@@ -182,7 +166,6 @@ async function getPost(id) {
             credentials: "include"
         });
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         } else {
@@ -195,8 +178,6 @@ async function getPost(id) {
 }
 
 const updatePost = async (id, body, title) => {
-    console.log(body);
-    console.log(title)
     try {
         const model = {
             body: body,
@@ -211,8 +192,6 @@ const updatePost = async (id, body, title) => {
 
         const responseBody = await response.text();
         const responseJson = JSON.parse(responseBody);
-        console.log(responseBody);
-
         if (response.ok) {
             return responseBody;
         }

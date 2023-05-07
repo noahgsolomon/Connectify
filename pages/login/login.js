@@ -1,5 +1,9 @@
 import {login} from "../../util/api/userapi.js";
-document.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("load", function() {
+
+    const page = document.querySelector('.page');
+    page.classList.remove('hidden');
+
     const loginForm = document.getElementById("login-form");
 
     loginForm.addEventListener("submit", function(event) {

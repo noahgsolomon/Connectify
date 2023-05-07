@@ -1,11 +1,16 @@
 import {
     profile,
-    updateProfile
+    updateProfile,
+    getFollowCount
 } from '../../util/api/userapi.js'
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
 
-document.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("load", function() {
+
+    const page = document.querySelector('.page');
+    page.classList.remove('hidden');
+
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
         '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰',
         '😗', '😙', '😚', '☺️', '🙂', '🤗', '🤩', '🤔', '🤨', '😐', '😑', '😶',
@@ -55,6 +60,19 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!userDetails.backgroundColor){
                 body.style.backgroundColor = 'whitesmoke'
             }
+
+            const followDetailContainer = document.querySelector('.followers-following');
+            const followCount = await getFollowCount(userDetails.username);
+            const followerCountSpan = document.createElement('span');
+            followerCountSpan.className = 'followers-count';
+            followerCountSpan.textContent = `${followCount.followerCount} followers`;
+
+            const followingCountSpan = document.createElement('span');
+            followingCountSpan.className = 'following-count';
+            followingCountSpan.textContent = `${followCount.followingCount} following`;
+
+            followDetailContainer.append(followerCountSpan);
+            followDetailContainer.append(followingCountSpan);
 
             const postListString = await getMyPosts();
             if (postListString) {
@@ -136,8 +154,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             else {
                                 showSlideMessage("Inappropriate Content!", "red");
                             }
-                            console.log(contentTextAreaElement.value);
-                            console.log(titleTextAreaElement.value);
                             const savedPostJson = await getPost(post.id);
                             const savedPost = JSON.parse(savedPostJson);
                             contentElement.textContent = savedPost.body;
@@ -249,7 +265,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         emoji.addEventListener('click', () => {
-            console.log('cock')
             emoji.textContent = emojiList[Math.round(Math.random() * emojiList.length)];
         });
 
@@ -268,7 +283,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 showSlideMessage("Error updating profile", "red");
             }
             const userDetails = JSON.parse(newProfile);
-            console.log(userDetails);
 
             const profileName = document.querySelector('.profile-name');
             profileName.textContent = userDetails.username;
