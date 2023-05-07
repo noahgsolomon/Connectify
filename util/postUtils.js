@@ -1,4 +1,4 @@
-import {addLikeBookmark, createComment, getLikeBookmark, getPostComments, getPostLikeCount} from "./api/postapi.js";
+import {addLikeBookmark, createComment, getLikeBookmark, getPostComments} from "./api/postapi.js";
 import {showSlideMessage} from "./status.js";
 import {fetchUserProfile} from "./api/userapi.js";
 
@@ -119,7 +119,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     const likedBookmarked = await getLikeBookmark(postList[i].id);
 
     const likeButton = document.createElement('button');
-    likeButton.className = 'btn like-btn';
+    likeButton.className = 'like-btn';
     if (!likedBookmarked.liked) {
         likeButton.textContent = '❤';
     } else {
@@ -157,7 +157,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     });
 
     const bookmarkButton = document.createElement('button');
-    bookmarkButton.className = 'btn bookmark-btn';
+    bookmarkButton.className = 'bookmark-btn';
     if (!likedBookmarked.bookmark) {
         bookmarkButton.textContent = '💾';
     } else {
