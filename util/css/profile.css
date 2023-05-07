@@ -111,3 +111,39 @@
     box-shadow: none;
     transform: translateY(0);
 }
+
+.followers-following {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.follow-btn {
+    background-color: #1e90ff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.follow-btn:hover {
+    background-color: #4892ee;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.follow-btn:active {
+    background-color: #1e90ff;
+    box-shadow: none;
+    transform: translateY(0);
+}

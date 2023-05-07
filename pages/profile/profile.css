@@ -1,4 +1,10 @@
 @import "../../util/css/base.css";
+@import "../../util/css/profile.css";
+
+
+body{
+    transition: 0.3s ease;
+}
 
 .container {
     display: flex;

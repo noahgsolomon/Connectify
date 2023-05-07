@@ -51,6 +51,14 @@ document.addEventListener("DOMContentLoaded", function() {
                             }
 
                             const elementToRemove = document.querySelector('.page-number-container');
+                            const messageUser = document.querySelector('.message-user');
+                            if (messageUser){
+                                messageUser.remove();
+                            }
+                            const followBtn = document.querySelector('.follow-btn');
+                            if (followBtn){
+                                followBtn.remove();
+                            }
 
                             if (elementToRemove) {
                                 elementToRemove.remove();

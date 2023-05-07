@@ -3,6 +3,8 @@ import {postRender} from "../postUtils.js";
 import {sendMessage} from "./inboxapi.js";
 import {showSlideMessage} from "../status.js";
 
+let loggedInUser = null;
+
 async function signUp(username, email, password) {
     try{
         const model = {username, email, password};
@@ -54,9 +56,7 @@ async function login(username, password){
             setTimeout(() => {
                 loginMessage.textContent = '';
             }, 2000);
-            const sessionId = responseBody;
-            console.log("Session ID:", sessionId);
-            return sessionId;
+            return responseBody;
         }
         else {
             console.log(responseBody);
@@ -79,8 +79,6 @@ async function userProfile(user){
     if (profileJson){
         const userDetails = JSON.parse(profileJson);
         const profileCard = document.querySelector('.profile-card');
-        const sendMessageButton = document.querySelector('.send-message-btn');
-        const messageField = document.querySelector('.message-bar');
 
         const emoji = document.querySelector('.profile-emoji');
         emoji.textContent = userDetails.profilePic;
@@ -110,20 +108,53 @@ async function userProfile(user){
             await postRender(postListString, profileJson, main, 'search');
         }
 
-        sendMessageButton.addEventListener('click', async() => {
-            if (messageField.value !== '') {
-                const messageStatus = document.querySelector('.message-status');
-                const message = messageField.value;
-                messageField.value = '';
-                const messageResponse = await sendMessage(userDetails.username, message);
-                if (messageResponse) {
-                    showSlideMessage("sent message!", "green");
-                    setTimeout(() => {
-                        messageStatus.textContent = '';
-                    }, 2000);
+        if (loggedInUser === null){
+            loggedInUser = await profile();
+            loggedInUser = JSON.parse(loggedInUser);
+        }
+
+        if (loggedInUser.username !== user){
+            const messageUser = document.createElement('div');
+            messageUser.className = 'message-user';
+
+            const messageLabel = document.createElement('label');
+            const messageBar = document.createElement('input');
+            messageBar.type = 'text';
+            messageBar.className = 'message-bar';
+            messageBar.placeholder = 'Send message...';
+
+            const sendMessageBtn = document.createElement('button');
+            sendMessageBtn.className = 'send-message-btn';
+            sendMessageBtn.textContent = 'Send';
+
+            const followBtn = document.createElement('button');
+            followBtn.className = 'follow-btn';
+            followBtn.textContent = 'Follow';
+
+            messageLabel.append(messageBar);
+            messageUser.append(messageLabel);
+            messageUser.append(sendMessageBtn);
+
+            const profileInfo = document.querySelector('.profile-info');
+            profileInfo.append(followBtn);
+            profileInfo.append(messageUser);
+
+            sendMessageBtn.addEventListener('click', async() => {
+                if (messageBar.value !== '') {
+                    const messageStatus = document.querySelector('.message-status');
+                    const message = messageBar.value;
+                    messageBar.value = '';
+                    const messageResponse = await sendMessage(userDetails.username, message);
+                    if (messageResponse) {
+                        showSlideMessage("sent message!", "green");
+                        setTimeout(() => {
+                            messageStatus.textContent = '';
+                        }, 2000);
+                    }
                 }
-            }
         });
+
+        }
 
 
 
@@ -243,5 +274,6 @@ export {
     fetchUserProfile,
     signUp,
     userProfile,
-    profileColors
+    profileColors,
+    loggedInUser
 };
