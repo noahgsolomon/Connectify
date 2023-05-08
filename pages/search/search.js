@@ -63,6 +63,8 @@ window.addEventListener("load", function() {
                                 followBtn.remove();
                             }
 
+                            document.querySelector('.followers-following').innerHTML = '';
+
                             if (elementToRemove) {
                                 elementToRemove.remove();
                             }
