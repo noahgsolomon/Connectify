@@ -155,7 +155,6 @@ async function userProfile(user){
                     await followEvent(user);
                     followCount.followerCount += 1;
                     followerCountSpan.textContent = `${followCount.followerCount} followers`;
-                    console.log(hexToRGBA(userDetails.backgroundColor, 0.5))
                     console.log(userDetails.backgroundColor)
                     followBtn.style.backgroundColor = rgbToRGBA(userDetails.backgroundColor, 0.5);
                     followBtn.textContent = 'Unfollow';
@@ -361,11 +360,36 @@ async function isUserFollowed(user){
     }
 }
 
-function hexToRGBA(hex, alpha) {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+async function getNotifications(){
+    try{
+        const response = await fetch('http://localhost:8080/notifications', {
+           method: 'GET',
+           headers: {'Content-Type': 'application/json'},
+           credentials: "include"
+        });
+        const responseBody = await response.text();
+        if (response.ok){
+            return JSON.parse(responseBody);
+        }
+    }catch (e) {
+        console.log(e);
+    }
+}
+
+async function deleteAllNotifications(){
+    try{
+        const response = await fetch('http://localhost:8080/delete-notifications', {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            credentials: "include"
+        });
+        const responseBody = await response.text();
+        if (response.ok){
+            return responseBody;
+        }
+    }catch (e) {
+        console.log(e);
+    }
 }
 
 function rgbToRGBA(rgb, alpha) {
@@ -392,5 +416,7 @@ export {
     userProfile,
     profileColors,
     loggedInUser,
-    getFollowCount
+    getFollowCount,
+    getNotifications,
+    deleteAllNotifications
 };

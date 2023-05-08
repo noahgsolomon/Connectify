@@ -45,6 +45,10 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     const postMeta = document.createElement('div')
     postMeta.className = 'post-meta';
 
+    const category = document.createElement('span');
+    category.className = 'category';
+    category.textContent = postList[i].category;
+
     const author = document.createElement('a');
     author.href = '#';
     author.className = 'author';
@@ -314,6 +318,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
 
     postElement.append(titleElement);
     postElement.append(contentElement);
+    postElement.append(category);
     postElement.append(postMeta);
     postElement.append(postActions);
     postElement.append(postStats);

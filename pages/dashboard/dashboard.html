@@ -10,15 +10,22 @@
     <title>Dashboard</title>
 </head>
 <body>
-<div class="page hidden">
 <header>
     <h1><a href="../index/index.html" class="logo">🌐 Connectify</a></h1>
     <nav>
         <a href="../profile/profile.html" class="profile-btn"></a>
+        <div class="notification-container">
+            <a href="#" class="notification-btn">🔔</a>
+            <div class="notification-panel">
+                <div class="notification-items">
+                </div>
+            </div>
+        </div>
         <a href="../search/search.html" class="search-btn">🔎</a>
         <a href="#" class="inbox-btn">💬</a>
     </nav>
 </header>
+<div class="page hidden">
 <div class="overlay"></div>
 
 <div class="container">
@@ -35,6 +42,7 @@
 <!--            <h2>Post Title</h2>-->
 <!--            <p>Post content...</p>-->
 <!--            <div class="post-meta">-->
+<!--                <span class="category">Technology</span>-->
 <!--                <span class="author">John Doe</span>-->
 <!--                <span class="date">2023-04-24</span>-->
 <!--            </div>-->

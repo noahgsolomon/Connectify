@@ -268,7 +268,6 @@ window.addEventListener("load", function() {
             emoji.textContent = emojiList[Math.round(Math.random() * emojiList.length)];
         });
 
-        // Add an event listener to handle form submission
         editForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -296,7 +295,7 @@ window.addEventListener("load", function() {
             body.style.backgroundColor = userDetails.backgroundColor;
 
             emoji.style.cursor = "default";
-            editForm.style.display = 'none';
+             editForm.style.display = 'none';
             editForm.reset();
             cancelBtn.style.display = 'none';
         });

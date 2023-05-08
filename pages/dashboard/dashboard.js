@@ -8,6 +8,7 @@ import {
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {postRender} from "../../util/postUtils.js";
+import {notificationRender} from "../../util/userUtils.js";
 
 window.addEventListener("load", function() {
 
@@ -34,6 +35,7 @@ window.addEventListener("load", function() {
         const profileString = await profileColors();
         const inboxListString = await getInbox();
         const postListString = await getPosts();
+        await notificationRender();
         if (postListString) {
             await postRender(postListString, profileString, main, 'dashboard');
         }
@@ -43,7 +45,6 @@ window.addEventListener("load", function() {
         if (inboxListString){
             const inboxList = JSON.parse(inboxListString);
             inboxList.sort((a, b) =>  new Date(b.timeSent) - new Date(a.timeSent));
-            console.log(inboxList);
             const inboxItems = document.querySelector(".inbox-items");
             for (const inbox of inboxList){
                 const inboxElement = document.createElement("div");
