@@ -1,18 +1,6 @@
 @import '../../util/css/post.css';
 @import '../../util/css/base.css';
 
-.profile-btn:hover{
-    background-color: #eae07a;
-}
-
-.inbox-btn:hover{
-    background-color: #d3d3d3;
-}
-
-.search-btn:hover{
-    background-color: #6477e5;
-}
-
 .container {
     display: flex;
 }

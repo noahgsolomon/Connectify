@@ -92,7 +92,7 @@ nav a:active {
 }
 
 .profile-btn:hover{
-    background-color: #eae07a;
+    background-color: #ffffff;
 }
 
 .inbox-btn:hover{
@@ -101,6 +101,81 @@ nav a:active {
 
 .search-btn:hover{
     background-color: #6477e5;
+}
+
+.notification-btn:hover{
+    background-color: #ffd87b;
+}
+
+.notification-container {
+    position: relative;
+    display: inline-block;
+}
+
+.notification-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 280px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    font-family: 'Roboto', sans-serif;
+    max-height: 400px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.notification-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-items {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.notification-item {
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: rgba(245, 245, 245, 0.4);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s;
+}
+
+.notification-item:hover {
+    background-color: rgba(245, 245, 245, 0.6);
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-title {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.notification-content {
+    font-size: 0.9em;
+    color: #444;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.notification-timestamp {
+    font-size: 0.8em;
+    color: #999;
 }
 
 .slide-message {

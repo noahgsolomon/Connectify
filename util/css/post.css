@@ -42,8 +42,14 @@
     font-weight: bold;
 }
 
+.category {
+    font-weight: bold;
+    color: #333;
+}
+
 .author {
     color: #1e90ff;
+    font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;
     cursor: pointer;
@@ -136,6 +142,8 @@
 }
 
 .comments {
+    max-height: 300px;
+    overflow-y: auto;
     margin-top: 1rem;
 }
 
