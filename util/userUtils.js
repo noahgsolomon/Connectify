@@ -2,7 +2,12 @@ import {getNotifications, deleteAllNotifications} from "./api/userapi.js";
 
 const notificationRender = async () => {
     const notificationList = await getNotifications();
+    console.log(notificationList);
     notificationList.reverse();
+    const notificationBtn = document.querySelector('.notification-btn');
+    if (notificationList.length > 0){
+        notificationBtn.style.backgroundColor = '#ff6a5f';
+    }
     const notificationItems = document.querySelector('.notification-items');
     for (const notification of notificationList){
         const notificationItem = document.createElement('div');
@@ -22,11 +27,11 @@ const notificationRender = async () => {
         }
         const notificationContent = document.createElement('div');
         notificationContent.className = 'notification-content';
-        console.log(notification.sender);
         notificationContent.textContent = `${notification.sender} ${notification.content}`
         const notificationTimestamp = document.createElement('div');
         notificationTimestamp.className = 'notification-timestamp';
-        notificationTimestamp.textContent = timeAgo(notification.time);
+        const dateObject = new Date(notification.date);
+        notificationTimestamp.textContent = timeAgo(dateObject);
 
         notificationItem.append(notificationTitle);
         notificationItem.append(notificationContent);
@@ -43,7 +48,6 @@ const notificationRender = async () => {
 
     document.querySelector('.page').addEventListener('click', async (event) => {
         const notificationPanel = document.querySelector('.notification-panel');
-        const notificationBtn = document.querySelector('.notification-btn');
 
         if (event.target !== notificationBtn) {
             if (notificationPanel.classList.contains('show')) {
@@ -57,6 +61,7 @@ const notificationRender = async () => {
 }
 
 function timeAgo(date) {
+    console.log(date)
     const now = new Date();
     const secondsAgo = Math.floor((now - date) / 1000);
     const minutesAgo = Math.floor(secondsAgo / 60);
