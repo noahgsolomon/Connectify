@@ -9,9 +9,11 @@ import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {postRender} from "../../util/postUtils.js";
 import {notificationRender} from "../../util/userUtils.js";
-
+const jwtToken = localStorage.getItem('jwtToken');
+if (!jwtToken){
+    window.location.href = "../login/login.html"
+}
 window.addEventListener("load", function() {
-
     const main = document.querySelector('.center-content');
 
     const formatDateAndTime = (dateString) => {

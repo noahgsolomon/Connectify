@@ -7,11 +7,14 @@ const formatDateAndTime = (dateString) => {
     const dateObj = new Date(dateString);
     const now = new Date();
     const timeDifference = now - dateObj;
-    const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    const twentyFourHours = 24 * 60 * 60 * 1000;
 
     const formattedDate = dateObj.toLocaleDateString();
-    const formattedTime = dateObj.toLocaleTimeString
-    ([], { hour12: true, hour: '2-digit', minute: '2-digit' });
+    const formattedTime = dateObj.toLocaleTimeString([], {
+        hour12: true,
+        hour: '2-digit',
+        minute: '2-digit'
+    }).replace(/^0+/, '');
 
     if (timeDifference < twentyFourHours) {
         return `${formattedTime}`;
@@ -19,7 +22,6 @@ const formatDateAndTime = (dateString) => {
         return `${formattedDate}`;
     }
 };
-
 
 async function displayPosts(i, postList, profileString, postWrapper, call){
 
@@ -63,7 +65,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
 
     author.addEventListener('mouseover', async (event) => {
         const username = event.target.textContent.trim();
-        let userDetails = null
+        let userDetails;
         if (userDetailList[username] !== undefined){
             userDetails = userDetailList[username]
         }
@@ -72,7 +74,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
             userDetails = JSON.parse(userString);
             userDetailList[username] = userDetails
         }
-        let emoji = '';
+        let emoji;
         if (userDetails.profilePic !== undefined || userDetails.profilePic !== '') {
             emoji = userDetails.profilePic;
         } else {
@@ -102,15 +104,15 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         emojiContainer.style.top = `${event.pageY + yOffset}px`;
     }
 
-    const formatDateAndTimePost = (dateString) => {
-        const dateObj = new Date(dateString);
-        const formattedDate = dateObj.toLocaleDateString();
-        const formattedTime = dateObj.toLocaleTimeString();
-        return `${formattedDate} ${formattedTime}`;
-    };
+    // const formatDateAndTimePost = (dateString) => {
+    //     const dateObj = new Date(dateString);
+    //     const formattedDate = dateObj.toLocaleDateString();
+    //     const formattedTime = dateObj.toLocaleTimeString();
+    //     return `${formattedDate} ${formattedTime}`;
+    // };
 
     const date = document.createElement('span');
-    const formattedLastModifiedDate = formatDateAndTimePost(postList[i].lastModifiedDate);
+    const formattedLastModifiedDate = formatDateAndTime(postList[i].lastModifiedDate);
     date.className = 'date';
     date.textContent = formattedLastModifiedDate;
 
@@ -381,4 +383,4 @@ async function postRender(postListString, profileJson, main, call){
     }
 }
 
-export {postRender}
+export {postRender, formatDateAndTime}

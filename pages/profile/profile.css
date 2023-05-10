@@ -158,54 +158,6 @@ body{
     transform: translateY(0);
 }
 
-.save-btn, .edit-btn, .cancel-popup-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    color: #fff;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.save-btn {
-    padding: 0.5rem 2rem;
-    background-color: #2ecc71;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.save-btn:hover {
-    background-color: #27ae60;
-}
-
-.edit-btn {
-    display: block;
-    background-color: #1e90ff;
-}
-
-.edit-btn:hover {
-    background-color: #64a3ff;
-}
-
-.cancel-popup-btn {
-    margin-top: 10px;
-    background-color: #ff8e8e;
-}
-
-.cancel-popup-btn:hover {
-    background-color: #e57272;
-}
-
-.save-btn:hover, .edit-btn:hover, .cancel-popup-btn:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
-}
-
-.save-btn:active, .edit-btn:active, .cancel-popup-btn:active {
-    box-shadow: none;
-    transform: translateY(0);
-}
-
 .card-color, .bg-color {
     width: 40px;
     height: 40px;
@@ -251,7 +203,7 @@ body{
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
-    color: #1e90ff;
+    color: #333333;
 }
 
 .post p {
@@ -270,81 +222,156 @@ body{
     color: #262626;
 }
 
+.post-meta .date {
+    font-weight: bold;
+    color: #333333;
+}
+
 .post-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 1rem;
 }
+
+.post-stats {
+    font-size: 0.9rem;
+    color: #262626;
+}
+
+.category {
+    font-weight: bold;
+    color: #333;
+}
 .post-edit-btn,
 .post-del-btn,
-.post-save-btn{
+.post-save-btn,
+.save-btn,
+.edit-btn,
+.cancel-popup-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
     background-color: #1e90ff;
     color: #fff;
-    padding: 0.5rem 1rem;
+    border: none;
     border-radius: 20px;
     font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .post-edit-btn:hover,
 .post-del-btn:hover,
-.post-save-btn:hover{
+.post-save-btn:hover,
+.save-btn:hover,
+.edit-btn:hover,
+.cancel-popup-btn:hover{
     background-color: #64a3ff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .post-edit-btn:active,
 .post-del-btn:active,
-.post-save-btn:active{
+.post-save-btn:active,
+.save-btn:active,
+.edit-btn:active,
+.cancel-popup-btn:active{
     background-color: #1e90ff;
-    box-shadow: none;
     transform: translateY(0);
+    box-shadow: none;
+}
+
+.save-btn {
+    padding: 0.5rem 2rem;
+    background-color: #2ecc71;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.save-btn:hover {
+    background-color: #27ae60;
+}
+
+.edit-btn, .cancel-popup-btn, .save-btn {
+    font-size: 1.1rem;
+    padding: 0.5rem 2rem;
+    display: block;
+}
+
+.edit-btn{
+    background-color: #1e90ff;
+}
+
+.edit-btn:hover {
+    background-color: #64a3ff;
+}
+
+.cancel-popup-btn {
+    margin-top: 10px;
+    background-color: #ff8e8e;
+}
+
+.cancel-popup-btn:hover {
+    background-color: #e57272;
 }
 
 .post-del-btn {
-    background-color: #ff766d;
+    background-color: #ff6961;
 }
 
 .post-del-btn:hover {
-    background-color: #e76b64;
+    background-color: #ff4d4d;
 }
 
 .post-save-btn {
     background-color: #2ecc71;
-    margin-left: 8px; /* Add space between the save button and other buttons */
+    margin-left: 8px;
 }
 
 .post-save-btn:hover {
     background-color: #27ae60;
 }
-
 .author {
-    margin: 20px;
-    font-size: 0.9rem;
-    color: #666;
+    color: #333333;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.author:hover {
+    color: #77b6f1;
+    text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
 }
 
 .confirm-delete-container {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
+    align-items: center;
+    animation: fadeIn 0.5s;
 }
 
 .confirm-delete-popup {
-    background-color: #fff;
-    border-radius: 5px;
+    width: 400px;
+    background: white;
     padding: 20px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    font-family: 'Roboto', sans-serif;
+    animation: slideUp 0.5s;
 }
 
 .confirm-delete-popup h3 {
@@ -359,35 +386,41 @@ body{
 }
 
 .confirm-delete-popup-buttons button {
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
     border: none;
-    border-radius: 5px;
-    transition: 0.3s;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
 }
 
 .confirm-delete-popup-buttons .cancel-popup-btn {
-    background-color: #b2b2b2;
-    color: #fff;
-    padding-bottom: 30px;
+    background: #f0f0f0;
+    color: #333;
 }
 
 .confirm-delete-popup-buttons .delete-btn {
-    padding-right: 30px;
-    padding-left: 30px;
-    background-color: #e74c3c;
-    color: #fff;
+    background: #ff6961;
+    color: white;
 }
 
 .confirm-delete-popup-buttons .cancel-popup-btn:hover {
-    background-color: #989898;
-    color: #fff;
+    background: #e5e5e5;
 }
 
 .confirm-delete-popup-buttons .delete-btn:hover {
-    background-color: #c43c2e;
-    color: #fff;
+    background: #ff4d4d;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(255, 105, 97, 0.2);
+}
+
+.confirm-delete-popup-buttons .delete-btn::before {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
 }
 
 .content-text-area, .title-text-area {
@@ -458,16 +491,16 @@ body{
     display: flex;
     padding: 6px;
     border-bottom: 1px solid #f0f0f0;
-    background-color: rgba(245, 245, 245, 0.4);
+    background-color: transparent;
     border-radius: 4px;
     margin-bottom: 8px;
-    transition: background-color 0.3s;
+    transition: 0.3s ease;
     align-items: center;
     justify-content: center;
 }
 
 .settings-panel li:hover {
-    background-color: rgba(245, 245, 245, 0.6);
+    background-color: rgba(245, 245, 245, 0.2);
 }
 
 .settings-panel li:last-child {
@@ -476,29 +509,47 @@ body{
 
 .settings-panel a {
     padding: 6px;
-    font-size: 1.3em;
+    font-size: 1.2em;
     color: #444;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
     width: 100%;
+    transition: 0.3s ease;
+}
+
+.settings-panel a:hover {
+    color: #1e90ff;
 }
 
 #logout-btn {
     padding: 12px;
-    background-color: #f44336;
+    background-color: #ff6961;
     color: #fff;
     text-align: center;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    border-radius: 20px;
+    transition: background-color 0.3s, transform 0.3s;
     cursor: pointer;
-
+    border: none;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #logout-btn:hover {
-    background-color: #d32f2f;
+    background-color: #ff4d4d;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(255, 105, 97, 0.2);
 }
 
+#logout-btn::before {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 .logout-confirm-modal {
     position: fixed;
     top: 0;
@@ -518,12 +569,12 @@ body{
 }
 
 .logout-confirm-content {
-    width: 500px;
+    width: 400px;
     background: white;
-    padding: 30px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     font-family: 'Roboto', sans-serif;
     animation: slideUp 0.5s;
 }
@@ -534,34 +585,49 @@ body{
 }
 
 #confirm-logout-btn {
-    background: #ff3b30;
+    background: #ff6961;
     color: white;
     border: none;
-    padding: 15px 30px;
-    margin-right: 20px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
     font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
 }
 
 #confirm-logout-btn:hover {
-    background: #d92a20;
+    background: #ff4d4d;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(255, 105, 97, 0.2);
+}
+
+#confirm-logout-btn::before {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
 }
 
 #cancel-logout-btn {
-    background: #bdbdbd;
-    color: black;
+    background: #f0f0f0;
+    color: #333;
     border: none;
-    padding: 15px 30px;
-    border-radius: 5px;
+    padding: 10px 20px;
+    border-radius: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
 }
 
 #cancel-logout-btn:hover {
-    background: #a8a8a8;
+    background: #e5e5e5;
 }
 
 .settings-panel.show {

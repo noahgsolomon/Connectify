@@ -6,7 +6,12 @@ import {
 } from '../../util/api/userapi.js'
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
+import {formatDateAndTime} from "../../util/postUtils.js";
 
+const jwtToken = localStorage.getItem('jwtToken');
+if (!jwtToken){
+    window.location.href = "../login/login.html"
+}
 window.addEventListener("load", function() {
 
     const page = document.querySelector('.page');
@@ -43,14 +48,22 @@ window.addEventListener("load", function() {
         settingsPanel.classList.toggle('show');
     });
 
+    document.querySelector('.page').addEventListener('click', function(e) {
+        const settingsPanel = document.querySelector('.settings-panel');
+        if (settingsPanel.classList.contains('show') && !settingsPanel.contains(e.target) && e.target !== document.querySelector('.settings-btn')) {
+            settingsPanel.classList.remove('show');
+        }
+    });
+
     document.querySelector('#logout-btn').addEventListener('click', function(e) {
         e.preventDefault();
         document.querySelector('.logout-confirm-modal').style.display = 'flex';
+        const settingsPanel = document.querySelector('.settings-panel');
+        settingsPanel.classList.remove('show');
     });
 
     document.querySelector('#confirm-logout-btn').addEventListener('click', async function(e) {
         e.preventDefault();
-        alert('Logging out!');
         document.querySelector('.logout-confirm-modal').style.display = 'none';
         await logout();
     });
@@ -59,7 +72,6 @@ window.addEventListener("load", function() {
         e.preventDefault();
         document.querySelector('.logout-confirm-modal').style.display = 'none';
     });
-
 
 
     (async () => {
@@ -120,6 +132,10 @@ window.addEventListener("load", function() {
                     const postMeta = document.createElement('div')
                     postMeta.className = 'post-meta';
 
+                    const category = document.createElement('span');
+                    category.className = 'category';
+                    category.textContent = post.category;
+
                     const author = document.createElement('span');
                     author.className = 'author';
                     author.textContent = post.username;
@@ -133,7 +149,7 @@ window.addEventListener("load", function() {
 
                     const postDelBtn = document.createElement('button');
                     postDelBtn.className = 'post-del-btn';
-                    postDelBtn.textContent = '🔥🗑️';
+                    postDelBtn.textContent = '🔥️';
 
                     postEditBtn.addEventListener('click', () => {
 
@@ -193,18 +209,15 @@ window.addEventListener("load", function() {
                     });
 
                     postDelBtn.addEventListener('click', async () => {
-                        // Display the custom popup
                         const confirmDeleteContainer = document.querySelector('.confirm-delete-container');
                         confirmDeleteContainer.style.display = 'flex';
 
-                        // Handle the Cancel button click
                         const cancelBtn = document.querySelector('.confirm-delete-popup-buttons .cancel-popup-btn');
                         cancelBtn.addEventListener('click', () => {
                             // Hide the custom popup
                             confirmDeleteContainer.style.display = 'none';
                         });
 
-                        // Handle the Delete button click
                         const deleteBtn = document.querySelector('.confirm-delete-popup-buttons .delete-btn');
                         deleteBtn.addEventListener('click', async () => {
                             const deletedPost = await deletePost(post.id);
@@ -220,17 +233,10 @@ window.addEventListener("load", function() {
                         });
                     });
 
-                    const formatDateAndTime = (dateString) => {
-                        const dateObj = new Date(dateString);
-                        const formattedDate = dateObj.toLocaleDateString();
-                        const formattedTime = dateObj.toLocaleTimeString();
-                        return `${formattedDate} ${formattedTime}`;
-                    };
-
                     const date = document.createElement('span');
                     const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
                     date.className = 'date';
-                    date.textContent = 'Date: ' + formattedLastModifiedDate;
+                    date.textContent = formattedLastModifiedDate;
 
                     postMeta.append(author);
                     postMeta.append(date);
@@ -241,6 +247,7 @@ window.addEventListener("load", function() {
 
                     postElement.append(titleElement);
                     postElement.append(contentElement);
+                    postElement.append(category);
                     postElement.append(postMeta);
                     postElement.append(postActions);
                     main.append(postElement);

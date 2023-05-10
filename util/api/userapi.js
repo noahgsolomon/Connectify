@@ -69,30 +69,20 @@ async function login(username, password){
         }
         return null;
     } catch (error) {
+        const loginMessage = document.querySelector('.login-msg');
+        loginMessage.innerHTML = 'User does not exist';
+        loginMessage.style.color = 'red';
+        setTimeout(() => {
+            loginMessage.textContent = '';
+        }, 2000);
         console.error(error);
     }
 }
 
 async function logout(){
-    try{
-        const response = await fetch('http://localhost:8080/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwtToken},
-            redirect: 'manual'
-    });
-        console.log(await response)
-        if (response.ok){
-            localStorage.removeItem('jwtToken');
-            window.location.href = "../login/login.html";
-        }
-        else {
-            console.log('Logout failed');
-        }
-    }catch (e){
-        console.log(e);
-    }
-} //TODO work on logout which does not work right now
+    localStorage.removeItem('jwtToken');
+    window.location.href = "../login/login.html";
+}
 
 
 

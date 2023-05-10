@@ -1,5 +1,10 @@
 import {userProfile, profileColors} from "../../util/api/userapi.js";
 
+
+const jwtToken = localStorage.getItem('jwtToken');
+if (!jwtToken){
+    window.location.href = "../login/login.html"
+}
 window.addEventListener("load", function() {
 
     function getUsernameFromUrl() {

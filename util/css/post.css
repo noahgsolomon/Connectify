@@ -7,7 +7,7 @@
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
-    color: #1e90ff;
+    color: #333333;
 }
 
 .post p {
@@ -24,6 +24,11 @@
     margin-top: 0.5rem;
     font-size: 0.9rem;
     color: #262626;
+}
+
+.post-meta .date {
+    font-weight: bold;
+    color: #333333;
 }
 
 .post-actions {
@@ -48,7 +53,7 @@
 }
 
 .author {
-    color: #1e90ff;
+    color: #333333;
     font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;
@@ -57,7 +62,7 @@
 }
 
 .author:hover {
-    color: #64a3ff;
+    color: #77b6f1;
     text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
 }
 
