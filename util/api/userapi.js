@@ -4,6 +4,7 @@ import {sendMessage} from "./inboxapi.js";
 import {showSlideMessage} from "../status.js";
 
 let loggedInUser = null;
+const jwtToken = localStorage.getItem('jwtToken');
 
 async function signUp(username, email, password) {
     try{
@@ -45,9 +46,11 @@ async function login(username, password){
             body: JSON.stringify(model),
             credentials: 'include'
         });
-        const responseBody = await response.text();
+        const responseBody = await response.json();
+        console.log(responseBody.token);
 
         if (response.ok) {
+            localStorage.setItem('jwtToken', responseBody.token);
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';
@@ -69,6 +72,29 @@ async function login(username, password){
         console.error(error);
     }
 }
+
+async function logout(){
+    try{
+        const response = await fetch('http://localhost:8080/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwtToken},
+            redirect: 'manual'
+    });
+        console.log(await response)
+        if (response.ok){
+            localStorage.removeItem('jwtToken');
+            window.location.href = "../login/login.html";
+        }
+        else {
+            console.log('Logout failed');
+        }
+    }catch (e){
+        console.log(e);
+    }
+} //TODO work on logout which does not work right now
+
+
 
 async function userProfile(user){
     const profileJson = await fetchUserProfile(user);
@@ -203,10 +229,11 @@ async function userProfile(user){
 
 async function profile()  {
     try {
+
         const response = await fetch("http://localhost:8080/profile", {
             method: "GET",
-            headers: {"Content-Type": "application/json"},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${jwtToken}`}
         });
 
         const responseBody = await response.text();
@@ -229,9 +256,9 @@ const updateProfile = async (country, bio, cardColor, backgroundColor, profilePi
     try{
         const response = await fetch("http://localhost:8080/profile", {
             method: "PUT",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(model),
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`},
+            body: JSON.stringify(model)
         });
 
         const responseBody = await response.text();
@@ -247,8 +274,8 @@ async function fetchUsers() {
     try {
         const response = await fetch("http://localhost:8080/users", {
             method: "GET",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
 
         const users = await response.text();
@@ -266,8 +293,8 @@ async function fetchUserProfile(user){
     try {
         const response = await fetch(`http://localhost:8080/${user}`, {
             method: "GET",
-            headers: {"Content-Type":"application/json"},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
 
         const responseBody = await response.text();
@@ -302,8 +329,8 @@ async function getFollowCount(user) {
     try {
         const response = await fetch(`http://localhost:8080/${user}/follow-count`, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include'
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
 
         const responseBody = await response.text();
@@ -320,8 +347,8 @@ async function followEvent(user){
     try{
         const response = await fetch(`http://localhost:8080/${user}/follow`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         console.log(responseBody);
@@ -334,8 +361,8 @@ async function unfollowEvent(user){
     try{
         const response = await fetch(`http://localhost:8080/${user}/unfollow`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         console.log(responseBody);
@@ -348,8 +375,8 @@ async function isUserFollowed(user){
     try{
         const response = await fetch(`http://localhost:8080/${user}/followed`, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         if (response.ok){
@@ -364,8 +391,8 @@ async function getNotifications(){
     try{
         const response = await fetch('http://localhost:8080/notifications', {
            method: 'GET',
-           headers: {'Content-Type': 'application/json'},
-           credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         if (response.ok){
@@ -380,8 +407,8 @@ async function deleteAllNotifications(){
     try{
         const response = await fetch('http://localhost:8080/delete-notifications', {
             method: 'DELETE',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         if (response.ok){
@@ -409,6 +436,7 @@ function rgbToRGBA(rgb, alpha) {
 export {
     profile,
     login,
+    logout,
     updateProfile,
     fetchUsers,
     fetchUserProfile,

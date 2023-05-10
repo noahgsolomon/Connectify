@@ -1,14 +1,16 @@
+const jwtToken = localStorage.getItem('jwtToken');
 async function getPosts() {
+
     const url = 'http://localhost:8080/posts';
 
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: "include"
-        });
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            }
+    });
         const responseBody = await response.text();
         if (response.ok) {
             return responseBody;
@@ -28,9 +30,9 @@ async function getUserPosts(user) {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: "include"
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            }
         });
         const responseBody = await response.text();
         if (response.ok) {
@@ -51,9 +53,9 @@ async function addLikeBookmark(postId, liked, bookmarked) {
     }
     const response = await fetch(`http://localhost:8080/posts/${postId}`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(model),
-        credentials: 'include'
+        headers: {'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`},
+        body: JSON.stringify(model)
     });
     console.log(response.body);
 }
@@ -62,8 +64,8 @@ async function getLikeBookmark(postId) {
     const url = `http://localhost:8080/post-interactions/${postId}`;
     const response = await fetch(url, {
         method: 'GET',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'include'
+        headers: {'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwtToken}`}
     });
 
     if (response.ok) {
@@ -86,9 +88,9 @@ async function createPost(title, body) {
     try {
         const response = await fetch('http://localhost:8080/create-post', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(model),
-            credentials: "include"
+            headers: {'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`},
+            body: JSON.stringify(model)
         });
         return await response.json();
     } catch (error) {
@@ -104,9 +106,9 @@ async function createComment(postID, content) {
     try {
         const response = await fetch(`http://localhost:8080/comment/${postID}`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: content,
-            credentials: "include"
+            headers: {'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`},
+            body: content
         });
 
         const responseBody = await response.text();
@@ -122,8 +124,9 @@ async function getPostComments(postID) {
     try {
         const response = await fetch(`http://localhost:8080/comment/${postID}`, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            }
         });
         const responseBody = await response.text();
         if (response.ok) {
@@ -141,9 +144,9 @@ async function getMyPosts() {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: "include"
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            }
         });
         const responseBody = await response.text();
         if (response.ok) {
@@ -161,9 +164,9 @@ async function getPost(id) {
         const response = await fetch(`http://localhost:8080/post/${id}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: "include"
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            }
         });
         const responseBody = await response.text();
         if (response.ok) {
@@ -185,9 +188,11 @@ const updatePost = async (id, body, title) => {
         }
         const response = await fetch(`http://localhost:8080/post/${id}`, {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(model),
-            credentials: "include"
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+            body: JSON.stringify(model)
         });
 
         const responseBody = await response.text();
@@ -206,8 +211,10 @@ const deletePost = async (id) => {
     try {
         const response = await fetch(`http://localhost:8080/post/${id}`, {
             method: 'DELETE',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            }
         });
 
         const responseBody = await response.text();
@@ -223,8 +230,10 @@ async function getPostLikeCount(postId) {
     try {
         const response = await fetch(`http://localhost:8080/likes/${postId}`, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
         });
 
         const responseBody = await response.text();

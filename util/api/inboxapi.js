@@ -1,9 +1,10 @@
+const jwtToken = localStorage.getItem('jwtToken');
 async function getInbox() {
     try {
         const response = await fetch('http://localhost:8080/inbox', {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: "include"
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
 
         const responseBody = await response.text();
@@ -23,8 +24,8 @@ async function getMessageLog(user) {
     try {
         const response = await fetch(`http://localhost:8080/inbox/${user}`, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-            credentials: 'include'
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         console.log(responseBody);
@@ -45,9 +46,9 @@ async function sendMessage(user, message) {
     try {
         const response = await fetch("http://localhost:8080/inbox/send", {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(model),
-            credentials: 'include'
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`},
+            body: JSON.stringify(model)
         });
 
         const responseBody = await response.text();

@@ -1,7 +1,8 @@
 import {
     profile,
     updateProfile,
-    getFollowCount
+    getFollowCount,
+    logout
 } from '../../util/api/userapi.js'
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
@@ -35,6 +36,31 @@ window.addEventListener("load", function() {
 
     const profileCard = document.querySelector('.profile-card');
     const body = document.querySelector('body');
+
+    document.querySelector('.settings-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const settingsPanel = document.querySelector('.settings-panel');
+        settingsPanel.classList.toggle('show');
+    });
+
+    document.querySelector('#logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.logout-confirm-modal').style.display = 'flex';
+    });
+
+    document.querySelector('#confirm-logout-btn').addEventListener('click', async function(e) {
+        e.preventDefault();
+        alert('Logging out!');
+        document.querySelector('.logout-confirm-modal').style.display = 'none';
+        await logout();
+    });
+
+    document.querySelector('#cancel-logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.logout-confirm-modal').style.display = 'none';
+    });
+
+
 
     (async () => {
         const profileJson = await profile();

@@ -15,6 +15,18 @@
   <nav>
     <a href="../dashboard/dashboard.html" class="dashboard-btn">🚀</a>
     <a href="../search/search.html" class="search-btn">🔎</a>
+    <div class="settings-container">
+      <a href="#" class="settings-btn">⚙️</a>
+      <div class="settings-panel">
+        <ul>
+          <li><a href="#account">Account Settings</a></li>
+          <li><a href="#privacy">Privacy Settings</a></li>
+          <li><a href="#notifications">Notification Settings</a></li>
+          <li><a href="#help">Help</a></li>
+          <li><button id="logout-btn">Logout</button></li>
+        </ul>
+      </div>
+    </div>
   </nav>
 </header>
 <div class="page hidden">
@@ -88,6 +100,13 @@
     </div>
   </div>
 </div>
+  <div class="logout-confirm-modal" style="display: none;">
+    <div class="logout-confirm-content">
+      <p>Are you sure you want to log out?</p>
+      <button id="confirm-logout-btn">Yes</button>
+      <button id="cancel-logout-btn">Cancel</button>
+    </div>
+  </div>
 </div>
 <script type="module" src="profile.js"></script>
 </body>

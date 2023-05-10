@@ -419,6 +419,156 @@ body{
     height: 150px;
 }
 
+.settings-container {
+    position: relative;
+    display: inline-block;
+}
+
+.settings-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 280px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    font-family: 'Roboto', sans-serif;
+    max-height: 400px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.settings-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.settings-panel ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.settings-panel li {
+    display: flex;
+    padding: 6px;
+    border-bottom: 1px solid #f0f0f0;
+    background-color: rgba(245, 245, 245, 0.4);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-panel li:hover {
+    background-color: rgba(245, 245, 245, 0.6);
+}
+
+.settings-panel li:last-child {
+    border-bottom: none;
+}
+
+.settings-panel a {
+    padding: 6px;
+    font-size: 1.3em;
+    color: #444;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+#logout-btn {
+    padding: 12px;
+    background-color: #f44336;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+}
+
+#logout-btn:hover {
+    background-color: #d32f2f;
+}
+
+.logout-confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.logout-confirm-content {
+    width: 500px;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    font-family: 'Roboto', sans-serif;
+    animation: slideUp 0.5s;
+}
+
+@keyframes slideUp {
+    from {transform: translateY(20px);}
+    to {transform: translateY(0);}
+}
+
+#confirm-logout-btn {
+    background: #ff3b30;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin-right: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+#confirm-logout-btn:hover {
+    background: #d92a20;
+}
+
+#cancel-logout-btn {
+    background: #bdbdbd;
+    color: black;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+#cancel-logout-btn:hover {
+    background: #a8a8a8;
+}
+
+.settings-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
 @media (max-width: 768px) {
     .content-text-area, .title-text-area {
         font-size: 0.9rem;
