@@ -33,6 +33,7 @@
 
 .center-content {
     margin-left: 15%;
+    margin-right: 5%;
     padding: 1rem;
     width: 60%;
 }
@@ -449,6 +450,154 @@ body.no-scroll {
     background-color: dodgerblue;
     box-shadow: none;
     transform: translateY(0);
+}
+
+.games-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 75px;
+}
+
+.game-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 500px;
+}
+
+.game-item:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.chess-game {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.trivia-game {
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.puzzle-game {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.game-title {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    color: #333333;
+}
+
+.game-description {
+    word-break: break-word;
+    margin-bottom: 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
+.game-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #262626;
+}
+
+.game-meta .players {
+    font-weight: bold;
+    color: #333333;
+}
+
+.game-join-btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #1e90ff;
+    margin-top: 10px;
+    color: #fff;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.game-join-btn:hover {
+    background-color: #64a3ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.game-join-btn:active {
+    background-color: #1e90ff;
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.chess-game {
+    background-color: #f1c40f;
+    border-color: #f39c12;
+}
+
+.trivia-game {
+    background-color: #3498db;
+    border-color: #2980b9;
+}
+
+.puzzle-game {
+    background-color: #27ae60;
+    border-color: #2ecc71;
+}
+
+#chess-game .game-title {
+    color: #e67e22;
+}
+
+#chess-game .game-join-btn {
+    background-color: #e67e22;
+}
+
+#chess-game .game-join-btn:hover {
+    background-color: #d35400;
+}
+
+#trivia-game .game-title {
+    color: #ffffff;
+}
+
+#trivia-game .game-join-btn {
+    background-color: #085a91;
+    color: #3498db;
+}
+
+#trivia-game .game-join-btn:hover {
+    background-color: #084a77;
+}
+
+#puzzle-game .game-title {
+    color: #ffffff;
+}
+
+#puzzle-game .game-join-btn {
+    background-color: #0c7235;
+    color: #27ae60;
+}
+
+#puzzle-game .game-join-btn:hover {
+    background-color: #08602b;
 }
 
 

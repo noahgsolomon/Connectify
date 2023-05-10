@@ -191,7 +191,7 @@ window.addEventListener("load", function() {
                         postSaveBtn.addEventListener('click', async () => {
                             const updatedPost = await updatePost(post.id, contentTextAreaElement.value, titleTextAreaElement.value);
                             if (updatedPost){
-                                showSlideMessage("Updated post!", "green");
+                                showSlideMessage("Updated post!", "#24bd47");
                             }
                             else {
                                 showSlideMessage("Inappropriate Content!", "red");
@@ -222,7 +222,7 @@ window.addEventListener("load", function() {
                         deleteBtn.addEventListener('click', async () => {
                             const deletedPost = await deletePost(post.id);
                             if (deletedPost){
-                                showSlideMessage("Post Deleted!", "green");
+                                showSlideMessage("Post Deleted!", "#24bd47");
 
                             }
                             else {
@@ -309,7 +309,7 @@ window.addEventListener("load", function() {
 
             const newProfile = await updateProfile(updatedCountry, updatedBio, profileCard.style.backgroundColor, body.style.backgroundColor, emoji.textContent);
             if (newProfile){
-                showSlideMessage("Updated profile!", "green");
+                showSlideMessage("Updated profile!", "#24bd47");
             }
             else {
                 showSlideMessage("Error updating profile", "red");

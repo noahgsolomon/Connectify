@@ -219,7 +219,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         if (commentField.value !== ''){
             const createdComment = await createComment(postList[i].id, commentField.value);
             if (createdComment){
-                showSlideMessage("uploaded comment!", "green");
+                showSlideMessage("uploaded comment!", "#24bd47");
             }
             else {
                 showSlideMessage("comment could not be posted", "red");

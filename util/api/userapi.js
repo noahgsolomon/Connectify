@@ -200,7 +200,7 @@ async function userProfile(user){
                     messageBar.value = '';
                     const messageResponse = await sendMessage(userDetails.username, message);
                     if (messageResponse) {
-                        showSlideMessage("sent message!", "green");
+                        showSlideMessage("sent message!", "#24bd47");
                         setTimeout(() => {
                             messageStatus.textContent = '';
                         }, 2000);

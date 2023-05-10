@@ -66,43 +66,52 @@
 }
 
 .message-bar {
-    width: 150px;
-    padding: 0.5rem;
+    width: 100%;
+    padding: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 20px;
     outline: none;
     box-sizing: border-box;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     background-color: #f4f4f4;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .message-bar:focus {
     background-color: #efefef;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .send-message-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: #4892ee;
-    width: 75px;
-    color: whitesmoke;
-    padding: 0.5rem;
+    width: 100%;
+    color: #fff;
+    padding: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
     outline: none;
     box-sizing: border-box;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.send-message-btn::before {
+    content: "✉️";
+    margin-right: 0.5rem;
 }
 
 .send-message-btn:hover {
     background-color: #99c8ff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 

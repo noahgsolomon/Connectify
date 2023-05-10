@@ -287,7 +287,7 @@ window.addEventListener("load", function() {
             postButton.value = '🔥';
         }
         else if(response.status === 'valid'){
-            showSlideMessage(response.response, 'green');
+            showSlideMessage(response.response, '#24bd47');
             postButton.style.backgroundColor = 'green';
             postButton.value = '✅';
         }
