@@ -1,0 +1,95 @@
+@import '../../../util/css/base.css';
+
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1000px;
+    margin: 100px auto 0;
+}
+
+.chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 600px;
+    min-width: 600px;
+    height: 600px;
+}
+
+.tile {
+    background-color: #DDB892;
+    border: 1px solid #8B4513;
+}
+
+.tile:nth-child(even) {
+    background-color: #CD853F;
+}
+
+.piece{
+    font-size: 3rem;
+}
+
+.friends-panel {
+    background-color: #F5DEB3;
+    width: 300px;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    min-width: 300px;
+    margin-top: 20px;
+}
+
+.friends-search {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 15px;
+    background-color: #FFF;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.friends-list {
+    border: none;
+    height: 300px;
+    overflow-y: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.friend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #E0E0E0;
+    transition: all 0.2s ease;
+}
+
+.friend-item:hover {
+    background-color: #E0E0E0;
+}
+
+.invite-btn {
+    padding: 10px 20px;
+    background-color: #8B4513;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.invite-btn:hover {
+    background-color: #A0522D;
+    transform: scale(1.05);
+}
+
+.friends-search {
+    box-sizing: border-box;
+}

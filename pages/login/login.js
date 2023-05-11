@@ -27,7 +27,10 @@ window.addEventListener("load", function() {
             if (sessionId) {
                 console.log(sessionId);
                 setCookie('JSESSIONID', sessionId, 7);
-                window.location.href = '../dashboard/dashboard.html';
+                if (localStorage.getItem('destination')){
+                    window.location.href = localStorage.getItem('destination');
+                }
+                else window.location.href = '../dashboard/dashboard.html';
             }
         })();
     });

@@ -10,6 +10,7 @@ import {formatDateAndTime} from "../../util/postUtils.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 if (!jwtToken){
+    localStorage.setItem('destination', '../profile/profile.html');
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {

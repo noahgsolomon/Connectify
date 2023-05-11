@@ -209,6 +209,7 @@
     opacity: 0;
     transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
+
 .inbox-panel {
     background-color: #f5f5f5;
     width: 500px;
@@ -458,6 +459,7 @@ body.no-scroll {
     align-items: center;
     gap: 2rem;
     margin-top: 75px;
+    margin-right: 10px;
 }
 
 .game-item {
@@ -468,7 +470,8 @@ body.no-scroll {
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    max-width: 500px;
+    box-sizing: border-box;
+    max-width: 100%;
 }
 
 .game-item:hover {
@@ -600,6 +603,9 @@ body.no-scroll {
     background-color: #08602b;
 }
 
+.game-description{
+    max-width: 40ch;
+}
 
 @media (min-width: 801px) {
     .inbox-panel{
@@ -608,6 +614,12 @@ body.no-scroll {
 }
 
 @media (max-width: 800px) {
+
+    .game-description,
+    .game-meta {
+        display: none;
+    }
+
     .inbox-panel{
         width: 400px;
     }

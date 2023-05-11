@@ -11,9 +11,11 @@ import {postRender} from "../../util/postUtils.js";
 import {notificationRender} from "../../util/userUtils.js";
 const jwtToken = localStorage.getItem('jwtToken');
 if (!jwtToken){
+    localStorage.setItem('destination', '../dashboard/dashboard.html');
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {
+
     const main = document.querySelector('.center-content');
 
     const formatDateAndTime = (dateString) => {
@@ -32,6 +34,12 @@ window.addEventListener("load", function() {
             return `${formattedDate}`;
         }
     };
+
+    const chessGameJoinBtn = document.querySelector('#chess-game .game-join-btn');
+    chessGameJoinBtn.addEventListener('click', () => {
+       window.location.href = '../games/chess/chess.html';
+    });
+
 
     (async () => {
         const profileString = await profileColors();
@@ -226,18 +234,16 @@ window.addEventListener("load", function() {
 
     })();
 
-    // Get the modal, add-post-btn and close elements
     const modal = document.getElementById("postModal");
     const addPostBtn = document.querySelector(".add-post-btn");
     const closeBtn = document.getElementsByClassName("close")[0];
     let charCount = document.getElementById("charCount");
 
-// When the add-post-btn is clicked, open the modal
+
     addPostBtn.onclick = function () {
         modal.style.display = "block";
     };
 
-// When the close button (x) is clicked, close the modal
     closeBtn.onclick = function () {
         modal.style.display = "none";
     };
@@ -248,14 +254,12 @@ window.addEventListener("load", function() {
         }
     };
 
-// Update the character count for the textarea
     document.getElementById("postBody").addEventListener("input", function () {
         charCount = document.getElementById("charCount");
         charCount.innerText = this.value.length;
     });
 
 
-// Add an event listener to the postForm
     document.getElementById("postForm").addEventListener("submit", async function (event) {
         event.preventDefault();
         charCount.innerText = '0';

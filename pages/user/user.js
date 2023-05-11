@@ -3,6 +3,7 @@ import {userProfile, profileColors} from "../../util/api/userapi.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 if (!jwtToken){
+    localStorage.setItem('destination', '../user/user.html');
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {

@@ -38,10 +38,18 @@ const notificationRender = async () => {
         notificationItem.append(notificationTimestamp);
         notificationItems.append(notificationItem);
     }
+    if (notificationList.length === 0){
+        const noNotificationsItem = document.createElement('div');
+        noNotificationsItem.className = 'no-notifications-item';
+        noNotificationsItem.textContent = '📭 No new notifications';
+        noNotificationsItem.style.fontWeight = 'bold';
+        notificationItems.append(noNotificationsItem);
+    }
 
     document.querySelector('.notification-btn').addEventListener('click', async () => {
         document.querySelector('.notification-panel').classList.toggle('show');
         if (document.querySelector('.notification-panel').classList.contains('show') && notificationList.length > 0){
+            notificationBtn.style.backgroundColor = '#f5f5f5';
             await deleteAllNotifications()
         }
     });

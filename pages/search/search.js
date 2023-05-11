@@ -6,6 +6,7 @@ import {
 
 const jwtToken = localStorage.getItem('jwtToken');
 if (!jwtToken){
+    localStorage.setItem('destination', '../search/search.html');
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {
