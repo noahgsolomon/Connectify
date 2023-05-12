@@ -51,6 +51,12 @@ async function login(username, password){
 
         if (response.ok) {
             localStorage.setItem('jwtToken', responseBody.token);
+            let expiryDate = new Date();
+
+            expiryDate.setTime(expiryDate.getTime() + (1000 * 60 * 60 * 24 * 7));
+
+            localStorage.setItem('expiry', expiryDate.toISOString());
+            console.log(localStorage.getItem('expiry'));
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';
@@ -377,32 +383,16 @@ async function isUserFollowed(user){
     }
 }
 
-async function getNotifications(){
+async function friendsList(){
     try{
-        const response = await fetch('http://localhost:8080/notifications', {
-           method: 'GET',
+        const response = await fetch('http://localhost:8080/friends', {
+            method: 'GET',
             headers: {"Content-Type": "application/json",
                 "Authorization": `Bearer ${jwtToken}`}
         });
         const responseBody = await response.text();
         if (response.ok){
             return JSON.parse(responseBody);
-        }
-    }catch (e) {
-        console.log(e);
-    }
-}
-
-async function deleteAllNotifications(){
-    try{
-        const response = await fetch('http://localhost:8080/delete-notifications', {
-            method: 'DELETE',
-            headers: {"Content-Type": "application/json",
-                "Authorization": `Bearer ${jwtToken}`}
-        });
-        const responseBody = await response.text();
-        if (response.ok){
-            return responseBody;
         }
     }catch (e) {
         console.log(e);
@@ -435,6 +425,5 @@ export {
     profileColors,
     loggedInUser,
     getFollowCount,
-    getNotifications,
-    deleteAllNotifications
+    friendsList
 };

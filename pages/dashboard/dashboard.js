@@ -1,5 +1,6 @@
 import {
-    profileColors
+    profileColors,
+    friendsList
 } from '../../util/api/userapi.js'
 import {
     createPost,
@@ -9,15 +10,24 @@ import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {postRender} from "../../util/postUtils.js";
 import {notificationRender} from "../../util/userUtils.js";
+import {deleteAllNotifications} from "../../util/api/notificationapi.js";
+import {getGameInvites, deleteGameInvite} from "../../util/api/gamesapi/inviteapi.js";
+import {showGameInvite} from "../../util/gameInvite.js";
 const jwtToken = localStorage.getItem('jwtToken');
-if (!jwtToken){
+let expiryDate = new Date(localStorage.getItem('expiry'));
+if (!jwtToken || expiryDate < new Date()){
+    if (jwtToken){
+        localStorage.removeItem('jwtToken');
+    }
+    localStorage.removeItem('expiry');
+    console.log();
     localStorage.setItem('destination', '../dashboard/dashboard.html');
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {
 
     const main = document.querySelector('.center-content');
-
+    console.log(localStorage.getItem('jwtToken'));
     const formatDateAndTime = (dateString) => {
         const dateObj = new Date(dateString);
         const now = new Date();
@@ -40,12 +50,61 @@ window.addEventListener("load", function() {
        window.location.href = '../games/chess/chess.html';
     });
 
+    const notificationBtn = document.querySelector('.notification-btn');
+    const notificationItems = document.querySelector('.notification-items');
+
+    document.querySelector('.notification-btn').addEventListener('click', async () => {
+        document.querySelector('.notification-panel').classList.toggle('show');
+        if (document.querySelector('.notification-panel').classList.contains('show') && notificationItems.innerHTML !== ''){
+            notificationBtn.style.backgroundColor = '#f5f5f5';
+            await deleteAllNotifications()
+        }
+    });
+
+    document.querySelector('.page').addEventListener('click', async (event) => {
+        const notificationPanel = document.querySelector('.notification-panel');
+
+        if (event.target !== notificationBtn) {
+            if (notificationPanel.classList.contains('show')) {
+                notificationPanel.classList.toggle('show');
+                if (notificationItems.innerHTML !== ''){
+                    await deleteAllNotifications();
+                }
+            }
+        }
+    });
+
 
     (async () => {
+        const friends = await friendsList();
+        console.log(friends);
         const profileString = await profileColors();
         const inboxListString = await getInbox();
         const postListString = await getPosts();
-        await notificationRender();
+        setInterval(notificationRender, 5000);
+
+        setInterval(async () => {
+            const inviteList = await getGameInvites();
+            console.log(inviteList);
+            if (inviteList.length > 0) {
+                showGameInvite(inviteList[0].game, inviteList[0].inviter);
+                console.log(inviteList[0].inviter);
+                let timeoutId = setTimeout(async () => {
+                    await deleteGameInvite(inviteList[0].inviter);
+                }, 6000);
+
+                document.querySelector('.invite-accept').addEventListener('click', async () => {
+                    await deleteGameInvite(inviteList[0].inviter);
+                    window.location.href = '../games/chess/chess.html';
+                });
+                document.querySelector('.invite-decline').addEventListener('click', async () => {
+                    clearTimeout(timeoutId);
+                    await deleteGameInvite(inviteList[0].inviter);
+                });
+
+            }
+        }, 10000);
+
         if (postListString) {
             await postRender(postListString, profileString, main, 'dashboard');
         }
@@ -53,6 +112,7 @@ window.addEventListener("load", function() {
         const page = document.querySelector('.page');
         page.classList.remove('hidden');
         if (inboxListString){
+            let updateInterval;
             const inboxList = JSON.parse(inboxListString);
             inboxList.sort((a, b) =>  new Date(b.timeSent) - new Date(a.timeSent));
             const inboxItems = document.querySelector(".inbox-items");
@@ -61,7 +121,6 @@ window.addEventListener("load", function() {
                 inboxElement.className = "inbox-item";
 
                 if (inbox.unread){
-                    console.log('hello')
                     inboxElement.className = 'inbox-item unread';
                 }
 
@@ -69,7 +128,7 @@ window.addEventListener("load", function() {
                 user.className = 'inbox-user';
                 user.textContent = inbox.user;
 
-                const lastMessage = document.createElement("div");
+                let lastMessage = document.createElement("div");
                 lastMessage.className = 'inbox-last-message';
                 lastMessage.textContent = inbox.last_message;
 
@@ -105,7 +164,7 @@ window.addEventListener("load", function() {
                     messageLogUsername.textContent = user;
 
                     const messageListString = await getMessageLog(user);
-                    const messageList = JSON.parse(messageListString);
+                    let messageList = JSON.parse(messageListString);
 
                     for (let i = 0; i < messageList.length; i++) {
                         const messageFormat = document.createElement("div");
@@ -129,6 +188,49 @@ window.addEventListener("load", function() {
                         messageLogContent.append(messageFormat);
                     }
 
+
+                    async function updateMessageLog(user) {
+                        const messageLogContent = document.querySelector('.message-log-content');
+                        const messageListString = await getMessageLog(user);
+                        const newMessageList = JSON.parse(messageListString);
+                        let newMessages;
+
+                        let lastMessageId = parseInt(messageList[messageList.length - 1].message_id);
+
+                        newMessages = newMessageList.filter(newMessage => parseInt(newMessage.message_id) > lastMessageId);
+
+                        // If there are new messages, update the UI and the current message list
+                        if (newMessages.length > 0) {
+                            for (let i = 0; i < newMessages.length; i++) {
+                                const messageFormat = document.createElement("div");
+                                if (newMessages[i].sender === user) {
+                                    messageFormat.className = 'message received';
+                                } else {
+                                    messageFormat.className = 'message sent';
+                                }
+
+                                const messageContent = document.createElement("div");
+                                messageContent.className = "message-content";
+                                messageContent.textContent = newMessages[i].message;
+
+                                const messageTime = document.createElement("span");
+                                messageTime.className = 'message-time';
+                                messageTime.textContent = formatDateAndTime(newMessages[i].timeSent);
+
+                                messageContent.append(messageTime);
+                                messageFormat.append(messageContent);
+                                messageLogContent.append(messageFormat);
+                                setTimeout(() => {
+                                    messageLogContent.scrollTop = messageLogContent.scrollHeight;
+                                }, 0);
+                            }
+                            inbox.last_message = newMessageList[newMessageList.length-1].message;
+                            messageList = newMessageList;
+                        }
+                    }
+
+                    updateInterval = setInterval(() => updateMessageLog(user), 1000);
+
                     setTimeout(() => {
                         messageLogContent.scrollTop = messageLogContent.scrollHeight;
                     }, 0);
@@ -137,26 +239,7 @@ window.addEventListener("load", function() {
                         const inputValue = inputField.value;
                         if (inputValue.trim() !== '') {
                             sendMessage(user, inputValue);
-                            const sentMessage = document.createElement("div");
-                            sentMessage.className = 'message sent';
-
-                            const messageContent = document.createElement("div");
-                            messageContent.className = "message-content";
-                            messageContent.textContent = inputValue;
-                            console.log(inputValue);
-
-                            const messageTime = document.createElement("span");
-                            messageTime.className = 'message-time';
-                            messageTime.textContent = formatDateAndTime(new Date());
-
-                            messageContent.append(messageTime);
-                            sentMessage.append(messageContent);
-                            messageLogContent.append(sentMessage);
                             inputField.value = '';
-
-                            setTimeout(() => {
-                                messageLogContent.scrollTop = messageLogContent.scrollHeight;
-                            }, 0);
 
                             const inboxIndex = inboxList.findIndex(item => item.user === user);
                             if (inboxIndex !== -1) {
@@ -168,6 +251,7 @@ window.addEventListener("load", function() {
                     }
 
                     async function closeMessageLog() {
+                        clearInterval(updateInterval);
                         document.body.classList.remove('no-scroll');
                         messageLogContent.innerHTML = '';
                         messageLogInput.innerHTML = '';
@@ -272,6 +356,7 @@ window.addEventListener("load", function() {
         const body = postBody.trim();
 
         const response = await createPost(title, body);
+
 
         if (title.length < 5 || title.length > 50) {
             postButton.style.backgroundColor = 'red';

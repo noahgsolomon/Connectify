@@ -1,4 +1,4 @@
-import {getNotifications, deleteAllNotifications} from "./api/userapi.js";
+import {deleteAllNotifications, getNotifications} from "./api/notificationapi.js";
 
 const notificationRender = async () => {
     const notificationList = await getNotifications();
@@ -9,6 +9,10 @@ const notificationRender = async () => {
         notificationBtn.style.backgroundColor = '#ff6a5f';
     }
     const notificationItems = document.querySelector('.notification-items');
+    notificationItems.innerHTML = '';
+    if (notificationList.length === 0){
+        notificationBtn.style.backgroundColor = '#f5f5f5';
+    }
     for (const notification of notificationList){
         const notificationItem = document.createElement('div');
         notificationItem.className = 'notification-item';
@@ -45,27 +49,6 @@ const notificationRender = async () => {
         noNotificationsItem.style.fontWeight = 'bold';
         notificationItems.append(noNotificationsItem);
     }
-
-    document.querySelector('.notification-btn').addEventListener('click', async () => {
-        document.querySelector('.notification-panel').classList.toggle('show');
-        if (document.querySelector('.notification-panel').classList.contains('show') && notificationList.length > 0){
-            notificationBtn.style.backgroundColor = '#f5f5f5';
-            await deleteAllNotifications()
-        }
-    });
-
-    document.querySelector('.page').addEventListener('click', async (event) => {
-        const notificationPanel = document.querySelector('.notification-panel');
-
-        if (event.target !== notificationBtn) {
-            if (notificationPanel.classList.contains('show')) {
-                notificationPanel.classList.toggle('show');
-                if (notificationList.length > 0) {
-                    await deleteAllNotifications();
-                }
-            }
-        }
-    });
 }
 
 function timeAgo(date) {

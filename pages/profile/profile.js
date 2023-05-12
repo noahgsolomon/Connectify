@@ -9,7 +9,13 @@ import {showSlideMessage} from "../../util/status.js";
 import {formatDateAndTime} from "../../util/postUtils.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
-if (!jwtToken){
+let expiryDate = new Date(localStorage.getItem('expiry'));
+if (!jwtToken || expiryDate < new Date()){
+    if (jwtToken){
+        localStorage.removeItem('jwtToken');
+    }
+    localStorage.removeItem('expiry');
+    console.log();
     localStorage.setItem('destination', '../profile/profile.html');
     window.location.href = "../login/login.html"
 }

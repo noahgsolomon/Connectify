@@ -1,11 +1,10 @@
 @import '../../../util/css/base.css';
 
-
 .content {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     max-width: 1000px;
     margin: 100px auto 0;
 }
@@ -14,22 +13,25 @@
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
-    width: 600px;
-    min-width: 600px;
-    height: 600px;
+    width: 60vh;
+    height: 60vh;
 }
 
 .tile {
+    display: flex;
     background-color: #DDB892;
     border: 1px solid #8B4513;
+    align-items: center;
+    justify-content: center;
 }
 
 .tile:nth-child(even) {
     background-color: #CD853F;
 }
 
-.piece{
-    font-size: 3rem;
+img{
+    width: 50px;
+    height: auto;
 }
 
 .friends-panel {
@@ -40,7 +42,7 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
     min-width: 300px;
-    margin-top: 20px;
+    margin: 20px auto;
 }
 
 .friends-search {
@@ -71,6 +73,10 @@
     transition: all 0.2s ease;
 }
 
+.piece {
+    font-size: 3rem;
+}
+
 .friend-item:hover {
     background-color: #E0E0E0;
 }
@@ -92,4 +98,29 @@
 
 .friends-search {
     box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+
+    img{
+        width: 40px;
+        height: auto;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .chess-board {
+        width: 90vw;
+        height: 90vw;
+    }
+}
+
+@media (max-width: 475px) {
+
 }
