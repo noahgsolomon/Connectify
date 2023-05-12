@@ -15,6 +15,11 @@ if (!jwtToken || expiryDate < new Date()){
 
 window.addEventListener("load", function() {
 
+    let url = new URL(window.location.href);
+
+    let sessionId = url.searchParams.get("sessionId");
+    localStorage.setItem('sessionId', sessionId);
+
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
 

@@ -36,7 +36,25 @@ async function getChessSession(opponent) {
     return responseBody;
 }
 
+async function getChessSessionWithId(sessionId) {
+    const response = await fetch(`http://localhost:8080/chess/session/${sessionId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwtToken
+        }
+    });
+    const responseBody = await response.text();
+    console.log(responseBody);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return responseBody;
+}
+
 export {
     createSession,
-    getChessSession
+    getChessSession,
+    getChessSessionWithId
 }

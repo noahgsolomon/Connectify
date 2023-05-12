@@ -98,8 +98,8 @@ window.addEventListener("load", function() {
 
                 document.querySelector('.invite-accept').addEventListener('click', async () => {
                     await deleteGameInvite(inviteList[0].inviter);
-                    createSession(inviteList[0].inviter);
-                    window.location.href = '../games/chess/chess.html';
+                    const sessionId = await createSession(inviteList[0].inviter);
+                    window.location.href = `../games/chess/chessgame/chessgame.html?sessionId=${sessionId}`;
                 });
                 document.querySelector('.invite-decline').addEventListener('click', async () => {
                     clearTimeout(timeoutId);
