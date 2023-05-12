@@ -1,0 +1,44 @@
+@import '../../../../util/css/base.css';
+@import '../chess.css';
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5DEB3;
+    border-radius: 15px;
+}
+
+.player span {
+    font-size: 1em;
+    text-align: center;
+}
+
+.top-player {
+    order: 1;
+}
+
+.chess-board {
+    order: 2;
+    margin: 20px 0;
+}
+
+.bottom-player {
+    order: 3;
+}
+.bottom-player {
+    order: 3;
+}

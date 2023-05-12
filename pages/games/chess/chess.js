@@ -1,6 +1,9 @@
 import {profileColors, friendsList} from "../../../util/api/userapi.js";
 import {chessboard} from "./chessboard.js";
 import { sendGameInvite } from "../../../util/api/gamesapi/inviteapi.js";
+import {getChessSession} from "../../../util/api/gamesapi/chessapi.js";
+
+
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
 if (!jwtToken || expiryDate < new Date()){
@@ -36,6 +39,7 @@ window.addEventListener("load", function() {
             friendItem.append(inviteBtn);
             friendListElement.append(friendItem);
             const inviteButton = friendItem.querySelector('.invite-btn');
+            let session;
 
             inviteButton.addEventListener('click', async function(e) {
                 const currentInviteButton = e.target;
@@ -43,7 +47,18 @@ window.addEventListener("load", function() {
                     await sendGameInvite(currentInviteButton.dataset.opponent, 'CHESS');
                     currentInviteButton.textContent = '✅';
                     currentInviteButton.style.backgroundColor = 'green';
+                    session = setInterval(async () =>{
+                        const sessionDataString = await getChessSession(currentInviteButton.dataset.opponent);
+                        let sessionData;
+                        if (sessionDataString !== 'No game open between users yet'){
+                            sessionData = JSON.parse(sessionDataString);
+                        }
+                        if (sessionData.gameStatus === 'IN_PROGRESS'){
+                            window.location.href = `./chessgame/chessgame.html/sessionId=${sessionData.id}`;
+                        }
+                    }, 2000);
                     setTimeout(() => {
+                        clearInterval(session);
                         currentInviteButton.textContent = 'Invite';
                         currentInviteButton.style.backgroundColor = '#8B4513';
                     }, 16000);

@@ -12,7 +12,10 @@ import {postRender} from "../../util/postUtils.js";
 import {notificationRender} from "../../util/userUtils.js";
 import {deleteAllNotifications} from "../../util/api/notificationapi.js";
 import {getGameInvites, deleteGameInvite} from "../../util/api/gamesapi/inviteapi.js";
+import {createSession} from "../../util/api/gamesapi/chessapi.js";
 import {showGameInvite} from "../../util/gameInvite.js";
+
+
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
 if (!jwtToken || expiryDate < new Date()){
@@ -95,6 +98,7 @@ window.addEventListener("load", function() {
 
                 document.querySelector('.invite-accept').addEventListener('click', async () => {
                     await deleteGameInvite(inviteList[0].inviter);
+                    createSession(inviteList[0].inviter);
                     window.location.href = '../games/chess/chess.html';
                 });
                 document.querySelector('.invite-decline').addEventListener('click', async () => {

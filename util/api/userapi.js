@@ -9,7 +9,7 @@ const jwtToken = localStorage.getItem('jwtToken');
 async function signUp(username, email, password) {
     try{
         const model = {username, email, password};
-        const response = await fetch('http://localhost:8080/sign-up', {
+        const response = await fetch('https://connectifyapi.herokuapp.com/sign-up', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(model),

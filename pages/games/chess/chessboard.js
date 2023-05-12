@@ -5,7 +5,7 @@ import {getValidMoves as getQueenValidMoves} from "./pieces/queen.js";
 import {getValidMoves as getRookValidMoves} from "./pieces/rook.js";
 import {getValidMoves as getKingValidMoves} from "./pieces/king.js";
 
-function chessboard(){
+function chessboard(imgLocation = ""){
     let boardState = {
         turn: 'white'
     }
@@ -187,7 +187,6 @@ function chessboard(){
                 return validKingMoves.includes(Number(toTile));
 
             case 'pawn':
-                console.log('helllknq')
                 const validPawnMoves = getPawnValidMoves(fromTile, boardState);
                 return validPawnMoves.includes(Number(toTile));
 
@@ -211,7 +210,7 @@ function chessboard(){
             tile.dataset.piece = getPieceType(pieces[i]);
             tile.style.cursor = 'pointer';
             let img = document.createElement('img');
-            img.src = `assets/${colorTeam}${piece.dataset.type}.png`;
+            img.src = `${imgLocation}assets/${colorTeam}${piece.dataset.type}.png`;
             piece.dataset.team = getPieceTeam(pieces[i]);
             tile.dataset.team = piece.dataset.team;
             piece.appendChild(img);
