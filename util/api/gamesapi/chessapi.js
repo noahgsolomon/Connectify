@@ -38,12 +38,36 @@ async function getChessSession(opponent) {
 
 async function getChessSessionWithId(sessionId) {
     const response = await fetch(`http://localhost:8080/chess/session/${sessionId}`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + jwtToken
         }
     });
+    const responseBody = await response.text();
+    console.log(responseBody);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return JSON.parse(responseBody);
+}
+
+async function postMove(sessionId, fromPos, toPos, piece){
+    const model = {
+        piece: piece,
+        startPosition: fromPos,
+        endPosition: toPos
+    }
+    const response = await fetch(`http://localhost:8080/chess/post-move/${sessionId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwtToken
+        },
+        body: JSON.stringify(model)
+    });
+
     const responseBody = await response.text();
     console.log(responseBody);
     if (!response.ok) {
@@ -56,5 +80,6 @@ async function getChessSessionWithId(sessionId) {
 export {
     createSession,
     getChessSession,
-    getChessSessionWithId
+    getChessSessionWithId,
+    postMove
 }

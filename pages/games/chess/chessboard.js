@@ -4,11 +4,12 @@ import {getValidMoves as getPawnValidMoves} from "./pieces/pawn.js";
 import {getValidMoves as getQueenValidMoves} from "./pieces/queen.js";
 import {getValidMoves as getRookValidMoves} from "./pieces/rook.js";
 import {getValidMoves as getKingValidMoves} from "./pieces/king.js";
+import {getChessSessionWithId, postMove} from "../../../util/api/gamesapi/chessapi.js";
 
-function chessboard(imgLocation = ""){
-    let boardState = {
-        turn: 'white'
-    }
+let url = new URL(window.location.href);
+
+let sessionId = url.searchParams.get("sessionId");
+function chessboard(imgLocation = "", userColor){
 
     let chessBoard = document.querySelector('.chess-board');
 
@@ -46,77 +47,78 @@ function chessboard(imgLocation = ""){
 
     let selectedPiece = null;
     let selectedTile = null;
+    let fromPos = null;
+    let toPos = null;
 
-    function handleTileClick(event) {
-        const currentBoard = getBoardState();
-        const tile = event.currentTarget;
-        const piece = tile.querySelector('.piece');
-        console.log(piece);
-        if (piece && !selectedPiece) {
-            if (piece.dataset.team !== boardState.turn){
-                return;
-            }
-            console.log(tile.dataset.piece);
-            tile.style.backgroundColor = 'rgb(211,110,108)';
-            selectedPiece = tile.querySelector('.piece');
-            selectedTile = tile;
-        }
-        else {
-            //if there is a piece selected, and the piece type can move to the tapped tile, and the tile is occupied by a different
-            //colored piece or no piece
-            if (selectedTile && (tile.dataset.team === '' || (tile.dataset.team !== selectedTile.dataset.team))
-                && canMove(selectedTile.dataset.num, tile.dataset.num, selectedPiece.dataset.type, currentBoard)){
 
-                if (piece){
-                    piece.dataset.moved ='true';
-                }
-
-                selectedTile.style.cursor = 'default';
-                tile.style.cursor = 'pointer';
-
-                tile.dataset.team = selectedTile.dataset.team;
-                if (selectedTile.dataset.color === 'light'){
-                    selectedTile.style.backgroundColor = '#DDB892';
-                }
-                else {
-                    selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
-                }
-
-                boardState.turn = boardState.turn === 'white' ? 'black' : 'white';
-                console.log(getBoardState().turn);
-                selectedTile.dataset.team = '';
-                selectedTile.dataset.piece = '';
-                tile.innerHTML = selectedTile.innerHTML;
-                selectedTile.innerHTML = '';
-                selectedTile = null;
-                selectedPiece = null;
-            }
-            else if (piece && selectedPiece && piece.dataset.team === selectedPiece.dataset.team && tile !== selectedTile){
-                if (selectedTile.dataset.color === 'light'){
-                    selectedTile.style.backgroundColor = '#DDB892';
-                }
-                else {
-                    selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
+    async function handleTileClick(event) {
+        console.log('hellooooooo');
+        console.log(window.boardState.turn.toUpperCase());
+        console.log(userColor);
+        if (window.boardState.turn.toUpperCase() === userColor.toUpperCase()) {
+            console.log('ur in!')
+            const currentBoard = getBoardState();
+            const tile = event.currentTarget;
+            const piece = tile.querySelector('.piece');
+            if (piece && !selectedPiece) {
+                if (piece.dataset.team.toUpperCase() !== window.boardState.turn) {
+                    return;
                 }
                 tile.style.backgroundColor = 'rgb(211,110,108)';
+                selectedPiece = tile.querySelector('.piece');
                 selectedTile = tile;
-                selectedPiece = piece;
-            }
-            //if the same tile is clicked again
-            else if (selectedTile === tile){
-                console.log('elle')
-                if (tile.dataset.color === 'light'){
-                    tile.style.backgroundColor = '#DDB892';
+                fromPos = tile.dataset.num;
+                console.log(selectedPiece);
+            } else {
+                //if there is a piece selected, and the piece type can move to the tapped tile, and the tile is occupied by a different
+                //colored piece or no piece
+                if (selectedTile && (tile.dataset.team === '' || (tile.dataset.team !== selectedTile.dataset.team))
+                    && canMove(selectedTile.dataset.num, tile.dataset.num, selectedPiece.dataset.type, currentBoard)) {
+
+                    if (piece) {
+                        piece.dataset.moved = 'true';
+                    }
+
+                    toPos = tile.dataset.num;
+                    selectedTile.style.cursor = 'default';
+                    tile.style.cursor = 'pointer';
+
+                    tile.dataset.team = selectedTile.dataset.team;
+                    if (selectedTile.dataset.color === 'light') {
+                        selectedTile.style.backgroundColor = '#DDB892';
+                    } else {
+                        selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                    }
+
+                    if (sessionId) {
+                        await postMove(sessionId, fromPos, toPos, selectedTile.dataset.piece.toUpperCase());
+                        window.chessSession = await getChessSessionWithId(sessionId);
+                    }
+                    selectedTile = null;
+                    selectedPiece = null;
+                } else if (piece && selectedPiece && piece.dataset.team === selectedPiece.dataset.team && tile !== selectedTile) {
+                    if (selectedTile.dataset.color === 'light') {
+                        selectedTile.style.backgroundColor = '#DDB892';
+                    } else {
+                        selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                    }
+                    tile.style.backgroundColor = 'rgb(211,110,108)';
+                    selectedTile = tile;
+                    selectedPiece = piece;
                 }
-                else {
-                    tile.style.backgroundColor = 'rgb(166, 109, 79)';
+                //if the same tile is clicked again
+                else if (selectedTile === tile) {
+                    if (tile.dataset.color === 'light') {
+                        tile.style.backgroundColor = '#DDB892';
+                    } else {
+                        tile.style.backgroundColor = 'rgb(166, 109, 79)';
+                    }
+                    selectedTile = null;
+                    selectedPiece = null;
                 }
-                selectedTile = null;
-                selectedPiece = null;
             }
+
         }
-
-
     }
 
 
@@ -133,14 +135,12 @@ function chessboard(imgLocation = ""){
                 newState[i] = { type: pieceType, color: pieceColor, hasMoved: hasMoved };
             }
         }
-        console.log(newState);
         return newState;
     }
 
     function isKingInCheck(team, boardState) {
         const kingPosition = Object.keys(boardState).find(key => boardState[key].type === 'king' && boardState[key].color === team);
-        console.log(kingPosition);
-        const opposingTeam = team === 'white' ? 'black' : 'white';
+        const opposingTeam = team === 'WHITE' ? 'BLACK' : 'WHITE';
 
         for (const tile in boardState) {
             let validMoves;
@@ -219,7 +219,9 @@ function chessboard(imgLocation = ""){
         else {
             tile.dataset.team = '';
         }
+
         tile.addEventListener('click', handleTileClick);
+
     }
 
     function getPieceType(piece) {

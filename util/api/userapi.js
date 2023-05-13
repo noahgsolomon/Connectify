@@ -57,6 +57,7 @@ async function login(username, password){
 
             localStorage.setItem('expiry', expiryDate.toISOString());
             console.log(localStorage.getItem('expiry'));
+            localStorage.setItem('username', username);
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';

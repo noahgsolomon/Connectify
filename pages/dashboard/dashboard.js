@@ -14,6 +14,7 @@ import {deleteAllNotifications} from "../../util/api/notificationapi.js";
 import {getGameInvites, deleteGameInvite} from "../../util/api/gamesapi/inviteapi.js";
 import {createSession} from "../../util/api/gamesapi/chessapi.js";
 import {showGameInvite} from "../../util/gameInvite.js";
+localStorage.removeItem('sessionId');
 
 
 const jwtToken = localStorage.getItem('jwtToken');
@@ -99,6 +100,7 @@ window.addEventListener("load", function() {
                 document.querySelector('.invite-accept').addEventListener('click', async () => {
                     await deleteGameInvite(inviteList[0].inviter);
                     const sessionId = await createSession(inviteList[0].inviter);
+                    localStorage.setItem('opponent', inviteList[0].inviter);
                     window.location.href = `../games/chess/chessgame/chessgame.html?sessionId=${sessionId}`;
                 });
                 document.querySelector('.invite-decline').addEventListener('click', async () => {

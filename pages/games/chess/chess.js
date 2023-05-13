@@ -54,6 +54,7 @@ window.addEventListener("load", function() {
                             sessionData = JSON.parse(sessionDataString);
                         }
                         if (sessionData.gameStatus === 'IN_PROGRESS'){
+                            localStorage.setItem('opponent', currentInviteButton.dataset.opponent);
                             window.location.href = `./chessgame/chessgame.html?sessionId=${sessionData.id}`;
                         }
                     }, 2000);
