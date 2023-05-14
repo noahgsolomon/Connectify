@@ -79,6 +79,15 @@ function chessboard(imgLocation = "", userColor){
                         piece.dataset.moved = 'true';
                     }
 
+                    if (selectedPiece.dataset.type === 'king' && Math.abs(Number(fromPos) - Number(toPos)) === 2) {
+                        const direction = Number(fromPos) < Number(toPos) ? 1 : -1;
+                        const rookFrom = Number(fromPos) + (direction === 1 ? 3 : -4);
+                        const rookTo = Number(fromPos) + (direction === 1 ? -2 : 3);
+                        const rookTileFrom = document.getElementById(`tile-${rookFrom}`);
+                        const rookTileTo = document.getElementById(`tile-${rookTo}`);
+                        const rook = rookTileFrom.querySelector('.piece');
+                    }
+
                     toPos = tile.dataset.num;
                     selectedTile.style.cursor = 'default';
                     tile.style.cursor = 'pointer';
@@ -105,6 +114,7 @@ function chessboard(imgLocation = "", userColor){
                     tile.style.backgroundColor = 'rgb(211,110,108)';
                     selectedTile = tile;
                     selectedPiece = piece;
+                    fromPos = tile.dataset.num;
                 }
                 //if the same tile is clicked again
                 else if (selectedTile === tile) {
@@ -139,12 +149,13 @@ function chessboard(imgLocation = "", userColor){
     }
 
     function isKingInCheck(team, boardState) {
-        const kingPosition = Object.keys(boardState).find(key => boardState[key].type === 'king' && boardState[key].color === team);
+        const kingPosition = Object.keys(boardState).find(key => boardState[key] && boardState[key].type === 'king' && boardState[key].color === team);
+        console.log(kingPosition);
         const opposingTeam = team === 'WHITE' ? 'BLACK' : 'WHITE';
 
         for (const tile in boardState) {
             let validMoves;
-            if (boardState[tile].color === opposingTeam) {
+            if (boardState[tile] && boardState[tile].color === opposingTeam) {
                 if (boardState[tile].type === 'knight'){
                     validMoves = getKnightValidMoves(tile, boardState[tile].type, boardState);
                 } else if (boardState[tile].type === 'bishop'){
@@ -161,6 +172,57 @@ function chessboard(imgLocation = "", userColor){
                 }
             }
         }
+        return false;
+    }
+
+    function canCastle(fromTile, toTile, boardState) {
+        const from = Number(fromTile);
+        const to = Number(toTile);
+        const king = boardState[from];
+        console.log(king);
+
+        if (king.hasMoved || isKingInCheck(king.color, boardState)) {
+            return false;
+        }
+
+        if (to === from + 2) {
+
+            const rook = boardState[from + 3];
+            if (rook && rook.type === 'rook' && !rook.hasMoved) {
+                if (!boardState[from + 1] && !boardState[from + 2]) {
+                    console.log('30-50 feral hogs');
+                    for (let i = 0; i <= 2; i++) {
+                        const intermediatePosition = from + i;
+                        console.log(intermediatePosition);
+                        const intermediateBoardState = { ...boardState, [from]: null, [intermediatePosition]: king };
+                        console.log(intermediateBoardState[from]);
+                        console.log(intermediateBoardState[intermediatePosition]);
+                        if (isKingInCheck(king.color, intermediateBoardState)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+        }
+
+        if (to === from - 2) {
+
+            const rook = boardState[from - 4];
+            if (rook && rook.type === 'rook' && !rook.hasMoved) {
+                if (!boardState[from - 1] && !boardState[from - 2] && !boardState[from - 3]) {
+                    console.log('we outside');
+                    for (let i = 0; i >= -2; i--) {
+                        const intermediatePosition = from + i;
+                        if (isKingInCheck(king.color, { ...boardState, [from]: null, [intermediatePosition]: king})) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -184,8 +246,7 @@ function chessboard(imgLocation = "", userColor){
 
             case 'king':
                 const validKingMoves = getKingValidMoves(fromTile, boardState);
-                return validKingMoves.includes(Number(toTile));
-
+                return validKingMoves.includes(Number(toTile)) || canCastle(fromTile, toTile, boardState);
             case 'pawn':
                 const validPawnMoves = getPawnValidMoves(fromTile, boardState);
                 return validPawnMoves.includes(Number(toTile));
