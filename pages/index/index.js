@@ -1,7 +1,9 @@
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
+
 window.addEventListener("load", function(){
+    localStorage.removeItem('jwtToken')
     if (jwtToken && expiryDate > new Date()){
         document.querySelector('.signup-btn').remove();
         document.querySelector('.login-btn').remove();

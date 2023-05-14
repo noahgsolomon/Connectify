@@ -84,7 +84,12 @@ window.addEventListener("load", function() {
                     console.log(fromTile);
                     console.log(toTile);
                     toTile.innerHTML = fromTile.innerHTML;
+                    toTile.dataset.team = fromTile.dataset.team;
+                    toTile.dataset.piece = fromTile.dataset.piece;
+                    toTile.style.cursor = 'pointer';
+                    toTile.querySelector('.piece').dataset.moved = 'true';
                     fromTile.dataset.team = '';
+                    fromTile.style.cursor = 'default';
                     fromTile.dataset.piece = '';
                     fromTile.innerHTML = '';
                     if (window.boardState.turn === 'WHITE'){
