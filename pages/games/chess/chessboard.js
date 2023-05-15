@@ -4,7 +4,7 @@ import {getValidMoves as getPawnValidMoves} from "./pieces/pawn.js";
 import {getValidMoves as getQueenValidMoves} from "./pieces/queen.js";
 import {getValidMoves as getRookValidMoves} from "./pieces/rook.js";
 import {getValidMoves as getKingValidMoves} from "./pieces/king.js";
-import {getChessSessionWithId, postMove} from "../../../util/api/gamesapi/chessapi.js";
+import {getChessSessionWithId, postMove, updateGameStatus} from "../../../util/api/gamesapi/chessapi.js";
 
 let url = new URL(window.location.href);
 
@@ -87,7 +87,16 @@ function chessboard(imgLocation = "", userColor){
                     }
                     if (sessionId) {
                         await postMove(sessionId, fromPos, toPos, selectedTile.dataset.piece.toUpperCase());
+                        const team = selectedTile.dataset.team;
+                        const otherTeam = (team === "white") ? "black" : "white";
                         window.chessSession = await getChessSessionWithId(sessionId);
+                        const hypotheticalBoardState = {...currentBoard};
+                        hypotheticalBoardState[toPos] = hypotheticalBoardState[fromPos];
+                        hypotheticalBoardState[fromPos] = null;
+                        if (isCheckmate(otherTeam, hypotheticalBoardState)) {
+                            console.log("Checkmate! " + (otherTeam === 'white' ? 'Black' : 'White') + " wins.");
+                            await updateGameStatus(sessionId, `${team.toUpperCase()}_WON`);
+                        }
                     }
                     selectedTile = null;
                     selectedPiece = null;
@@ -263,6 +272,43 @@ function chessboard(imgLocation = "", userColor){
             default:
                 return false;
         }
+    }
+
+    function isCheckmate(team, boardState) {
+        for (let tile in boardState) {
+            if (boardState[tile] && boardState[tile].color === team) {
+                let validMoves = [];
+                switch(boardState[tile].type) {
+                    case 'king':
+                        validMoves = getKingValidMoves(tile, boardState);
+                        break;
+                    case 'queen':
+                        validMoves = getQueenValidMoves(tile, boardState);
+                        break;
+                    case 'rook':
+                        validMoves = getRookValidMoves(tile, boardState);
+                        break;
+                    case 'bishop':
+                        validMoves = getBishopValidMoves(tile, boardState);
+                        break;
+                    case 'knight':
+                        validMoves = getKnightValidMoves(tile, boardState);
+                        break;
+                    case 'pawn':
+                        validMoves = getPawnValidMoves(tile, boardState);
+                        break;
+                }
+                for (let move of validMoves) {
+                    let hypotheticalBoardState = { ...boardState };
+                    hypotheticalBoardState[move] = hypotheticalBoardState[tile];
+                    hypotheticalBoardState[tile] = null;
+                    if (!isKingInCheck(team, hypotheticalBoardState)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 

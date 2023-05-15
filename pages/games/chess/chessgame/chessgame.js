@@ -70,12 +70,34 @@ window.addEventListener("load", function() {
             userColor = localStorage.getItem('userColor')
         }
         let pastMove = null;
+        let prevFromTile = null;
+        let prevToTile = null;
         let updatedChessSession = setInterval(async () => {
             if (window.chessSession.turn.toUpperCase() !== userColor.toUpperCase()) {
+                let previousGameStatus = window.chessSession.gameStatus;
                 window.chessSession = await getChessSessionWithId(sessionId);
+                console.log(window.chessSession.gameStatus);
                 if (window.chessSession.recentMove.startPosition && (!pastMove || pastMove !== `${window.chessSession.recentMove.startPosition},${window.chessSession.recentMove.endPosition}`)) {
                     const fromTile = document.querySelector(`#tile-${window.chessSession.recentMove.startPosition}`);
                     const toTile = document.querySelector(`#tile-${window.chessSession.recentMove.endPosition}`);
+                    if (prevFromTile && prevToTile){
+                        if (prevFromTile.dataset.color === 'light'){
+                            prevFromTile.style.backgroundColor = '#DDB892';
+                        }
+                        else if (prevFromTile.dataset.color === 'dark'){
+                            prevFromTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                        }
+
+                        if (prevToTile.dataset.color === 'light'){
+                            prevToTile.style.backgroundColor = '#DDB892';
+                        }
+                        else if (prevToTile.dataset.color === 'dark'){
+                            prevToTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                        }
+                    }
+                    fromTile.style.backgroundColor = 'rgba(255,255,0,0.5)';
+                    toTile.style.backgroundColor = 'rgb(255,255,0)';
+
                     toTile.innerHTML = fromTile.innerHTML;
                     toTile.dataset.team = fromTile.dataset.team;
                     toTile.dataset.piece = fromTile.dataset.piece;
@@ -85,6 +107,8 @@ window.addEventListener("load", function() {
                     fromTile.style.cursor = 'default';
                     fromTile.dataset.piece = '';
                     fromTile.innerHTML = '';
+                    prevFromTile = fromTile;
+                    prevToTile = toTile;
                     console.log(fromTile.dataset.piece);
                     if (toTile.dataset.piece === 'king'){
                         console.log('king')
@@ -120,6 +144,25 @@ window.addEventListener("load", function() {
                             rookFromTile.dataset.piece = '';
                             rookFromTile.innerHTML = '';
                         }
+                    }
+                    if (previousGameStatus === 'IN_PROGRESS' && window.chessSession.gameStatus !== 'IN_PROGRESS') {
+                        console.log('hiiiii squidward');
+                        let modal = document.getElementById("gameResultModal");
+                        let span = document.getElementsByClassName("close")[0];
+                        let gameResultText = document.getElementById("gameResultText");
+                        console.log(window.chessSession.gameStatus);
+                        if (window.chessSession.gameStatus === 'WHITE_WON'){
+                            gameResultText.innerText = '👑White won by checkmate!👑';
+                        }
+                        else if (window.chessSession.gameStatus === 'BLACK_WON'){
+                            gameResultText.innerText = '👑Black won by checkmate!👑';
+                        }
+
+                        span.onclick = function() {
+                            modal.style.display = "none";
+                        }
+
+                        modal.style.display = "flex";
                     }
                     if (window.boardState.turn === 'WHITE'){
                         window.boardState.turn = 'BLACK';
