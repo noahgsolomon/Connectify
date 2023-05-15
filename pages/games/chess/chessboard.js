@@ -210,9 +210,14 @@ function chessboard(imgLocation = "", userColor){
 
     function canMove(fromTile, toTile, pieceType, boardState) {
 
-        console.log(isKingInCheck(document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team, boardState));
-        console.log(isKingInCheck(document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team, boardState));
-        console.log(isKingInCheck(document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team, boardState));
+        let hypotheticalBoardState = { ...boardState };
+        hypotheticalBoardState[toTile] = hypotheticalBoardState[fromTile];
+        hypotheticalBoardState[fromTile] = null;
+        let team = document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team;
+        if (isKingInCheck(team, hypotheticalBoardState)) {
+            return false;
+        }
+
 
         switch (pieceType) {
             case 'rook':
