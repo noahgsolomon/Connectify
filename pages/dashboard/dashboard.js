@@ -109,7 +109,7 @@ window.addEventListener("load", function() {
                 });
 
             }
-        }, 1000);
+        }, 7500);
 
         if (postListString) {
             await postRender(postListString, profileString, main, 'dashboard');

@@ -211,11 +211,29 @@ function chessboard(imgLocation = "", userColor){
     function canMove(fromTile, toTile, pieceType, boardState) {
 
         let hypotheticalBoardState = { ...boardState };
+
         hypotheticalBoardState[toTile] = hypotheticalBoardState[fromTile];
+
         hypotheticalBoardState[fromTile] = null;
+
         let team = document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team;
+
+
+        let kingPosition = Object.keys(boardState).find(key => boardState[key] && boardState[key].type === 'king' && boardState[key].color === team);
+
+        let kingTile = document.getElementById('tile-' + kingPosition);
+
         if (isKingInCheck(team, hypotheticalBoardState)) {
+            kingTile.style.backgroundColor = '#de4848';
             return false;
+        }
+        else {
+            if (kingTile.dataset.color === 'light'){
+                kingTile.style.backgroundColor = '#DDB892';
+            }
+            else {
+                kingTile.style.backgroundColor = 'rgb(166, 109, 79)';
+            }
         }
 
 
@@ -242,7 +260,6 @@ function chessboard(imgLocation = "", userColor){
             case 'pawn':
                 const validPawnMoves = getPawnValidMoves(fromTile, boardState);
                 return validPawnMoves.includes(Number(toTile));
-
             default:
                 return false;
         }

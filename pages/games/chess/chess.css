@@ -121,6 +121,44 @@ img{
     }
 }
 
-@media (max-width: 475px) {
+@media (max-width: 550px) {
+    .chess-board {
+        width: 100vw;
+        height: 120vw;
+    }
 
+    img {
+        width: 30px;
+        height: auto;
+    }
+
+    .tile {
+        font-size: 2rem;
+    }
+
+    .friends-panel, .friends-search {
+        width: 90vw;
+        margin: 10px auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .chess-board {
+        width: 100vw;
+        height: 120vw;
+    }
+
+    img {
+        width: 25px;
+        height: auto;
+    }
+
+    .tile {
+        font-size: 1.6rem;
+    }
+
+    .friends-panel, .friends-search {
+        width: 60vw;
+        margin: 10px auto;
+    }
 }
