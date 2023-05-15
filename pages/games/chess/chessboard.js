@@ -52,11 +52,7 @@ function chessboard(imgLocation = "", userColor){
 
 
     async function handleTileClick(event) {
-        console.log('hellooooooo');
-        console.log(window.boardState.turn.toUpperCase());
-        console.log(userColor);
         if (window.boardState.turn.toUpperCase() === userColor.toUpperCase()) {
-            console.log('ur in!')
             const currentBoard = getBoardState();
             const tile = event.currentTarget;
             const piece = tile.querySelector('.piece');
@@ -67,25 +63,16 @@ function chessboard(imgLocation = "", userColor){
                 tile.style.backgroundColor = 'rgb(211,110,108)';
                 selectedPiece = tile.querySelector('.piece');
                 selectedTile = tile;
-                fromPos = tile.dataset.num;
                 console.log(selectedPiece);
+                console.log(selectedTile);
+                fromPos = tile.dataset.num;
             } else {
                 //if there is a piece selected, and the piece type can move to the tapped tile, and the tile is occupied by a different
                 //colored piece or no piece
                 if (selectedTile && (tile.dataset.team === '' || (tile.dataset.team !== selectedTile.dataset.team))
                     && canMove(selectedTile.dataset.num, tile.dataset.num, selectedPiece.dataset.type, currentBoard)) {
-
                     if (piece) {
                         piece.dataset.moved = 'true';
-                    }
-
-                    if (selectedPiece.dataset.type === 'king' && Math.abs(Number(fromPos) - Number(toPos)) === 2) {
-                        const direction = Number(fromPos) < Number(toPos) ? 1 : -1;
-                        const rookFrom = Number(fromPos) + (direction === 1 ? 3 : -4);
-                        const rookTo = Number(fromPos) + (direction === 1 ? -2 : 3);
-                        const rookTileFrom = document.getElementById(`tile-${rookFrom}`);
-                        const rookTileTo = document.getElementById(`tile-${rookTo}`);
-                        const rook = rookTileFrom.querySelector('.piece');
                     }
 
                     toPos = tile.dataset.num;
@@ -98,7 +85,6 @@ function chessboard(imgLocation = "", userColor){
                     } else {
                         selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
                     }
-
                     if (sessionId) {
                         await postMove(sessionId, fromPos, toPos, selectedTile.dataset.piece.toUpperCase());
                         window.chessSession = await getChessSessionWithId(sessionId);
@@ -141,7 +127,7 @@ function chessboard(imgLocation = "", userColor){
             if (piece) {
                 const pieceType = piece.dataset.type;
                 const pieceColor = tile.dataset.team;
-                const hasMoved = piece.dataset.hasMoved;
+                const hasMoved = piece.dataset.moved;
                 newState[i] = { type: pieceType, color: pieceColor, hasMoved: hasMoved };
             }
         }
@@ -150,24 +136,25 @@ function chessboard(imgLocation = "", userColor){
 
     function isKingInCheck(team, boardState) {
         const kingPosition = Object.keys(boardState).find(key => boardState[key] && boardState[key].type === 'king' && boardState[key].color === team);
-        console.log(kingPosition);
-        const opposingTeam = team === 'WHITE' ? 'BLACK' : 'WHITE';
 
+        const opposingTeam = team.toUpperCase() === 'WHITE' ? 'BLACK' : 'WHITE';
+
+        console.log(boardState);
         for (const tile in boardState) {
             let validMoves;
-            if (boardState[tile] && boardState[tile].color === opposingTeam) {
+            if (boardState[tile] && boardState[tile].color.toUpperCase() === opposingTeam) {
                 if (boardState[tile].type === 'knight'){
-                    validMoves = getKnightValidMoves(tile, boardState[tile].type, boardState);
+                    validMoves = getKnightValidMoves(tile, boardState);
                 } else if (boardState[tile].type === 'bishop'){
-                    validMoves = getBishopValidMoves(tile, boardState[tile].type, boardState);
+                    validMoves = getBishopValidMoves(tile, boardState);
                 }else if (boardState[tile].type === 'pawn'){
-                    validMoves = getPawnValidMoves(tile, boardState[tile].type, boardState);
+                    validMoves = getPawnValidMoves(tile, boardState);
                 }else if (boardState[tile].type === 'queen'){
-                    validMoves = getQueenValidMoves(tile, boardState[tile].type, boardState);
+                    validMoves = getQueenValidMoves(tile, boardState);
                 }else if (boardState[tile].type === 'pawn'){
-                    validMoves = getPawnValidMoves(tile, boardState[tile].type, boardState);
+                    validMoves = getPawnValidMoves(tile, boardState);
                 }
-                if (validMoves.includes(Number(kingPosition))) {
+                if (validMoves && validMoves.includes(Number(kingPosition))) {
                     return true;
                 }
             }
@@ -181,22 +168,18 @@ function chessboard(imgLocation = "", userColor){
         const king = boardState[from];
         console.log(king);
 
-        if (king.hasMoved || isKingInCheck(king.color, boardState)) {
+        if (king.hasMoved.toLowerCase() === 'true' || isKingInCheck(king.color, boardState)) {
             return false;
         }
 
         if (to === from + 2) {
 
             const rook = boardState[from + 3];
-            if (rook && rook.type === 'rook' && !rook.hasMoved) {
+            if (rook && rook.type === 'rook' && rook.hasMoved.toLowerCase() === 'false') {
                 if (!boardState[from + 1] && !boardState[from + 2]) {
-                    console.log('30-50 feral hogs');
                     for (let i = 0; i <= 2; i++) {
                         const intermediatePosition = from + i;
-                        console.log(intermediatePosition);
                         const intermediateBoardState = { ...boardState, [from]: null, [intermediatePosition]: king };
-                        console.log(intermediateBoardState[from]);
-                        console.log(intermediateBoardState[intermediatePosition]);
                         if (isKingInCheck(king.color, intermediateBoardState)) {
                             return false;
                         }
@@ -209,9 +192,8 @@ function chessboard(imgLocation = "", userColor){
         if (to === from - 2) {
 
             const rook = boardState[from - 4];
-            if (rook && rook.type === 'rook' && !rook.hasMoved) {
+            if (rook && rook.type === 'rook' && rook.hasMoved.toLowerCase() === 'false') {
                 if (!boardState[from - 1] && !boardState[from - 2] && !boardState[from - 3]) {
-                    console.log('we outside');
                     for (let i = 0; i >= -2; i--) {
                         const intermediatePosition = from + i;
                         if (isKingInCheck(king.color, { ...boardState, [from]: null, [intermediatePosition]: king})) {
@@ -227,6 +209,11 @@ function chessboard(imgLocation = "", userColor){
     }
 
     function canMove(fromTile, toTile, pieceType, boardState) {
+
+        console.log(isKingInCheck(document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team, boardState));
+        console.log(isKingInCheck(document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team, boardState));
+        console.log(isKingInCheck(document.getElementById('tile-' + fromTile).querySelector('.piece').dataset.team, boardState));
+
         switch (pieceType) {
             case 'rook':
                 const validRookMoves = getRookValidMoves(fromTile, boardState);

@@ -71,18 +71,11 @@ window.addEventListener("load", function() {
         }
         let pastMove = null;
         let updatedChessSession = setInterval(async () => {
-            console.log(pastMove);
-            console.log(window.chessSession.turn.toUpperCase());
-            console.log(userColor.toUpperCase());
-            console.log(window.chessSession.recentMove.startPosition);
             if (window.chessSession.turn.toUpperCase() !== userColor.toUpperCase()) {
-                console.log('hellooooo')
                 window.chessSession = await getChessSessionWithId(sessionId);
                 if (window.chessSession.recentMove.startPosition && (!pastMove || pastMove !== `${window.chessSession.recentMove.startPosition},${window.chessSession.recentMove.endPosition}`)) {
                     const fromTile = document.querySelector(`#tile-${window.chessSession.recentMove.startPosition}`);
                     const toTile = document.querySelector(`#tile-${window.chessSession.recentMove.endPosition}`);
-                    console.log(fromTile);
-                    console.log(toTile);
                     toTile.innerHTML = fromTile.innerHTML;
                     toTile.dataset.team = fromTile.dataset.team;
                     toTile.dataset.piece = fromTile.dataset.piece;
@@ -92,6 +85,42 @@ window.addEventListener("load", function() {
                     fromTile.style.cursor = 'default';
                     fromTile.dataset.piece = '';
                     fromTile.innerHTML = '';
+                    console.log(fromTile.dataset.piece);
+                    if (toTile.dataset.piece === 'king'){
+                        console.log('king')
+                        if (parseInt(window.chessSession.recentMove.endPosition) - parseInt(window.chessSession.recentMove.startPosition) === 2){
+                            console.log('right side');
+                            const rookFromTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)+3}`);
+                            const rookToTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)+1}`);
+                            console.log(rookFromTile);
+                            console.log(rookToTile);
+                            rookToTile.innerHTML = rookFromTile.innerHTML;
+                            rookToTile.dataset.team = rookFromTile.dataset.team;
+                            rookToTile.style.cursor = 'pointer';
+                            rookToTile.querySelector('.piece').dataset.moved = 'true';
+                            rookToTile.dataset.piece = 'rook';
+                            rookFromTile.dataset.team = '';
+                            rookFromTile.style.cursor = 'default';
+                            rookFromTile.dataset.piece = '';
+                            rookFromTile.innerHTML = '';
+                        }
+                        else if (parseInt(window.chessSession.recentMove.endPosition) - parseInt(window.chessSession.recentMove.startPosition) === -2){
+                            console.log('left side');
+                            const rookFromTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)-4}`);
+                            const rookToTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)-1}`);
+                            console.log(rookFromTile);
+                            console.log(rookToTile);
+                            rookToTile.innerHTML = rookFromTile.innerHTML;
+                            rookToTile.dataset.team = rookFromTile.dataset.team;
+                            rookToTile.style.cursor = 'pointer';
+                            rookToTile.querySelector('.piece').dataset.moved = 'true';
+                            rookToTile.dataset.piece = 'rook';
+                            rookFromTile.dataset.team = '';
+                            rookFromTile.style.cursor = 'default';
+                            rookFromTile.dataset.piece = '';
+                            rookFromTile.innerHTML = '';
+                        }
+                    }
                     if (window.boardState.turn === 'WHITE'){
                         window.boardState.turn = 'BLACK';
                     }
@@ -102,6 +131,6 @@ window.addEventListener("load", function() {
                 }
             }
 
-        }, 2000);
+        }, 500);
     })();
 });

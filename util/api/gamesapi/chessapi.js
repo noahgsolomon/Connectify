@@ -28,7 +28,6 @@ async function getChessSession(opponent) {
         body: opponent
     });
     const responseBody = await response.text();
-    console.log(responseBody);
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -45,7 +44,6 @@ async function getChessSessionWithId(sessionId) {
         }
     });
     const responseBody = await response.text();
-    console.log(responseBody);
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -69,7 +67,6 @@ async function postMove(sessionId, fromPos, toPos, piece){
     });
 
     const responseBody = await response.text();
-    console.log(responseBody);
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
