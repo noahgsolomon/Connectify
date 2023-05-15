@@ -76,6 +76,7 @@ window.addEventListener("load", function() {
         let updatedChessSession = setInterval(async () => {
             if (window.chessSession.turn.toUpperCase() !== userColor.toUpperCase()) {
                 window.chessSession = await getChessSessionWithId(sessionId);
+                console.log(window.chessSession.gameStatus);
                 if (window.chessSession.gameStatus !== 'IN_PROGRESS' && !shownModal) {
                     shownModal = true;
                     let modal = document.getElementById("gameResultModal");
@@ -180,5 +181,3 @@ window.addEventListener("load", function() {
         }, 500);
     })();
 });
-
-
