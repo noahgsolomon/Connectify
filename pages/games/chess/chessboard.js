@@ -96,6 +96,25 @@ function chessboard(imgLocation = "", userColor){
                         if (isCheckmate(otherTeam, hypotheticalBoardState)) {
                             console.log("Checkmate! " + (otherTeam === 'white' ? 'Black' : 'White') + " wins.");
                             await updateGameStatus(sessionId, `${team.toUpperCase()}_WON`);
+                            let modal = document.getElementById("gameResultModal");
+                            let span = document.getElementsByClassName("close")[0];
+                            let gameResultText = document.getElementById("gameResultText");
+                            console.log(window.chessSession.gameStatus);
+                            if (window.chessSession.gameStatus === 'WHITE_WON'){
+                                gameResultText.innerText = '👑White won by checkmate!👑';
+                            }
+                            else if (window.chessSession.gameStatus === 'BLACK_WON'){
+                                gameResultText.innerText = '👑Black won by checkmate!👑';
+                            }
+
+                            span.onclick = function() {
+                                modal.style.display = "none";
+                            }
+
+                            modal.style.display = "flex";
+                            setTimeout(function() {
+                                window.location.href = "../chess.html";
+                            }, 2000);
                         }
                     }
                     selectedTile = null;
@@ -162,6 +181,9 @@ function chessboard(imgLocation = "", userColor){
                     validMoves = getQueenValidMoves(tile, boardState);
                 }else if (boardState[tile].type === 'pawn'){
                     validMoves = getPawnValidMoves(tile, boardState);
+                }
+                else if (boardState[tile].type === 'rook'){
+                    validMoves = getRookValidMoves(tile, boardState);
                 }
                 if (validMoves && validMoves.includes(Number(kingPosition))) {
                     return true;
