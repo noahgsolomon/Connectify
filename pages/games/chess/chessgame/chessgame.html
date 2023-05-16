@@ -24,14 +24,24 @@
     <div class="chess-board">
 
     </div>
-    <div class="player bottom-player">
-
+    <div class="bottom-wrapper">
+      <div class="player bottom-player"></div>
+      <button class="resign-btn">Resign 🏳️</button>
     </div>
+
   </div>
   <div id="gameResultModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
       <p id="gameResultText"></p>
+    </div>
+  </div>
+  <div id="resignConfirmationModal" class="modal" style="display: none">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Are you sure you want to resign?</p>
+      <button id="confirmResign">Yes</button>
+      <button id="cancelResign">No</button>
     </div>
   </div>
 </div>

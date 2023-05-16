@@ -13,27 +13,6 @@ function chessboard(imgLocation = "", userColor){
 
     let chessBoard = document.querySelector('.chess-board');
 
-    let isLight = true;
-
-    for (let i = 1; i <= 64; i++) {
-        let tile = document.createElement('div');
-
-        tile.id = 'tile-' + i;
-
-        tile.classList.add('tile');
-
-        tile.dataset.color = isLight ? 'light' : 'dark';
-        tile.dataset.num = i.toString();
-
-        tile.style.backgroundColor = isLight ? '#DDB88C' : '#A66D4F';
-
-        chessBoard.appendChild(tile);
-
-        if (i % 8 !== 0) {
-            isLight = !isLight;
-        }
-    }
-
     const pieces = [
         '♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜',
         '♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟',
@@ -44,6 +23,128 @@ function chessboard(imgLocation = "", userColor){
         '♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙',
         '♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'
     ];
+
+    let isLight = true;
+    if (!userColor || userColor.toUpperCase() === 'WHITE'){
+        for (let i = 1; i <= 64; i++) {
+            let tile = document.createElement('div');
+
+            tile.id = 'tile-' + i;
+
+            tile.classList.add('tile');
+
+            tile.dataset.color = isLight ? 'light' : 'dark';
+            tile.dataset.num = i.toString();
+
+            tile.style.backgroundColor = isLight ? '#DDB88C' : '#A66D4F';
+
+            chessBoard.appendChild(tile);
+
+            if (i % 8 !== 0) {
+                isLight = !isLight;
+            }
+        }
+
+        let colorTeam = 'black';
+        for (let i = 0; i < 64; i++) {
+            if (i === 48){
+                colorTeam = 'white';
+            }
+            let tile = document.getElementById('tile-' + (i + 1));
+            if (pieces[i] !== '') {
+                let piece = document.createElement('div');
+                piece.dataset.moved = 'false';
+                piece.classList.add('piece');
+                piece.dataset.type = getPieceType(pieces[i]);
+                tile.dataset.piece = getPieceType(pieces[i]);
+                tile.style.cursor = 'pointer';
+                let img = document.createElement('img');
+                img.src = `${imgLocation}assets/${colorTeam}${piece.dataset.type}.png`;
+                piece.dataset.team = getPieceTeam(pieces[i]);
+                tile.dataset.team = piece.dataset.team;
+                piece.appendChild(img);
+                tile.appendChild(piece);
+            }
+            else {
+                tile.dataset.team = '';
+            }
+
+            tile.addEventListener('click', handleTileClick);
+
+        }
+
+
+    }
+    else if (userColor.toUpperCase() === 'BLACK'){
+        for (let i = 64; i >= 1; i--) {
+            let tile = document.createElement('div');
+
+            tile.id = 'tile-' + i;
+
+            tile.classList.add('tile');
+
+            tile.dataset.color = isLight ? 'light' : 'dark';
+            tile.dataset.num = i.toString();
+
+            tile.style.backgroundColor = isLight ? '#DDB88C' : '#A66D4F';
+
+            chessBoard.appendChild(tile);
+
+            if (i % 8 !== 1) {
+                isLight = !isLight;
+            }
+        }
+
+        let colorTeam = 'white';
+        for (let i = 63; i >= 0; i--) {
+            if (i === 48){
+                colorTeam = 'black';
+            }
+            let tile = document.getElementById('tile-' + (i + 1));
+            if (pieces[i] !== '') {
+                let piece = document.createElement('div');
+                piece.dataset.moved = 'false';
+                piece.classList.add('piece');
+                piece.dataset.type = getPieceType(pieces[i]);
+                tile.dataset.piece = getPieceType(pieces[i]);
+                tile.style.cursor = 'pointer';
+                let img = document.createElement('img');
+                img.src = `${imgLocation}assets/${colorTeam}${piece.dataset.type}.png`;
+                piece.dataset.team = getPieceTeam(pieces[i]);
+                tile.dataset.team = piece.dataset.team;
+                piece.appendChild(img);
+                tile.appendChild(piece);
+            }
+            else {
+                tile.dataset.team = '';
+            }
+
+            tile.addEventListener('click', handleTileClick);
+
+        }
+    }
+
+    function getPieceType(piece) {
+        if (piece === '♜' || piece === '♖') {
+            return 'rook';
+        } else if (piece === '♞' || piece === '♘') {
+            return 'knight';
+        } else if (piece === '♝' || piece === '♗') {
+            return 'bishop';
+        } else if (piece === '♛' || piece === '♕') {
+            return 'queen';
+        } else if (piece === '♚' || piece === '♔') {
+            return 'king';
+        } else if (piece === '♟' || piece === '♙') {
+            return 'pawn';
+        }
+    }
+
+    function getPieceTeam(piece) {
+        return (piece === '♔' || piece === '♕' || piece === '♖' ||
+            piece === '♗' || piece === '♘' || piece === '♙') ?
+            'white' : 'black';
+    }
 
     let selectedPiece = null;
     let selectedTile = null;
@@ -334,57 +435,6 @@ function chessboard(imgLocation = "", userColor){
             }
         }
         return true;
-    }
-
-
-    let colorTeam = 'black';
-    for (let i = 0; i < 64; i++) {
-        if (i === 48){
-            colorTeam = 'white'
-        }
-        let tile = document.getElementById('tile-' + (i + 1));
-        if (pieces[i] !== '') {
-            let piece = document.createElement('div');
-            piece.dataset.moved = 'false';
-            piece.classList.add('piece');
-            piece.dataset.type = getPieceType(pieces[i]);
-            tile.dataset.piece = getPieceType(pieces[i]);
-            tile.style.cursor = 'pointer';
-            let img = document.createElement('img');
-            img.src = `${imgLocation}assets/${colorTeam}${piece.dataset.type}.png`;
-            piece.dataset.team = getPieceTeam(pieces[i]);
-            tile.dataset.team = piece.dataset.team;
-            piece.appendChild(img);
-            tile.appendChild(piece);
-        }
-        else {
-            tile.dataset.team = '';
-        }
-
-        tile.addEventListener('click', handleTileClick);
-
-    }
-
-    function getPieceType(piece) {
-        if (piece === '♜' || piece === '♖') {
-            return 'rook';
-        } else if (piece === '♞' || piece === '♘') {
-            return 'knight';
-        } else if (piece === '♝' || piece === '♗') {
-            return 'bishop';
-        } else if (piece === '♛' || piece === '♕') {
-            return 'queen';
-        } else if (piece === '♚' || piece === '♔') {
-            return 'king';
-        } else if (piece === '♟' || piece === '♙') {
-            return 'pawn';
-        }
-    }
-
-    function getPieceTeam(piece) {
-        return (piece === '♔' || piece === '♕' || piece === '♖' ||
-            piece === '♗' || piece === '♘' || piece === '♙') ?
-            'white' : 'black';
     }
 }
 

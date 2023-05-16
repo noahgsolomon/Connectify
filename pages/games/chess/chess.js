@@ -70,6 +70,11 @@ window.addEventListener("load", function() {
                 }
             });
         }
+        if (friends.length === 0){
+            const noFriends = document.createElement('span');
+            noFriends.textContent = 'You have no friends😢'
+            friendListElement.append(noFriends);
+        }
     })();
 
 

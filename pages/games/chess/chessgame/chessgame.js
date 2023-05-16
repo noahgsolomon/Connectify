@@ -1,6 +1,6 @@
 import {chessboard} from "../chessboard.js";
 import {profileColors, fetchUserProfile} from "../../../../util/api/userapi.js";
-import {getChessSessionWithId, deleteChessSession} from "../../../../util/api/gamesapi/chessapi.js";
+import {getChessSessionWithId, deleteChessSession, updateGameStatus} from "../../../../util/api/gamesapi/chessapi.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -32,10 +32,57 @@ window.addEventListener("load", function() {
 
 
 
-    const blackPlayerElement = document.querySelector('.top-player');
-    const whitePlayerElement = document.querySelector('.bottom-player');
+    const opponentPlayer = document.querySelector('.top-player');
+    const userPlayer = document.querySelector('.bottom-player');
 
     (async () => {
+
+        const resignBtn = document.querySelector('.resign-btn');
+        const resignConfirmationModal = document.getElementById('resignConfirmationModal');
+        const confirmResignBtn = document.getElementById('confirmResign');
+        const cancelResignBtn = document.getElementById('cancelResign');
+        const closeResignModalBtn = document.querySelector('#resignConfirmationModal .close');
+
+        resignBtn.addEventListener('click', () => {
+            resignConfirmationModal.style.display = 'flex';
+        });
+
+        confirmResignBtn.addEventListener('click', async () => {
+            resignConfirmationModal.style.display = 'none';
+            let modal = document.getElementById("gameResultModal");
+            let span = document.getElementsByClassName("close")[0];
+            let gameResultText = document.getElementById("gameResultText");
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+                if (userColor.toUpperCase() === 'WHITE'){
+                    gameResultText.innerText = '🏳️Black won by resignation🏳️';
+                    await updateGameStatus(sessionId, 'BLACK_WON_BY_RESIGNATION');
+                }
+                else if (userColor.toUpperCase() === 'BLACK'){
+                    gameResultText.innerText = '🏳️White won by resignation🏳️';
+                    await updateGameStatus(sessionId, 'WHITE_WON_BY_RESIGNATION');
+                }
+
+            modal.style.display = "flex";
+
+
+            setTimeout(function() {
+                resignConfirmationModal.style.display = 'none';
+                window.location.href = "../chess.html";
+            }, 2000);
+
+        });
+
+        cancelResignBtn.addEventListener('click', () => {
+            resignConfirmationModal.style.display = 'none';
+        });
+
+        closeResignModalBtn.addEventListener('click', () => {
+            resignConfirmationModal.style.display = 'none';
+        });
 
         setInterval(async () => {
 
@@ -52,24 +99,23 @@ window.addEventListener("load", function() {
         const userEmoji = profileBtn.textContent;
         const opponentProfileString = await fetchUserProfile(opponent);
         const opponentProfile = JSON.parse(opponentProfileString);
-        let chessSession = await getChessSessionWithId(sessionId);
+        let chessSession;
+        try{
+            chessSession = await getChessSessionWithId(sessionId);
+        } catch (e){
+            window.location.href = '../chess.html';
+        }
+
         window.chessSession = chessSession;
-        const whitePlayerSpan = document.createElement('span');
-        whitePlayerSpan.textContent = chessSession.whitePlayer;
-        const blackPlayerSpan = document.createElement('span');
-        blackPlayerSpan.textContent = chessSession.blackPlayer;
+        const userPlayerSpan = document.createElement('span');
+        const opponentPlayerSpan = document.createElement('span');
 
-        if (window.chessSession.whitePlayer === username){
-            whitePlayerSpan.textContent = `${userEmoji} ${username}`;
-            blackPlayerSpan.textContent = `${opponentProfile.profilePic} ${opponent}`
-        }
-        else {
-            whitePlayerSpan.textContent = `${opponentProfile.profilePic} ${opponent}`;
-            blackPlayerSpan.textContent = `${userEmoji} ${username}`
-        }
+        userPlayerSpan.textContent = `${userEmoji} ${username}`;
+        opponentPlayerSpan.textContent = `${opponentProfile.profilePic} ${opponent}`;
 
-        blackPlayerElement.append(blackPlayerSpan);
-        whitePlayerElement.append(whitePlayerSpan);
+        opponentPlayer.append(opponentPlayerSpan);
+        userPlayer.append(userPlayerSpan);
+
         let userColor;
         if (window.chessSession.whitePlayer === username){
             chessboard('../', 'WHITE');
@@ -86,19 +132,27 @@ window.addEventListener("load", function() {
         let prevToTile = null;
         window.updatedChessSession = setInterval(async () => {
             if (window.chessSession.turn.toUpperCase() !== userColor.toUpperCase()) {
-                window.chessSession = await getChessSessionWithId(sessionId);
+                try{
+                    window.chessSession = await getChessSessionWithId(sessionId);
+                }catch (e){
+                    window.location.href = '../chess.html';
+                }
                 if (window.chessSession.gameStatus !== 'IN_PROGRESS') {
-                    await deleteChessSession(sessionId);
-
                     let modal = document.getElementById("gameResultModal");
                     let span = document.getElementsByClassName("close")[0];
                     let gameResultText = document.getElementById("gameResultText");
-                    console.log(window.chessSession.gameStatus);
+
                     if (window.chessSession.gameStatus === 'WHITE_WON'){
                         gameResultText.innerText = '👑White won by checkmate!👑';
                     }
                     else if (window.chessSession.gameStatus === 'BLACK_WON'){
                         gameResultText.innerText = '👑Black won by checkmate!👑';
+                    }
+                    else if (window.chessSession.gameStatus === 'WHITE_WON_BY_RESIGNATION'){
+                        gameResultText.innerText = '🏳️White won by resignation🏳️';
+                    }
+                    else if (window.chessSession.gameStatus === 'BLACK_WON_BY_RESIGNATION'){
+                        gameResultText.innerText = '🏳️Black won by resignation🏳️';
                     }
 
                     span.onclick = function() {
@@ -107,7 +161,12 @@ window.addEventListener("load", function() {
 
 
                     modal.style.display = "flex";
-                    setTimeout(function() {
+                    setTimeout(async function() {
+                        try {
+                            await deleteChessSession(sessionId);
+                        } catch (e){
+                            console.log('session already deleted');
+                        }
                         clearInterval(updatedChessSession);
                         window.location.href = "../chess.html";
                     }, 2000);
@@ -132,8 +191,12 @@ window.addEventListener("load", function() {
                     gameResultText.innerText = '⏳Game closed due to inactivity⏳';
                     modal.style.display = "flex";
 
-                    await deleteChessSession(sessionId);
-                    setTimeout(function() {
+                    setTimeout(async function() {
+                        try {
+                            await deleteChessSession(sessionId);
+                        } catch (e){
+                            console.log('session already deleted');
+                        }
                         clearInterval(updatedChessSession);
                         window.location.href = "../chess.html";
                     }, 2000);
@@ -216,7 +279,42 @@ window.addEventListener("load", function() {
                 }
             }
             else {
-                let chessSession = await getChessSessionWithId(sessionId);
+                let chessSession;
+                try {
+                    chessSession = await getChessSessionWithId(sessionId);
+                } catch (e) {
+                    window.location.href = '../chess.html';
+                }
+                if (chessSession.gameStatus !== 'IN_PROGRESS'){
+                    let modal = document.getElementById("gameResultModal");
+                    let span = document.getElementsByClassName("close")[0];
+                    let gameResultText = document.getElementById("gameResultText");
+
+                    if (chessSession.gameStatus === 'WHITE_WON_BY_RESIGNATION'){
+                        gameResultText.innerText = '🏳️White won by resignation🏳️';
+                    }
+                    else if (chessSession.gameStatus === 'BLACK_WON_BY_RESIGNATION'){
+                        gameResultText.innerText = '🏳️Black won by resignation🏳️';
+                    }
+
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    modal.style.display = "flex";
+
+                    setTimeout(async function () {
+                        try {
+                            await deleteChessSession(sessionId);
+                        } catch (e){
+                            console.log('session already deleted');
+                        }
+                        clearInterval(updatedChessSession);
+                        window.location.href = "../chess.html";
+                    }, 2000);
+                }
+
+
 
                 let updatedAt = new Date(chessSession.updatedAt);
                 console.log(updatedAt);
@@ -237,7 +335,12 @@ window.addEventListener("load", function() {
                     gameResultText.innerText = '⏳Game closed due to inactivity⏳';
                     modal.style.display = "flex";
 
-                    setTimeout(function () {
+                    setTimeout(async function () {
+                        try {
+                            await deleteChessSession(sessionId);
+                        } catch (e){
+                            console.log('session already deleted');
+                        }
                         clearInterval(updatedChessSession);
                         window.location.href = "../chess.html";
                     }, 2000);
