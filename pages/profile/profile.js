@@ -7,6 +7,7 @@ import {
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {formatDateAndTime} from "../../util/postUtils.js";
+import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -82,6 +83,9 @@ window.addEventListener("load", function() {
 
 
     (async () => {
+
+        await getChessInvites('../games/chess/chessgame/chessgame.html');
+
         const profileJson = await profile();
         if (profileJson){
             const userDetails = JSON.parse(profileJson);

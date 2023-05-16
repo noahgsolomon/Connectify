@@ -2,6 +2,7 @@ import {profileColors, friendsList} from "../../../util/api/userapi.js";
 import {chessboard} from "./chessboard.js";
 import { sendGameInvite } from "../../../util/api/gamesapi/inviteapi.js";
 import {getChessSession} from "../../../util/api/gamesapi/chessapi.js";
+import {getChessInvites} from "../../../util/api/gamesapi/inviteUtil.js";
 
 
 const jwtToken = localStorage.getItem('jwtToken');
@@ -23,6 +24,9 @@ window.addEventListener("load", function() {
 
     let friends;
     (async () => {
+
+        await getChessInvites('chessgame/chessgame.html');
+
         await profileColors();
         friends = await friendsList();
         const friendListElement = document.querySelector('.friends-list');

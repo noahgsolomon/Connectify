@@ -99,11 +99,10 @@ function chessboard(imgLocation = "", userColor){
                             let modal = document.getElementById("gameResultModal");
                             let span = document.getElementsByClassName("close")[0];
                             let gameResultText = document.getElementById("gameResultText");
-                            console.log(window.chessSession.gameStatus);
-                            if (window.chessSession.gameStatus === 'WHITE_WON'){
+                            if (`${team.toUpperCase()}_WON` === 'WHITE_WON'){
                                 gameResultText.innerText = '👑White won by checkmate!👑';
                             }
-                            else if (window.chessSession.gameStatus === 'BLACK_WON'){
+                            else if (`${team.toUpperCase()}_WON` === 'BLACK_WON'){
                                 gameResultText.innerText = '👑Black won by checkmate!👑';
                             }
 
@@ -113,8 +112,9 @@ function chessboard(imgLocation = "", userColor){
 
                             modal.style.display = "flex";
                             setTimeout(function() {
+                                clearInterval(window.updatedChessSession);
                                 window.location.href = "../chess.html";
-                            }, 2000);
+                            }, 3000);
                         }
                     }
                     selectedTile = null;
@@ -184,6 +184,9 @@ function chessboard(imgLocation = "", userColor){
                 }
                 else if (boardState[tile].type === 'rook'){
                     validMoves = getRookValidMoves(tile, boardState);
+                }
+                else if (boardState[tile].type === 'king'){
+                    validMoves = getKingValidMoves(tile, boardState);
                 }
                 if (validMoves && validMoves.includes(Number(kingPosition))) {
                     return true;

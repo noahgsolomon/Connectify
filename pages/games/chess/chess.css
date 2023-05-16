@@ -1,4 +1,5 @@
 @import '../../../util/css/base.css';
+@import '../../../util/css/gameinvite.css';
 
 .content {
     display: flex;

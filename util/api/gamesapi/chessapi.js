@@ -75,8 +75,6 @@ async function postMove(sessionId, fromPos, toPos, piece){
 }
 
 async function updateGameStatus(sessionId, gameStatus) {
-    console.log(sessionId);
-    console.log(gameStatus);
 
     const response = await fetch(`http://localhost:8080/chess/game-status/${sessionId}`, {
         method: 'PUT',
@@ -97,10 +95,30 @@ async function updateGameStatus(sessionId, gameStatus) {
     return responseBody;
 }
 
+async function deleteChessSession(sessionId){
+    const response = await fetch(`http://localhost:8080/chess/delete-session/${sessionId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwtToken
+        }
+    });
+
+    const responseBody = await response.text();
+    console.log(responseBody);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return responseBody;
+}
+
 export {
     createSession,
     getChessSession,
     getChessSessionWithId,
     postMove,
-    updateGameStatus
+    updateGameStatus,
+    deleteChessSession
 }

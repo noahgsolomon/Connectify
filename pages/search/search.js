@@ -3,6 +3,7 @@ import {
     userProfile,
     profileColors
 } from '../../util/api/userapi.js'
+import {getChessInvites} from "../../util/api/gamesapi/inviteUtil";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -24,6 +25,9 @@ window.addEventListener("load", function() {
     const searchContent = document.querySelector('.search-content');
 
     (async () => {
+
+        await getChessInvites('../games/chess/chessgame/chessgame.html');
+
         const allUsers = await fetchUsers();
         await profileColors();
         if (allUsers){

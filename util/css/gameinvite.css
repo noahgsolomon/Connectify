@@ -1,0 +1,81 @@
+.invite-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.invite-content {
+    width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    font-family: 'Roboto', sans-serif;
+    animation: slideUp 0.5s;
+}
+
+@keyframes slideUp {
+    from {transform: translateY(20px);}
+    to {transform: translateY(0);}
+}
+
+.invite-game-header {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.invite-accept {
+    background: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    animation: bounce 1s infinite;
+}
+
+.invite-accept:hover {
+    background: #45a049;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+}
+
+.invite-decline {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.invite-decline:hover {
+    background: #e53935;
+}

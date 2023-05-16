@@ -1,4 +1,5 @@
 import {userProfile, profileColors} from "../../util/api/userapi.js";
+import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 
 
 const jwtToken = localStorage.getItem('jwtToken');
@@ -26,6 +27,9 @@ window.addEventListener("load", function() {
     const username = getUsernameFromUrl();
 
     (async () => {
+
+        await getChessInvites('../games/chess/chessgame/chessgame.html');
+
         await profileColors();
         await userProfile(username);
         const page = document.querySelector('.page');

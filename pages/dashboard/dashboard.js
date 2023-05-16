@@ -11,9 +11,7 @@ import {showSlideMessage} from "../../util/status.js";
 import {postRender} from "../../util/postUtils.js";
 import {notificationRender} from "../../util/userUtils.js";
 import {deleteAllNotifications} from "../../util/api/notificationapi.js";
-import {getGameInvites, deleteGameInvite} from "../../util/api/gamesapi/inviteapi.js";
-import {createSession} from "../../util/api/gamesapi/chessapi.js";
-import {showGameInvite} from "../../util/gameInvite.js";
+import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 localStorage.removeItem('sessionId');
 
 
@@ -87,29 +85,7 @@ window.addEventListener("load", function() {
         const postListString = await getPosts();
         setInterval(notificationRender, 5000);
 
-        setInterval(async () => {
-            const inviteList = await getGameInvites();
-            console.log(inviteList);
-            if (inviteList.length > 0) {
-                showGameInvite(inviteList[0].game, inviteList[0].inviter);
-                console.log(inviteList[0].inviter);
-                let timeoutId = setTimeout(async () => {
-                    await deleteGameInvite(inviteList[0].inviter);
-                }, 6000);
-
-                document.querySelector('.invite-accept').addEventListener('click', async () => {
-                    await deleteGameInvite(inviteList[0].inviter);
-                    const sessionId = await createSession(inviteList[0].inviter);
-                    localStorage.setItem('opponent', inviteList[0].inviter);
-                    window.location.href = `../games/chess/chessgame/chessgame.html?sessionId=${sessionId}`;
-                });
-                document.querySelector('.invite-decline').addEventListener('click', async () => {
-                    clearTimeout(timeoutId);
-                    await deleteGameInvite(inviteList[0].inviter);
-                });
-
-            }
-        }, 7500);
+        await getChessInvites('../games/chess/chessgame/chessgame.html');
 
         if (postListString) {
             await postRender(postListString, profileString, main, 'dashboard');

@@ -1,6 +1,6 @@
 import {chessboard} from "../chessboard.js";
 import {profileColors, fetchUserProfile} from "../../../../util/api/userapi.js";
-import {getChessSessionWithId} from "../../../../util/api/gamesapi/chessapi.js";
+import {getChessSessionWithId, deleteChessSession} from "../../../../util/api/gamesapi/chessapi.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -31,10 +31,22 @@ window.addEventListener("load", function() {
     page.classList.remove('hidden');
 
 
+
     const blackPlayerElement = document.querySelector('.top-player');
     const whitePlayerElement = document.querySelector('.bottom-player');
 
     (async () => {
+
+        setInterval(async () => {
+
+            await fetch(`http://localhost:8080/chess/heart-beat/${sessionId}`, {
+                method: 'POST',
+                headers: {'Content-Type':'application/json',
+                    'Authorization': 'Bearer ' + jwtToken}
+            });
+
+        }, 60000);
+
         await profileColors();
         const profileBtn = document.querySelector('.profile-btn');
         const userEmoji = profileBtn.textContent;
@@ -72,13 +84,12 @@ window.addEventListener("load", function() {
         let pastMove = null;
         let prevFromTile = null;
         let prevToTile = null;
-        let shownModal = false;
-        let updatedChessSession = setInterval(async () => {
+        window.updatedChessSession = setInterval(async () => {
             if (window.chessSession.turn.toUpperCase() !== userColor.toUpperCase()) {
                 window.chessSession = await getChessSessionWithId(sessionId);
-                console.log(window.chessSession.gameStatus);
-                if (window.chessSession.gameStatus !== 'IN_PROGRESS' && !shownModal) {
-                    shownModal = true;
+                if (window.chessSession.gameStatus !== 'IN_PROGRESS') {
+                    await deleteChessSession(sessionId);
+
                     let modal = document.getElementById("gameResultModal");
                     let span = document.getElementsByClassName("close")[0];
                     let gameResultText = document.getElementById("gameResultText");
@@ -94,13 +105,40 @@ window.addEventListener("load", function() {
                         modal.style.display = "none";
                     }
 
-                    modal.style.display = "flex";
 
+                    modal.style.display = "flex";
                     setTimeout(function() {
+                        clearInterval(updatedChessSession);
                         window.location.href = "../chess.html";
                     }, 2000);
                 }
-                if (window.chessSession.recentMove.startPosition && (!pastMove || pastMove !== `${window.chessSession.recentMove.startPosition},${window.chessSession.recentMove.endPosition}`)) {
+
+                let updatedAt = new Date(window.chessSession.updatedAt);
+                console.log(updatedAt);
+                let now = new Date();
+                console.log(now);
+                let differenceInMilliseconds = now - updatedAt;
+                console.log(differenceInMilliseconds);
+                let differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+
+                if (differenceInMinutes > 2) {
+                    let modal = document.getElementById("gameResultModal");
+                    let span = document.getElementsByClassName("close")[0];
+                    let gameResultText = document.getElementById("gameResultText");
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    gameResultText.innerText = '⏳Game closed due to inactivity⏳';
+                    modal.style.display = "flex";
+
+                    await deleteChessSession(sessionId);
+                    setTimeout(function() {
+                        clearInterval(updatedChessSession);
+                        window.location.href = "../chess.html";
+                    }, 2000);
+                }
+                else if (window.chessSession.recentMove.startPosition && (!pastMove || pastMove !== `${window.chessSession.recentMove.startPosition},${window.chessSession.recentMove.endPosition}`)) {
                     const fromTile = document.querySelector(`#tile-${window.chessSession.recentMove.startPosition}`);
                     const toTile = document.querySelector(`#tile-${window.chessSession.recentMove.endPosition}`);
                     if (prevFromTile && prevToTile){
@@ -175,6 +213,34 @@ window.addEventListener("load", function() {
                         window.boardState.turn = 'WHITE';
                     }
                     pastMove = `${window.chessSession.recentMove.startPosition},${window.chessSession.recentMove.endPosition}`;
+                }
+            }
+            else {
+                let chessSession = await getChessSessionWithId(sessionId);
+
+                let updatedAt = new Date(chessSession.updatedAt);
+                console.log(updatedAt);
+                let now = new Date();
+                console.log(now);
+                let differenceInMilliseconds = now - updatedAt;
+                console.log(differenceInMilliseconds);
+                let differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+
+                if (differenceInMinutes > 2) {
+                    let modal = document.getElementById("gameResultModal");
+                    let span = document.getElementsByClassName("close")[0];
+                    let gameResultText = document.getElementById("gameResultText");
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    gameResultText.innerText = '⏳Game closed due to inactivity⏳';
+                    modal.style.display = "flex";
+
+                    setTimeout(function () {
+                        clearInterval(updatedChessSession);
+                        window.location.href = "../chess.html";
+                    }, 2000);
                 }
             }
 
