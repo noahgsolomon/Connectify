@@ -97,7 +97,7 @@ function chessboard(imgLocation = "", userColor){
 
         let colorTeam = 'white';
         for (let i = 63; i >= 0; i--) {
-            if (i === 48){
+            if (i === 17){
                 colorTeam = 'black';
             }
             let tile = document.getElementById('tile-' + (i + 1));
@@ -154,7 +154,7 @@ function chessboard(imgLocation = "", userColor){
 
     async function handleTileClick(event) {
         if (window.boardState.turn.toUpperCase() === userColor.toUpperCase()) {
-            const currentBoard = getBoardState();
+            let currentBoard = getBoardState();
             const tile = event.currentTarget;
             const piece = tile.querySelector('.piece');
             if (piece && !selectedPiece) {
@@ -176,6 +176,21 @@ function chessboard(imgLocation = "", userColor){
                         piece.dataset.moved = 'true';
                     }
 
+                    if (selectedTile.dataset.team.toUpperCase() === 'WHITE'){
+                        if (parseInt(tile.dataset.num) <= 8){
+                            selectedTile.dataset.piece = 'queen';
+                            selectedTile.querySelector('.piece').dataset.type = 'queen';
+                            selectedTile.querySelector('img').src = '../assets/whitequeen.png';
+                        }
+                    }
+                    else if (selectedTile.dataset.team.toUpperCase() === 'BLACK'){
+                        if (parseInt(tile.dataset.num) >= 57){
+                            selectedTile.dataset.piece = 'queen';
+                            selectedTile.querySelector('.piece').dataset.type = 'queen';
+                            selectedTile.querySelector('img').src = '../assets/blackqueen.png';
+                        }
+                    }
+
                     toPos = tile.dataset.num;
                     selectedTile.style.cursor = 'default';
                     tile.style.cursor = 'pointer';
@@ -187,6 +202,7 @@ function chessboard(imgLocation = "", userColor){
                         selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
                     }
                     if (sessionId) {
+                        currentBoard = getBoardState();
                         await postMove(sessionId, fromPos, toPos, selectedTile.dataset.piece.toUpperCase());
                         const team = selectedTile.dataset.team;
                         const otherTeam = (team === "white") ? "black" : "white";
@@ -194,6 +210,12 @@ function chessboard(imgLocation = "", userColor){
                         const hypotheticalBoardState = {...currentBoard};
                         hypotheticalBoardState[toPos] = hypotheticalBoardState[fromPos];
                         hypotheticalBoardState[fromPos] = null;
+                        console.log(hypotheticalBoardState);
+                        console.log(hypotheticalBoardState);
+                        console.log(hypotheticalBoardState);
+                        console.log(hypotheticalBoardState);
+                        console.log(hypotheticalBoardState);
+                        console.log(hypotheticalBoardState);
                         if (isCheckmate(otherTeam, hypotheticalBoardState)) {
                             console.log("Checkmate! " + (otherTeam === 'white' ? 'Black' : 'White') + " wins.");
                             await updateGameStatus(sessionId, `${team.toUpperCase()}_WON`);
@@ -214,7 +236,7 @@ function chessboard(imgLocation = "", userColor){
                             modal.style.display = "flex";
                             setTimeout(function() {
                                 clearInterval(window.updatedChessSession);
-                                window.location.href = "../chess.html";
+                                window.location.href = "chess.html";
                             }, 3000);
                         }
                     }
@@ -242,7 +264,6 @@ function chessboard(imgLocation = "", userColor){
                     selectedPiece = null;
                 }
             }
-
         }
     }
 
@@ -301,7 +322,6 @@ function chessboard(imgLocation = "", userColor){
         const from = Number(fromTile);
         const to = Number(toTile);
         const king = boardState[from];
-        console.log(king);
 
         if (king.hasMoved.toLowerCase() === 'true' || isKingInCheck(king.color, boardState)) {
             return false;

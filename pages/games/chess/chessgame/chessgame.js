@@ -173,11 +173,8 @@ window.addEventListener("load", function() {
                 }
 
                 let updatedAt = new Date(window.chessSession.updatedAt);
-                console.log(updatedAt);
                 let now = new Date();
-                console.log(now);
                 let differenceInMilliseconds = now - updatedAt;
-                console.log(differenceInMilliseconds);
                 let differenceInMinutes = differenceInMilliseconds / (1000 * 60);
 
                 if (differenceInMinutes > 2) {
@@ -204,6 +201,22 @@ window.addEventListener("load", function() {
                 else if (window.chessSession.recentMove.startPosition && (!pastMove || pastMove !== `${window.chessSession.recentMove.startPosition},${window.chessSession.recentMove.endPosition}`)) {
                     const fromTile = document.querySelector(`#tile-${window.chessSession.recentMove.startPosition}`);
                     const toTile = document.querySelector(`#tile-${window.chessSession.recentMove.endPosition}`);
+
+                    if (fromTile.dataset.team.toUpperCase() === 'WHITE'){
+                        if (parseInt(toTile.dataset.num) <= 8){
+                            fromTile.dataset.piece = 'queen';
+                            fromTile.querySelector('.piece').dataset.type = 'queen';
+                            fromTile.querySelector('img').src = '../assets/whitequeen.png';
+                        }
+                    }
+                    else if (fromTile.dataset.team.toUpperCase() === 'BLACK'){
+                        if (parseInt(toTile.dataset.num) >= 57){
+                            fromTile.dataset.piece = 'queen';
+                            fromTile.querySelector('.piece').dataset.type = 'queen';
+                            fromTile.querySelector('img').src = '../assets/blackqueen.png';
+                        }
+                    }
+
                     if (prevFromTile && prevToTile){
                         if (prevFromTile.dataset.color === 'light'){
                             prevFromTile.style.backgroundColor = '#DDB892';
@@ -233,15 +246,10 @@ window.addEventListener("load", function() {
                     fromTile.innerHTML = '';
                     prevFromTile = fromTile;
                     prevToTile = toTile;
-                    console.log(fromTile.dataset.piece);
                     if (toTile.dataset.piece === 'king'){
-                        console.log('king')
                         if (parseInt(window.chessSession.recentMove.endPosition) - parseInt(window.chessSession.recentMove.startPosition) === 2){
-                            console.log('right side');
                             const rookFromTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)+3}`);
                             const rookToTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)+1}`);
-                            console.log(rookFromTile);
-                            console.log(rookToTile);
                             rookToTile.innerHTML = rookFromTile.innerHTML;
                             rookToTile.dataset.team = rookFromTile.dataset.team;
                             rookToTile.style.cursor = 'pointer';
@@ -253,11 +261,8 @@ window.addEventListener("load", function() {
                             rookFromTile.innerHTML = '';
                         }
                         else if (parseInt(window.chessSession.recentMove.endPosition) - parseInt(window.chessSession.recentMove.startPosition) === -2){
-                            console.log('left side');
                             const rookFromTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)-4}`);
                             const rookToTile = document.querySelector(`#tile-${parseInt(window.chessSession.recentMove.startPosition)-1}`);
-                            console.log(rookFromTile);
-                            console.log(rookToTile);
                             rookToTile.innerHTML = rookFromTile.innerHTML;
                             rookToTile.dataset.team = rookFromTile.dataset.team;
                             rookToTile.style.cursor = 'pointer';
@@ -317,11 +322,8 @@ window.addEventListener("load", function() {
 
 
                 let updatedAt = new Date(chessSession.updatedAt);
-                console.log(updatedAt);
                 let now = new Date();
-                console.log(now);
                 let differenceInMilliseconds = now - updatedAt;
-                console.log(differenceInMilliseconds);
                 let differenceInMinutes = differenceInMilliseconds / (1000 * 60);
 
                 if (differenceInMinutes > 2) {
