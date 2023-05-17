@@ -123,18 +123,20 @@ img{
 }
 
 @media (max-width: 550px) {
+
     .chess-board {
         width: 100vw;
-        height: 120vw;
+        height: 130vw;
     }
 
-    img {
-        width: 30px;
+    img{
+        width: 32px;
         height: auto;
     }
 
+
     .tile {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     .friends-panel, .friends-search {
@@ -144,19 +146,6 @@ img{
 }
 
 @media (max-width: 500px) {
-    .chess-board {
-        width: 100vw;
-        height: 120vw;
-    }
-
-    img {
-        width: 25px;
-        height: auto;
-    }
-
-    .tile {
-        font-size: 1.6rem;
-    }
 
     .friends-panel, .friends-search {
         width: 60vw;

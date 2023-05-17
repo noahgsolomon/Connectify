@@ -3,7 +3,7 @@ import {
     userProfile,
     profileColors
 } from '../../util/api/userapi.js'
-import {getChessInvites} from "../../util/api/gamesapi/inviteUtil";
+import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));

@@ -643,6 +643,16 @@ body{
     }
 }
 
+@media (max-width: 600px) {
+    .container{
+        width: 90%;
+        margin: 25px auto;
+    }
+    .posts{
+        width: 90%;
+    }
+}
+
 @media (max-width: 480px) {
     .content-text-area, .title-text-area {
         font-size: 0.8rem;
