@@ -176,21 +176,22 @@ function chessboard(imgLocation = "", userColor){
                         piece.dataset.moved = 'true';
                     }
 
-                    if (selectedTile.dataset.team.toUpperCase() === 'WHITE'){
-                        if (parseInt(tile.dataset.num) <= 8){
-                            selectedTile.dataset.piece = 'queen';
-                            selectedTile.querySelector('.piece').dataset.type = 'queen';
-                            selectedTile.querySelector('img').src = '../assets/whitequeen.png';
+                    if (selectedTile.dataset.piece.toUpperCase() === 'PAWN'){
+                        if (selectedTile.dataset.team.toUpperCase() === 'WHITE'){
+                            if (parseInt(tile.dataset.num) <= 8){
+                                selectedTile.dataset.piece = 'queen';
+                                selectedTile.querySelector('.piece').dataset.type = 'queen';
+                                selectedTile.querySelector('img').src = '../assets/whitequeen.png';
+                            }
+                        }
+                        else if (selectedTile.dataset.team.toUpperCase() === 'BLACK'){
+                            if (parseInt(tile.dataset.num) >= 57){
+                                selectedTile.dataset.piece = 'queen';
+                                selectedTile.querySelector('.piece').dataset.type = 'queen';
+                                selectedTile.querySelector('img').src = '../assets/blackqueen.png';
+                            }
                         }
                     }
-                    else if (selectedTile.dataset.team.toUpperCase() === 'BLACK'){
-                        if (parseInt(tile.dataset.num) >= 57){
-                            selectedTile.dataset.piece = 'queen';
-                            selectedTile.querySelector('.piece').dataset.type = 'queen';
-                            selectedTile.querySelector('img').src = '../assets/blackqueen.png';
-                        }
-                    }
-
                     toPos = tile.dataset.num;
                     selectedTile.style.cursor = 'default';
                     tile.style.cursor = 'pointer';

@@ -202,20 +202,23 @@ window.addEventListener("load", function() {
                     const fromTile = document.querySelector(`#tile-${window.chessSession.recentMove.startPosition}`);
                     const toTile = document.querySelector(`#tile-${window.chessSession.recentMove.endPosition}`);
 
-                    if (fromTile.dataset.team.toUpperCase() === 'WHITE'){
-                        if (parseInt(toTile.dataset.num) <= 8){
-                            fromTile.dataset.piece = 'queen';
-                            fromTile.querySelector('.piece').dataset.type = 'queen';
-                            fromTile.querySelector('img').src = '../assets/whitequeen.png';
+                    if (fromTile.dataset.piece.toUpperCase() === 'PAWN'){
+                        if (fromTile.dataset.team.toUpperCase() === 'WHITE'){
+                            if (parseInt(toTile.dataset.num) <= 8){
+                                fromTile.dataset.piece = 'queen';
+                                fromTile.querySelector('.piece').dataset.type = 'queen';
+                                fromTile.querySelector('img').src = '../assets/whitequeen.png';
+                            }
+                        }
+                        else if (fromTile.dataset.team.toUpperCase() === 'BLACK'){
+                            if (parseInt(toTile.dataset.num) >= 57){
+                                fromTile.dataset.piece = 'queen';
+                                fromTile.querySelector('.piece').dataset.type = 'queen';
+                                fromTile.querySelector('img').src = '../assets/blackqueen.png';
+                            }
                         }
                     }
-                    else if (fromTile.dataset.team.toUpperCase() === 'BLACK'){
-                        if (parseInt(toTile.dataset.num) >= 57){
-                            fromTile.dataset.piece = 'queen';
-                            fromTile.querySelector('.piece').dataset.type = 'queen';
-                            fromTile.querySelector('img').src = '../assets/blackqueen.png';
-                        }
-                    }
+
 
                     if (prevFromTile && prevToTile){
                         if (prevFromTile.dataset.color === 'light'){
