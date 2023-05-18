@@ -275,14 +275,37 @@ window.addEventListener("load", function() {
         const darkModeBtn = document.querySelector('.dark-mode');
 
         lightModeBtn.addEventListener('click', async function() {
+            const country = document.querySelector('.profile-country').textContent.substring(9);
+            const bio = document.querySelector('.profile-bio').textContent.substring(5);
+            const profileCardBackgroundColor = '#E0E0E0';
+            const bodyBackgroundColor = '#ECEFF1';
+            const profileEmoji = document.querySelector('.profile-emoji').textContent;
+
             localStorage.setItem('theme', 'light');
             await updateTheme('light');
+
+            await updateProfile(country, bio, profileCardBackgroundColor, bodyBackgroundColor, profileEmoji);
+
+            document.body.style.backgroundColor = bodyBackgroundColor;
+            document.querySelector('.profile-card').style.backgroundColor = profileCardBackgroundColor;
+
             applyTheme();
         });
 
         darkModeBtn.addEventListener('click', async function() {
+            const country = document.querySelector('.profile-country').textContent.substring(9);
+            const bio = document.querySelector('.profile-bio').textContent.substring(5);
+            const profileCardBackgroundColor = '#1C1C1C';
+            const bodyBackgroundColor = '#263238';
+            const profileEmoji = document.querySelector('.profile-emoji').textContent;
+
             localStorage.setItem('theme', 'dark');
             await updateTheme('dark');
+
+            await updateProfile(country, bio, profileCardBackgroundColor, bodyBackgroundColor, profileEmoji);
+
+            document.body.style.backgroundColor = bodyBackgroundColor;
+            document.querySelector('.profile-card').style.backgroundColor = profileCardBackgroundColor;
             applyTheme();
         });
 

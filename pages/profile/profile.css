@@ -328,7 +328,7 @@ body{
     justify-content: center;
     padding: 0.5rem 1rem;
     background-color: var(--detail-color);
-    color: var(--text-color);
+    color: #f0f0f0;
     border: none;
     border-radius: 20px;
     font-size: 1rem;
