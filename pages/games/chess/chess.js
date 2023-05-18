@@ -75,6 +75,22 @@ window.addEventListener("load", function() {
             noFriends.textContent = 'You have no friends😢'
             friendListElement.append(noFriends);
         }
+        const searchInput = document.querySelector('.friends-search');
+        const friendItems = Array.from(document.querySelectorAll('.friend-item'));
+
+        searchInput.addEventListener('keydown', function(e) {
+            const searchString = e.target.value.toLowerCase();
+
+            friendItems.forEach(function(item) {
+                const friendName = item.textContent.toLowerCase();
+
+                if(friendName.includes(searchString)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
     })();
 
 

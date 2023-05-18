@@ -36,14 +36,19 @@ img{
 }
 
 .friends-panel {
-    background-color: #F5DEB3;
+    background-color: #E6BD92;
     width: 300px;
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     font-family: 'Roboto', sans-serif;
     min-width: 300px;
     margin: 20px auto;
+    transition: all 0.2s ease;
+}
+
+.friends-panel:hover {
+    transform: translateY(-5px);
 }
 
 .friends-search {
@@ -54,7 +59,7 @@ img{
     border: none;
     border-radius: 15px;
     background-color: #FFF;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .friends-list {
@@ -63,6 +68,8 @@ img{
     overflow-y: auto;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    background-color: #F5DEB3;
+    overflow-x: hidden;
 }
 
 .friend-item {
@@ -74,31 +81,33 @@ img{
     transition: all 0.2s ease;
 }
 
-.piece {
-    font-size: 3rem;
-}
-
 .friend-item:hover {
-    background-color: #E0E0E0;
+    background-color: #F0D5B5;
+    transform: scale(1.02);
 }
 
 .invite-btn {
     padding: 10px 20px;
-    background-color: #8B4513;
+    background-color: #BF7F50;
     color: white;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .invite-btn:hover {
-    background-color: #A0522D;
+    background-color: #A4683C;
     transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .friends-search {
     box-sizing: border-box;
+}
+.piece {
+    font-size: 3rem;
 }
 
 @media (max-width: 1200px) {
