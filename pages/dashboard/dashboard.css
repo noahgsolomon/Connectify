@@ -1,6 +1,7 @@
 @import '../../util/css/post.css';
 @import '../../util/css/base.css';
 @import '../../util/css/gameinvite.css';
+@import '../../util/css/var.css';
 
 .container {
     display: flex;
@@ -13,8 +14,8 @@
     justify-content: center;
     width: 80px;
     height: 80px;
-    background-color: dodgerblue;
-    color: white;
+    background-color: var(--detail-color);
+    color: #f0f0f0;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -28,7 +29,7 @@
     z-index: 500;
 }
 .add-post-btn:hover {
-    background-color: #64a3ff;
+    background-color: var(--detail-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
@@ -49,33 +50,33 @@
     border-radius: 10px;
     outline: none;
     box-sizing: border-box;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #333;
+    background-color: var(--post-search-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: 0.3s ease;
 }
 
 .post-search:hover {
-    background-color: #fdfdfd;
+    background-color: var(--input-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--shadow);
 }
 
 .post-search:focus {
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #333;
+    background-color: var(--input-focus);
+    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
+    color: var(--post-text-color);
     outline: none;
 }
 
 
 .post {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--background);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 2rem;
     margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
 }
 
@@ -99,39 +100,28 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--overlay-bg);
     transition: all 0.3s ease;
 }
 
 .modal-content {
-    background-color: #f2f2f2;
+    background-color: var(--modal-bg);
     margin: 15% auto;
     padding: 20px;
     border-radius: 10px;
     width: 80%;
     max-width: 500px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px var(--shadow);
     transition: all 0.3s ease;
-}
-
-.close {
-    color: #aaa;
-    font-size: 30px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.close:hover {
-    color: #000;
 }
 
 .modal-header {
     padding-bottom: 10px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2{
+    color: var(--post-title-color);
 }
 
 .modal-body {
@@ -143,39 +133,44 @@
     width: 100%;
     padding: 1rem;
     font-size: 1.1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     outline: none;
     margin-bottom: 1.5rem;
     box-sizing: border-box;
-    background-color: #f6f6f6;
+    background-color: var(--input-bg);
     transition: all 0.3s ease;
     resize: none;
+    color: var(--text-color);
+}
+
+#postForm p {
+    color: var(--text-color);
 }
 
 #postForm input[type="text"]:focus,
 #postForm textarea:focus {
-    border-color: #1e90ff;
-    box-shadow: 0 0 5px #1e90ff;
+    border-color: var(--detail-color);
+    box-shadow: 0 0 5px var(--highlight-color);
 }
 
 #postForm input[type="submit"] {
     margin-bottom: 1.5rem;
-    background-color: #1e90ff;
-    color: white;
+    background-color: var(--btn-color);
+    color: var(--text-color);
     border: none;
     padding: 1rem 2rem;
     font-size: 1.1rem;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow);
 }
 
 #postForm input[type="submit"]:hover {
-    background-color: #64a3ff;
+    background-color: var(--btn-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--shadow);
 }
 
 #postForm input[type="submit"]:active {
@@ -195,8 +190,8 @@
     left: 50%;
     top: 30px;
     transform: translateX(-50%);
-    background-color: #00b894;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--slide-message-bg);
+    box-shadow: 0 0 10px var(--shadow);
     opacity: 0;
     transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
@@ -213,7 +208,7 @@
 }
 
 .inbox-panel {
-    background-color: #f5f5f5;
+    background-color: var(--inbox-panel-bg);
     width: 500px;
     height: 100vh;
     position: fixed;
@@ -225,7 +220,7 @@
     padding: 1rem;
     box-sizing: border-box;
     display: none;
-    box-shadow: -6px 0 12px rgba(0, 0, 0, 0.1);
+    box-shadow: -6px 0 12px var(--shadow);
 }
 
 .inbox-search {
@@ -237,13 +232,13 @@
     border-radius: 5px;
     outline: none;
     box-sizing: border-box;
-    background-color: #f0f0f0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--inbox-search-bg);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
 }
 
 .inbox-search:focus {
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
 }
 
 .overlay {
@@ -253,7 +248,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-bg);
     z-index: 900;
 }
 
@@ -263,26 +258,26 @@
     border-radius: 5px;
     padding: 1rem;
     margin-bottom: 0.5rem;
-    background-color: #fff;
+    background-color: var(--background);
     cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--overlay-bg);
     transition: all 0.3s ease;
 }
 
 .inbox-item:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--overlay-bg);
     transform: translateY(-2px);
 }
 
 .inbox-user {
     font-weight: bold;
     margin-bottom: 0.5rem;
-    color: #1e90ff;
+    color: var(--detail-color);
 }
 
 .inbox-last-message {
     font-size: 0.9rem;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 0.5rem;
 }
 
@@ -291,25 +286,35 @@
     color: #aaa;
 }
 
+.inbox-last-message,
+.message-log-username,
+.message {
+    color: var(--text-color);
+}
+
+.inbox-timestamp,
+.message-time{
+    color: var(--dark-text-color);
+}
+
 .unread::before {
     content: '';
     display: inline-block;
     width: 10px;
     height: 10px;
-    background-color: #0080ff;
+    background-color: var(--highlight-color);
     border-radius: 50%;
     margin-right: 0.5rem;
     vertical-align: middle;
 }
 
 
-/* Message log styles */
 .message-log {
     display: none;
     flex-direction: column;
     height: 100vh;
-    background-color: #f5f5f5;
-    box-shadow: -6px 0 12px rgba(0, 0, 0, 0.1);
+    background-color: var(--background);
+    box-shadow: -6px 0 12px var(--shadow);
 }
 
 .message-log-header {
@@ -318,22 +323,20 @@
     justify-content: space-between;
     padding: 1rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .back-btn {
+    border: none;
     font-size: 1.2rem;
     padding: 5px 10px;
-    background-color: dodgerblue;
-    color: white;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .back-btn:hover {
-    background-color: #64a3ff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -345,7 +348,7 @@ body.no-scroll {
     margin: 0;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
 }
 
 .message-log-content {
@@ -353,7 +356,7 @@ body.no-scroll {
     max-height: 700px;
     padding: 1rem;
     overflow-y: auto;
-    background-color: #fff;
+    background-color: var(--background);
     box-sizing: border-box;
 }
 
@@ -361,7 +364,7 @@ body.no-scroll {
     margin-bottom: 1rem;
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #333;
+    color: var(--text-color);
     border: none;
 }
 
@@ -369,8 +372,8 @@ body.no-scroll {
     display: inline-block;
     padding: 8px;
     border-radius: 12px;
-    color: whitesmoke;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    box-shadow: 0 2px 4px var(--shadow);
     max-width: 60%;
 }
 
@@ -390,7 +393,7 @@ body.no-scroll {
 }
 
 .message.sent .message-content{
-    background-color: #007AFF;
+    background-color: var(--highlight-color);
 }
 
 .message.received .message-content{
@@ -406,8 +409,8 @@ body.no-scroll {
     display: flex;
     align-items: center;
     padding: 1rem;
-    border-top: 1px solid #e0e0e0;
-    background-color: #fff;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--background);
 }
 
 .inbox-message-input {
@@ -420,23 +423,22 @@ body.no-scroll {
     border-radius: 10px;
     outline: none;
     box-sizing: border-box;
-    background-color: #f4f4f4;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
 }
 
 
 .inbox-message-input:focus {
     border: none;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
 }
 
 .send-message-btn {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     color: #fff;
-    background-color: dodgerblue;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -444,15 +446,20 @@ body.no-scroll {
 }
 
 .send-message-btn:hover {
-    background-color: #64a3ff;
+    background-color: var(--btn-hover);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
 .send-message-btn:active {
-    background-color: dodgerblue;
+    background-color: var(--btn-focus);
     box-shadow: none;
     transform: translateY(0);
+}
+
+.back-btn,
+.send-message-btn {
+    background-color: var(--btn-color);
 }
 
 .games-panel {
@@ -465,49 +472,49 @@ body.no-scroll {
 }
 
 .game-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--background);
+    border: 1px solid var(--text-color);
     border-radius: 10px;
     padding: 1.5rem;
     width: 100%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
     box-sizing: border-box;
     max-width: 100%;
 }
 
 .game-item:hover {
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
 .chess-game {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
+    background-color: var(--chess-panel);
+    border-color: var(--border-color);
 }
 
 .trivia-game {
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
+    background-color: var(--trivia-panel);
+    border-color: var(--border-color);
 }
 
 .puzzle-game {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
+    background-color: var(--puzzle-panel);
+    border-color: var(--border-color);
 }
 
 .game-title {
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
-    color: #333333;
+    color: var(--text-color);
 }
 
 .game-description {
     word-break: break-word;
     margin-bottom: 0;
     font-size: 1rem;
-    color: #333;
+    color: var(--text-color);
     line-height: 1.5;
 }
 
@@ -516,18 +523,18 @@ body.no-scroll {
     justify-content: space-between;
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #262626;
+    color: var(--text-color);
 }
 
 .game-meta .players {
     font-weight: bold;
-    color: #333333;
+    color: var(--text-color);
 }
 
 .game-join-btn {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     margin-top: 10px;
     color: #fff;
     border-radius: 50px;
@@ -541,68 +548,40 @@ body.no-scroll {
 }
 
 .game-join-btn:hover {
-    background-color: #64a3ff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--detail-color);
+    box-shadow: 0 4px 10px var(--shadow);
     transform: translateY(-2px);
 }
 
 .game-join-btn:active {
-    background-color: #1e90ff;
+    background-color: var(--btn-focus);
     box-shadow: none;
     transform: translateY(0);
 }
 
-.chess-game {
-    background-color: #f1c40f;
-    border-color: #f39c12;
-}
-
-.trivia-game {
-    background-color: #3498db;
-    border-color: #2980b9;
-}
-
-.puzzle-game {
-    background-color: #27ae60;
-    border-color: #2ecc71;
-}
-
-#chess-game .game-title {
-    color: #e67e22;
-}
 
 #chess-game .game-join-btn {
-    background-color: #e67e22;
+    background-color: var(--chess-join-btn);
 }
 
 #chess-game .game-join-btn:hover {
-    background-color: #d35400;
-}
-
-#trivia-game .game-title {
-    color: #ffffff;
+    background-color: var(--chess-join-btn-hover);
 }
 
 #trivia-game .game-join-btn {
-    background-color: #085a91;
-    color: #3498db;
+    background-color: var(--trivia-join-btn);
 }
 
 #trivia-game .game-join-btn:hover {
-    background-color: #084a77;
-}
-
-#puzzle-game .game-title {
-    color: #ffffff;
+    background-color: var(--trivia-join-btn-hover);
 }
 
 #puzzle-game .game-join-btn {
-    background-color: #0c7235;
-    color: #27ae60;
+    background-color: var(--puzzle-join-btn);
 }
 
 #puzzle-game .game-join-btn:hover {
-    background-color: #08602b;
+    background-color: var(--puzzle-join-btn-hover);
 }
 
 .game-description{

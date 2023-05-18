@@ -1,0 +1,179 @@
+:root{
+    --header: #f0f0f0;
+    --light-header: #f0f0f0;
+    --dark-header: #2d2d2d;
+
+    --header-btn: #f5f5f5;
+    --light-header-btn: #f5f5f5;
+    --dark-header-btn: #3d3d3d;
+
+    --emoji: #f0f0f0;
+    --light-emoji: #f0f0f0;
+    --dark-emoji: #3d3d3d;
+
+    --detail-color: #1e90ff;
+    --light-detail-color: #1e90ff;
+    --dark-detail-color: #416caa;
+
+    --chess-panel: #f1c40f;
+    --light-chess-panel: #f1c40f;
+    --dark-chess-panel: #c6b228;
+
+    --trivia-panel: #3498db;
+    --light-trivia-panel: #3498db;
+    --dark-trivia-panel: #1f6383;
+
+    --puzzle-panel: #27ae60;
+    --light-puzzle-panel: #27ae60;
+    --dark-puzzle-panel: #238e48;
+
+    --background: #f5f5f5;
+    --light-background: #e0e0e0;
+    --dark-background: #232323;
+
+    --logo: #333;
+    --light-logo: #333;
+    --dark-logo: #ddd;
+
+    --liked-btn-bg: rgb(215, 47, 86);
+    --light-liked-btn-bg: rgb(215, 47, 86);
+    --dark-liked-btn-bg: rgb(170, 45, 75);
+
+    --bookmarked-btn-bg: rgb(190, 119, 63);
+    --light-bookmarked-btn-bg: rgb(190, 119, 63);
+    --dark-bookmarked-btn-bg: rgb(153, 101, 60);
+
+    --input-bg: #f0f0f0;
+    --light-input-bg: #f0f0f0;
+    --dark-input-bg: #3d3d3d;
+
+    --text-color: #333333;
+    --light-text-color: #333333;
+    --dark-text-color: #cccccc;
+
+    --add-post-btn-bg: dodgerblue;
+    --light-add-post-btn-bg: #64a3ff;
+    --dark-add-post-btn-bg: #133c55;
+
+    --post-search-bg: #ffffff;
+    --light-post-search-bg: #fdfdfd;
+    --dark-post-search-bg: #3d3d3d;
+
+    --modal-bg: #f2f2f2;
+    --light-modal-bg: #fbfbfb;
+    --dark-modal-bg: #444;
+
+    --postForm-input-bg: #f6f6f6;
+    --light-postForm-input-bg: #fbfbfb;
+    --dark-postForm-input-bg: #3d3d3d;
+
+    --postForm-submit-btn-bg: #1e90ff;
+    --light-postForm-submit-btn-bg: #64a3ff;
+    --dark-postForm-submit-btn-bg: #133c55;
+
+    --slide-message-bg: #00b894;
+    --light-slide-message-bg: #00cc99;
+    --dark-slide-message-bg: #006650;
+
+    --inbox-panel-bg: #f5f5f5;
+    --light-inbox-panel-bg: #fafafa;
+    --dark-inbox-panel-bg: #303030;
+
+    --inbox-search-bg: #f0f0f0;
+    --light-inbox-search-bg: #fafafa;
+    --dark-inbox-search-bg: #3d3d3d;
+
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    --light-overlay-bg: rgba(0, 0, 0, 0.6);
+    --dark-overlay-bg: rgba(0, 0, 0, 0.4);
+
+    --post-title-color: #333333;
+    --light-post-title-color: #333333;
+    --dark-post-title-color: #cccccc;
+
+    --post-text-color: #333;
+    --light-post-text-color: #333;
+    --dark-post-text-color: #a4a4a4;
+
+    --post-meta-color: #262626;
+    --light-post-meta-color: #262626;
+    --dark-post-meta-color: #9b9b9b;
+
+    --post-meta-date-color: #333333;
+    --light-post-meta-date-color: #333333;
+    --dark-post-meta-date-color: #bbbbbb;
+
+    --post-highlight-color: #77b6f1;
+    --light-post-highlight-color: #77b6f1;
+    --dark-post-highlight-color: #77b6f1;
+
+    --post-highlight-text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+    --light-post-highlight-text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+    --dark-post-highlight-text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+
+    --btn-hover: rgba(30, 144, 255, 0.8);
+    --light-btn-hover: rgba(30, 144, 255, 0.8);
+    --dark-btn-hover: rgba(65, 108, 170, 0.8);
+
+    --btn-focus: #d0d0d0;
+    --light-btn-focus: #d0d0d0;
+    --dark-btn-focus: #5d5d5d;
+
+    --input-hover: #e6e6e6;
+    --light-input-hover: #e6e6e6;
+    --dark-input-hover: #4d4d4d;
+
+    --input-focus: #d9d9d9;
+    --light-input-focus: #d9d9d9;
+    --dark-input-focus: #5d5d5d;
+
+    --highlight-color: #1e90ff;
+    --highlight-color-light: #1e90ff;
+    --highlight-color-dark: #416caa;
+
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.8);
+
+    --border-color: #ccc;
+    --border-color-light: #ccc;
+    --border-color-dark: #333;
+
+    --btn-color: #1e90ff;
+    --btn-color-light: #1e90ff;
+    --btn-color-dark: #416caa;
+
+    --chess-join-btn: #e67e22;;
+    --chess-join-btn-light: #e67e22;
+    --chess-join-btn-dark: #d35400;;
+
+    --chess-join-btn-hover: #d35400;
+    --chess-join-btn-hover-light: #d35400;
+    --chess-join-btn-hover-dark:  #a04000;
+
+    --trivia-join-btn: #085a91;
+    --trivia-join-btn-light: #085a91;
+    --trivia-join-btn-dark: #084a77;
+
+
+    --trivia-join-btn-hover: #084a77;
+    --trivia-join-btn-hover-light: #084a77;
+    --trivia-join-btn-hover-dark: #063b5a;
+
+    --puzzle-join-btn: #0c7235;
+    --puzzle-join-btn-light: #0c7235;
+    --puzzle-join-btn-dark: #08602b;
+
+    --puzzle-join-btn-hover: #08602b;
+    --puzzle-join-btn-hover-light: #08602b;
+    --puzzle-join-btn-hover-dark: #06481d;
+
+    --error-color: #ff6961;
+    --error-color-light: #ff4d4d;
+    --error-color-dark: #a94442;
+
+    --error-color-hover: #ff4d4d;
+    --error-color-hover-light: #ff3333;
+    --error-color-hover-dark: #843534;
+
+}

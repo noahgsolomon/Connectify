@@ -126,7 +126,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     if (!likedBookmarked.liked) {
         likeButton.textContent = '❤';
     } else {
-        likeButton.style.backgroundColor = '#d72f56';
+        likeButton.style.backgroundColor = 'var(--liked-btn-bg)';
         likeButton.textContent = '💖';
         likeButton.setAttribute('data-clicked', 'true');
     }
@@ -137,7 +137,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
         if (!isClicked) {
             postList[i].likes += 1;
-            buttonElement.style.backgroundColor = '#d72f56';
+            buttonElement.style.backgroundColor = 'var(--liked-btn-bg)';
             buttonElement.textContent = '💖';
             buttonElement.setAttribute('data-clicked', 'true');
         } else {
@@ -164,7 +164,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     if (!likedBookmarked.bookmark) {
         bookmarkButton.textContent = '💾';
     } else {
-        bookmarkButton.style.backgroundColor = '#be773f';
+        bookmarkButton.style.backgroundColor = 'var(--bookmarked-btn-bg)';
         bookmarkButton.textContent = '📚';
         bookmarkButton.setAttribute('data-clicked', 'true');
     }
@@ -173,7 +173,7 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
         const buttonElement = event.currentTarget;
         const isClicked = buttonElement.getAttribute('data-clicked') === 'true';
         if (!isClicked) {
-            buttonElement.style.backgroundColor = '#be773f';
+            buttonElement.style.backgroundColor = 'var(--bookmarked-btn-bg)';
             buttonElement.textContent = '📚';
             buttonElement.setAttribute('data-clicked', 'true');
         } else {

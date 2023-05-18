@@ -1,8 +1,11 @@
 import {signUp} from '../../util/api/userapi.js'
+import {applyTheme} from "../../util/userUtils.js";
 window.addEventListener("load", function() {
 
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
+
+    applyTheme();
 
     const signUpForm = document.getElementById("signup-form");
 

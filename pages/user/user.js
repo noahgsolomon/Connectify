@@ -1,5 +1,6 @@
 import {userProfile, profileColors} from "../../util/api/userapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
+import {applyTheme} from "../../util/userUtils.js";
 
 
 const jwtToken = localStorage.getItem('jwtToken');
@@ -14,6 +15,8 @@ if (!jwtToken || expiryDate < new Date()){
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {
+
+    applyTheme();
 
     function getUsernameFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);

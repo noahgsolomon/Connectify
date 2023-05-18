@@ -46,7 +46,7 @@ async function login(username, password){
             credentials: 'include'
         });
         const responseBody = await response.json();
-        console.log(responseBody.token);
+
 
         if (response.ok) {
             localStorage.setItem('jwtToken', responseBody.token);
@@ -57,6 +57,7 @@ async function login(username, password){
             localStorage.setItem('expiry', expiryDate.toISOString());
             console.log(localStorage.getItem('expiry'));
             localStorage.setItem('username', username);
+            localStorage.setItem('theme', responseBody.theme);
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';
@@ -399,6 +400,24 @@ async function friendsList(){
     }
 }
 
+async function updateTheme(theme){
+    try{
+        const response = await fetch("http://localhost:8080/update-theme", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`},
+            body: theme
+        });
+
+        const responseBody = await response.text();
+        console.log(responseBody);
+        if (response.ok){
+            return responseBody;
+        }
+    }catch (error){
+        console.log(error);
+    }
+}
 function rgbToRGBA(rgb, alpha) {
     const regex = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
     const match = regex.exec(rgb);
@@ -425,5 +444,6 @@ export {
     profileColors,
     loggedInUser,
     getFollowCount,
-    friendsList
+    friendsList,
+    updateTheme
 };

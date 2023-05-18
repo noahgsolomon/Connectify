@@ -1,5 +1,5 @@
 .profile-card {
-    background-color: white;
+    background-color: var(--background);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
@@ -17,8 +17,12 @@
     margin-bottom: 15px;
     border-radius: 50%;
     padding: 10px;
-    background-color: #f0f0f0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--emoji);
+    box-shadow: 0 4px 6px var(--shadow);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .profile-info {
@@ -31,7 +35,7 @@
 .profile-name {
     font-size: 48px;
     font-weight: bold;
-    color: #1e90ff;
+    color: var(--detail-color);
 }
 
 @media (max-width: 1000px) {
@@ -46,16 +50,21 @@
     font-size: 24px;
 }
 
+.profile-country{
+    color: var(--post-title-color);
+}
+
+
 .profile-bio {
     font-size: 18px;
     font-style: italic;
     margin-top: 0;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--text-color);
 }
 
 .profile-category {
-    background-color: #1e90ff;
+    background-color: var(--detail-color);;
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
@@ -65,23 +74,31 @@
     font-size: 16px;
 }
 
+.followers-count{
+    color: var(--post-highlight-color);
+}
+
+.following-count{
+    color: var(--post-meta-color);
+}
+
 .message-bar {
     width: 100%;
     padding: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 20px;
     outline: none;
     box-sizing: border-box;
     transition: all 0.3s ease;
-    background-color: #f4f4f4;
+    background-color: var(--input-bg);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .message-bar:focus {
-    background-color: #efefef;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--input-bg);
+    box-shadow: 0 0 5px var(--highlight-color), 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -89,9 +106,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #4892ee;
+    background-color: var(--btn-color);
     width: 100%;
-    color: #fff;
+    color: var(--text-color);
     padding: 1rem;
     margin-bottom: 0.5rem;
     font-size: 1rem;
@@ -101,7 +118,7 @@
     box-sizing: border-box;
     transition: all 0.3s ease;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--shadow);
 }
 
 .send-message-btn::before {
@@ -110,13 +127,13 @@
 }
 
 .send-message-btn:hover {
-    background-color: #99c8ff;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--btn-hover);
+    box-shadow: 0 6px 10px var(--shadow);
     transform: translateY(-2px);
 }
 
 .send-message-btn:active {
-    background-color: #4892ee;
+    background-color: var(--btn-focus);
     box-shadow: none;
     transform: translateY(0);
 }
@@ -126,33 +143,33 @@
     gap: 10px;
     font-size: 16px;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 20px;
 }
 
 .follow-btn {
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     border: none;
     border-radius: 5px;
-    color: white;
+    color: var(--text-color);
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
     padding: 10px 20px;
     text-transform: uppercase;
     transition: 0.3s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow);
     margin-bottom: 20px;
 }
 
 .follow-btn:hover {
-    background-color: #4892ee;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--detail-color);
+    box-shadow: 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
 .follow-btn:active {
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     box-shadow: none;
     transform: translateY(0);
 }

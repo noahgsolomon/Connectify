@@ -15,8 +15,9 @@ body{
 }
 
 .profile-card {
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    background-color: var(--background);
+    box-shadow: 0 4px 6px var(--shadow);
     border-radius: 10px;
     padding: 20px;
     width: 80%;
@@ -34,12 +35,63 @@ body{
     margin-bottom: 15px;
     border-radius: 50%;
     padding: 10px;
-    background-color: #f0f0f0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: var(--emoji);
+    box-shadow: 0 4px 6px var(--shadow);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.theme-switch {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.theme-btn {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.theme-btn:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.theme-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.light-mode{
+    background-color: whitesmoke;
+}
+
+.light-mode:hover{
+    background-color: #cecece;
+}
+
+.dark-mode{
+    background-color: #333333;
+}
+
+.dark-mode:hover{
+    background-color: #2c2b2b;
+}
+
+.light-mode:focus{
+    background-color: #FFC83D;
+}
+
+.dark-mode:focus{
+    background-color: #FEFCD7;
 }
 
 .profile-info {
@@ -52,7 +104,7 @@ body{
 .profile-name {
     font-size: 48px;
     font-weight: bold;
-    color: #1e90ff;
+    color: var(--detail-color);
 }
 
 @media (max-width: 1000px) {
@@ -67,16 +119,20 @@ body{
     font-size: 24px;
 }
 
+.profile-country{
+    color: var(--post-title-color);
+}
+
 .profile-bio {
     font-size: 18px;
     font-style: italic;
     margin-top: 0;
     margin-bottom: 15px;
-    color: #333;
+    color: var(--text-color);
 }
 
 .profile-category {
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
@@ -84,6 +140,14 @@ body{
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 16px;
+}
+
+.followers-count{
+    color: var(--post-highlight-color);
+}
+
+.following-count{
+    color: var(--post-meta-color);
 }
 
 .edit-form {
@@ -97,7 +161,7 @@ body{
 .edit-form label {
     font-size: 18px;
     font-weight: bold;
-    color: #1e90ff;
+    color: var(--text-color);
     margin-bottom: 0.5rem;
 }
 
@@ -105,19 +169,19 @@ body{
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     padding: 8px;
-    border: 2px solid #ddd;
+    border: 2px solid var(--border-color);
     border-radius: 10px;
     width: 200px;
-    background-color: #f2f2f2;
+    background-color: var(--input-bg);
+    color: var(--text-color);
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
 }
 
 .edit-form input[type="text"]:focus {
-    border-color: #3f51b5;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--input-bg);
+    box-shadow: 0 4px 10px var(--shadow);
 }
 
 .form-fields {
@@ -136,8 +200,8 @@ body{
 
 .like-btn,
 .bookmark-btn {
-    background-color: #1e90ff;
-    color: #fff;
+    background-color: var(--btn-color);
+    color: var(--text-color);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 1rem;
@@ -147,14 +211,14 @@ body{
 
 .like-btn:hover,
 .bookmark-btn:hover {
-    background-color: #64a3ff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--btn-hover);
+    box-shadow: 0 4px 10px var(--shadow);
     transform: translateY(-2px);
 }
 
 .like-btn:active,
 .bookmark-btn:active {
-    background-color: #1e90ff;
+    background-color: var(--btn-focus);
     box-shadow: none;
     transform: translateY(0);
 }
@@ -166,12 +230,18 @@ body{
     border-radius: 10px;
     float: left;
     transition: 0.4s;
-    border: 1px solid rgba(220, 220, 220, 0.4);
 }
 
 .card-color:hover, .bg-color:hover {
     cursor: pointer;
-    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 1px 2px 3px var(--shadow);
+}
+
+.color-label {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 .posts {
@@ -186,7 +256,7 @@ body{
 }
 
 .post {
-    background-color: #fff;
+    background-color: var(--background);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 1.5rem;
@@ -204,14 +274,14 @@ body{
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
-    color: #333333;
+    color: var(--post-title-color);
 }
 
 .post p {
     word-break: break-word;
     margin-bottom: 0;
     font-size: 1rem;
-    color: #333;
+    color: var(--post-text-color);
     line-height: 1.5;
 }
 
@@ -220,12 +290,16 @@ body{
     justify-content: space-between;
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #262626;
+    color: var(--post-meta-color);
 }
 
 .post-meta .date {
     font-weight: bold;
-    color: #333333;
+    color: var(--post-meta-date-color);
+}
+
+.post-meta .author{
+    color: var(--post-title-color);
 }
 
 .post-actions {
@@ -236,12 +310,12 @@ body{
 
 .post-stats {
     font-size: 0.9rem;
-    color: #262626;
+    color: var(--post-meta-color);
 }
 
 .category {
     font-weight: bold;
-    color: #333;
+    color: var(--post-text-color);
 }
 .post-edit-btn,
 .post-del-btn,
@@ -253,8 +327,8 @@ body{
     align-items: center;
     justify-content: center;
     padding: 0.5rem 1rem;
-    background-color: #1e90ff;
-    color: #fff;
+    background-color: var(--detail-color);
+    color: var(--text-color);
     border: none;
     border-radius: 20px;
     font-size: 1rem;
@@ -271,9 +345,9 @@ body{
 .save-btn:hover,
 .edit-btn:hover,
 .cancel-popup-btn:hover{
-    background-color: #64a3ff;
+    background-color: var(--btn-hover);
     transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px var(--shadow);
 }
 
 .post-edit-btn:active,
@@ -282,7 +356,7 @@ body{
 .save-btn:active,
 .edit-btn:active,
 .cancel-popup-btn:active{
-    background-color: #1e90ff;
+    background-color: var(--btn-hover);
     transform: translateY(0);
     box-shadow: none;
 }
@@ -305,20 +379,20 @@ body{
 }
 
 .edit-btn{
-    background-color: #1e90ff;
+    background-color:var(--btn-color);
 }
 
 .edit-btn:hover {
-    background-color: #64a3ff;
+    background-color: var(--btn-hover);
 }
 
 .cancel-popup-btn {
     margin-top: 10px;
-    background-color: #ff8e8e;
+    background-color: var(--error-color);
 }
 
 .cancel-popup-btn:hover {
-    background-color: #e57272;
+    background-color:  var(--error-color-hover);
 }
 
 .post-del-btn {
@@ -357,7 +431,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-bg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -366,11 +440,11 @@ body{
 
 .confirm-delete-popup {
     width: 400px;
-    background: white;
+    background: var(--background);
     padding: 20px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px var(--overlay-bg);
     font-family: 'Roboto', sans-serif;
     animation: slideUp 0.5s;
 }
@@ -378,6 +452,7 @@ body{
 .confirm-delete-popup h3 {
     font-size: 1.5rem;
     margin-top: 0;
+    color: var(--text-color);
 }
 
 .confirm-delete-popup-buttons {
@@ -400,23 +475,23 @@ body{
 }
 
 .confirm-delete-popup-buttons .cancel-popup-btn {
-    background: #f0f0f0;
-    color: #333;
+    background: var(--header);
+    color: var(--text-color);
 }
 
 .confirm-delete-popup-buttons .delete-btn {
-    background: #ff6961;
-    color: white;
+    background: var(--error-color);
+    color: var(--text-color);
 }
 
 .confirm-delete-popup-buttons .cancel-popup-btn:hover {
-    background: #e5e5e5;
+    background: var(--btn-hover);
 }
 
 .confirm-delete-popup-buttons .delete-btn:hover {
-    background: #ff4d4d;
+    background: var(--error-color-hover);
     transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(255, 105, 97, 0.2);
+    box-shadow: 0 4px 10px var(--overlay-bg);
 }
 
 .confirm-delete-popup-buttons .delete-btn::before {
@@ -431,9 +506,9 @@ body{
     outline: none;
     box-sizing: border-box;
     padding: 0.5rem;
-    background-color: #f4f4f4;
-    color: #333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
     resize: none;
     width: 100%;
@@ -441,7 +516,7 @@ body{
 
 .content-text-area:focus, .title-text-area:focus {
     border: none;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
 }
 
 
@@ -463,11 +538,11 @@ body{
     top: 100%;
     right: 0;
     width: 280px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: var(--background);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 15px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px var(--shadow);
     z-index: 100;
     font-family: 'Roboto', sans-serif;
     max-height: 400px;
@@ -491,7 +566,7 @@ body{
 .settings-panel li {
     display: flex;
     padding: 6px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border-color);
     background-color: transparent;
     border-radius: 4px;
     margin-bottom: 8px;
@@ -501,7 +576,7 @@ body{
 }
 
 .settings-panel li:hover {
-    background-color: rgba(245, 245, 245, 0.2);
+    background-color: var(--input-hover);
 }
 
 .settings-panel li:last-child {
@@ -511,7 +586,7 @@ body{
 .settings-panel a {
     padding: 6px;
     font-size: 1.2em;
-    color: #444;
+    color: var(--text-color);
     text-decoration: none;
     text-align: center;
     cursor: pointer;
@@ -520,13 +595,13 @@ body{
 }
 
 .settings-panel a:hover {
-    color: #1e90ff;
+    color: var(--highlight-color);
 }
 
 #logout-btn {
     padding: 12px;
-    background-color: #ff6961;
-    color: #fff;
+    background-color: var(--error-color);
+    color: var(--text-color);
     text-align: center;
     border-radius: 20px;
     transition: background-color 0.3s, transform 0.3s;
@@ -539,9 +614,9 @@ body{
 }
 
 #logout-btn:hover {
-    background-color: #ff4d4d;
+    background-color: var(--error-color-hover);
     transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(255, 105, 97, 0.2);
+    box-shadow: 0 4px 10px var(--error-color-hover);
 }
 
 #logout-btn::before {
@@ -557,7 +632,7 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-bg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -571,13 +646,17 @@ body{
 
 .logout-confirm-content {
     width: 400px;
-    background: white;
+    background: var(--background);
     padding: 20px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px var(--shadow);
     font-family: 'Roboto', sans-serif;
     animation: slideUp 0.5s;
+}
+
+.logout-confirm-content p {
+    color: var(--text-color);
 }
 
 @keyframes slideUp {
@@ -586,8 +665,8 @@ body{
 }
 
 #confirm-logout-btn {
-    background: #ff6961;
-    color: white;
+    background: var(--error-color);
+    color: var(--text-color);
     border: none;
     padding: 10px 20px;
     margin-right: 10px;
@@ -602,9 +681,9 @@ body{
 }
 
 #confirm-logout-btn:hover {
-    background: #ff4d4d;
+    background: var(--error-color-hover);
     transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(255, 105, 97, 0.2);
+    box-shadow: 0 3px 6px var(--error-color-hover);
 }
 
 #confirm-logout-btn::before {
@@ -613,13 +692,13 @@ body{
 }
 
 #cancel-logout-btn {
-    background: #f0f0f0;
-    color: #333;
+    background: var(--header-btn);
+    color: var(--text-color);
     border: none;
     padding: 10px 20px;
     border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: 0.3s ease;
     font-weight: bold;
     display: inline-flex;
     align-items: center;
@@ -628,7 +707,9 @@ body{
 }
 
 #cancel-logout-btn:hover {
-    background: #e5e5e5;
+    background-color: var(--btn-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px var(--shadow);
 }
 
 .settings-panel.show {

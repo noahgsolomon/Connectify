@@ -1,9 +1,11 @@
+@import 'var.css';
+
 body {
     font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #f5f5f5;
+    background-color: var(--background);
 }
 
 .hidden{
@@ -16,13 +18,13 @@ a {
 }
 
 a:hover {
-    color: #1e90ff;
+    color: var(--detail-color);
 }
 
 .btn {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     color: #fff;
     border-radius: 5px;
     font-size: 1rem;
@@ -34,9 +36,9 @@ a:hover {
 }
 
 header {
-    background-color: #f0f0f0;
+    background-color: var(--header);
     padding: 0 10%;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,35 +51,35 @@ nav a {
     padding: 0.5rem 1rem;
     font-size: 1.4rem;
     font-weight: 500;
-    color: #333;
+    color: var(--text-color);
     text-decoration: none;
     border-radius: 8px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.5s ease;
 }
 
 nav a:hover {
     color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
 nav a:active {
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     box-shadow: none;
     transform: translateY(0);
 }
 
 .logo {
-    color: #333;
+    color: var(--logo);
     font-size: 2.5rem;
     transition: 0.3s;
     text-decoration: none;
 }
 
 .logo:hover {
-    color: #1e90ff;
+    color: var(--detail-color);
 }
 
 .dashboard-btn:hover{
@@ -108,6 +110,18 @@ nav a:active {
     background-color: #ffd87b;
 }
 
+.notification-btn.has-notification {
+    background-color: #ff6a5f;
+}
+
+.notification-btn:hover {
+    background-color: #ffd87b;
+}
+
+.notification-btn.has-notification:hover {
+    background-color: #ff8e7f;
+}
+
 .settings-btn:hover{
     background-color: lightgrey;
 }
@@ -123,7 +137,7 @@ nav a:active {
     left: 50%;
     transform: translateX(-50%);
     width: 280px;
-    background-color: #ffffff;
+    background-color: var(--header-btn);
     border: 1px solid #ccc;
     border-radius: 6px;
     padding: 15px;
@@ -146,6 +160,7 @@ nav a:active {
     margin: 0;
     padding: 0;
     list-style-type: none;
+    color: var(--text-color);
 }
 
 .notification-item {

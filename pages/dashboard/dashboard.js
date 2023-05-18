@@ -9,7 +9,7 @@ import {
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {postRender} from "../../util/postUtils.js";
-import {notificationRender} from "../../util/userUtils.js";
+import {notificationRender, applyTheme} from "../../util/userUtils.js";
 import {deleteAllNotifications} from "../../util/api/notificationapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 localStorage.removeItem('sessionId');
@@ -27,6 +27,7 @@ if (!jwtToken || expiryDate < new Date()){
     window.location.href = "../login/login.html"
 }
 window.addEventListener("load", function() {
+    applyTheme();
 
     const main = document.querySelector('.center-content');
     console.log(localStorage.getItem('jwtToken'));
@@ -34,7 +35,7 @@ window.addEventListener("load", function() {
         const dateObj = new Date(dateString);
         const now = new Date();
         const timeDifference = now - dateObj;
-        const twentyFourHours = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        const twentyFourHours = 24 * 60 * 60 * 1000;
 
         const formattedDate = dateObj.toLocaleDateString();
         const formattedTime = dateObj.toLocaleTimeString
@@ -58,8 +59,7 @@ window.addEventListener("load", function() {
     document.querySelector('.notification-btn').addEventListener('click', async () => {
         document.querySelector('.notification-panel').classList.toggle('show');
         if (document.querySelector('.notification-panel').classList.contains('show') && notificationItems.innerHTML !== ''){
-            notificationBtn.style.backgroundColor = '#f5f5f5';
-            await deleteAllNotifications()
+            await deleteAllNotifications();
         }
     });
 
@@ -302,16 +302,11 @@ window.addEventListener("load", function() {
 
     const modal = document.getElementById("postModal");
     const addPostBtn = document.querySelector(".add-post-btn");
-    const closeBtn = document.getElementsByClassName("close")[0];
     let charCount = document.getElementById("charCount");
 
 
     addPostBtn.onclick = function () {
         modal.style.display = "block";
-    };
-
-    closeBtn.onclick = function () {
-        modal.style.display = "none";
     };
 
     window.onclick = function (event) {

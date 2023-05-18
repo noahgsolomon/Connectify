@@ -2,12 +2,13 @@ import {
     profile,
     updateProfile,
     getFollowCount,
-    logout
+    logout, updateTheme
 } from '../../util/api/userapi.js'
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {formatDateAndTime} from "../../util/postUtils.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
+import {applyTheme} from "../../util/userUtils.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -24,6 +25,8 @@ window.addEventListener("load", function() {
 
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
+
+    applyTheme();
 
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
         '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰',
@@ -267,6 +270,22 @@ window.addEventListener("load", function() {
 
             profileCard.style.display = 'block';
         }
+
+        const lightModeBtn = document.querySelector('.light-mode');
+        const darkModeBtn = document.querySelector('.dark-mode');
+
+        lightModeBtn.addEventListener('click', async function() {
+            localStorage.setItem('theme', 'light');
+            await updateTheme('light');
+            applyTheme();
+        });
+
+        darkModeBtn.addEventListener('click', async function() {
+            localStorage.setItem('theme', 'dark');
+            await updateTheme('dark');
+            applyTheme();
+        });
+
     })();
 
     const editButton = document.querySelector('.edit-btn');

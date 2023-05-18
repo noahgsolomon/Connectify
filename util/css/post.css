@@ -1,3 +1,5 @@
+@import "var.css";
+
 .post:hover {
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
@@ -7,14 +9,14 @@
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
-    color: #333333;
+    color: var(--post-title-color);
 }
 
 .post p {
     word-break: break-word;
     margin-bottom: 0;
     font-size: 1rem;
-    color: #333;
+    color: var(--post-text-color);
     line-height: 1.5;
 }
 
@@ -23,12 +25,12 @@
     justify-content: space-between;
     margin-top: 0.5rem;
     font-size: 0.9rem;
-    color: #262626;
+    color: var(--post-meta-color);
 }
 
 .post-meta .date {
     font-weight: bold;
-    color: #333333;
+    color: var(--post-meta-date-color);
 }
 
 .post-actions {
@@ -39,7 +41,7 @@
 
 .post-stats {
     font-size: 0.9rem;
-    color: #262626;
+    color: var(--post-meta-color);
 }
 
 .like-count {
@@ -49,11 +51,11 @@
 
 .category {
     font-weight: bold;
-    color: #333;
+    color: var(--post-text-color);
 }
 
 .author {
-    color: #333333;
+    color: var(--post-title-color);
     font-size: 1.2rem;
     font-weight: bold;
     text-decoration: none;
@@ -62,13 +64,14 @@
 }
 
 .author:hover {
-    color: #77b6f1;
-    text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+    color: var(--post-highlight-color);
+    text-shadow: var(--post-highlight-text-shadow);
 }
 
 .like-btn,
 .bookmark-btn {
-    background-color: #1e90ff;
+    border: none;
+    background-color: var(--detail-color);
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 100px;
@@ -86,7 +89,7 @@
 
 .like-btn:active,
 .bookmark-btn:active {
-    background-color: #1e90ff;
+    background-color: var(--detail-color);
     box-shadow: none;
     transform: translateY(0);
 }
@@ -106,7 +109,8 @@
     outline: none;
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #f0f0f0;
+    background-color: var(--input-bg);
+    color: var(--text-color);
 }
 
 .comment-field:focus {
@@ -114,7 +118,8 @@
 }
 
 .comment-btn {
-    background-image: linear-gradient(135deg, #1e90ff 0%, #64a3ff 100%);
+    border: none;
+    background-color: var(--detail-color);
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 20px;
@@ -132,7 +137,7 @@
 
 .see-comments-container {
     font-size: 0.9rem;
-    color: #1e90ff;
+    color: var(--detail-color);
     cursor: pointer;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -167,19 +172,21 @@
 .comment-author {
     font-weight: bold;
     margin-right: 0.5rem;
-    color: #666;
+    color: var(--post-meta-color);
     transition: 0.3s ease;
 }
 
-.comment-author:hover{
-    color: #1e90ff;
-}
-
 .comment-text {
-    color: #333;
+    color: var(--post-text-color);
     margin-top: 0.5rem;
     line-height: 1.5;
 }
+
+
+.comment-author:hover{
+    color: var(--detail-color);
+}
+
 
 .comment-info {
     display: flex;

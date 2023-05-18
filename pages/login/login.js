@@ -1,5 +1,8 @@
 import {login} from "../../util/api/userapi.js";
+import {applyTheme} from "../../util/userUtils.js";
 window.addEventListener("load", function() {
+
+    applyTheme();
 
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
@@ -12,26 +15,12 @@ window.addEventListener("load", function() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        function setCookie(name, value, days, sameSite = 'Lax') {
-            let expires = '';
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = '; expires=' + date.toUTCString();
-            }
-            document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=' + sameSite + '; Secure; HttpOnly';
-        }
-
         (async () => {
-            const sessionId = await login(username, password).catch(error => console.error(error));
-            if (sessionId) {
-                console.log(sessionId);
-                setCookie('JSESSIONID', sessionId, 7);
-                if (localStorage.getItem('destination')){
-                    window.location.href = localStorage.getItem('destination');
-                }
-                else window.location.href = '../dashboard/dashboard.html';
+            await login(username, password).catch(error => console.error(error));
+            if (localStorage.getItem('destination')){
+                window.location.href = localStorage.getItem('destination');
             }
+            else window.location.href = '../dashboard/dashboard.html';
         })();
     });
 });

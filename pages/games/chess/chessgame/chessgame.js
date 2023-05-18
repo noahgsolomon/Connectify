@@ -1,6 +1,7 @@
 import {chessboard} from "../chessboard.js";
 import {profileColors, fetchUserProfile} from "../../../../util/api/userapi.js";
 import {getChessSessionWithId, deleteChessSession, updateGameStatus} from "../../../../util/api/gamesapi/chessapi.js";
+import {applyTheme} from "../../../../util/userUtils.js";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -30,7 +31,7 @@ window.addEventListener("load", function() {
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
 
-
+    applyTheme();
 
     const opponentPlayer = document.querySelector('.top-player');
     const userPlayer = document.querySelector('.bottom-player');

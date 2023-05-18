@@ -4,7 +4,7 @@ main {
     max-width: 1100px;
     margin: 2rem auto;
     padding: 1rem;
-    background-color: #f8f8f8;
+    background-color: var(--emoji);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
 }
@@ -12,13 +12,13 @@ main {
 main h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 main p, ul {
     font-size: 1.1rem;
     margin-bottom: 1rem;
-    color: #666;
+    color: var(--post-meta-color);
 }
 
 ul {
@@ -36,8 +36,8 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 1rem 0;
-    background-color: #1e90ff;
-    color: #fff;
+    background-color: var(--highlight-color);
+    color: var(--text-color);
 }
 
 .footer-sections {
@@ -71,7 +71,7 @@ footer h3 {
 }
 
 .footer-links a {
-    color: #fff;
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -92,8 +92,8 @@ footer .rights-reserved{
 section {
     margin-bottom: 2rem;
     padding: 1rem;
-    background-color: #f4f4f4;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
     border-radius: 1rem;
     transition: transform 0.3s ease;
 }
@@ -112,7 +112,8 @@ blockquote {
     margin: 1rem 0;
     position: relative;
     padding-left: 1.5rem;
-    border-left: 2px solid #1e90ff;
+    border-left: 2px solid var(--border-color);
+    color: var(--text-color);
 }
 
 blockquote::before {
@@ -121,7 +122,7 @@ blockquote::before {
     position: absolute;
     top: 0;
     left: 0;
-    color: #1e90ff;
+    color: var(--highlight-color);
 }
 
 blockquote::after {
@@ -130,7 +131,11 @@ blockquote::after {
     position: absolute;
     bottom: 0;
     right: 0;
-    color: #1e90ff;
+    color: var(--highlight-color);
+}
+
+h3 {
+    color: var(--post-title-color);
 }
 
 cite {
@@ -140,7 +145,7 @@ cite {
     font-weight: bold;
     text-align: right;
     margin-top: 0.5rem;
-    color: #333;
+    color: var(--text-color);
 }
 
 
@@ -155,7 +160,7 @@ cite {
     flex: 1;
     min-width: 250px;
     padding: 1rem;
-    background-color: #f9f9f9;
+    background-color: var(--background);
     border-radius: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
