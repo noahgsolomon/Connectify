@@ -4,9 +4,13 @@ current lines of code: 8048
 
 This repository houses the frontend for Connectify, a diverse social media and gaming platform. It provides the user interface to interact with the extensive features and services offered by Connectify.
 
-## Live Application
+## 🎉Live Application🎉
 
 You can interact with Connectify on [connectifyapp.web.app](https://connectifyapp.web.app)
+
+![lightconnectify](https://github.com/noahgsolomon/connectify-backend/assets/111200060/48456044-667e-4cad-99be-35242f611c1f)
+![image](https://github.com/noahgsolomon/connectify-backend/assets/111200060/32243871-fa77-4780-bc32-4569c764699d)
+
 
 ## Features
 
