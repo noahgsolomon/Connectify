@@ -10,7 +10,7 @@ You can interact with Connectify on [connectifyapp.web.app](https://connectifyap
 
 ![lightconnectify](https://github.com/noahgsolomon/connectify-backend/assets/111200060/48456044-667e-4cad-99be-35242f611c1f)
 ![image](https://github.com/noahgsolomon/connectify-backend/assets/111200060/32243871-fa77-4780-bc32-4569c764699d)
-
+![image](https://github.com/noahgsolomon/connectify-frontend/assets/111200060/49e1e7e8-3b1b-45bf-bf17-8149d0453668)
 
 ## Features
 
