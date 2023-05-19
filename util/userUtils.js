@@ -2,7 +2,6 @@ import {deleteAllNotifications, getNotifications} from "./api/notificationapi.js
 
 const notificationRender = async () => {
     const notificationList = await getNotifications();
-    console.log(notificationList);
     notificationList.reverse();
     const notificationBtn = document.querySelector('.notification-btn');
     if (notificationList.length > 0){
@@ -60,9 +59,6 @@ function applyTheme() {
         root.style.setProperty('--header-btn', 'var(--light-header-btn)');
         root.style.setProperty('--emoji', 'var(--light-emoji)');
         root.style.setProperty('--detail-color', 'var(--light-detail-color)');
-        root.style.setProperty('--chess-panel', 'var(--light-chess-panel)');
-        root.style.setProperty('--trivia-panel', 'var(--light-trivia-panel)');
-        root.style.setProperty('--puzzle-panel', 'var(--light-puzzle-panel)');
         root.style.setProperty('--background', 'var(--light-background)');
         root.style.setProperty('--logo', 'var(--light-logo)');
         root.style.setProperty('--liked-btn-bg', 'var(--light-liked-btn-bg)');
@@ -92,12 +88,6 @@ function applyTheme() {
         root.style.setProperty('--shadow', 'var(--shadow-light)');
         root.style.setProperty('--border-color', 'var(--border-color-light)');
         root.style.setProperty('--btn-color', 'var(--btn-color-light)');
-        root.style.setProperty('--chess-join-btn', 'var(--chess-join-btn-light)');
-        root.style.setProperty('--chess-join-btn-hover', 'var(--chess-join-btn-hover-light)');
-        root.style.setProperty('--trivia-join-btn', 'var(--trivia-join-btn-light)');
-        root.style.setProperty('--trivia-join-btn-hover', 'var(--trivia-join-btn-hover-light)');
-        root.style.setProperty('--puzzle-join-btn', 'var(--puzzle-join-btn-light)');
-        root.style.setProperty('--puzzle-join-btn-hover', 'var(--puzzle-join-btn-hover-light)');
         root.style.setProperty('--error-color', 'var(--error-color-light)');
         root.style.setProperty('--error-color-hover', 'var(--error-color-hover-light)');
 
@@ -106,9 +96,6 @@ function applyTheme() {
         root.style.setProperty('--header-btn', 'var(--dark-header-btn)');
         root.style.setProperty('--emoji', 'var(--dark-emoji)');
         root.style.setProperty('--detail-color', 'var(--dark-detail-color)');
-        root.style.setProperty('--chess-panel', 'var(--dark-chess-panel)');
-        root.style.setProperty('--trivia-panel', 'var(--dark-trivia-panel)');
-        root.style.setProperty('--puzzle-panel', 'var(--dark-puzzle-panel)');
         root.style.setProperty('--background', 'var(--dark-background)');
         root.style.setProperty('--logo', 'var(--dark-logo)');
         root.style.setProperty('--liked-btn-bg', 'var(--dark-liked-btn-bg)');
@@ -138,12 +125,6 @@ function applyTheme() {
         root.style.setProperty('--shadow', 'var(--shadow-dark)');
         root.style.setProperty('--border-color', 'var(--border-color-dark)');
         root.style.setProperty('--btn-color', 'var(--btn-color-dark)');
-        root.style.setProperty('--chess-join-btn', 'var(--chess-join-btn-dark)');
-        root.style.setProperty('--chess-join-btn-hover', 'var(--chess-join-btn-hover-dark)');
-        root.style.setProperty('--trivia-join-btn', 'var(--trivia-join-btn-dark)');
-        root.style.setProperty('--trivia-join-btn-hover', 'var(--trivia-join-btn-hover-dark)');
-        root.style.setProperty('--puzzle-join-btn', 'var(--puzzle-join-btn-dark)');
-        root.style.setProperty('--puzzle-join-btn-hover', 'var(--puzzle-join-btn-hover-dark)');
         root.style.setProperty('--error-color', 'var(--error-color-dark)');
         root.style.setProperty('--error-color-hover', 'var(--error-color-hover-dark)');
     }

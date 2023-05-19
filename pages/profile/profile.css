@@ -1,7 +1,7 @@
 @import "../../util/css/base.css";
 @import "../../util/css/profile.css";
 @import '../../util/css/gameinvite.css';
-
+@import '../../util/css/var.css';
 
 body{
     transition: 0.3s ease;
