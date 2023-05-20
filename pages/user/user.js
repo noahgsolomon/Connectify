@@ -1,4 +1,4 @@
-import {userProfile, profileColors} from "../../util/api/userapi.js";
+import {userProfile, profileColors, onlineHeartbeat} from "../../util/api/userapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 import {applyTheme} from "../../util/userUtils.js";
 
@@ -14,6 +14,8 @@ if (!jwtToken || expiryDate < new Date()){
     localStorage.setItem('destination', '../user/user.html');
     window.location.href = "../login/login.html"
 }
+
+
 window.addEventListener("load", function() {
 
     applyTheme();
@@ -25,11 +27,11 @@ window.addEventListener("load", function() {
     }
 
 
-
-
     const username = getUsernameFromUrl();
 
     (async () => {
+        await onlineHeartbeat();
+        setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('../games/chess/chessgame/chessgame.html');
 

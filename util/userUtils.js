@@ -90,6 +90,9 @@ function applyTheme() {
         root.style.setProperty('--btn-color', 'var(--btn-color-light)');
         root.style.setProperty('--error-color', 'var(--error-color-light)');
         root.style.setProperty('--error-color-hover', 'var(--error-color-hover-light)');
+        root.style.setProperty('--light-tile', 'var(--light-tile-light');
+        root.style.setProperty('--dark-tile', 'var(--dark-tile-light');
+        root.style.setProperty('--chess-border', 'var(--chess-border-light');
 
     } else {
         root.style.setProperty('--header', 'var(--dark-header)');
@@ -127,6 +130,10 @@ function applyTheme() {
         root.style.setProperty('--btn-color', 'var(--btn-color-dark)');
         root.style.setProperty('--error-color', 'var(--error-color-dark)');
         root.style.setProperty('--error-color-hover', 'var(--error-color-hover-dark)');
+        root.style.setProperty('--light-tile', 'var(--light-tile-dark');
+        root.style.setProperty('--dark-tile', 'var(--dark-tile-dark');
+        root.style.setProperty('--chess-border', 'var(--chess-border-dark');
+
     }
 }
 

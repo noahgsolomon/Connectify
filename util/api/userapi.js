@@ -49,6 +49,7 @@ async function login(username, password){
 
 
         if (response.ok) {
+            console.log(localStorage.getItem('jwtToken'));
             localStorage.setItem('jwtToken', responseBody.token);
             let expiryDate = new Date();
 
@@ -61,6 +62,7 @@ async function login(username, password){
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';
+            console.log(localStorage.getItem('jwtToken'));
             setTimeout(() => {
                 loginMessage.textContent = '';
             }, 2000);
@@ -95,12 +97,24 @@ async function logout(){
 
 async function userProfile(user){
     const profileJson = await fetchUserProfile(user);
-    if (profileJson){
+    const myProfile = await profile();
+
+    if (profileJson) {
         const userDetails = JSON.parse(profileJson);
         const profileCard = document.querySelector('.profile-card');
 
         const emoji = document.querySelector('.profile-emoji');
+
         emoji.textContent = userDetails.profilePic;
+        let userOnline = userDetails.online.toLowerCase() === 'true';
+        if (userOnline) {
+            const onlineIndicator = document.createElement('div');
+            onlineIndicator.className = "online-indicator";
+            const blink = document.createElement('span');
+            blink.className = "blink";
+            onlineIndicator.appendChild(blink);
+            emoji.appendChild(onlineIndicator);
+        }
         if (userDetails.profilePic === undefined){
             emoji.textContent = '😀'
         }
@@ -112,19 +126,12 @@ async function userProfile(user){
         bio.textContent = userDetails.bio;
         const category = document.querySelector(".profile-category");
         category.textContent = userDetails.topCategory + ' enthusiast';
-        profileCard.style.backgroundColor = userDetails.cardColor;
-        document.body.style.backgroundColor = userDetails.backgroundColor;
-        if (!userDetails.cardColor){
-            profileCard.style.backgroundColor = 'white';
-        }
-        if (!userDetails.backgroundColor){
-            document.body.style.backgroundColor = 'whitesmoke'
-        }
 
         const main = document.querySelector('.posts');
         const postListString = await getUserPosts(user);
+
         if (postListString) {
-            await postRender(postListString, profileJson, main, 'search');
+            await postRender(postListString, myProfile, main, 'search');
         }
 
         if (loggedInUser === null){
@@ -166,11 +173,12 @@ async function userProfile(user){
 
             if (userFollow.followed){
                 followBtn.textContent = 'Unfollow';
-                followBtn.style.backgroundColor = rgbToRGBA(userDetails.backgroundColor, 0.5);
+                followBtn.style.color = 'var(--text-color)';
+                followBtn.style.backgroundColor = 'var(--emoji)';
             }
             else{
                 followBtn.textContent = 'Follow';
-                followBtn.style.backgroundColor = '#4892ee';
+                followBtn.style.backgroundColor = 'var(--detail-color)';
             }
 
             followBtn.addEventListener('click', async () => {
@@ -178,15 +186,16 @@ async function userProfile(user){
                     await followEvent(user);
                     followCount.followerCount += 1;
                     followerCountSpan.textContent = `${followCount.followerCount} followers`;
-                    console.log(userDetails.backgroundColor)
-                    followBtn.style.backgroundColor = rgbToRGBA(userDetails.backgroundColor, 0.5);
+                    followBtn.style.backgroundColor = 'var(--emoji)';
+                    followBtn.style.color = 'var(--text-color)';
                     followBtn.textContent = 'Unfollow';
                 }
                 else if (followBtn.textContent === 'Unfollow'){
                     await unfollowEvent(user);
                     followCount.followerCount -= 1;
                     followerCountSpan.textContent = `${followCount.followerCount} followers`;
-                    followBtn.style.backgroundColor = '#4892ee';
+                    followBtn.style.backgroundColor = 'var(--detail-color)';
+                    followBtn.style.color = '#f5f5f5';
                     followBtn.textContent = 'Follow'
                 }
 
@@ -418,17 +427,19 @@ async function updateTheme(theme){
         console.log(error);
     }
 }
-function rgbToRGBA(rgb, alpha) {
-    const regex = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
-    const match = regex.exec(rgb);
-    if (match) {
-        const r = parseInt(match[1], 10);
-        const g = parseInt(match[2], 10);
-        const b = parseInt(match[3], 10);
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } else {
-        console.error("Invalid color format:", rgb);
-        return rgb;
+
+async function onlineHeartbeat() {
+    try{
+        const response = await fetch("http://localhost:8080/online", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwtToken}
+        });
+
+        await response;
+
+    }catch (e) {
+        console.log(e);
     }
 }
 
@@ -445,5 +456,6 @@ export {
     loggedInUser,
     getFollowCount,
     friendsList,
-    updateTheme
+    updateTheme,
+    onlineHeartbeat
 };

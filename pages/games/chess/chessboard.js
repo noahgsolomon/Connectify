@@ -36,7 +36,7 @@ function chessboard(imgLocation = "", userColor){
             tile.dataset.color = isLight ? 'light' : 'dark';
             tile.dataset.num = i.toString();
 
-            tile.style.backgroundColor = isLight ? '#DDB88C' : '#A66D4F';
+            tile.style.backgroundColor = isLight ? 'var(--light-tile)' : 'var(--dark-tile)';
 
             chessBoard.appendChild(tile);
 
@@ -86,7 +86,7 @@ function chessboard(imgLocation = "", userColor){
             tile.dataset.color = isLight ? 'light' : 'dark';
             tile.dataset.num = i.toString();
 
-            tile.style.backgroundColor = isLight ? '#DDB88C' : '#A66D4F';
+            tile.style.backgroundColor = isLight ? 'var(--light-tile)' : 'var(--dark-tile)';
 
             chessBoard.appendChild(tile);
 
@@ -198,9 +198,9 @@ function chessboard(imgLocation = "", userColor){
 
                     tile.dataset.team = selectedTile.dataset.team;
                     if (selectedTile.dataset.color === 'light') {
-                        selectedTile.style.backgroundColor = '#DDB892';
+                        selectedTile.style.backgroundColor = 'var(--light-tile)';
                     } else {
-                        selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                        selectedTile.style.backgroundColor = 'var(--dark-tile)';
                     }
                     if (sessionId) {
                         currentBoard = getBoardState();
@@ -245,9 +245,9 @@ function chessboard(imgLocation = "", userColor){
                     selectedPiece = null;
                 } else if (piece && selectedPiece && piece.dataset.team === selectedPiece.dataset.team && tile !== selectedTile) {
                     if (selectedTile.dataset.color === 'light') {
-                        selectedTile.style.backgroundColor = '#DDB892';
+                        selectedTile.style.backgroundColor = 'var(--light-tile)';
                     } else {
-                        selectedTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                        selectedTile.style.backgroundColor = 'var(--dark-tile)';
                     }
                     tile.style.backgroundColor = 'rgb(211,110,108)';
                     selectedTile = tile;
@@ -257,9 +257,9 @@ function chessboard(imgLocation = "", userColor){
                 //if the same tile is clicked again
                 else if (selectedTile === tile) {
                     if (tile.dataset.color === 'light') {
-                        tile.style.backgroundColor = '#DDB892';
+                        tile.style.backgroundColor = 'var(--light-tile)';
                     } else {
-                        tile.style.backgroundColor = 'rgb(166, 109, 79)';
+                        tile.style.backgroundColor = 'var(--dark-tile)';
                     }
                     selectedTile = null;
                     selectedPiece = null;
@@ -385,10 +385,10 @@ function chessboard(imgLocation = "", userColor){
         }
         else {
             if (kingTile.dataset.color === 'light'){
-                kingTile.style.backgroundColor = '#DDB892';
+                kingTile.style.backgroundColor = 'var(--light-tile)';
             }
             else {
-                kingTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                kingTile.style.backgroundColor = 'var(--dark-tile)';
             }
         }
 

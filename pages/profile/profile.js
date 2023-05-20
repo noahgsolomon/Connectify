@@ -2,7 +2,7 @@ import {
     profile,
     updateProfile,
     getFollowCount,
-    logout, updateTheme
+    logout, updateTheme, onlineHeartbeat
 } from '../../util/api/userapi.js'
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
@@ -21,6 +21,7 @@ if (!jwtToken || expiryDate < new Date()){
     localStorage.setItem('destination', '../profile/profile.html');
     window.location.href = "../login/login.html"
 }
+
 window.addEventListener("load", function() {
 
     const page = document.querySelector('.page');
@@ -86,6 +87,8 @@ window.addEventListener("load", function() {
 
 
     (async () => {
+        await onlineHeartbeat();
+        setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('../games/chess/chessgame/chessgame.html');
 
@@ -275,6 +278,9 @@ window.addEventListener("load", function() {
         const darkModeBtn = document.querySelector('.dark-mode');
 
         lightModeBtn.addEventListener('click', async function() {
+            if (localStorage.getItem('theme') === 'light'){
+                return;
+            }
             const country = document.querySelector('.profile-country').textContent.substring(9);
             const bio = document.querySelector('.profile-bio').textContent.substring(5);
             const profileCardBackgroundColor = '#E0E0E0';
@@ -288,11 +294,16 @@ window.addEventListener("load", function() {
 
             document.body.style.backgroundColor = bodyBackgroundColor;
             document.querySelector('.profile-card').style.backgroundColor = profileCardBackgroundColor;
-
+            document.querySelectorAll('.post').forEach(function(post) {
+                post.style.backgroundColor = '#E0E0E0';
+            });
             applyTheme();
         });
 
         darkModeBtn.addEventListener('click', async function() {
+            if (localStorage.getItem('theme') === 'dark'){
+                return;
+            }
             const country = document.querySelector('.profile-country').textContent.substring(9);
             const bio = document.querySelector('.profile-bio').textContent.substring(5);
             const profileCardBackgroundColor = '#1C1C1C';
@@ -303,8 +314,10 @@ window.addEventListener("load", function() {
             await updateTheme('dark');
 
             await updateProfile(country, bio, profileCardBackgroundColor, bodyBackgroundColor, profileEmoji);
-
             document.body.style.backgroundColor = bodyBackgroundColor;
+            document.querySelectorAll('.post').forEach(function(post) {
+                post.style.backgroundColor = '#1C1C1C';
+            });
             document.querySelector('.profile-card').style.backgroundColor = profileCardBackgroundColor;
             applyTheme();
         });

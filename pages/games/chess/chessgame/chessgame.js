@@ -1,5 +1,5 @@
 import {chessboard} from "../chessboard.js";
-import {profileColors, fetchUserProfile} from "../../../../util/api/userapi.js";
+import {profileColors, fetchUserProfile, onlineHeartbeat} from "../../../../util/api/userapi.js";
 import {getChessSessionWithId, deleteChessSession, updateGameStatus} from "../../../../util/api/gamesapi/chessapi.js";
 import {applyTheme} from "../../../../util/userUtils.js";
 
@@ -37,6 +37,8 @@ window.addEventListener("load", function() {
     const userPlayer = document.querySelector('.bottom-player');
 
     (async () => {
+        await onlineHeartbeat();
+        setInterval(await onlineHeartbeat, 120000);
 
         const resignBtn = document.querySelector('.resign-btn');
         const resignConfirmationModal = document.getElementById('resignConfirmationModal');
@@ -223,17 +225,17 @@ window.addEventListener("load", function() {
 
                     if (prevFromTile && prevToTile){
                         if (prevFromTile.dataset.color === 'light'){
-                            prevFromTile.style.backgroundColor = '#DDB892';
+                            prevFromTile.style.backgroundColor = 'var(--light-tile)';
                         }
                         else if (prevFromTile.dataset.color === 'dark'){
-                            prevFromTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                            prevFromTile.style.backgroundColor = 'var(--dark-tile)';
                         }
 
                         if (prevToTile.dataset.color === 'light'){
-                            prevToTile.style.backgroundColor = '#DDB892';
+                            prevToTile.style.backgroundColor = 'var(--light-tile)';
                         }
                         else if (prevToTile.dataset.color === 'dark'){
-                            prevToTile.style.backgroundColor = 'rgb(166, 109, 79)';
+                            prevToTile.style.backgroundColor = 'var(--dark-tile)';
                         }
                     }
                     fromTile.style.backgroundColor = 'rgba(255,255,0,0.5)';

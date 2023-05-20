@@ -2,11 +2,10 @@
 @import "../../util/css/profile.css";
 @import "../../util/css/post.css";
 @import '../../util/css/gameinvite.css';
-
-
+@import '../../util/css/var.css';
 
 .container {
-    margin: 25px 0;
+    margin: 100px 50px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,6 +37,38 @@
     width: 250px;
     transition: all 0.3s ease;
 }
+
+.online-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    background-color: #0fcc45;
+    border-radius: 50%;
+}
+
+.blink {
+    display: block;
+    width: 15px;
+    height: 15px;
+
+    background-color: #0fcc45;
+    opacity: 0.7;
+    border-radius: 50%;
+
+    animation: blink 3s linear infinite;
+}
+
+@keyframes blink {
+    100% { transform: scale(2, 2);
+        opacity: 0;
+    }
+}
+
+
 
 @media (max-width: 600px) {
     .container{

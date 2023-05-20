@@ -1,6 +1,7 @@
 import {
     profileColors,
-    friendsList
+    friendsList,
+    onlineHeartbeat
 } from '../../util/api/userapi.js'
 import {
     createPost,
@@ -16,6 +17,7 @@ localStorage.removeItem('sessionId');
 
 
 const jwtToken = localStorage.getItem('jwtToken');
+console.log(jwtToken);
 let expiryDate = new Date(localStorage.getItem('expiry'));
 if (!jwtToken || expiryDate < new Date()){
     if (jwtToken){
@@ -26,7 +28,9 @@ if (!jwtToken || expiryDate < new Date()){
     localStorage.setItem('destination', '../dashboard/dashboard.html');
     window.location.href = "../login/login.html"
 }
+
 window.addEventListener("load", function() {
+
     applyTheme();
 
     const main = document.querySelector('.center-content');
@@ -78,12 +82,14 @@ window.addEventListener("load", function() {
 
 
     (async () => {
+        await onlineHeartbeat();
         const friends = await friendsList();
         console.log(friends);
         const profileString = await profileColors();
         const inboxListString = await getInbox();
         const postListString = await getPosts();
         setInterval(notificationRender, 5000);
+        setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('../games/chess/chessgame/chessgame.html');
 

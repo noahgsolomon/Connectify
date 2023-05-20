@@ -1,4 +1,4 @@
-import {profileColors, friendsList} from "../../../util/api/userapi.js";
+import {profileColors, friendsList, onlineHeartbeat} from "../../../util/api/userapi.js";
 import {chessboard} from "./chessboard.js";
 import { sendGameInvite } from "../../../util/api/gamesapi/inviteapi.js";
 import {getChessSession} from "../../../util/api/gamesapi/chessapi.js";
@@ -17,6 +17,7 @@ if (!jwtToken || expiryDate < new Date()){
     localStorage.setItem('destination', '../games/chess/chess.html');
     window.location.href = "../../login/login.html"
 }
+
 window.addEventListener("load", function() {
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
@@ -26,6 +27,8 @@ window.addEventListener("load", function() {
 
     let friends;
     (async () => {
+        await onlineHeartbeat();
+        setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('chessgame/chessgame.html');
 
@@ -35,8 +38,22 @@ window.addEventListener("load", function() {
         for (const friend of friends){
             const friendItem = document.createElement('div');
             friendItem.className = 'friend-item';
+
             const friendName = document.createElement('span');
             friendName.textContent = `${friend.profilePic} ${friend.username}`;
+
+            const isOnline = (friend.online.toLowerCase() === 'true');
+
+            if (isOnline) {
+                const onlineIndicator = document.createElement('div');
+                onlineIndicator.className = 'online-indicator';
+                const blinkSpan = document.createElement('span');
+                blinkSpan.className = 'blink';
+                onlineIndicator.appendChild(blinkSpan);
+
+                friendName.appendChild(onlineIndicator);
+            }
+
             const inviteBtn = document.createElement('button');
             inviteBtn.className = 'invite-btn';
             inviteBtn.textContent = 'Invite';
@@ -67,7 +84,7 @@ window.addEventListener("load", function() {
                     setTimeout(() => {
                         clearInterval(session);
                         currentInviteButton.textContent = 'Invite';
-                        currentInviteButton.style.backgroundColor = '#8B4513';
+                        currentInviteButton.style.backgroundColor = 'var(--light-tile)';
                     }, 16000);
                 }
             });

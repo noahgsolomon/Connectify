@@ -176,4 +176,18 @@
     --error-color-hover-light: #ff3333;
     --error-color-hover-dark: #843534;
 
+    --light-tile: #EAE9D2;
+    --light-tile-light:#EAE9D2;
+    --light-tile-dark: #7A8593;
+
+    --dark-tile: #4B7399;
+    --dark-tile-light: #4B7399;
+    --dark-tile-dark: #2D3541;
+
+    --chess-border: #3a4e67;
+    --chess-border-light: #3a4e67;
+    --chess-border-dark: #20262d;
+
+
+
 }

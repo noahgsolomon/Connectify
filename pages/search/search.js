@@ -1,7 +1,7 @@
 import {
     fetchUsers,
     userProfile,
-    profileColors
+    profileColors, onlineHeartbeat
 } from '../../util/api/userapi.js'
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
 import {applyTheme} from "../../util/userUtils.js";
@@ -18,6 +18,7 @@ if (!jwtToken || expiryDate < new Date()){
     window.location.href = "../login/login.html"
 }
 
+
 window.addEventListener("load", function() {
 
     const page = document.querySelector('.page');
@@ -28,6 +29,8 @@ window.addEventListener("load", function() {
     const searchContent = document.querySelector('.search-content');
 
     (async () => {
+        await onlineHeartbeat();
+        setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('../games/chess/chessgame/chessgame.html');
 
