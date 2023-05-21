@@ -4,17 +4,14 @@ import {onlineHeartbeat} from "../../util/api/userapi.js";
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));
 
+if (jwtToken && expiryDate > new Date()){
+    window.location.href = '../dashboard/dashboard.html'
+}
+
 window.addEventListener("load", function(){
 
     applyTheme();
 
-    if (jwtToken && expiryDate > new Date()){
-        document.querySelector('.signup-btn').remove();
-        document.querySelector('.login-btn').remove();
-    }
-    else {
-        document.querySelector('.dashboard-btn').remove();
-    }
     const page = document.querySelector('.page');
     page.classList.remove('hidden');
 

@@ -264,7 +264,7 @@ nav a:active {
     animation: blink 0.3s linear infinite;
 }
 
-@keyframes loader-blink {
+@keyframes blink {
     100% { transform: scale(2, 2);
         opacity: 0;
     }
