@@ -2,7 +2,6 @@ import {getUserPosts} from "./postapi.js";
 import {postRender} from "../postUtils.js";
 import {sendMessage} from "./inboxapi.js";
 import {showSlideMessage} from "../status.js";
-
 let loggedInUser = null;
 const jwtToken = localStorage.getItem('jwtToken');
 
@@ -14,22 +13,12 @@ async function signUp(username, email, password) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(model)
         });
-        const responseBody = await response.text();
 
         if (response.ok) {
-            const signUpMessage = document.querySelector('.signup-msg');
-            signUpMessage.innerHTML = 'Successfully created! Check email to activate account';
-            signUpMessage.style.color = 'green';
-            console.log(responseBody);
+            showSlideMessage('Successfully created! Check email to activate account', 'var(--slide-message-bg)', 7500);
         }
         else {
-            console.log(responseBody);
-            const signUpMessage = document.querySelector('.signup-msg');
-            signUpMessage.innerHTML = 'Credentials invalid';
-            signUpMessage.style.color = 'red';
-            setTimeout(() => {
-                signUpMessage.textContent = '';
-            }, 2000);
+            showSlideMessage('Credentials invalid', 'var(--error-color');
         }
     } catch (error) {
         console.error(error);
@@ -60,22 +49,12 @@ async function login(username, password){
             localStorage.setItem('username', username);
             localStorage.setItem('theme', responseBody.theme);
             localStorage.setItem('emoji', responseBody.emoji);
-            const loginMessage = document.querySelector('.login-msg');
-            loginMessage.innerHTML = 'Successfully logged in!';
-            loginMessage.style.color = 'green';
-            console.log(localStorage.getItem('jwtToken'));
-            setTimeout(() => {
-                loginMessage.textContent = '';
-            }, 2000);
+
+            showSlideMessage('Successfully logged in!', 'var(--slide-message-bg)');
             return responseBody;
         }
         else {
-            const loginMessage = document.querySelector('.login-msg');
-            loginMessage.innerHTML = 'User does not exist';
-            loginMessage.style.color = 'red';
-            setTimeout(() => {
-                loginMessage.textContent = '';
-            }, 2000);
+            showSlideMessage('User does not exist', 'var(--error-color)');
         }
         return null;
     } catch (error) {

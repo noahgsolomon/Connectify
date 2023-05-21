@@ -18,15 +18,15 @@ html, body {
     max-width: 50%;
     width: 100%;
     padding: 2rem;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
 .signup-container:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -51,13 +51,14 @@ html, body {
 form input[type="text"],
 form input[type="email"],
 form input[type="password"] {
+    color: var(--text-color);
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 10px;
     width: 100%;
-    background-color: #f2f2f2;
+    background-color: var(--post-search-bg);
     box-sizing: border-box;
     outline: none;
     transition: border-color 0.3s;
@@ -66,13 +67,13 @@ form input[type="password"] {
 form input[type="text"]:focus,
 form input[type="email"]:focus,
 form input[type="password"]:focus {
-    border-color: #1e90ff;
-    background-color: #fff;
+    border-color: var(--highlight-color);
+    background-color: var(--post-search-bg);
 }
 
 form input[type="submit"] {
-    background-color: #1e90ff;
-    color: #fff;
+    background-color: var(--btn-color);
+    color: var(--text-color);
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 1rem;
@@ -84,13 +85,13 @@ form input[type="submit"] {
 }
 
 form input[type="submit"]:hover {
-    background-color: #64a3ff;
+    background-color: var(--btn-hover);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
 form input[type="submit"]:active {
-    background-color: #1e90ff;
+    background-color: var(--btn-hover);
     box-shadow: none;
     transform: translateY(0);
 }
@@ -98,8 +99,8 @@ form input[type="submit"]:active {
 .signup-container {
     max-width: 400px;
     padding: 2rem;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--post-search-bg);
+    box-shadow: 0 2px 4px var(--shadow);
     border-radius: 10px;
 }
 
@@ -107,7 +108,7 @@ form input[type="submit"]:active {
     font-size: 2rem;
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #1e90ff;
+    color: var(--highlight-color);
     font-weight: 600;
 }
 
@@ -124,6 +125,7 @@ form div {
 }
 
 form label {
+    color: var(--text-color);
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 0.25rem;

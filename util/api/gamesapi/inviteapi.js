@@ -1,4 +1,3 @@
-
 const jwtToken = localStorage.getItem('jwtToken');
 async function getGameInvites(){
     try{

@@ -1,5 +1,13 @@
 import {signUp} from '../../util/api/userapi.js'
 import {applyTheme} from "../../util/userUtils.js";
+
+const jwtToken = localStorage.getItem('jwtToken');
+let expiryDate = new Date(localStorage.getItem('expiry'));
+
+if (jwtToken && expiryDate > new Date()){
+    window.location.href = '../dashboard/dashboard.html'
+}
+
 window.addEventListener("load", function() {
 
     const page = document.querySelector('.page');
