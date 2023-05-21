@@ -21,25 +21,27 @@
     border-radius: 10px;
     outline: none;
     box-sizing: border-box;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #333;
+    background-color: var(--post-search-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: 0.3s ease;
 }
 
 .search-bar:hover {
-    background-color: #fdfdfd;
+    background-color: var(--input-hover);
     transform: translateY(-2px);
+    box-shadow: 0 4px 6px var(--shadow);
 }
 
 .search-bar:focus {
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #333;
+    background-color: var(--input-focus);
+    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
+    color: var(--post-text-color);
     outline: none;
 }
 
 .search-container {
+    color: var(--text-color);
     padding: 50px;
     display: flex;
     justify-content: center;
@@ -54,35 +56,35 @@
 }
 
 .search-result {
-    background-color: #f8f8f8;
-    border: 1px solid #d1d1d1;
+    background-color: var(--post-search-bg);
+    border: 1px solid var(--border-color);
     padding: 1.5rem;
     margin-bottom: 1rem;
     border-radius: 1rem;
     cursor: pointer;
     transition: background-color 0.2s, box-shadow 0.2s;
     width: 70%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--shadow);
     font-family: 'Nunito Sans', sans-serif;
 }
 
 .search-result:hover {
-    background-color: #eef1ff;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--input-hover);
+    box-shadow: 0 6px 8px var(--shadow);
 }
 
 .search-result h3 {
     margin: 0;
     font-size: 1.2rem;
     font-weight: bold;
-    color: #1e90ff;
+    color: var(--highlight-color);
 }
 
 .search-result p {
     margin-top: 0.5rem;
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #333;
+    color: var(--text-color);
     font-weight: 400;
 }
 
@@ -105,8 +107,7 @@
 
 
 .post {
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--shadow);
     border-radius: 10px;
     padding: 1.5rem;
     margin: 1rem;

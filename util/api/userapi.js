@@ -59,6 +59,7 @@ async function login(username, password){
             console.log(localStorage.getItem('expiry'));
             localStorage.setItem('username', username);
             localStorage.setItem('theme', responseBody.theme);
+            localStorage.setItem('emoji', responseBody.emoji);
             const loginMessage = document.querySelector('.login-msg');
             loginMessage.innerHTML = 'Successfully logged in!';
             loginMessage.style.color = 'green';
@@ -102,7 +103,7 @@ async function userProfile(user){
     if (profileJson) {
         const userDetails = JSON.parse(profileJson);
         const profileCard = document.querySelector('.profile-card');
-
+        profileCard.style.backgroundColor = 'var(--card)';
         const emoji = document.querySelector('.profile-emoji');
 
         emoji.textContent = userDetails.profilePic;
@@ -312,8 +313,9 @@ async function fetchUserProfile(user){
     }
 }
 
+//deprecated
 async function profileColors(){
-    const profileEmoji = document.querySelector('.profile-btn')
+    const profileEmoji = document.querySelector('.profile-btn');
     const profileString = await profile();
     if (profileString){
         const profileDetails = JSON.parse(profileString);

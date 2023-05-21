@@ -239,6 +239,36 @@ nav a:active {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+.loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-left: 20px;
+    background-color: #1e90ff;
+    border-radius: 50%;
+}
+
+.loader-blink {
+    display: block;
+    width: 25px;
+    height: 25px;
+
+    background-color: #416caa;
+    opacity: 0.7;
+    border-radius: 50%;
+
+    animation: blink 0.3s linear infinite;
+}
+
+@keyframes loader-blink {
+    100% { transform: scale(2, 2);
+        opacity: 0;
+    }
+}
 
 @media (max-width: 800px) {
     header {

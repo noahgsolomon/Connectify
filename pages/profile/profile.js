@@ -23,10 +23,6 @@ if (!jwtToken || expiryDate < new Date()){
 }
 
 window.addEventListener("load", function() {
-
-    const page = document.querySelector('.page');
-    page.classList.remove('hidden');
-
     applyTheme();
 
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
@@ -53,37 +49,6 @@ window.addEventListener("load", function() {
 
     const profileCard = document.querySelector('.profile-card');
     const body = document.querySelector('body');
-
-    document.querySelector('.settings-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        const settingsPanel = document.querySelector('.settings-panel');
-        settingsPanel.classList.toggle('show');
-    });
-
-    document.querySelector('.page').addEventListener('click', function(e) {
-        const settingsPanel = document.querySelector('.settings-panel');
-        if (settingsPanel.classList.contains('show') && !settingsPanel.contains(e.target) && e.target !== document.querySelector('.settings-btn')) {
-            settingsPanel.classList.remove('show');
-        }
-    });
-
-    document.querySelector('#logout-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector('.logout-confirm-modal').style.display = 'flex';
-        const settingsPanel = document.querySelector('.settings-panel');
-        settingsPanel.classList.remove('show');
-    });
-
-    document.querySelector('#confirm-logout-btn').addEventListener('click', async function(e) {
-        e.preventDefault();
-        document.querySelector('.logout-confirm-modal').style.display = 'none';
-        await logout();
-    });
-
-    document.querySelector('#cancel-logout-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector('.logout-confirm-modal').style.display = 'none';
-    });
 
 
     (async () => {
@@ -274,6 +239,11 @@ window.addEventListener("load", function() {
             profileCard.style.display = 'block';
         }
 
+        const loader = document.querySelector('.loader');
+        loader.style.display = "none";
+        const page = document.querySelector('.page');
+        page.classList.remove('hidden');
+
         const lightModeBtn = document.querySelector('.light-mode');
         const darkModeBtn = document.querySelector('.dark-mode');
 
@@ -394,11 +364,43 @@ window.addEventListener("load", function() {
             body.style.backgroundColor = userDetails.backgroundColor;
 
             emoji.style.cursor = "default";
-             editForm.style.display = 'none';
+            localStorage.setItem('emoji', emoji.textContent);
+            editForm.style.display = 'none';
             editForm.reset();
             cancelBtn.style.display = 'none';
         });
     }
+
+    document.querySelector('.settings-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        const settingsPanel = document.querySelector('.settings-panel');
+        settingsPanel.classList.toggle('show');
+    });
+
+    document.querySelector('.page').addEventListener('click', function(e) {
+        const settingsPanel = document.querySelector('.settings-panel');
+        if (settingsPanel.classList.contains('show') && !settingsPanel.contains(e.target) && e.target !== document.querySelector('.settings-btn')) {
+            settingsPanel.classList.remove('show');
+        }
+    });
+
+    document.querySelector('#logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.logout-confirm-modal').style.display = 'flex';
+        const settingsPanel = document.querySelector('.settings-panel');
+        settingsPanel.classList.remove('show');
+    });
+
+    document.querySelector('#confirm-logout-btn').addEventListener('click', async function(e) {
+        e.preventDefault();
+        document.querySelector('.logout-confirm-modal').style.display = 'none';
+        await logout();
+    });
+
+    document.querySelector('#cancel-logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.logout-confirm-modal').style.display = 'none';
+    });
 
 
 

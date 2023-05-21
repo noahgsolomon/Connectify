@@ -21,9 +21,6 @@ if (!jwtToken || expiryDate < new Date()){
 
 window.addEventListener("load", function() {
 
-    const page = document.querySelector('.page');
-    page.classList.remove('hidden');
-
     applyTheme();
 
     const searchContent = document.querySelector('.search-content');
@@ -36,6 +33,13 @@ window.addEventListener("load", function() {
 
         const allUsers = await fetchUsers();
         await profileColors();
+
+
+        const loader = document.querySelector('.loader');
+        loader.style.display = "none";
+        const page = document.querySelector('.page');
+        page.classList.remove('hidden');
+
         if (allUsers){
             const usersList = JSON.parse(allUsers);
             const usernameList = usersList.map((user) => user.username);
@@ -55,7 +59,6 @@ window.addEventListener("load", function() {
                     const matchingUsers = usernameList.filter((username) =>
                         username.toLowerCase().includes(searchTerm.toLowerCase())
                     );
-                    console.log(matchingUsers);
 
                     for (const user of matchingUsers){
                         const userDiv = document.createElement('div');
@@ -64,6 +67,12 @@ window.addEventListener("load", function() {
                         searchContent.append(userDiv);
 
                         userDiv.addEventListener('click', async () => {
+                            document.querySelector('.container').style.display = 'none';
+                            document.querySelector('.post-wrapper').style.display = 'none';
+                            loader.style.display = "inline-block";
+
+
+
                             const postsContainer = document.querySelector('.posts');
                             const allPosts = postsContainer.querySelectorAll('.post');
                             for (const post of allPosts){
@@ -96,6 +105,10 @@ window.addEventListener("load", function() {
 
 
                             searchBar.value = '';
+
+                            document.querySelector('.container').style.display = 'flex';
+                            document.querySelector('.post-wrapper').style.display = 'flex';
+                            loader.style.display = "none";
                         });
                     }
                 }

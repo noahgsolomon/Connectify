@@ -37,6 +37,8 @@ window.addEventListener("load", function() {
 
         await profileColors();
         await userProfile(username);
+        const loader = document.querySelector('.loader');
+        loader.style.display = "none";
         const page = document.querySelector('.page');
         page.classList.remove('hidden');
     })();

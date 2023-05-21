@@ -13,9 +13,6 @@ import {postRender} from "../../util/postUtils.js";
 import {notificationRender, applyTheme} from "../../util/userUtils.js";
 import {deleteAllNotifications} from "../../util/api/notificationapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
-localStorage.removeItem('sessionId');
-
-
 const jwtToken = localStorage.getItem('jwtToken');
 console.log(jwtToken);
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -105,6 +102,8 @@ window.addEventListener("load", function() {
             await postRender(postListString, profileString, main, 'dashboard');
         }
 
+        const loader = document.querySelector('.loader');
+        loader.style.display = "none";
         const page = document.querySelector('.page');
         page.classList.remove('hidden');
         if (inboxListString){
