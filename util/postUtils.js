@@ -48,8 +48,8 @@ async function displayPosts(i, postList, profileString, postWrapper, call){
     postMeta.className = 'post-meta';
 
     const category = document.createElement('span');
-    category.className = 'category';
-    category.textContent = postList[i].category;
+    category.className = `category ${postList[i].category.toLowerCase()}`;
+    category.textContent = '#' + postList[i].category;
 
     const author = document.createElement('a');
     author.href = '#';
