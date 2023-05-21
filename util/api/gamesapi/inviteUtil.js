@@ -2,7 +2,7 @@ import {showGameInvite} from "../../gameInvite.js";
 import {deleteGameInvite, getGameInvites} from "./inviteapi.js";
 import {createSession} from "./chessapi.js";
 
-async function getChessInvites(chesslocation){
+async function getChessInvites(chesslocation, timeout=7500){
     setInterval(async () => {
         const inviteList = await getGameInvites();
         console.log(inviteList);
@@ -25,7 +25,7 @@ async function getChessInvites(chesslocation){
             });
 
         }
-    }, 7500);
+    }, timeout);
 }
 
 export {

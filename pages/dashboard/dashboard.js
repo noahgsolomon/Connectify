@@ -61,10 +61,16 @@ window.addEventListener("load", function() {
     const notificationItems = document.querySelector('.notification-items');
 
     document.querySelector('.notification-btn').addEventListener('click', async () => {
-        document.querySelector('.notification-panel').classList.toggle('show');
-        if (document.querySelector('.notification-panel').classList.contains('show') && notificationItems.innerHTML !== ''){
-            await deleteAllNotifications();
+
+        if (document.querySelector('.notification-panel').classList.contains('show')){
+            if (notificationItems.innerHTML !== ''){
+                await deleteAllNotifications();
+                notificationBtn.classList.remove('has-notification');
+            }
         }
+
+        document.querySelector('.notification-panel').classList.toggle('show');
+
     });
 
     document.querySelector('.page').addEventListener('click', async (event) => {
@@ -75,6 +81,7 @@ window.addEventListener("load", function() {
                 notificationPanel.classList.toggle('show');
                 if (notificationItems.innerHTML !== ''){
                     await deleteAllNotifications();
+                    notificationBtn.classList.remove('has-notification');
                 }
             }
         }
@@ -83,6 +90,7 @@ window.addEventListener("load", function() {
 
     (async () => {
         await onlineHeartbeat();
+        await notificationRender();
         const friends = await friendsList();
         console.log(friends);
         const profileString = await profileColors();
@@ -365,7 +373,7 @@ window.addEventListener("load", function() {
         }
 
         setTimeout(function() {
-            postButton.style.backgroundColor = '#1e90ff';
+            postButton.style.backgroundColor = 'var(btn-color-light)';
             postButton.value = '🚀';
         }, 2000);
 

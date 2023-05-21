@@ -1,4 +1,4 @@
-import {deleteAllNotifications, getNotifications} from "./api/notificationapi.js";
+import {getNotifications} from "./api/notificationapi.js";
 
 const notificationRender = async () => {
     const notificationList = await getNotifications();
@@ -9,9 +9,6 @@ const notificationRender = async () => {
     }
     const notificationItems = document.querySelector('.notification-items');
     notificationItems.innerHTML = '';
-    if (notificationList.length === 0){
-        notificationBtn.classList.remove('has-notification');
-    }
     for (const notification of notificationList){
         const notificationItem = document.createElement('div');
         notificationItem.className = 'notification-item';
