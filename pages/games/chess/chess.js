@@ -30,7 +30,7 @@ window.addEventListener("load", function() {
         await onlineHeartbeat();
         setInterval(await onlineHeartbeat, 120000);
 
-        await getChessInvites('chessgame/chessgame.html', 2000);
+        await getChessInvites('chessgame/chessgame.html', 1000);
 
         await profileColors();
         friends = await friendsList();
@@ -80,7 +80,7 @@ window.addEventListener("load", function() {
                             localStorage.setItem('opponent', currentInviteButton.dataset.opponent);
                             window.location.href = `./chessgame/chessgame.html?sessionId=${sessionData.id}`;
                         }
-                    }, 250);
+                    }, 100);
                     setTimeout(() => {
                         clearInterval(session);
                         currentInviteButton.textContent = 'Invite';

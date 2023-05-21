@@ -21,7 +21,6 @@ if (!jwtToken || expiryDate < new Date()){
         localStorage.removeItem('jwtToken');
     }
     localStorage.removeItem('expiry');
-    console.log();
     localStorage.setItem('destination', '../dashboard/dashboard.html');
     window.location.href = "../login/login.html"
 }
@@ -106,6 +105,7 @@ window.addEventListener("load", function() {
         loader.style.display = "none";
         const page = document.querySelector('.page');
         page.classList.remove('hidden');
+
         if (inboxListString){
             let updateInterval;
             const inboxList = JSON.parse(inboxListString);
@@ -238,7 +238,6 @@ window.addEventListener("load", function() {
 
                             const inboxIndex = inboxList.findIndex(item => item.user === user);
                             if (inboxIndex !== -1) {
-                                console.log(inboxIndex);
                                 inboxList[inboxIndex].last_message = inputValue;
                                 inboxList[inboxIndex].timeSent = new Date();
                             }
@@ -309,7 +308,27 @@ window.addEventListener("load", function() {
                 inboxItems.append(inboxElement);
                 inboxElement.addEventListener('click', openMessageLog);
             }
+
+            function updateLastMessage() {
+                inboxList.forEach(async (inbox, index) => {
+                    const messageListString = await getMessageLog(inbox.user);
+                    const messageList = JSON.parse(messageListString);
+                    const lastMessage = messageList[messageList.length - 1].message;
+                    inbox.last_message = lastMessage;
+
+                    const inboxItemElement = document.querySelectorAll('.inbox-item')[index];
+                    const lastMessageElement = inboxItemElement.querySelector('.inbox-last-message');
+                    lastMessageElement.textContent = lastMessage;
+
+                    const timeSent = inboxItemElement.querySelector(".inbox-timestamp");
+                    timeSent.textContent = formatDateAndTime(messageList[messageList.length - 1].timeSent);
+                });
+            }
+
+            setInterval(updateLastMessage, 5000);
         }
+
+
 
     })();
 
@@ -372,7 +391,7 @@ window.addEventListener("load", function() {
         }
 
         setTimeout(function() {
-            postButton.style.backgroundColor = 'var(btn-color-light)';
+            postButton.style.backgroundColor = 'var(--btn-color-light)';
             postButton.value = '🚀';
         }, 2000);
 

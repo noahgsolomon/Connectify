@@ -8,7 +8,6 @@ async function getInbox() {
         });
 
         const responseBody = await response.text();
-        console.log(responseBody);
         if (response.ok) {
             return responseBody;
         } else {
@@ -27,10 +26,8 @@ async function getMessageLog(user) {
             headers: {"Content-Type": "application/json",
                 "Authorization": `Bearer ${jwtToken}`}
         });
-        const responseBody = await response.text();
-        console.log(responseBody);
 
-        return responseBody;
+        return await response.text();
 
     } catch (error) {
         console.log(error);
@@ -51,10 +48,7 @@ async function sendMessage(user, message) {
             body: JSON.stringify(model)
         });
 
-        const responseBody = await response.text();
-        console.log(responseBody);
-
-        return responseBody;
+        return await response.text();
 
     } catch (error) {
         console.log(error);

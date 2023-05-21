@@ -258,14 +258,14 @@
     border-radius: 5px;
     padding: 1rem;
     margin-bottom: 0.5rem;
-    background-color: var(--background);
+    background-color: var(--inbox-panel-bg);
     cursor: pointer;
-    box-shadow: 0 2px 4px var(--overlay-bg);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
 }
 
 .inbox-item:hover {
-    box-shadow: 0 4px 8px var(--overlay-bg);
+    box-shadow: 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -327,6 +327,7 @@
 }
 
 .back-btn {
+    color: #f0f0f0;
     border: none;
     font-size: 1.2rem;
     padding: 5px 10px;
