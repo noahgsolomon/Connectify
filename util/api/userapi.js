@@ -106,7 +106,7 @@ async function userProfile(user){
         const category = document.querySelector(".profile-category");
         category.textContent = userDetails.topCategory + ' enthusiast';
         let pageCount = 0;
-        await displayPosts(myProfile, 'search', pageCount);
+        await displayPosts(myProfile, 'search', pageCount, userDetails.username);
 
         if (loggedInUser === null){
             loggedInUser = await profile();
@@ -122,7 +122,7 @@ async function userProfile(user){
                 pageCount += 1;
                 console.log();
                 console.log(pageCount);
-                await displayPosts(myProfile, 'search', pageCount);
+                await displayPosts(myProfile, 'search', pageCount, userDetails.username);
             }
         };
 

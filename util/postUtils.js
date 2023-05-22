@@ -1,4 +1,11 @@
-import {addLikeBookmark, createComment, getLikeBookmark, getPostComments, getPosts} from "./api/postapi.js";
+import {
+    addLikeBookmark,
+    createComment,
+    getLikeBookmark,
+    getPostComments,
+    getPosts,
+    getUserPosts
+} from "./api/postapi.js";
 import {showSlideMessage} from "./status.js";
 import {fetchUserProfile} from "./api/userapi.js";
 
@@ -23,15 +30,22 @@ const formatDateAndTime = (dateString) => {
     }
 };
 
-async function displayPosts(profileString, call, page){
+async function displayPosts(profileString, call, page, username=null){
 
     const userDetailList = {
     }
 
     const postWrapper = document.querySelector('.post-wrapper');
 
-    let postList = await getPosts(page);
+    let postList;
+    if (!username){
+        postList = await getPosts(page);
+    }
+    else {
+        postList = await getUserPosts(username, page);
+    }
     postList = JSON.parse(postList);
+
 
     for (let i = 0; i < postList.length; i++) {
 

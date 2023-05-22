@@ -23,8 +23,8 @@ async function getPosts(page) {
     }
 }
 
-async function getUserPosts(user) {
-    const url = `http://localhost:8080/posts/${user}`;
+async function getUserPosts(user, page) {
+    const url = `http://localhost:8080/posts/${user}?page=${page}`;
 
     try {
         const response = await fetch(url, {
