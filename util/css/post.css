@@ -81,7 +81,27 @@
 .category.business { background-color: rgba(255, 163, 144, 0.9); color: #ff3333; }
 .category.entertainment { background-color: rgba(238, 185, 144, 0.9); color: #cc6600; }
 .category.history { background-color: rgba(163, 144, 238, 0.9); color: #330066; }
-.category.miscellaneous { background-color: rgba(224, 224, 224, 0.9); color: #666666; }
+.category.miscellaneous { background-color: rgba(238, 224, 202, 0.9); color: #8b4513; }
+.category.cars { background-color: rgba(140, 130, 128, 0.9); color: #8B4513; }
+.category.philosophy { background-color: rgba(235, 226, 174, 0.9); color: #DAA520; }
+.category.photography { background-color: rgba(174, 198, 207, 0.9); color: #2F4F4F; }
+.category.movies { background-color: rgba(119, 136, 153, 0.9); color: #000080; }
+.category.home-and-garden { background-color: rgba(152, 251, 152, 0.9); color: #006400; }
+.category.career { background-color: rgba(221, 160, 221, 0.9); color: #8A2BE2; }
+.category.relationships { background-color: rgba(255, 105, 180, 0.9); color: #C71585; }
+.category.society { background-color: rgba(255, 99, 71, 0.9); color: #B22222; }
+.category.parenting { background-color: rgba(240, 230, 140, 0.9); color: #DAA520; }
+.category.space { background-color: rgba(135, 206, 235, 0.9); color: #00008B; }
+.category.diy { background-color: rgba(50, 205, 50, 0.9); color: #008000; }
+.category.cooking { background-color: rgba(250, 128, 114, 0.9); color: #8B0000; }
+.category.adventure { background-color: rgba(144, 238, 144, 0.9); color: #006400; }
+.category.spirituality { background-color: rgba(238, 130, 238, 0.9); color: #8A2BE2; }
+.category.fitness { background-color: rgba(100, 149, 237, 0.9); color: #000080; }
+.category.real-estate { background-color: rgba(244, 164, 96, 0.9); color: #8B4513; }
+.category.psychology { background-color: rgba(221, 221, 221, 0.9); color: #808080; }
+.category.personal-finance { background-color: rgba(210, 180, 140, 0.9); color: #8B4513; }
+.category.hobbies { background-color: rgba(255, 140, 0, 0.9); color: #B22222; }
+.category.current-events { background-color: rgba(176, 224, 230, 0.9); color: #2F4F4F; }
 
 
 

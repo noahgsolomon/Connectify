@@ -1,9 +1,4 @@
-import {
-    profile,
-    updateProfile,
-    getFollowCount,
-    logout, updateTheme, onlineHeartbeat
-} from '../../util/api/userapi.js'
+import {getFollowCount, logout, onlineHeartbeat, profile, updateProfile, updateTheme} from '../../util/api/userapi.js'
 import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {formatDateAndTime} from "../../util/postUtils.js";
@@ -115,8 +110,9 @@ window.addEventListener("load", function() {
                     postMeta.className = 'post-meta';
 
                     const category = document.createElement('span');
-                    category.className = 'category';
-                    category.textContent = post.category;
+                    const categoryType = post.category.toLowerCase().replace(/ /g, '-');
+                    category.className = `category ${categoryType}`;
+                    category.textContent = '#' + post.category;
 
                     const author = document.createElement('span');
                     author.className = 'author';
@@ -124,6 +120,11 @@ window.addEventListener("load", function() {
 
                     const postActions = document.createElement('div');
                     postActions.className = 'post-actions';
+
+                    const date = document.createElement('span');
+                    const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
+                    date.className = 'date';
+                    date.textContent = formattedLastModifiedDate;
 
                     const postEditBtn = document.createElement('button');
                     postEditBtn.className = 'post-edit-btn';
@@ -182,6 +183,11 @@ window.addEventListener("load", function() {
                             const savedPost = JSON.parse(savedPostJson);
                             contentElement.textContent = savedPost.body;
                             titleElement.textContent = savedPost.title;
+                            const categoryType = savedPost.category.toLowerCase().replace(/ /g, '-');
+                            category.className = `category ${categoryType}`;
+                            category.textContent = '#' + savedPost.category;
+                            date.textContent = formatDateAndTime(savedPost.lastModifiedDate);
+
                             postElement.replaceChild(contentElement, inputContainer);
                             postElement.replaceChild(titleElement, titleContainer);
                             postSaveBtn.remove();
@@ -214,11 +220,6 @@ window.addEventListener("load", function() {
                             confirmDeleteContainer.style.display = 'none';
                         });
                     });
-
-                    const date = document.createElement('span');
-                    const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
-                    date.className = 'date';
-                    date.textContent = formattedLastModifiedDate;
 
                     postMeta.append(author);
                     postMeta.append(date);
