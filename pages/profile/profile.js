@@ -88,154 +88,20 @@ window.addEventListener("load", function() {
 
             followDetailContainer.append(followerCountSpan);
             followDetailContainer.append(followingCountSpan);
+            let pageCount = 0;
+            await renderPosts(pageCount);
 
-            const postListString = await getMyPosts();
-            if (postListString) {
-                const postList = JSON.parse(postListString);
-                postList.reverse();
+            window.onscroll = async function() {
+                const d = document.documentElement;
+                const offset = d.scrollTop + window.innerHeight;
+                const height = d.offsetHeight;
 
-                const main = document.querySelector('.posts');
-                for (const post of postList) {
-                    const postElement = document.createElement('div');
-                    postElement.className = 'post';
-                    postElement.style.backgroundColor = profileCard.style.backgroundColor;
-
-                    const titleElement = document.createElement('h2');
-                    titleElement.textContent = post.title;
-
-                    const contentElement = document.createElement('p');
-                    contentElement.textContent = post.body;
-
-                    const postMeta = document.createElement('div')
-                    postMeta.className = 'post-meta';
-
-                    const category = document.createElement('span');
-                    const categoryType = post.category.toLowerCase().replace(/ /g, '-');
-                    category.className = `category ${categoryType}`;
-                    category.textContent = '#' + post.category;
-
-                    const author = document.createElement('span');
-                    author.className = 'author';
-                    author.textContent = post.username;
-
-                    const postActions = document.createElement('div');
-                    postActions.className = 'post-actions';
-
-                    const date = document.createElement('span');
-                    const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
-                    date.className = 'date';
-                    date.textContent = formattedLastModifiedDate;
-
-                    const postEditBtn = document.createElement('button');
-                    postEditBtn.className = 'post-edit-btn';
-                    postEditBtn.textContent = 'Edit'
-
-                    const postDelBtn = document.createElement('button');
-                    postDelBtn.className = 'post-del-btn';
-                    postDelBtn.textContent = '🔥️';
-
-                    postEditBtn.addEventListener('click', () => {
-
-                        postActions.removeChild(postEditBtn);
-
-                        const content = contentElement.textContent;
-                        const title = titleElement.textContent;
-
-                        const inputContainer = document.createElement('div');
-                        inputContainer.style.display = 'flex';
-
-                        const titleContainer = document.createElement('div');
-                        titleContainer.style.display = 'flex'
-
-                        const contentTextAreaElement = document.createElement('textarea');
-                        contentTextAreaElement.className = 'content-text-area';
-                        contentTextAreaElement.value = content;
-                        contentTextAreaElement.rows = 5;
-
-                        const titleTextAreaElement = document.createElement('textarea');
-                        titleTextAreaElement.className = 'title-text-area';
-                        titleTextAreaElement.value = title;
-
-                        inputContainer.appendChild(contentTextAreaElement);
-                        titleContainer.appendChild(titleTextAreaElement);
-
-                        postElement.replaceChild(inputContainer, contentElement);
-                        postElement.replaceChild(titleContainer, titleElement);
-
-                        const postWidth = postElement.offsetWidth;
-                        inputContainer.style.maxWidth = postWidth + 'px';
-
-                        const postSaveBtn = document.createElement('button');
-                        postSaveBtn.className = 'post-save-btn';
-                        postSaveBtn.textContent = '✅';
-
-                        postActions.append(postSaveBtn);
-
-                        postSaveBtn.addEventListener('click', async () => {
-                            const updatedPost = await updatePost(post.id, contentTextAreaElement.value, titleTextAreaElement.value);
-                            if (updatedPost){
-                                showSlideMessage("Updated post!", "#24bd47");
-                            }
-                            else {
-                                showSlideMessage("Inappropriate Content!", "red");
-                            }
-                            const savedPostJson = await getPost(post.id);
-                            const savedPost = JSON.parse(savedPostJson);
-                            contentElement.textContent = savedPost.body;
-                            titleElement.textContent = savedPost.title;
-                            const categoryType = savedPost.category.toLowerCase().replace(/ /g, '-');
-                            category.className = `category ${categoryType}`;
-                            category.textContent = '#' + savedPost.category;
-                            date.textContent = formatDateAndTime(savedPost.lastModifiedDate);
-
-                            postElement.replaceChild(contentElement, inputContainer);
-                            postElement.replaceChild(titleElement, titleContainer);
-                            postSaveBtn.remove();
-                            postActions.append(postEditBtn);
-                        });
-
-                    });
-
-                    postDelBtn.addEventListener('click', async () => {
-                        const confirmDeleteContainer = document.querySelector('.confirm-delete-container');
-                        confirmDeleteContainer.style.display = 'flex';
-
-                        const cancelBtn = document.querySelector('.confirm-delete-popup-buttons .cancel-popup-btn');
-                        cancelBtn.addEventListener('click', () => {
-                            // Hide the custom popup
-                            confirmDeleteContainer.style.display = 'none';
-                        });
-
-                        const deleteBtn = document.querySelector('.confirm-delete-popup-buttons .delete-btn');
-                        deleteBtn.addEventListener('click', async () => {
-                            const deletedPost = await deletePost(post.id);
-                            if (deletedPost){
-                                showSlideMessage("Post Deleted!", "#24bd47");
-
-                            }
-                            else {
-                                showSlideMessage("Error deleting post", "red");
-                            }
-                            postElement.remove();
-                            confirmDeleteContainer.style.display = 'none';
-                        });
-                    });
-
-                    postMeta.append(author);
-                    postMeta.append(date);
-
-
-                    postActions.append(postDelBtn);
-                    postActions.append(postEditBtn);
-
-                    postElement.append(titleElement);
-                    postElement.append(contentElement);
-                    postElement.append(category);
-                    postElement.append(postMeta);
-                    postElement.append(postActions);
-                    main.append(postElement);
+                if (offset >= height) {
+                    pageCount += 1;
+                    console.log(pageCount);
+                    await renderPosts(pageCount);
                 }
-            }
+            };
 
             profileCard.style.display = 'block';
         }
@@ -370,6 +236,154 @@ window.addEventListener("load", function() {
             editForm.reset();
             cancelBtn.style.display = 'none';
         });
+    }
+
+    async function renderPosts(page){
+
+        const postListString = await getMyPosts(page);
+        const postList = JSON.parse(postListString);
+
+        const main = document.querySelector('.posts');
+        for (const post of postList) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post';
+            postElement.style.backgroundColor = profileCard.style.backgroundColor;
+
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = post.title;
+
+            const contentElement = document.createElement('p');
+            contentElement.textContent = post.body;
+
+            const postMeta = document.createElement('div')
+            postMeta.className = 'post-meta';
+
+            const category = document.createElement('span');
+            const categoryType = post.category.toLowerCase().replace(/ /g, '-');
+            category.className = `category ${categoryType}`;
+            category.textContent = '#' + post.category;
+
+            const author = document.createElement('span');
+            author.className = 'author';
+            author.textContent = post.username;
+
+            const postActions = document.createElement('div');
+            postActions.className = 'post-actions';
+
+            const date = document.createElement('span');
+            const formattedLastModifiedDate = formatDateAndTime(post.lastModifiedDate);
+            date.className = 'date';
+            date.textContent = formattedLastModifiedDate;
+
+            const postEditBtn = document.createElement('button');
+            postEditBtn.className = 'post-edit-btn';
+            postEditBtn.textContent = 'Edit'
+
+            const postDelBtn = document.createElement('button');
+            postDelBtn.className = 'post-del-btn';
+            postDelBtn.textContent = '🔥️';
+
+            postEditBtn.addEventListener('click', () => {
+
+                postActions.removeChild(postEditBtn);
+
+                const content = contentElement.textContent;
+                const title = titleElement.textContent;
+
+                const inputContainer = document.createElement('div');
+                inputContainer.style.display = 'flex';
+
+                const titleContainer = document.createElement('div');
+                titleContainer.style.display = 'flex'
+
+                const contentTextAreaElement = document.createElement('textarea');
+                contentTextAreaElement.className = 'content-text-area';
+                contentTextAreaElement.value = content;
+                contentTextAreaElement.rows = 5;
+
+                const titleTextAreaElement = document.createElement('textarea');
+                titleTextAreaElement.className = 'title-text-area';
+                titleTextAreaElement.value = title;
+
+                inputContainer.appendChild(contentTextAreaElement);
+                titleContainer.appendChild(titleTextAreaElement);
+
+                postElement.replaceChild(inputContainer, contentElement);
+                postElement.replaceChild(titleContainer, titleElement);
+
+                const postWidth = postElement.offsetWidth;
+                inputContainer.style.maxWidth = postWidth + 'px';
+
+                const postSaveBtn = document.createElement('button');
+                postSaveBtn.className = 'post-save-btn';
+                postSaveBtn.textContent = '✅';
+
+                postActions.append(postSaveBtn);
+
+                postSaveBtn.addEventListener('click', async () => {
+                    const updatedPost = await updatePost(post.id, contentTextAreaElement.value, titleTextAreaElement.value);
+                    if (updatedPost){
+                        showSlideMessage("Updated post!", "#24bd47");
+                    }
+                    else {
+                        showSlideMessage("Inappropriate Content!", "red");
+                    }
+                    const savedPostJson = await getPost(post.id);
+                    const savedPost = JSON.parse(savedPostJson);
+                    contentElement.textContent = savedPost.body;
+                    titleElement.textContent = savedPost.title;
+                    const categoryType = savedPost.category.toLowerCase().replace(/ /g, '-');
+                    category.className = `category ${categoryType}`;
+                    category.textContent = '#' + savedPost.category;
+                    date.textContent = formatDateAndTime(savedPost.lastModifiedDate);
+
+                    postElement.replaceChild(contentElement, inputContainer);
+                    postElement.replaceChild(titleElement, titleContainer);
+                    postSaveBtn.remove();
+                    postActions.append(postEditBtn);
+                });
+
+            });
+
+            postDelBtn.addEventListener('click', async () => {
+                const confirmDeleteContainer = document.querySelector('.confirm-delete-container');
+                confirmDeleteContainer.style.display = 'flex';
+
+                const cancelBtn = document.querySelector('.confirm-delete-popup-buttons .cancel-popup-btn');
+                cancelBtn.addEventListener('click', () => {
+                    // Hide the custom popup
+                    confirmDeleteContainer.style.display = 'none';
+                });
+
+                const deleteBtn = document.querySelector('.confirm-delete-popup-buttons .delete-btn');
+                deleteBtn.addEventListener('click', async () => {
+                    const deletedPost = await deletePost(post.id);
+                    if (deletedPost){
+                        showSlideMessage("Post Deleted!", "#24bd47");
+
+                    }
+                    else {
+                        showSlideMessage("Error deleting post", "red");
+                    }
+                    postElement.remove();
+                    confirmDeleteContainer.style.display = 'none';
+                });
+            });
+
+            postMeta.append(author);
+            postMeta.append(date);
+
+
+            postActions.append(postDelBtn);
+            postActions.append(postEditBtn);
+
+            postElement.append(titleElement);
+            postElement.append(contentElement);
+            postElement.append(category);
+            postElement.append(postMeta);
+            postElement.append(postActions);
+            main.append(postElement);
+        }
     }
 
     document.querySelector('.settings-btn').addEventListener('click', function(e) {

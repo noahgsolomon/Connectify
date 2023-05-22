@@ -1,5 +1,4 @@
-import {getUserPosts} from "./postapi.js";
-import {postRender} from "../postUtils.js";
+import {displayPosts} from "../postUtils.js";
 import {sendMessage} from "./inboxapi.js";
 import {showSlideMessage} from "../status.js";
 let loggedInUser = null;
@@ -106,18 +105,26 @@ async function userProfile(user){
         bio.textContent = userDetails.bio;
         const category = document.querySelector(".profile-category");
         category.textContent = userDetails.topCategory + ' enthusiast';
-
-        const main = document.querySelector('.posts');
-        const postListString = await getUserPosts(user);
-
-        if (postListString) {
-            await postRender(postListString, myProfile, main, 'search');
-        }
+        let pageCount = 0;
+        await displayPosts(myProfile, 'search', pageCount);
 
         if (loggedInUser === null){
             loggedInUser = await profile();
             loggedInUser = JSON.parse(loggedInUser);
         }
+
+        window.onscroll = async function() {
+            const d = document.documentElement;
+            const offset = d.scrollTop + window.innerHeight;
+            const height = d.offsetHeight;
+
+            if (offset >= height) {
+                pageCount += 1;
+                console.log();
+                console.log(pageCount);
+                await displayPosts(myProfile, 'dashboard', pageCount);
+            }
+        };
 
         const followDetailContainer = document.querySelector('.followers-following');
         const followCount = await getFollowCount(user);

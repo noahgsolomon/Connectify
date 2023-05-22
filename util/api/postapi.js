@@ -1,7 +1,7 @@
 const jwtToken = localStorage.getItem('jwtToken');
-async function getPosts() {
+async function getPosts(page) {
 
-    const url = 'http://localhost:8080/posts';
+    const url = `http://localhost:8080/posts?page=${page}`;
 
     try {
         const response = await fetch(url, {
@@ -137,8 +137,8 @@ async function getPostComments(postID) {
     }
 }
 
-async function getMyPosts() {
-    const url = `http://localhost:8080/my-posts`;
+async function getMyPosts(page) {
+    const url = `http://localhost:8080/my-posts?page=${page}`;
 
     try {
         const response = await fetch(url, {

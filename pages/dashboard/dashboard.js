@@ -4,12 +4,11 @@ import {
     onlineHeartbeat
 } from '../../util/api/userapi.js'
 import {
-    createPost,
-    getPosts
+    createPost
 } from "../../util/api/postapi.js";
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.js";
 import {showSlideMessage} from "../../util/status.js";
-import {postRender} from "../../util/postUtils.js";
+import {displayPosts} from "../../util/postUtils.js";
 import {notificationRender, applyTheme} from "../../util/userUtils.js";
 import {deleteAllNotifications} from "../../util/api/notificationapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
@@ -29,7 +28,6 @@ window.addEventListener("load", function() {
 
     applyTheme();
 
-    const main = document.querySelector('.center-content');
     console.log(localStorage.getItem('jwtToken'));
     const formatDateAndTime = (dateString) => {
         const dateObj = new Date(dateString);
@@ -83,27 +81,28 @@ window.addEventListener("load", function() {
         }
     });
 
+    let pageCount;
+    let profileString;
 
     (async () => {
         await onlineHeartbeat();
         await notificationRender();
         const friends = await friendsList();
         console.log(friends);
-        const profileString = await profileColors();
+        profileString = await profileColors();
         const inboxListString = await getInbox();
-        const postListString = await getPosts();
         setInterval(notificationRender, 5000);
         setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('../games/chess/chessgame/chessgame.html');
+        pageCount = 0
 
-        if (postListString) {
-            await postRender(postListString, profileString, main, 'dashboard');
-        }
+        await displayPosts(profileString, 'dashboard', pageCount);
 
         const loader = document.querySelector('.loader');
         loader.style.display = "none";
         const page = document.querySelector('.page');
+
         page.classList.remove('hidden');
 
         if (inboxListString){
@@ -332,6 +331,19 @@ window.addEventListener("load", function() {
 
     })();
 
+    window.onscroll = async function() {
+        const d = document.documentElement;
+        const offset = d.scrollTop + window.innerHeight;
+        const height = d.offsetHeight;
+
+        if (offset >= height) {
+            pageCount += 1;
+            console.log(profileString);
+            console.log(pageCount);
+            await displayPosts(profileString, 'dashboard', pageCount);
+        }
+    };
+
     const modal = document.getElementById("postModal");
     const addPostBtn = document.querySelector(".add-post-btn");
     let charCount = document.getElementById("charCount");
@@ -453,7 +465,8 @@ window.addEventListener("load", function() {
             const title = item.querySelector('h2').textContent.trim().toLowerCase();
             const body = item.querySelector('p').textContent.trim().toLowerCase();
             const username = item.querySelector('.author').textContent.trim().toLowerCase();
-            const postContent = title + body + username;
+            const category = item.querySelector('.category').textContent.trim().toLowerCase();
+            const postContent = title + body + username + category;
             if (postContent.includes(searchValue)) {
                 item.style.display = 'block';
             } else {
