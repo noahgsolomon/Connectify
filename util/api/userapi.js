@@ -122,7 +122,7 @@ async function userProfile(user){
                 pageCount += 1;
                 console.log();
                 console.log(pageCount);
-                await displayPosts(myProfile, 'dashboard', pageCount);
+                await displayPosts(myProfile, 'search', pageCount);
             }
         };
 
