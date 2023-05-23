@@ -3,7 +3,7 @@ import {chessboard} from "./chessboard.js";
 import { sendGameInvite } from "../../../util/api/gamesapi/inviteapi.js";
 import {getChessSession} from "../../../util/api/gamesapi/chessapi.js";
 import {getChessInvites} from "../../../util/api/gamesapi/inviteUtil.js";
-import {applyTheme} from "../../../util/userUtils.js";
+import {applyTheme} from "../../../util/userUtils.jsx";
 
 
 const jwtToken = localStorage.getItem('jwtToken');

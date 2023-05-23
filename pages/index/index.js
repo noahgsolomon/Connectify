@@ -1,4 +1,4 @@
-import {applyTheme} from "../../util/userUtils.js";
+import {applyTheme} from "../../util/userUtils.jsx";
 import {onlineHeartbeat} from "../../util/api/userapi.js";
 
 const jwtToken = localStorage.getItem('jwtToken');

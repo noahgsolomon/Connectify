@@ -1,51 +1,134 @@
+import React, {useEffect, useRef, useState} from 'react';
 import {getNotifications} from "./api/notificationapi.js";
 
-const notificationRender = async () => {
-    const notificationList = await getNotifications();
-    notificationList.reverse();
-    const notificationBtn = document.querySelector('.notification-btn');
-    if (notificationList.length > 0){
-        notificationBtn.classList.add('has-notification');
-    }
-    const notificationItems = document.querySelector('.notification-items');
-    notificationItems.innerHTML = '';
-    for (const notification of notificationList){
-        const notificationItem = document.createElement('div');
-        notificationItem.className = 'notification-item';
-        const notificationTitle = document.createElement('div');
-        notificationTitle.className = 'notification-title';
-        if (notification.type === 'LIKE'){
-            notificationTitle.textContent = 'New Like ❤️';
-        } else if (notification.type === 'FOLLOW'){
-            notificationTitle.textContent = 'New Follower 👥';
-        }else if (notification.type === 'COMMENT'){
-            notificationTitle.textContent = 'New Comment 💬';
-        }else if (notification.type === 'TAG'){
-            notificationTitle.textContent = 'New Tag 🏷️';
-        }else if (notification.type === 'MESSAGE'){
-            notificationTitle.textContent = 'New Message 📩';
-        }
-        const notificationContent = document.createElement('div');
-        notificationContent.className = 'notification-content';
-        notificationContent.textContent = `${notification.sender} ${notification.content}`
-        const notificationTimestamp = document.createElement('div');
-        notificationTimestamp.className = 'notification-timestamp';
-        const dateObject = new Date(notification.date);
-        notificationTimestamp.textContent = timeAgo(dateObject);
 
-        notificationItem.append(notificationTitle);
-        notificationItem.append(notificationContent);
-        notificationItem.append(notificationTimestamp);
-        notificationItems.append(notificationItem);
+const NotificationItem = ({ notification }) => {
+    const { type, sender, content, date } = notification;
+    let notificationTitle;
+
+    switch (type) {
+        case 'LIKE':
+            notificationTitle = 'New Like ❤️';
+            break;
+        case 'FOLLOW':
+            notificationTitle = 'New Follower 👥';
+            break;
+        case 'COMMENT':
+            notificationTitle = 'New Comment 💬';
+            break;
+        case 'TAG':
+            notificationTitle = 'New Tag 🏷️';
+            break;
+        case 'MESSAGE':
+            notificationTitle = 'New Message 📩';
+            break;
+        default:
+            break;
     }
-    if (notificationList.length === 0){
-        const noNotificationsItem = document.createElement('div');
-        noNotificationsItem.className = 'no-notifications-item';
-        noNotificationsItem.textContent = '📭 No new notifications';
-        noNotificationsItem.style.fontWeight = 'bold';
-        notificationItems.append(noNotificationsItem);
+
+    return (
+        <div className='notification-item'>
+            <div className='notification-title'>{notificationTitle}</div>
+            <div className='notification-content'>{`${sender} ${content}`}</div>
+            <div className='notification-timestamp'>{timeAgo(new Date(date))}</div>
+        </div>
+    );
+};
+
+const NotificationList = () => {
+    const [notificationList, setNotificationList] = useState([]);
+    const notificationBtnRef = useRef(null);
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            const fetchedNotifications = await getNotifications();
+            setNotificationList(fetchedNotifications.reverse());
+        };
+
+        fetchNotifications();
+
+        const intervalId = setInterval(fetchNotifications, 5000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+
+    useEffect(() => {
+        notificationBtnRef.current = document.querySelector('.notification-btn');
+        if (notificationBtnRef.current){
+            if (notificationList.length > 0){
+                notificationBtnRef.current.classList.add('has-notification');
+            }
+        }
+    }, [notificationList]);
+
+    if (notificationList.length === 0) {
+        return (
+            <div className='no-notifications-item' style={{ fontWeight: 'bold' }}>
+                📭 No new notifications
+            </div>
+        );
     }
-}
+
+    console.log(notificationList);
+
+    return (
+        <div className={`notification-items`}>
+            {notificationList.map((notification, index) => (
+                <NotificationItem key={index} notification={notification} />
+            ))}
+        </div>
+    );
+};
+
+//deprecated
+
+// const notificationRender = async () => {
+//     const notificationList = await getNotifications();
+//     notificationList.reverse();
+//     console.log(notificationList);
+//     const notificationBtn = document.querySelector('.notification-btn');
+//     if (notificationList.length > 0){
+//         notificationBtn.classList.add('has-notification');
+//     }
+//     const notificationItems = document.querySelector('.notification-items');
+//     notificationItems.innerHTML = '';
+//     for (const notification of notificationList){
+//         const notificationItem = document.createElement('div');
+//         notificationItem.className = 'notification-item';
+//         const notificationTitle = document.createElement('div');
+//         notificationTitle.className = 'notification-title';
+//         if (notification.type === 'LIKE'){
+//             notificationTitle.textContent = 'New Like ❤️';
+//         } else if (notification.type === 'FOLLOW'){
+//             notificationTitle.textContent = 'New Follower 👥';
+//         }else if (notification.type === 'COMMENT'){
+//             notificationTitle.textContent = 'New Comment 💬';
+//         }else if (notification.type === 'TAG'){
+//             notificationTitle.textContent = 'New Tag 🏷️';
+//         }else if (notification.type === 'MESSAGE'){
+//             notificationTitle.textContent = 'New Message 📩';
+//         }
+//         const notificationContent = document.createElement('div');
+//         notificationContent.className = 'notification-content';
+//         notificationContent.textContent = `${notification.sender} ${notification.content}`
+//         const notificationTimestamp = document.createElement('div');
+//         notificationTimestamp.className = 'notification-timestamp';
+//         const dateObject = new Date(notification.date);
+//         notificationTimestamp.textContent = timeAgo(dateObject);
+//
+//         notificationItem.append(notificationTitle);
+//         notificationItem.append(notificationContent);
+//         notificationItem.append(notificationTimestamp);
+//         notificationItems.append(notificationItem);
+//     }
+//     if (notificationList.length === 0){
+//         const noNotificationsItem = document.createElement('div');
+//         noNotificationsItem.className = 'no-notifications-item';
+//         noNotificationsItem.textContent = '📭 No new notifications';
+//         noNotificationsItem.style.fontWeight = 'bold';
+//         notificationItems.append(noNotificationsItem);
+//     }
+// }
 
 function applyTheme() {
     const theme = localStorage.getItem('theme');
@@ -137,7 +220,6 @@ function applyTheme() {
 }
 
 function timeAgo(date) {
-    console.log(date)
     const now = new Date();
     const secondsAgo = Math.floor((now - date) / 1000);
     const minutesAgo = Math.floor(secondsAgo / 60);
@@ -156,6 +238,6 @@ function timeAgo(date) {
 }
 
 export {
-    notificationRender,
-    applyTheme
+    applyTheme,
+    NotificationList
 }

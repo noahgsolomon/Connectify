@@ -1,6 +1,6 @@
 import {userProfile, profileColors, onlineHeartbeat} from "../../util/api/userapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
-import {applyTheme} from "../../util/userUtils.js";
+import {applyTheme} from "../../util/userUtils.jsx";
 
 
 const jwtToken = localStorage.getItem('jwtToken');

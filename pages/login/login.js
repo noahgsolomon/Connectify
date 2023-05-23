@@ -1,5 +1,5 @@
 import {login} from "../../util/api/userapi.js";
-import {applyTheme} from "../../util/userUtils.js";
+import {applyTheme} from "../../util/userUtils.jsx";
 
 
 const jwtToken = localStorage.getItem('jwtToken');

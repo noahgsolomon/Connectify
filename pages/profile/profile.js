@@ -3,7 +3,7 @@ import {deletePost, getMyPosts, getPost, updatePost} from "../../util/api/postap
 import {showSlideMessage} from "../../util/status.js";
 import {formatDateAndTime} from "../../util/postUtils.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
-import {applyTheme} from "../../util/userUtils.js";
+import {applyTheme} from "../../util/userUtils.jsx";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));

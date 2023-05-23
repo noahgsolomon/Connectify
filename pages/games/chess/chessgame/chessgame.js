@@ -1,7 +1,7 @@
 import {chessboard} from "../chessboard.js";
 import {profileColors, fetchUserProfile, onlineHeartbeat} from "../../../../util/api/userapi.js";
 import {getChessSessionWithId, deleteChessSession, updateGameStatus} from "../../../../util/api/gamesapi/chessapi.js";
-import {applyTheme} from "../../../../util/userUtils.js";
+import {applyTheme} from "../../../../util/userUtils.jsx";
 
 const jwtToken = localStorage.getItem('jwtToken');
 let expiryDate = new Date(localStorage.getItem('expiry'));

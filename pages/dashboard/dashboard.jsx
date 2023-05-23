@@ -9,9 +9,12 @@ import {
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.js";
 import {showSlideMessage} from "../../util/status.js";
 import {displayPosts} from "../../util/postUtils.js";
-import {notificationRender, applyTheme} from "../../util/userUtils.js";
+import {applyTheme, NotificationList} from "../../util/userUtils.jsx";
 import {deleteAllNotifications} from "../../util/api/notificationapi.js";
 import {getChessInvites} from "../../util/api/gamesapi/inviteUtil.js";
+import ReactDOM from "react-dom";
+import React from 'react';
+
 const jwtToken = localStorage.getItem('jwtToken');
 console.log(jwtToken);
 let expiryDate = new Date(localStorage.getItem('expiry'));
@@ -86,12 +89,13 @@ window.addEventListener("load", function() {
 
     (async () => {
         await onlineHeartbeat();
-        await notificationRender();
+        ReactDOM.render(
+            <NotificationList />,
+            document.querySelector('.notification-items')
+        );
         const friends = await friendsList();
-        console.log(friends);
         profileString = await profileColors();
         const inboxListString = await getInbox();
-        setInterval(notificationRender, 5000);
         setInterval(await onlineHeartbeat, 120000);
 
         await getChessInvites('../games/chess/chessgame/chessgame.html');
