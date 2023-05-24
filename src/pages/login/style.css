@@ -1,0 +1,137 @@
+.login-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.login-container {
+    max-width: 500px;
+    width: 100%;
+    padding: 2rem;
+    background-color: var(--input-bg);
+    box-shadow: 0 2px 4px var(--shadow);
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-login {
+    margin-left: 0.5rem;
+}
+
+
+.login-wrapper {
+    margin-top: 200px;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.login-container:hover {
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 1200px) {
+    .login-container {
+        max-width: 60%;
+    }
+}
+
+@media (max-width: 992px) {
+    .login-container {
+        max-width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        max-width: 90%;
+    }
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    width: 100%;
+    background-color: var(--post-search-bg);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#username, #password {
+    color: var(--text-color);
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus {
+    border-color: var(--border-color);
+}
+
+form input[type="submit"] {
+    background-color: var(--btn-hover);
+    color: #f0f0f0;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    border: none;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+form input[type="submit"]:hover {
+    background-color: var(--btn-hover);
+    box-shadow: 0 4px 10px var(--shadow);
+    transform: translateY(-2px);
+}
+
+form input[type="submit"]:active {
+    background-color: var(--btn-focus);
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.login-container {
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.login-container h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--highlight-color);
+    font-weight: 600;
+}
+
+.login-container .login-msg {
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 1rem;
+}
+
+form label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    display: block;
+}

@@ -1,0 +1,277 @@
+.post:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.post h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    color: var(--post-title-color);
+}
+
+.post p {
+    word-break: break-word;
+    margin-bottom: 0;
+    font-size: 1rem;
+    color: var(--post-text-color);
+    line-height: 1.5;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--post-meta-color);
+}
+
+.post-meta .date {
+    font-weight: bold;
+    color: var(--post-meta-date-color);
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.post-stats {
+    font-size: 0.9rem;
+    color: var(--post-meta-color);
+}
+
+.like-count {
+    margin-left: 0.4rem;
+    font-weight: bold;
+}
+
+.category {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #282a36;
+    font-weight: bold;
+    border-radius: 15px;
+    color: #ffffff;
+    position: relative;
+    margin: 5px 0;
+    font-size: 0.85em;
+}
+
+.category.technology { background-color: rgb(132, 179, 245, 0.9); color: #1a7fe3; }
+.category.travel { background-color: rgba(144, 238, 144, 0.9); color: #32cd32; }
+.category.food { background-color: rgba(255, 224, 144, 0.9); color: #ffa500; }
+.category.fashion { background-color: rgba(238, 144, 238, 0.9); color: #da70d6; }
+.category.sports { background-color: rgba(255, 240, 215, 0.9); color: #d2a659; }
+.category.health { background-color: rgba(144, 238, 178, 0.9); color: #3cb371; }
+.category.beauty { background-color: rgba(255, 144, 192, 0.9); color: #ff1493; }
+.category.music { background-color: rgba(255, 179, 144, 0.9); color: #ff6347; }
+.category.gaming { background-color: rgba(198, 144, 238, 0.9); color: #8a2be2; }
+.category.animals { background-color: rgba(144, 255, 178, 0.9); color: #0fcc45; }
+.category.finance { background-color: rgba(144, 238, 224, 0.9); color: #006666; }
+.category.education { background-color: rgba(238, 207, 144, 0.9); color: #996600; }
+.category.art { background-color: rgba(238, 144, 173, 0.9); color: #660033; }
+.category.politics { background-color: rgba(238, 238, 144, 0.9); color: #666600; }
+.category.science { background-color: rgba(144, 167, 238, 0.9); color: #003366; }
+.category.environment { background-color: rgba(144, 238, 167, 0.9); color: #336633; }
+.category.literature { background-color: rgba(238, 144, 170, 0.9); color: #cc0066; }
+.category.business { background-color: rgba(255, 163, 144, 0.9); color: #ff3333; }
+.category.entertainment { background-color: rgba(238, 185, 144, 0.9); color: #cc6600; }
+.category.history { background-color: rgba(163, 144, 238, 0.9); color: #330066; }
+.category.miscellaneous { background-color: rgba(238, 224, 202, 0.9); color: #8b4513; }
+.category.cars { background-color: rgba(140, 130, 128, 0.9); color: #8B4513; }
+.category.philosophy { background-color: rgba(235, 226, 174, 0.9); color: #DAA520; }
+.category.photography { background-color: rgba(174, 198, 207, 0.9); color: #2F4F4F; }
+.category.movies { background-color: rgba(119, 136, 153, 0.9); color: #000080; }
+.category.home-and-garden { background-color: rgba(152, 251, 152, 0.9); color: #006400; }
+.category.career { background-color: rgba(221, 160, 221, 0.9); color: #8A2BE2; }
+.category.relationships { background-color: rgba(255, 105, 180, 0.9); color: #C71585; }
+.category.society { background-color: rgba(255, 99, 71, 0.9); color: #B22222; }
+.category.parenting { background-color: rgba(240, 230, 140, 0.9); color: #DAA520; }
+.category.space { background-color: rgba(135, 206, 235, 0.9); color: #00008B; }
+.category.diy { background-color: rgba(50, 205, 50, 0.9); color: #008000; }
+.category.cooking { background-color: rgba(250, 128, 114, 0.9); color: #8B0000; }
+.category.adventure { background-color: rgba(144, 238, 144, 0.9); color: #006400; }
+.category.spirituality { background-color: rgba(238, 130, 238, 0.9); color: #8A2BE2; }
+.category.fitness { background-color: rgba(100, 149, 237, 0.9); color: #000080; }
+.category.real-estate { background-color: rgba(244, 164, 96, 0.9); color: #8B4513; }
+.category.psychology { background-color: rgba(221, 221, 221, 0.9); color: #808080; }
+.category.personal-finance { background-color: rgba(210, 180, 140, 0.9); color: #8B4513; }
+.category.hobbies { background-color: rgba(255, 140, 0, 0.9); color: #B22222; }
+.category.current-events { background-color: rgba(176, 224, 230, 0.9); color: #2F4F4F; }
+
+
+
+.author {
+    color: var(--post-title-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.author:hover {
+    color: var(--post-highlight-color);
+    text-shadow: var(--post-highlight-text-shadow);
+}
+
+.like-btn,
+.bookmark-btn {
+    border: none;
+    background-color: var(--detail-color);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.like-btn:hover,
+.bookmark-btn:hover {
+    background-color: #64a3ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.like-btn:active,
+.bookmark-btn:active {
+    background-color: var(--detail-color);
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.comment-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.comment-field {
+    flex-grow: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.comment-field:focus {
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-btn {
+    border: none;
+    background-color: var(--detail-color);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-btn:hover {
+    filter: brightness(110%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.see-comments-container {
+    font-size: 0.9rem;
+    color: var(--detail-color);
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.see-comments-container:hover {
+    color: #64a3ff;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(100, 163, 255, 0.5);
+}
+
+.comments {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 1rem;
+}
+
+.comment {
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 0.5rem;
+    color: var(--post-meta-color);
+    transition: 0.3s ease;
+}
+
+.comment-text {
+    color: var(--post-text-color);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+}
+
+
+.comment-author:hover{
+    color: var(--detail-color);
+}
+
+
+.comment-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.25rem;
+}
+
+.comment-time {
+    color: #888;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.page-number-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.page-number-container > div {
+    font-family: 'Roboto', sans-serif;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--background);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.page-number-container > div:hover {
+    background-color: var(--border-color);
+    color: #f0f0f0;
+    box-shadow: 0 2px 4px var(--shadow);
+}
