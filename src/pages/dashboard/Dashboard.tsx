@@ -1,8 +1,12 @@
 import React from "react";
 import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
+import useAuthentication from "../../setup/useAuthentication.tsx";
 
 const Dashboard : React.FC = () => {
+
+    useAuthentication();
+
 
 
     return (

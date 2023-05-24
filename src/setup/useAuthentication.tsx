@@ -12,9 +12,13 @@ export default function useAuthentication() {
         if (jwtToken && expiryDate && expiryDate > new Date()) {
             navigate('/dashboard');
         } else {
-            setShowContent(true);
+            if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup') {
+                setShowContent(true);
+            } else {
+                navigate('/login');
+            }
         }
-    }, [jwtToken, expiryDate, navigate]);
+    }, [navigate]);
 
     return showContent;
 }
