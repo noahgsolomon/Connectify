@@ -9,7 +9,7 @@ import {applyTheme} from "../../util/userUtils.tsx";
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, duration?: number } | null>(null);
+    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const navigate = useNavigate();
     const showContent = useAuthentication();
 
@@ -22,12 +22,12 @@ const Login: React.FC = () => {
         event.preventDefault();
 
         if (!username) {
-            setSlideMessage({ message: 'Please enter your username', color: 'var(--error-color)' });
+            setSlideMessage({ message: 'Please enter your username', color: 'var(--error-color)', messageKey: Math.random() });
             return;
         }
 
         if (!password) {
-            setSlideMessage({ message: 'Please enter your password', color: 'var(--error-color)' });
+            setSlideMessage({ message: 'Please enter your password', color: 'var(--error-color)', messageKey: Math.random() });
             return;
         }
 
@@ -42,12 +42,12 @@ const Login: React.FC = () => {
             localStorage.setItem('theme', response.theme);
             localStorage.setItem('emoji', response.emoji);
 
-            setSlideMessage({ message: response.message, color: response.color});
+            setSlideMessage({ message: response.message, color: response.color, messageKey: Math.random() });
             applyTheme();
             navigate('/dashboard');
         }
         else {
-            setSlideMessage({ message: response.message, color: response.color});
+            setSlideMessage({ message: response.message, color: response.color, messageKey: Math.random() });
         }
 
         setUsername('');

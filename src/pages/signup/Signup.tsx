@@ -11,7 +11,7 @@ const Signup : React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, duration?: number } | null>(null);
+    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey : number, duration?: number } | null>(null);
 
     const showContent = useAuthentication();
     if (!showContent){
@@ -23,16 +23,16 @@ const Signup : React.FC = () => {
         event.preventDefault();
 
         if (!username || username.length < 8) {
-            setSlideMessage({ message: 'Username must be at least 8 characters long', color: 'var(--error-color)' });
+            setSlideMessage({ message: 'Username must be at least 8 characters long', color: 'var(--error-color)', messageKey: Math.random()});
         } else if (!email) {
-            setSlideMessage({ message: 'Please provide a valid email', color: 'var(--error-color)' });
+            setSlideMessage({ message: 'Please provide a valid email', color: 'var(--error-color)', messageKey: Math.random()});
         } else if (!password || password.length < 8) {
-            setSlideMessage({ message: 'Password must be at least 8 characters long', color: 'var(--error-color)' });
+            setSlideMessage({ message: 'Password must be at least 8 characters long', color: 'var(--error-color)', messageKey: Math.random()});
         } else if (password !== confirmPassword) {
-            setSlideMessage({ message: 'Passwords do not match', color: 'var(--error-color)' });
+            setSlideMessage({ message: 'Passwords do not match', color: 'var(--error-color)', messageKey: Math.random()});
         } else {
             const response = await signUp(username, email, password);
-            setSlideMessage(response);
+            setSlideMessage({...response, messageKey: Math.random()});
         }
 
         setUsername('');

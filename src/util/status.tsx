@@ -3,10 +3,10 @@ interface SlideMessageProps {
     message: string;
     color: string;
     duration?: number;
-    key: number
+    messageKey: number;
 }
 
-const SlideMessage: React.FC<SlideMessageProps> = ({ message, color, key, duration = 2000 }) => {
+const SlideMessage: React.FC<SlideMessageProps> = ({ message, color, messageKey, duration = 2000 }) => {
     const [showMessage, setShowMessage] = useState(false);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const SlideMessage: React.FC<SlideMessageProps> = ({ message, color, key, durati
 
         }, duration);
         return () => clearTimeout(timerId);
-    }, [key, message, duration]);
+    }, [messageKey, message, duration]);
 
     return (
         showMessage ? (

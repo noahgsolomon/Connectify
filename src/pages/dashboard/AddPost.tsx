@@ -1,11 +1,11 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import './style.css';
 import {createPost} from "../../util/api/postapi.tsx";
 
 type AddPostProps = {
     setDisplayModal : React.Dispatch<React.SetStateAction<boolean>>
     displayModal : boolean,
-    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, key: number, duration?: number } | null>>;
+    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
 }
 
 const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSlideMessage }) => {
@@ -30,10 +30,14 @@ const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSl
         setCreatePostBody(e.target.value);
     }
 
+    useEffect(() => {
+        document.body.style.overflowY = displayModal ? 'hidden' : 'auto';
+    }, [displayModal]);
+
     const submitPost = (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (createPostTitle.length < 5 || createPostTitle.length > 50 || createPostBody.length < 10 ||  createPostBody.length > 500 ){
-            setSlideMessage({message: 'Invalid post length', color: 'var(--error-color)', key: Math.random()});
+            setSlideMessage({message: 'Invalid post length', color: 'var(--error-color)', messageKey: Math.random()});
             setSubmitBtnBg('red');
             setSubmitBtnText('🔥');
         }
@@ -41,17 +45,17 @@ const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSl
             const postData = async () => {
                 const post = await createPost(createPostTitle, createPostBody);
                 if (post.status === 'valid'){
-                    setSlideMessage({message: 'Uploaded post!', color: 'var(--slide-message-bg)', key: Math.random()})
+                    setSlideMessage({message: 'Uploaded post!', color: 'var(--slide-message-bg)', messageKey: Math.random()})
                     setSubmitBtnBg('green');
                     setSubmitBtnText('✅');
                 }
                 else if (post.status === 'invalid') {
-                    setSlideMessage({message: 'This content does adhere to our policies', color: 'var(--error-color)', key: Math.random()})
+                    setSlideMessage({message: 'This content does adhere to our policies', color: 'var(--error-color)', messageKey: Math.random()})
                     setSubmitBtnBg('red');
                     setSubmitBtnText('🔥');
                 }
                 else{
-                    setSlideMessage({message: 'Internal server error', color: 'var(--error-color)', key: Math.random()})
+                    setSlideMessage({message: 'Internal server error', color: 'var(--error-color)', messageKey: Math.random()})
                     setSubmitBtnBg('red');
                     setSubmitBtnText('🔥');
                 }
@@ -65,7 +69,7 @@ const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSl
             setCreatePostTitle('');
             setSubmitBtnText('🚀');
             setSubmitBtnBg('var(--detail-color)');
-        }, 2000);
+        }, 1000);
 
 
     }

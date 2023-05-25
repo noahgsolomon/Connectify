@@ -23,7 +23,7 @@ const Comment : React.FC<Comment> = ({user, content, date}) => (
 
 type CommentList = {
     postId : number,
-    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, key: number, duration?: number } | null>>;
+    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -66,10 +66,10 @@ const CommentList : React.FC<CommentList> = ({postId, setSlideMessage, setLoadin
                 const uploadComment = await createComment(postId, commentText);
                 if (uploadComment){
                     setComments([...comments, {user: uploadComment.user, content: uploadComment.content, date: uploadComment.date}]);
-                    setSlideMessage({message: 'Uploaded comment!', color: 'var(--slide-message-bg)', key: Math.random()})
+                    setSlideMessage({message: 'Uploaded comment!', color: 'var(--slide-message-bg)', messageKey: Math.random()})
                 }
                 else {
-                    setSlideMessage({message: 'Failed to upload comment', color: 'var(--error-color)', key: Math.random()})
+                    setSlideMessage({message: 'Failed to upload comment', color: 'var(--error-color)', messageKey: Math.random()})
                 }
                 setCommentText('');
             }

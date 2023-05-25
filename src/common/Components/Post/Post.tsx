@@ -19,7 +19,7 @@ type PostProps = {
     category: Category,
     likes: number,
     bookmarks: number,
-    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, key: number, duration?: number } | null>>;
+    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     // The setPostDisplay function prop, to control display of post from the parent component
     setPostDisplay: (value: boolean) => void;
 }
@@ -68,7 +68,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
 }
 
 interface PostListProps {
-    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, key: number, duration?: number } | null>>;
+    setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     page: number;
 }
 
