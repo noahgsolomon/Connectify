@@ -4,15 +4,23 @@ import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
 import SlideMessage from "../../util/status.tsx";
+import AddPost from "./AddPost.tsx";
 
 const Dashboard : React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filter, setFilter] = useState("👨 last 30 days");
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, key: number, duration?: number } | null>(null);
+    const [displayModal, setDisplayModal] = useState(false);
+
     const showContent = useAuthentication();
+
 
     if (!showContent){
         return null;
+    }
+
+    const handleAddPost = () => {
+        setDisplayModal(true);
     }
 
     const toggleDropdown = () => {
@@ -29,9 +37,8 @@ const Dashboard : React.FC = () => {
       <div>
         <Header page={"dashboard"}/>
           <div className="overlay"></div>
-
           <div className="container">
-              <button className="add-post-btn">+</button>
+              <button className="add-post-btn" onClick={handleAddPost}>+</button>
 
               <main className="center-content">
                   <div className="post-wrapper">
@@ -54,21 +61,7 @@ const Dashboard : React.FC = () => {
                       </div>
                       <PostList setSlideMessage={setSlideMessage} page={0}/>
                   </div>
-                  <div id="postModal" className="modal">
-                      <div className="modal-content">
-                          <div className="modal-header">
-                              <h2>Create a new post</h2>
-                          </div>
-                          <div className="modal-body">
-                              <form id="postForm" noValidate={true}>
-                                  <label htmlFor="postTitle"></label><input type="text" id="postTitle" name="postTitle" maxLength={100} placeholder="Title" required/>
-                                  <label htmlFor="postBody"></label><textarea id="postBody" name="postBody" rows={5} maxLength={500} placeholder="Body" required/>
-                                  <p><span id="charCount">0</span>/500</p>
-                                  <input type="submit" value="🚀" className="btn"/>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
+                  <AddPost setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
               </main>
               <div className="games-panel">
                   <div id="chess-game" className="game-item chess-game">
