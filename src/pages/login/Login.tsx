@@ -34,6 +34,14 @@ const Login: React.FC = () => {
         const response = await login(username, password);
 
         if (response.status === 'ok'){
+            localStorage.setItem('jwtToken', response.token);
+            let expiryDate = new Date();
+            expiryDate.setTime(expiryDate.getTime() + (1000 * 60 * 60 * 24 * 7));
+            localStorage.setItem('expiry', expiryDate.toISOString());
+            localStorage.setItem('username', username);
+            localStorage.setItem('theme', response.theme);
+            localStorage.setItem('emoji', response.emoji);
+
             setSlideMessage({ message: response.message, color: response.color});
             applyTheme();
             navigate('/dashboard');

@@ -15,13 +15,15 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
+    const emoji = localStorage.getItem('emoji') || "😀";
+
     const buttonConfigs: { [key in HeaderProps['page']]: (Button | ButtonWithNestedElements)[] } = {
         index: [
             { href: "/signup", className: "signup-btn", label: "📝 sign up" },
             { href: "/login", className: "login-btn", label: "🔑 login" },
         ],
         dashboard: [
-            { href: "/profile", className: "profile-btn", label: "😀" },
+            { href: "/profile", className: "profile-btn", label: emoji },
             {
                 href: "#",
                 className: "notification-container",
@@ -37,11 +39,11 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
         ],
         search: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            { href: "/profile", className: "profile-btn", label: "😀" },
+            { href: "/profile", className: "profile-btn", label: emoji },
         ],
         profile: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            { href: "/profile", className: "profile-btn", label: "😀" },
+            { href: "/profile", className: "profile-btn", label: emoji },
         ],
         login: [
             { href: "/signup", className: "signup-btn", label: "📝 sign up" },

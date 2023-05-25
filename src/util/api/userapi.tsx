@@ -47,15 +47,8 @@ async function login(username : string, password : string){
         console.log(responseBody);
 
         if (response.ok) {
-
-            localStorage.setItem('jwtToken', responseBody.token);
-            let expiryDate = new Date();
-            expiryDate.setTime(expiryDate.getTime() + (1000 * 60 * 60 * 24 * 7));
-            localStorage.setItem('expiry', expiryDate.toISOString());
-            localStorage.setItem('username', username);
-            localStorage.setItem('theme', responseBody.theme);
-            localStorage.setItem('emoji', responseBody.emoji);
             return {
+                ...responseBody,
                 status: 'ok',
                 message: 'Successfully logged in!',
                 color: 'var(--slide-message-bg)',

@@ -5,7 +5,11 @@ import useAuthentication from "../../setup/useAuthentication.tsx";
 
 const Dashboard : React.FC = () => {
 
-    useAuthentication();
+    const showContent = useAuthentication();
+
+    if (!showContent){
+        return null;
+    }
 
 
 

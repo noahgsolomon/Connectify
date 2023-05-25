@@ -10,7 +10,11 @@ export default function useAuthentication() {
 
     useEffect(() => {
         if (jwtToken && expiryDate && expiryDate > new Date()) {
-            navigate('/dashboard');
+            if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup') {
+                navigate('/dashboard');
+            } else {
+                setShowContent(true);
+            }
         } else {
             if (location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup') {
                 setShowContent(true);
