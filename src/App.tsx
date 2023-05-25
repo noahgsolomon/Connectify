@@ -1,6 +1,6 @@
 import Home from "./pages/home/Home.tsx";
 import './App.css'
-import {Route, BrowserRouter as Router, Routes} from "react-router-dom";
+import {Route, BrowserRouter, Routes} from "react-router-dom";
 import React, {useEffect} from "react";
 import Login from "./pages/login/Login.tsx";
 import Signup from "./pages/signup/Signup.tsx";
@@ -15,14 +15,14 @@ const App: React.FC = () => {
     }, [theme]);
 
     return (
-        <Router>
+        <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
-        </Router>
+        </BrowserRouter>
     );
 }
 

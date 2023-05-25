@@ -35,6 +35,10 @@
     --light-background: #ECEFF1;
     --dark-background: #101010;
 
+    --post-color: rgb(224, 224, 224);
+    --post-color-light: rgb(224, 224, 224);
+    --post-color-dark: rgb(28, 28, 28);
+
     --logo: #333;
     --light-logo: #333;
     --dark-logo: #ddd;
@@ -75,9 +79,9 @@
     --light-postForm-submit-btn-bg: #64a3ff;
     --dark-postForm-submit-btn-bg: #133c55;
 
-    --slide-message-bg: #00b894;
-    --light-slide-message-bg: #00cc99;
-    --dark-slide-message-bg: #006650;
+    --slide-message-bg: #47e314;
+    --light-slide-message-bg: #47e314;
+    --dark-slide-message-bg: #41bd18;
 
     --inbox-panel-bg: #f5f5f5;
     --light-inbox-panel-bg: #fafafa;

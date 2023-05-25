@@ -1,5 +1,10 @@
+
+.post-wrapper {
+    position: relative;
+}
+
 .post {
-    background-color: var(--background);
+    background-color: var(--post-color);
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 2rem;
@@ -56,6 +61,24 @@
     margin-left: 0.4rem;
     font-weight: bold;
 }
+
+.like-btn-active{
+    background-color: var(--liked-btn-bg);
+}
+
+.like-btn-inactive{
+    background-color: var(--detail-color);
+}
+
+.bookmark-btn-active{
+    background-color: var(--bookmarked-btn-bg);
+}
+
+.bookmark-btn-inactive{
+    background-color: var(--detail-color);
+}
+
+
 
 .category {
     display: inline-block;
@@ -130,7 +153,6 @@
 .like-btn,
 .bookmark-btn {
     border: none;
-    background-color: var(--detail-color);
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 100px;
@@ -141,14 +163,12 @@
 
 .like-btn:hover,
 .bookmark-btn:hover {
-    background-color: #64a3ff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
 .like-btn:active,
 .bookmark-btn:active {
-    background-color: var(--detail-color);
     box-shadow: none;
     transform: translateY(0);
 }
@@ -229,6 +249,7 @@
 }
 
 .comment-author {
+    cursor: pointer;
     font-weight: bold;
     margin-right: 0.5rem;
     color: var(--post-meta-color);

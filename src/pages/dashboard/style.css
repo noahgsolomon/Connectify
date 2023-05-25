@@ -1,4 +1,3 @@
-@import 'src/common/css/post.css';
 @import 'src/common/css/gameinvite.css';
 
 .container {
@@ -39,54 +38,124 @@
     width: 60%;
 }
 
-.post-search {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+.search-bar{
+    margin-bottom: 50px;
+}
+
+.post-search-btn {
     border: none;
-    border-radius: 10px;
-    outline: none;
-    box-sizing: border-box;
-    background-color: var(--post-search-bg);
     color: var(--text-color);
-    box-shadow: 0 2px 4px var(--shadow);
+    outline: transparent;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    background-color: var(--header-btn);
+    margin-left: 1rem;
+    user-select: none;
+}
+
+.post-search-btn:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.post-search-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    cursor: pointer;
+    background-color: var(--header-btn);
+    margin-left: 1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    color: var(--text-color);
+    font-size: 1rem;
+    border: none;
+    outline: transparent;
+    text-align: center;
+    z-index: 5000;
+}
+
+.dropdown-title {
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+}
+
+.dropdown-title span {
+    display: inline-block;
+    transform: rotate(-45deg);
+    transition: transform 0.3s ease;
+}
+
+.dropdown:hover {
+    box-shadow: 0 4px 10px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.dropdown:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.dropdown-options {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    background-color: var(--header-btn);
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    z-index: 5000;
+    max-height: 400px;
+    overflow-y: auto;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+    list-style-type: none;
+}
+
+.dropdown-options.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-options li {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--background);
+    border-radius: 4px;
+    margin-bottom: 8px;
     transition: 0.3s ease;
 }
 
-.post-search:hover {
-    background-color: var(--input-hover);
+.dropdown-options li:hover {
+    box-shadow: 0 4px 10px var(--shadow);
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px var(--shadow);
 }
 
-.post-search:focus {
-    background-color: var(--input-focus);
-    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
-    color: var(--post-text-color);
-    outline: none;
+.dropdown-options li:last-child {
+    border-bottom: none;
 }
 
-
-.post {
-    background-color: var(--background);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 2rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px var(--shadow);
-    transition: all 0.3s ease;
+.dropdown-options li:last-child {
+    border-bottom: none;
 }
 
 @media (min-width: 1000px) {
     .center-content {
         width: 600px;
     }
-}
-
-.like-btn,
-.bookmark-btn{
-    border-radius: 100px;
 }
 
 .modal {

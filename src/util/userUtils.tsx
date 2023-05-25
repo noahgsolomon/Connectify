@@ -130,6 +130,7 @@ function applyTheme() {
         root.style.setProperty('--dark-tile', 'var(--dark-tile-light');
         root.style.setProperty('--chess-border', 'var(--chess-border-light');
         root.style.setProperty('--card', 'var(--card-light');
+        root.style.setProperty('--post-color', 'var(--post-color-light');
 
     } else {
         root.style.setProperty('--header', 'var(--dark-header)');
@@ -171,7 +172,7 @@ function applyTheme() {
         root.style.setProperty('--dark-tile', 'var(--dark-tile-dark');
         root.style.setProperty('--chess-border', 'var(--chess-border-dark');
         root.style.setProperty('--card', 'var(--card-dark');
-
+        root.style.setProperty('--post-color', 'var(--post-color-dark');
     }
 }
 

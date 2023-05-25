@@ -1,17 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
+import SlideMessage from "../../util/status.tsx";
 
 const Dashboard : React.FC = () => {
-
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [filter, setFilter] = useState("👨 last 30 days");
+    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, key: number, duration?: number } | null>(null);
     const showContent = useAuthentication();
 
     if (!showContent){
         return null;
     }
 
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
+    const handleFilterChange = (value : string) => {
+        setFilter(value);
+        setDropdownOpen(false);
+    };
 
 
     return (
@@ -23,10 +34,26 @@ const Dashboard : React.FC = () => {
               <button className="add-post-btn">+</button>
 
               <main className="center-content">
-                  <label>
-                      <input type="text" className="post-search" placeholder="Search..."/>
-                  </label>
-                  <PostList page={0}/>
+                  <div className="post-wrapper">
+                      <div className="search-bar">
+                          <div className="dropdown" onClick={toggleDropdown}>
+                              <div className="dropdown-title">{filter} <span>∟</span></div>
+                              {dropdownOpen &&
+                                  <ul className={`dropdown-options ${dropdownOpen ? 'show' : ''}`}>
+                                      <li onClick={() => handleFilterChange("👶 last day")}>👶 Last day</li>
+                                      <li onClick={() => handleFilterChange("🧒 last 7 days")}>🧒 Last 7 days</li>
+                                      <li onClick={() => handleFilterChange("👨 last 30 days")}>👨 Last 30 days</li>
+                                      <li onClick={() => handleFilterChange("🧓 last year")}>🧓 Last year</li>
+
+                                  </ul>
+                              }
+                          </div>
+                          <button className={'post-search-btn'} type="submit">
+                              🔎
+                          </button>
+                      </div>
+                      <PostList setSlideMessage={setSlideMessage} page={0}/>
+                  </div>
                   <div id="postModal" className="modal">
                       <div className="modal-content">
                           <div className="modal-header">
@@ -89,6 +116,7 @@ const Dashboard : React.FC = () => {
                   </div>
               </aside>
           </div>
+          {slideMessage && <SlideMessage {...slideMessage} />}
       </div>
     );
 };

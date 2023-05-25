@@ -121,7 +121,7 @@ const createComment = async (postId : number, content : string) => {
             body: content
         });
 
-        const responseBody = await response.text();
+        const responseBody = await response.json();
         if (response.ok) {
             return responseBody;
         }
@@ -139,7 +139,7 @@ const getPostComments = async (postId : number) => {
                 'Authorization': `Bearer ${jwtToken}`
             }
         });
-        const responseBody = await response.text();
+        const responseBody = await response.json();
         if (response.ok) {
             return responseBody;
         }
