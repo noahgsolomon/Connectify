@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
+import PostList from "../../common/Components/Post/Post.tsx";
 
 const Dashboard : React.FC = () => {
 
@@ -25,9 +26,7 @@ const Dashboard : React.FC = () => {
                   <label>
                       <input type="text" className="post-search" placeholder="Search..."/>
                   </label>
-                  <div className="post-wrapper">
-
-                  </div>
+                  <PostList page={0}/>
                   <div id="postModal" className="modal">
                       <div className="modal-content">
                           <div className="modal-header">

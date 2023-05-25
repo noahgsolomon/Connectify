@@ -11,12 +11,11 @@ const getPosts = async (page : number) => {
                 'Authorization': `Bearer ${jwtToken}`
             }
         });
-        const responseBody = await response.text();
+        const responseBody = await response.json();
         if (response.ok) {
             return responseBody;
-        } else {
-            console.log('error');
         }
+        console.log(response);
     } catch (error) {
         console.error(error);
         throw error;
