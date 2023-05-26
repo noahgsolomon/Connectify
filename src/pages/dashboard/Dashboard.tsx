@@ -5,14 +5,18 @@ import useAuthentication from "../../setup/useAuthentication.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
 import SlideMessage from "../../util/status.tsx";
 import AddPost from "./AddPost.tsx";
+import Categories from "./Categories.tsx";
 
 const Dashboard : React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filter, setFilter] = useState("👨 last 30 days");
+    const [lastDay, setLastDay] = useState(30);
+    const [category, setCategory] = useState("");
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [displayModal, setDisplayModal] = useState(false);
     const [page, setPage] = useState<Array<number>>([0])
     const [displayFilter, setDisplayFilter] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState("");
     const showContent = useAuthentication();
 
 
@@ -35,6 +39,10 @@ const Dashboard : React.FC = () => {
 
     }, []);
 
+    useEffect(() => {
+        setPage([0]);
+    }, [lastDay, category])
+
     if (!showContent){
         return null;
     }
@@ -51,6 +59,20 @@ const Dashboard : React.FC = () => {
     };
 
     const handleFilterChange = (value : string) => {
+        value = value.toLowerCase()
+        if (value.includes('last day')){
+            setLastDay(1);
+        }
+        else if (value.includes('7 days')){
+            setLastDay(7);
+        }
+        else if (value.includes('30 days')){
+            setLastDay(30);
+        }
+        else if (value.includes('last year')){
+            setLastDay(365);
+        }
+
         setFilter(value);
         setDropdownOpen(false);
     };
@@ -65,6 +87,19 @@ const Dashboard : React.FC = () => {
             setDropdownOpen(false);
         }
         setDisplayFilter(!displayFilter);
+    }
+
+    const handleFilterClick = (category: string) => {
+        category = (category.replaceAll('-', ' '));
+        setSelectedCategory(category);
+        if (category && category !== ''){
+            if (category === 'any'){
+                setCategory('');
+            }
+            else {
+            setCategory(category);
+            }
+        }
     }
 
 
@@ -89,53 +124,12 @@ const Dashboard : React.FC = () => {
                       </div>
                       <div className="filter-btn" onClick={toggleFilter}>🔧
                           <div className={`filter-panel ${displayFilter ? 'show' : ''}`}>
-                              <div className="filter-category">Filter by category</div>
-                              <div className="filter-option category technology">#Technology</div>
-                              <div className="filter-option category travel">#Travel</div>
-                              <div className="filter-option category food">#Food</div>
-                              <div className="filter-option category fashion">#Fashion</div>
-                              <div className="filter-option category sports">#Sports</div>
-                              <div className="filter-option category health">#Health</div>
-                              <div className="filter-option category beauty">#Beauty</div>
-                              <div className="filter-option category music">#Music</div>
-                              <div className="filter-option category gaming">#Gaming</div>
-                              <div className="filter-option category animals">#Animals</div>
-                              <div className="filter-option category finance">#Finance</div>
-                              <div className="filter-option category education">#Education</div>
-                              <div className="filter-option category art">#Art</div>
-                              <div className="filter-option category politics">#Politics</div>
-                              <div className="filter-option category science">#Science</div>
-                              <div className="filter-option category environment">#Environment</div>
-                              <div className="filter-option category literature">#Literature</div>
-                              <div className="filter-option category business">#Business</div>
-                              <div className="filter-option category entertainment">#Entertainment</div>
-                              <div className="filter-option category history">#History</div>
-                              <div className="filter-option category miscellaneous">#Miscellaneous</div>
-                              <div className="filter-option category cars">#Cars</div>
-                              <div className="filter-option category philosophy">#Philosophy</div>
-                              <div className="filter-option category photography">#Photography</div>
-                              <div className="filter-option category movies">#Movies</div>
-                              <div className="filter-option category home-and-garden">#HomeAndGarden</div>
-                              <div className="filter-option category career">#Career</div>
-                              <div className="filter-option category relationships">#Relationships</div>
-                              <div className="filter-option category society">#Society</div>
-                              <div className="filter-option category parenting">#Parenting</div>
-                              <div className="filter-option category space">#Space</div>
-                              <div className="filter-option category diy">#DIY</div>
-                              <div className="filter-option category cooking">#Cooking</div>
-                              <div className="filter-option category adventure">#Adventure</div>
-                              <div className="filter-option category spirituality">#Spirituality</div>
-                              <div className="filter-option category fitness">#Fitness</div>
-                              <div className="filter-option category real-estate">#RealEstate</div>
-                              <div className="filter-option category psychology">#Psychology</div>
-                              <div className="filter-option category personal-finance">#PersonalFinance</div>
-                              <div className="filter-option category hobbies">#Hobbies</div>
-                              <div className="filter-option category current-events">#CurrentEvents</div>
+                              <Categories handleFilterClick={handleFilterClick} selectedCategory={selectedCategory} />
                           </div>
                       </div>
                   </div>
                   <div className="post-wrapper">
-                      <PostList setSlideMessage={setSlideMessage} page={page}/>
+                      <PostList setSlideMessage={setSlideMessage} category={category} lastDay={lastDay} page={page}/>
                   </div>
                   <AddPost setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
               </main>

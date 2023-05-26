@@ -1,10 +1,8 @@
 const jwtToken = localStorage.getItem('jwtToken');
 const getPosts = async (page : number) => {
 
-    const url = `http://localhost:8080/posts?page=${page}`;
-
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`http://localhost:8080/posts?page=${page}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,6 +18,34 @@ const getPosts = async (page : number) => {
         console.error(error);
         throw error;
     }
+}
+
+const getPostsFilter = async (category : string, lastDays : number, page : number) => {
+
+    const model = {
+        category: category,
+        lastDays: lastDays
+    }
+
+    try {
+        const response = await fetch(`http://localhost:8080/posts-filter?page=${page}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwtToken}`
+            },
+            body: JSON.stringify(model)
+        });
+        const responseBody = await response.json();
+        if (response.ok) {
+            return responseBody;
+        }
+        console.log(response);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+
 }
 
 const getUserPosts = async (user : string, page : number) => {
@@ -259,15 +285,18 @@ const getPostLikeCount = async (postId : number) => {
     }
 }
 
-export {deletePost};
-export {updatePost};
-export {getPost};
-export {getMyPosts};
-export {getPostComments};
-export {createComment};
-export {createPost};
-export {getLikeBookmark};
-export {addLikeBookmark};
-export {getUserPosts};
-export {getPosts};
-export {getPostLikeCount};
+export {
+    deletePost,
+    updatePost,
+    getPost,
+    getMyPosts,
+    getPostComments,
+    createComment,
+    createPost,
+    getLikeBookmark,
+    addLikeBookmark,
+    getUserPosts,
+    getPosts,
+    getPostLikeCount,
+    getPostsFilter
+};

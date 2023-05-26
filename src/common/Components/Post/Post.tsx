@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import './post.css';
 
 import {
-    getPosts
+    getPostsFilter
 } from "../../../util/api/postapi.tsx";
 
 import CommentList from "./Comment.tsx";
@@ -70,9 +70,11 @@ const Post : React.FC<PostProps> = ({ id, username, title,
 interface PostListProps {
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     page: Array<number>;
+    category: string;
+    lastDay: number;
 }
 
-const PostList : React.FC<PostListProps> = ({ setSlideMessage, page }) => {
+const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState<Array<PostProps>>([]); // Specify type
@@ -89,7 +91,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page }) => {
         }
 
         const fetchPosts = async () => {
-            const response = await getPosts(lastFetchPage);
+            const response = await getPostsFilter(category, lastDay, lastFetchPage);
             if (response){
                 setPosts(prevState => [...prevState, ...response]);
                 setLastFetchPage(lastFetchPage + 1);
@@ -98,6 +100,22 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page }) => {
         }
         fetchPosts();
     }, [page, init]);
+
+    useEffect(() => {
+
+        if (!init){
+            setPosts([]);
+            const fetchPosts = async () => {
+                const response = await getPostsFilter(category, lastDay, 0);
+                if (response){
+                    setPosts(response);
+                    setLastFetchPage(1);
+                }
+            }
+            fetchPosts();
+        }
+
+    },[lastDay, category]);
 
     useEffect(() => {
         if (Object.values(postDisplays).every(value => value)) {
