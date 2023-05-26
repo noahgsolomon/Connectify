@@ -23,6 +23,7 @@
     transform: none;
     z-index: 500;
 }
+
 .add-post-btn:hover {
     background-color: var(--detail-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

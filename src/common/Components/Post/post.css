@@ -1,4 +1,5 @@
-.post-wrapper {
+
+.post-wrapper{
     position: relative;
 }
 
@@ -10,6 +11,17 @@
     margin-bottom: 1rem;
     box-shadow: 0 2px 4px var(--shadow);
     transition: all 0.3s ease;
+}
+
+.post-container{
+    opacity: 1;
+    visibility: visible;
+    transition: 0.2s ease;
+}
+
+.post-container.hide{
+    opacity: 0;
+    visibility: hidden;
 }
 
 .post:hover {
@@ -148,7 +160,6 @@
 .category.current-events { background-color: rgba(176, 224, 230, 0.9); color: #2F4F4F; }
 
 
-
 .author {
     color: var(--post-title-color);
     font-size: 1.2rem;
@@ -260,7 +271,6 @@
 .comment:last-child {
     border-bottom: none;
 }
-
 .comment-author {
     cursor: pointer;
     font-weight: bold;

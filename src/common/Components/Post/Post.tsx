@@ -91,6 +91,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
     const [postDisplays, setPostDisplays] = useState<{[id: number] : boolean}>({});
     const [allPostsLoaded, setAllPostsLoaded] = useState(false);
     const [lastFetchPage, setLastFetchPage] = useState( page[page.length - 1]);
+    const [postTransition, setPostTransition] = useState(false); // Used to trigger useEffect on page change
     const [init, setInit] = useState(true);
 
     useEffect(() => {
@@ -114,15 +115,23 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
     useEffect(() => {
 
         if (!init){
-            setPosts([]);
-            const fetchPosts = async () => {
-                const response = await getPostsFilter(category, lastDay, 0);
-                if (response){
-                    setPosts(response);
-                    setLastFetchPage(1);
+            setPostTransition(true);
+
+            setTimeout(() => {
+                setPosts([]);
+                const fetchPosts = async () => {
+                    const response = await getPostsFilter(category, lastDay, 0);
+                    if (response){
+                        setPosts(response);
+                        setLastFetchPage(1);
+                    }
                 }
-            }
-            fetchPosts();
+                fetchPosts();
+                setTimeout(() => {
+                    setPostTransition(false);
+                }, 1000);
+            }, 200);
+
         }
 
     },[lastDay, category]);
@@ -142,7 +151,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
     }
 
     return (
-        <>
+        <div className={`post-container ${postTransition ? 'hide' : ''}`}>
             {posts.map((post, index) => (
                 <Post key={index} {...post} setSlideMessage={setSlideMessage} setCategory={setCategory} setSelectedCategory={setSelectedCategory}
                       setPostDisplay={(value) => { // Define a function called setPostDisplay that takes a boolean value as a parameter
@@ -151,7 +160,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
                           });
                       }} />
             ))}
-        </>
+        </div>
     );
 }
 
