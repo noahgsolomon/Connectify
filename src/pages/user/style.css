@@ -3,7 +3,7 @@
 @import '../../common/css/gameinvite.css';
 @import '../../common/css/var.css';
 
-.container {
+.profile-container {
     margin: 100px 50px 0;
     display: flex;
     justify-content: center;

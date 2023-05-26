@@ -62,7 +62,7 @@ const User : React.FC = () => {
         <>
         <div className={`page ${(userLoaded)? '' : 'hidden'}`}>
         <Header page={"profile"}/>
-            <div className="container">
+            <div className="profile-container">
                 <div className="profile-card">
                     <div className="profile-info">
                         <div className="profile-header">
