@@ -1,5 +1,3 @@
-@import 'src/common/css/gameinvite.css';
-
 .container {
     display: flex;
 }
@@ -38,18 +36,21 @@
     width: 60%;
 }
 
-.search-bar{
-    margin-bottom: 50px;
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 25px;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
     padding: 0.5rem 1rem;
-    border-radius: 75px;
+    border-radius: 10px;
     cursor: pointer;
-    background-color: var(--post-color);
-    margin-left: 1rem;
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
     transition: 0.3s ease;
     color: var(--text-color);
     font-size: 1rem;
@@ -72,7 +73,7 @@
 }
 
 .dropdown:hover {
-    box-shadow: 0 4px 10px var(--shadow);
+    box-shadow: 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -129,6 +130,105 @@
     border-bottom: none;
 }
 
+.filter-btn {
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: 0.3s ease;
+    color: var(--text-color);
+    font-size: 1rem;
+    border: none;
+    outline: transparent;
+    text-align: center;
+    z-index: 7001;
+    user-select: none;
+    margin: 8px;
+}
+
+.filter-btn:hover {
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.filter-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.filter-category{
+    text-align: center;
+    font-weight: bold;
+    background-color: var(--header-btn);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow);
+    width: 100%;
+    transition: 0.2s ease;
+    font-size: 1.2rem;
+}
+
+.filter-category:hover{
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.filter-panel {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    width: 300px;
+    align-items: center;
+    gap: 5px;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    max-height: 250px;
+    overflow-y: auto;
+    transition: 0.2s ease;
+    list-style-type: none;
+    z-index: 7002;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.filter-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.filter-option {
+    padding: 1px;
+    font-size: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--notification-item);
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s ease;
+    user-select: none;
+}
+
+.filter-option:hover {
+    box-shadow: 0 4px 10px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.filter-option:last-child {
+    border-bottom: none;
+}
+
 @media (min-width: 1000px) {
     .center-content {
         width: 600px;
@@ -148,7 +248,7 @@
 
 .modal-content {
     background-color: var(--modal-bg);
-    margin: 15% auto;
+    margin: 8% auto;
     padding: 20px;
     border-radius: 10px;
     width: 80%;

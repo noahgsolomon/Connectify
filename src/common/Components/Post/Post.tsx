@@ -50,7 +50,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
     }, [interactionsLoading, commentsLoading]);
 
     return (
-        <div className={postDisplay ? ('post') : ('post hidden')}>
+        <div className={`post ${postDisplay ? ('') : ('hidden')}`}>
             <h2>{title}</h2>
             <p>{body}</p>
                 <span className={`category 
@@ -69,7 +69,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
 
 interface PostListProps {
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
-    page: number;
+    page: Array<number>;
 }
 
 const PostList : React.FC<PostListProps> = ({ setSlideMessage, page }) => {
@@ -78,17 +78,26 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page }) => {
     const [posts, setPosts] = useState<Array<PostProps>>([]); // Specify type
     const [postDisplays, setPostDisplays] = useState<{[id: number] : boolean}>({});
     const [allPostsLoaded, setAllPostsLoaded] = useState(false);
+    const [lastFetchPage, setLastFetchPage] = useState( page[page.length - 1]);
+    const [init, setInit] = useState(true);
 
     useEffect(() => {
+
+        if (init) {
+            setInit(false);
+            return;
+        }
+
         const fetchPosts = async () => {
-            const response = await getPosts(page);
+            const response = await getPosts(lastFetchPage);
             if (response){
-                setPosts(response);
+                setPosts(prevState => [...prevState, ...response]);
+                setLastFetchPage(lastFetchPage + 1);
             }
             setIsLoading(false);
         }
         fetchPosts();
-    }, [page]);
+    }, [page, init]);
 
     useEffect(() => {
         if (Object.values(postDisplays).every(value => value)) {
@@ -106,8 +115,8 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page }) => {
 
     return (
         <>
-            {posts.map((post) => (
-                <Post key={post.id} {...post} setSlideMessage={setSlideMessage}
+            {posts.map((post, index) => (
+                <Post key={index} {...post} setSlideMessage={setSlideMessage}
                       setPostDisplay={(value) => { // Define a function called setPostDisplay that takes a boolean value as a parameter
                           setPostDisplays(prevState => { // Call setPostDisplays function with a callback function
                               return {...prevState, [post.id]: value}// Update the display setting for the post with post.id

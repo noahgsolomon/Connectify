@@ -64,12 +64,12 @@ const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSl
             postData();
         }
         setTimeout(() => {
-            setDisplayModal(false);
             setCreatePostBody('');
             setCreatePostTitle('');
             setSubmitBtnText('🚀');
             setSubmitBtnBg('var(--detail-color)');
-        }, 1000);
+            setDisplayModal(false);
+        }, 1500);
 
 
     }
