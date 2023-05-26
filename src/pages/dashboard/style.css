@@ -163,8 +163,8 @@
 .filter-category{
     text-align: center;
     font-weight: bold;
-    background-color: var(--header-btn);
-    padding: 0.2rem 0.5rem;
+    background-color: var(--notification-item);
+    padding: 0.75rem 0.5rem;
     border-radius: 6px;
     color: var(--text-color);
     box-shadow: 0 2px 4px var(--shadow);
@@ -191,7 +191,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #fff;
+    background-color: var(--header-btn);
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 15px;
