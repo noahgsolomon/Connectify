@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NotificationButton from "./NotificationButton.tsx";
 interface Button {
     href: string;
     className: string;
-    label: string;
+    label: string | React.ReactNode;
+    isReactNode?: boolean;
 }
 
 type ButtonWithNestedElements = Button & {
@@ -27,12 +29,8 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
             {
                 href: "#",
                 className: "notification-container",
-                label: "",
-                children: [
-                    { href: "#", className: "notification-btn", label: "🔔" },
-                    { href: "#", className: "notification-panel", label: "" },
-                    { href: "#", className: "notification-items", label: "" },
-                ]
+                label: <NotificationButton />,
+                isReactNode: true
             },
             { href: "/search", className: "search-btn", label: "🔎" },
             { href: "/#", className: "inbox-btn", label: "💬" },
@@ -65,11 +63,20 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
                 </div>
             );
         } else {
-            return (
-                <Link key={index} to={button.href} className={button.className}>
-                    {button.label}
-                </Link>
-            );
+            if (button.isReactNode) {
+                return (
+                    <div key={index} className={button.className}>
+                        {button.label}
+                    </div>
+                )
+            }
+            else {
+                return (
+                    <Link key={index} to={button.href} className={button.className}>
+                        {button.label}
+                    </Link>
+                );
+            }
         }
     }
 

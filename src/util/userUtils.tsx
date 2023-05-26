@@ -1,90 +1,3 @@
-import React from "react";
-import { getNotifications } from './api/notificationapi.tsx';
-
-
-type NotificationType = {
-    type: string;
-    sender: string;
-    content: string;
-    date: string;
-};
-
-const NotificationItem: React.FC<{ notification: NotificationType }> = ({ notification }) => {
-    const { type, sender, content, date } = notification;
-    let notificationTitle;
-
-    switch (type) {
-        case 'LIKE':
-            notificationTitle = 'New Like ';
-            break;
-        case 'FOLLOW':
-            notificationTitle = 'New Follower ';
-            break;
-        case 'COMMENT':
-            notificationTitle = 'New Comment ';
-            break;
-        case 'TAG':
-            notificationTitle = 'New Tag ';
-            break;
-        case 'MESSAGE':
-            notificationTitle = 'New Message ';
-            break;
-        default:
-            break;
-    }
-
-    return (
-        <div className="notification-item">
-            <div className="notification-title">{notificationTitle}</div>
-            <div className="notification-content">{`${sender} ${content}`}</div>
-            <div className="notification-timestamp">{timeAgo(new Date(date))}</div>
-        </div>
-    );
-};
-
-const NotificationList: React.FC = () => {
-    const [notificationList, setNotificationList] = React.useState<NotificationType[]>([]);
-    const notificationBtnRef = React.useRef<HTMLButtonElement | null>(null);
-
-    React.useEffect(() => {
-        const fetchNotifications = async () => {
-            const fetchedNotifications = await getNotifications();
-            setNotificationList(fetchedNotifications.reverse());
-        };
-
-        fetchNotifications();
-
-        const intervalId = setInterval(fetchNotifications, 5000);
-
-        return () => clearInterval(intervalId);
-    }, []);
-
-    React.useEffect(() => {
-        if (notificationBtnRef.current) {
-            if (notificationList.length > 0) {
-                notificationBtnRef.current.classList.add('has-notification');
-            }
-        }
-    }, [notificationList]);
-
-    if (notificationList.length === 0) {
-        return (
-            <div className="no-notifications-item" style={{ fontWeight: 'bold' }}>
-                📭 No new notifications
-            </div>
-        );
-    }
-
-    console.log(notificationList);
-
-    return (
-        <div className="notification-items">
-            {notificationList.map((notification, index) => (
-                <NotificationItem key={index} notification={notification} />
-            ))}
-        </div>
-    );
-};
 
 function applyTheme() {
     const theme = localStorage.getItem('theme');
@@ -131,6 +44,7 @@ function applyTheme() {
         root.style.setProperty('--chess-border', 'var(--chess-border-light');
         root.style.setProperty('--card', 'var(--card-light');
         root.style.setProperty('--post-color', 'var(--post-color-light');
+        root.style.setProperty('--notification-item', 'var(--notification-item-light');
 
     } else {
         root.style.setProperty('--header', 'var(--dark-header)');
@@ -173,6 +87,8 @@ function applyTheme() {
         root.style.setProperty('--chess-border', 'var(--chess-border-dark');
         root.style.setProperty('--card', 'var(--card-dark');
         root.style.setProperty('--post-color', 'var(--post-color-dark');
+        root.style.setProperty('--notification-item', 'var(--notification-item-dark');
+
     }
 }
 
@@ -197,5 +113,5 @@ function timeAgo(date : Date) {
 
 export {
     applyTheme,
-    NotificationList
+    timeAgo
 }

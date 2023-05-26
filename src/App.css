@@ -132,6 +132,7 @@ nav a:active {
 }
 
 .notification-panel {
+    margin-top: 10px;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -142,7 +143,7 @@ nav a:active {
     border-radius: 6px;
     padding: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    z-index: 100;
+    z-index: 8000;
     font-family: 'Roboto', sans-serif;
     max-height: 400px;
     overflow-y: auto;
@@ -165,15 +166,16 @@ nav a:active {
 
 .notification-item {
     padding: 12px;
-    border-bottom: 1px solid #f0f0f0;
-    background-color: rgba(245, 245, 245, 0.4);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--notification-item);
     border-radius: 4px;
     margin-bottom: 8px;
-    transition: background-color 0.3s;
+    transition: 0.3s ease;
 }
 
 .notification-item:hover {
-    background-color: rgba(245, 245, 245, 0.6);
+    box-shadow: 0 6px 8px var(--shadow);
+    transform: translateY(-2px);
 }
 
 .notification-item:last-child {
@@ -188,7 +190,7 @@ nav a:active {
 
 .notification-content {
     font-size: 0.9em;
-    color: #444;
+    color: var(--post-title-color);
     margin-bottom: 5px;
     display: flex;
     align-items: center;

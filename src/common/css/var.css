@@ -103,6 +103,10 @@
     --light-post-text-color: #333;
     --dark-post-text-color: #a4a4a4;
 
+    --notification-item: #9f9f9f;
+    --notification-light: #9f9f9f;
+    --notification-item-dark: #525252;
+
     --post-meta-color: #262626;
     --light-post-meta-color: #262626;
     --dark-post-meta-color: #9b9b9b;
@@ -146,6 +150,8 @@
     --border-color: #ccc;
     --border-color-light: #ccc;
     --border-color-dark: #333;
+
+
 
     --btn-color: #1e90ff;
     --btn-color-light: #1e90ff;

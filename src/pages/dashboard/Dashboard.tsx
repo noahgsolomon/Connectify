@@ -9,7 +9,7 @@ import AddPost from "./AddPost.tsx";
 const Dashboard : React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filter, setFilter] = useState("👨 last 30 days");
-    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, key: number, duration?: number } | null>(null);
+    const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [displayModal, setDisplayModal] = useState(false);
 
     const showContent = useAuthentication();
@@ -55,9 +55,6 @@ const Dashboard : React.FC = () => {
                                   </ul>
                               }
                           </div>
-                          <button className={'post-search-btn'} type="submit">
-                              🔎
-                          </button>
                       </div>
                       <PostList setSlideMessage={setSlideMessage} page={0}/>
                   </div>
