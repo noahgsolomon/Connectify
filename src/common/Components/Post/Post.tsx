@@ -8,6 +8,7 @@ import {
 import CommentList from "./Comment.tsx";
 import PostInteractions from "./PostInteractions.tsx";
 import {formatDateAndTime} from "../../../util/postUtils.tsx";
+import {Link} from "react-router-dom";
 
 
 type PostProps = {
@@ -65,7 +66,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
                 #{category}
             </span>
             <div className="post-meta">
-                <a href="#" className="author">{username}</a>
+                <Link to={`/user/${username}`} className={"author"}>{username}</Link>
                 <span className="date">{formatDateAndTime(lastModifiedDate)}</span>
             </div>
             <PostInteractions postId={id} likes={likes} setLoading={setInteractionsLoading}/>

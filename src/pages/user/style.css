@@ -1,0 +1,80 @@
+@import "../../common/css/profile.css";
+@import "../../common/Components/Post/post.css";
+@import '../../common/css/gameinvite.css';
+@import '../../common/css/var.css';
+
+.container {
+    margin: 100px 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.posts {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.post {
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.online-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    background-color: #0fcc45;
+    border-radius: 50%;
+}
+
+.blink {
+    display: block;
+    width: 15px;
+    height: 15px;
+
+    background-color: #0fcc45;
+    opacity: 0.7;
+    border-radius: 50%;
+
+    animation: blink 3s linear infinite;
+}
+
+@keyframes blink {
+    100% { transform: scale(2, 2);
+        opacity: 0;
+    }
+}
+
+
+
+@media (max-width: 600px) {
+    .container{
+        width: 90%;
+        margin: 25px auto;
+    }
+    .posts{
+        width: 90%;
+    }
+}

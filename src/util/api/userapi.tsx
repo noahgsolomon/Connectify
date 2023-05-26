@@ -138,12 +138,12 @@ async function fetchUserProfile(user : string){
                 "Authorization": `Bearer ${jwtToken}`}
         });
 
-        const responseBody = await response.text();
         if (response.ok){
-            return responseBody;
+            return await response.json();
         }
     } catch (error){
         console.log(error);
+        throw error;
     }
 }
 async function getFollowCount(user : string) {
