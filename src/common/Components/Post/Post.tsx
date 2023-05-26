@@ -93,6 +93,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
     const [lastFetchPage, setLastFetchPage] = useState( page[page.length - 1]);
     const [postTransition, setPostTransition] = useState(false); // Used to trigger useEffect on page change
     const [init, setInit] = useState(true);
+    const [emptyPosts, setEmptyPosts] = useState(false);
 
     useEffect(() => {
 
@@ -122,6 +123,12 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
                 const fetchPosts = async () => {
                     const response = await getPostsFilter(category, lastDay, 0);
                     if (response){
+                        if (response.length === 0){
+                            setEmptyPosts(true);
+                        }
+                        else{
+                            setEmptyPosts(false);
+                        }
                         setPosts(response);
                         setLastFetchPage(1);
                     }
@@ -135,6 +142,8 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
         }
 
     },[lastDay, category]);
+
+
 
     useEffect(() => {
         if (Object.values(postDisplays).every(value => value)) {
@@ -151,6 +160,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
     }
 
     return (
+        !emptyPosts ? (
         <div className={`post-container ${postTransition ? 'hide' : ''}`}>
             {posts.map((post, index) => (
                 <Post key={index} {...post} setSlideMessage={setSlideMessage} setCategory={setCategory} setSelectedCategory={setSelectedCategory}
@@ -161,6 +171,17 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
                       }} />
             ))}
         </div>
+    ) :
+            <div className={`post-container}`}>
+                <div className={`post`}>
+                    <h2>No posts here 😢</h2>
+                    <p>Check back some other time, or make a post yourself!</p>
+                    <span className={`category 
+                           ${category.toLowerCase().replace(/ /g, '-')}`}>
+                        #{category}
+                    </span>
+                </div>
+            </div>
     );
 }
 
