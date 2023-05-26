@@ -22,6 +22,8 @@ type PostProps = {
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     // The setPostDisplay function prop, to control display of post from the parent component
     setPostDisplay: (value: boolean) => void;
+    setCategory: React.Dispatch<React.SetStateAction<string>>;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
 type Category = 'invalid' | 'technology' | 'travel' |
@@ -37,7 +39,7 @@ type Category = 'invalid' | 'technology' | 'travel' |
 
 const Post : React.FC<PostProps> = ({ id, username, title,
                                         body, lastModifiedDate, category,
-                                        likes, setSlideMessage}) => {
+                                        likes, setSlideMessage, setCategory, setSelectedCategory}) => {
 
     const [interactionsLoading, setInteractionsLoading] = useState(true);
     const [commentsLoading, setCommentsLoading] = useState(true);
@@ -49,11 +51,16 @@ const Post : React.FC<PostProps> = ({ id, username, title,
         }
     }, [interactionsLoading, commentsLoading]);
 
+    const handleCategoryClick = () => {
+        setSelectedCategory(category.replaceAll('-', ' '));
+        setCategory(category);
+    };
+
     return (
         <div className={`post ${postDisplay ? ('') : ('hidden')}`}>
             <h2>{title}</h2>
             <p>{body}</p>
-                <span className={`category 
+                <span onClick={handleCategoryClick} className={`category 
             ${category.toLowerCase().replace(/ /g, '-')}`}>
                 #{category}
             </span>
@@ -72,9 +79,11 @@ interface PostListProps {
     page: Array<number>;
     category: string;
     lastDay: number;
+    setCategory: React.Dispatch<React.SetStateAction<string>>;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay }) => {
+const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState<Array<PostProps>>([]); // Specify type
@@ -134,7 +143,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
     return (
         <>
             {posts.map((post, index) => (
-                <Post key={index} {...post} setSlideMessage={setSlideMessage}
+                <Post key={index} {...post} setSlideMessage={setSlideMessage} setCategory={setCategory} setSelectedCategory={setSelectedCategory}
                       setPostDisplay={(value) => { // Define a function called setPostDisplay that takes a boolean value as a parameter
                           setPostDisplays(prevState => { // Call setPostDisplays function with a callback function
                               return {...prevState, [post.id]: value}// Update the display setting for the post with post.id

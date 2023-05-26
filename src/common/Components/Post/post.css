@@ -90,6 +90,20 @@
     position: relative;
     margin: 5px 0;
     font-size: 0.85em;
+    transition: 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.category:hover{
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    color: #f5f5f5;
+}
+
+.category:active{
+    box-shadow: none;
+    transform: translateY(0);
 }
 
 .category.technology { background-color: rgb(132, 179, 245, 0.9); color: #1a7fe3; }
