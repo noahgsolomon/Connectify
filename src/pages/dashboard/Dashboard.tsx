@@ -32,11 +32,14 @@ const Dashboard : React.FC = () => {
         setDropdownOpen(false);
     };
 
+    const handleOverlayClick = () => {
+        setDropdownOpen(false);
+    }
 
     return (
       <div>
         <Header page={"dashboard"}/>
-          <div className="overlay"></div>
+          {dropdownOpen && <div className="overlay" onClick={handleOverlayClick}></div>}
           <div className="container">
               <button className="add-post-btn" onClick={handleAddPost}>+</button>
 
@@ -45,15 +48,12 @@ const Dashboard : React.FC = () => {
                       <div className="search-bar">
                           <div className="dropdown" onClick={toggleDropdown}>
                               <div className="dropdown-title">{filter} <span>∟</span></div>
-                              {dropdownOpen &&
-                                  <ul className={`dropdown-options ${dropdownOpen ? 'show' : ''}`}>
-                                      <li onClick={() => handleFilterChange("👶 last day")}>👶 Last day</li>
-                                      <li onClick={() => handleFilterChange("🧒 last 7 days")}>🧒 Last 7 days</li>
-                                      <li onClick={() => handleFilterChange("👨 last 30 days")}>👨 Last 30 days</li>
-                                      <li onClick={() => handleFilterChange("🧓 last year")}>🧓 Last year</li>
-
-                                  </ul>
-                              }
+                              <ul className={`dropdown-options ${dropdownOpen ? 'show' : ''}`}>
+                                  <li onClick={() => handleFilterChange("👶 last day")}>👶 Last day</li>
+                                  <li onClick={() => handleFilterChange("🧒 last 7 days")}>🧒 Last 7 days</li>
+                                  <li onClick={() => handleFilterChange("👨 last 30 days")}>👨 Last 30 days</li>
+                                  <li onClick={() => handleFilterChange("🧓 last year")}>🧓 Last year</li>
+                              </ul>
                           </div>
                       </div>
                       <PostList setSlideMessage={setSlideMessage} page={0}/>

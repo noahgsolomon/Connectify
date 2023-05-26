@@ -18,6 +18,25 @@ async function getNotifications() {
     }
 }
 
+async function readAllNotifications() {
+    try {
+        const response = await fetch('http://localhost:8080/read-notifications', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`
+            }
+        });
+        const responseBody = await response.text();
+        if (response.ok) {
+            return responseBody;
+        }
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
+}
+
 async function deleteAllNotifications() {
     try {
         const response = await fetch('http://localhost:8080/delete-notifications', {
@@ -40,4 +59,5 @@ async function deleteAllNotifications() {
 export {
     getNotifications,
     deleteAllNotifications,
+    readAllNotifications
 };

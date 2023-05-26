@@ -19,11 +19,9 @@ const SlideMessage: React.FC<SlideMessageProps> = ({ message, color, messageKey,
     }, [messageKey, message, duration]);
 
     return (
-        showMessage ? (
-            <div className="slide-message show" style={{ backgroundColor: color }}>
+            <div className={`slide-message ${showMessage ? 'show' : ''}`} style={{ backgroundColor: color }}>
                 {message}
             </div>
-        ) : null
     );
 };
 export default SlideMessage;

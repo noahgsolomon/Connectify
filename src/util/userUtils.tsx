@@ -45,6 +45,9 @@ function applyTheme() {
         root.style.setProperty('--card', 'var(--card-light');
         root.style.setProperty('--post-color', 'var(--post-color-light');
         root.style.setProperty('--notification-item', 'var(--notification-item-light');
+        root.style.setProperty('--notification-unread', 'var(--notification-unread-light');
+
+
 
     } else {
         root.style.setProperty('--header', 'var(--dark-header)');
@@ -88,7 +91,7 @@ function applyTheme() {
         root.style.setProperty('--card', 'var(--card-dark');
         root.style.setProperty('--post-color', 'var(--post-color-dark');
         root.style.setProperty('--notification-item', 'var(--notification-item-dark');
-
+        root.style.setProperty('--notification-unread', 'var(--notification-unread-dark');
     }
 }
 

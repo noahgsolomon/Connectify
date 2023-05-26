@@ -1,17 +1,17 @@
 import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
-import {getNotifications} from "../../../util/api/notificationapi.tsx";
+import {getNotifications, readAllNotifications} from "../../../util/api/notificationapi.tsx";
 import {timeAgo} from "../../../util/userUtils.tsx";
 
 
 const NotificationButton : React.FC = () => {
-    const [notificationList, setNotificationList] = useState([]);
+    const [notificationList, setNotificationList] = useState<Notification[]>([]);
     const [showNotificationPanel, setShowNotificationPanel] = useState(false);
 
     useEffect(() => {
         const fetchNotifications = async () => {
             const fetchedNotifications = await getNotifications();
-            setNotificationList(fetchedNotifications.reverse());
+            setNotificationList(fetchedNotifications);
         };
 
         fetchNotifications();
@@ -25,6 +25,18 @@ const NotificationButton : React.FC = () => {
         setShowNotificationPanel(!showNotificationPanel);
     }
 
+    useEffect(() => {
+        if (showNotificationPanel){
+            const postData = async () => {
+                await readAllNotifications();
+            }
+            postData();
+        }
+        else {
+
+        }
+    }, [showNotificationPanel]);
+
     const handleOverlayClick = () => {
         setShowNotificationPanel(false);
     }
@@ -35,18 +47,26 @@ const NotificationButton : React.FC = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 6000
+        zIndex: 8000
     }
 
     return (
         <>
-            <Link to="#" className={`notification-btn ${(notificationList.length > 0) ? 'has-notification' : ''}`} onClick={handleNotificationBtnClick}>🔔</Link>
+            <Link to="#"
+                  className={`notification-btn ${
+                notificationList.some((notification) => notification.unread)
+                    ? 'has-notification'
+                    : ''
+            }`} onClick={handleNotificationBtnClick}>🔔</Link>
             {showNotificationPanel && <div onClick={handleOverlayClick} style={overlay}></div>}
             <div className={`notification-panel ${showNotificationPanel ? 'show': ''}`}>
                 {notificationList.length === 0
                     ? <div className="no-notifications-item" style={{ fontWeight: 'bold' }}>📜 No new notifications</div>
                     : <div className="notification-items">
-                        {notificationList.map((notification, index) => <NotificationItem key={index} notification={notification} />)}
+                        {notificationList.map((notification, index) => <NotificationItem key={index}
+                                                                                         type={notification.type} sender={notification.sender}
+                                                                                         content={notification.content} date={notification.date}
+                                                                                         unread={notification.unread}/>)}
                     </div>
                 }
             </div>
@@ -55,20 +75,17 @@ const NotificationButton : React.FC = () => {
 };
 
 type Notification = {
-    notification: {
         type: Type,
         sender: string,
         content: string,
-        date: string
-    }
-
+        date: string,
+        unread: boolean
 }
 
 type Type = 'LIKE' | 'FOLLOW' | 'COMMENT' | 'TAG' | 'MESSAGE'
 
-const NotificationItem : React.FC<Notification> = ({ notification}) => {
+const NotificationItem : React.FC<Notification> = ({ type, sender, content, date, unread}) => {
 
-    const {type, sender, content, date} = notification;
     let notificationTitle;
 
     switch (type) {
@@ -92,7 +109,7 @@ const NotificationItem : React.FC<Notification> = ({ notification}) => {
     }
 
     return (
-        <div className="notification-item">
+        <div className={`notification-item ${unread ? 'unread' : ''}`}>
             <div className="notification-title">
                 {notificationTitle}
             </div>

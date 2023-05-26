@@ -173,6 +173,10 @@ nav a:active {
     transition: 0.3s ease;
 }
 
+.unread {
+    background-color: var(--notification-unread);
+}
+
 .notification-item:hover {
     box-shadow: 0 6px 8px var(--shadow);
     transform: translateY(-2px);
@@ -202,7 +206,6 @@ nav a:active {
 }
 
 .slide-message {
-    visibility: hidden;
     min-width: 250px;
     padding: 20px;
     color: #fff;
@@ -214,31 +217,21 @@ nav a:active {
     top: 30px;
     font-family: 'Roboto', sans-serif;
     transform: translateX(-50%) translateY(-20px);
-    background-color: #00b894;
+    background-color: var(--slide-message-bg);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    display: flex;
     align-items: center;
+    visibility: hidden;
     justify-content: center;
     gap: 10px;
-}
-
-.slide-message::before {
-    font-size: 1.5rem;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .slide-message.show {
     visibility: visible;
     opacity: 1;
     transform: translateX(-50%) translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.slide-message.hide {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
 .loading-indicator {

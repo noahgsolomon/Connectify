@@ -103,9 +103,13 @@
     --light-post-text-color: #333;
     --dark-post-text-color: #a4a4a4;
 
-    --notification-item: #9f9f9f;
-    --notification-light: #9f9f9f;
+    --notification-item: #e8e8e8;
+    --notification-item-light: #e8e8e8;
     --notification-item-dark: #525252;
+
+    --notification-unread: #f6b1b1;
+    --notification-unread-light: #f6b1b1;
+    --notification-unread-dark: #d58888;
 
     --post-meta-color: #262626;
     --light-post-meta-color: #262626;
