@@ -5,6 +5,7 @@
       <Languages>
         <language minSize="16" name="Style Sheets" />
         <language minSize="538" name="JavaScript" />
+        <language minSize="63" name="TypeScript" />
       </Languages>
     </inspection_tool>
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">

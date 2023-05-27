@@ -11,11 +11,11 @@ const Dashboard : React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filter, setFilter] = useState("👨 last 30 days");
     const [lastDay, setLastDay] = useState(30);
-    const [category, setCategory] = useState("");
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [displayModal, setDisplayModal] = useState(false);
     const [page, setPage] = useState<Array<number>>([0])
     const [displayFilter, setDisplayFilter] = useState(false);
+    const [category, setCategory] = useState("")
     const [selectedCategory, setSelectedCategory] = useState("");
     const showContent = useAuthentication();
 
@@ -41,7 +41,7 @@ const Dashboard : React.FC = () => {
 
     useEffect(() => {
         setPage([0]);
-    }, [lastDay, category])
+    }, [lastDay, category]);
 
     if (!showContent){
         return null;
@@ -124,12 +124,12 @@ const Dashboard : React.FC = () => {
                         </div>
                         <div className="filter-btn" onClick={toggleFilter}>🔧
                             <div className={`filter-panel ${displayFilter ? 'show' : ''}`}>
-                                <Categories handleFilterClick={handleFilterClick} selectedCategory={selectedCategory} />
+                                <Categories handleFilterClick={handleFilterClick} selectedCategory={selectedCategory}/>
                             </div>
                         </div>
                     </div>
                     <div className="post-wrapper">
-                        <PostList setSlideMessage={setSlideMessage} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory}/>
+                        <PostList setSlideMessage={setSlideMessage} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}/>
                     </div>
                     <AddPost setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
                 </main>

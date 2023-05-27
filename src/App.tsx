@@ -7,8 +7,13 @@ import Signup from "./pages/signup/Signup.tsx";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import {applyTheme} from "./util/userUtils.tsx";
 import UserRoutes from "./pages/user/UserRoutes.tsx";
+import {onlineHeartbeat} from "./util/api/userapi.tsx";
 
 const App: React.FC = () => {
+
+    setInterval(async () => {
+        await onlineHeartbeat();
+    }, 1000 * 60 * 2);
 
     const theme = localStorage.getItem('theme');
     useEffect(() => {

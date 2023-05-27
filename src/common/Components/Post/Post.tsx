@@ -82,9 +82,10 @@ interface PostListProps {
     lastDay: number;
     setCategory: React.Dispatch<React.SetStateAction<string>>;
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+    user: string;
 }
 
-const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory }) => {
+const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory, user }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState<Array<PostProps>>([]); // Specify type
@@ -103,7 +104,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
         }
 
         const fetchPosts = async () => {
-            const response = await getPostsFilter(category, lastDay, lastFetchPage);
+            const response = await getPostsFilter(category, lastDay, user, lastFetchPage);
             if (response){
                 setPosts(prevState => [...prevState, ...response]);
                 setLastFetchPage(lastFetchPage + 1);
@@ -121,7 +122,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
             setTimeout(() => {
                 setPosts([]);
                 const fetchPosts = async () => {
-                    const response = await getPostsFilter(category, lastDay, 0);
+                    const response = await getPostsFilter(category, lastDay, user, 0);
                     if (response){
                         if (response.length === 0){
                             setEmptyPosts(true);

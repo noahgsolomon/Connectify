@@ -20,11 +20,12 @@ const getPosts = async (page : number) => {
     }
 }
 
-const getPostsFilter = async (category : string, lastDays : number, page : number) => {
+const getPostsFilter = async (category : string, lastDays : number, user : string, page : number) => {
 
     const model = {
         category: category,
-        lastDays: lastDays
+        lastDays: lastDays,
+        user: user
     }
 
     try {
