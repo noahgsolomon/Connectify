@@ -62,6 +62,11 @@
     transform: translateY(-2px);
 }
 
+.inbox-item:active{
+    box-shadow: none;
+    transform: translateY(0);
+}
+
 .inbox-user {
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -113,24 +118,20 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.back-btn {
-    color: #f0f0f0;
-    border: none;
-    font-size: 1.2rem;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-}
+/*.back-btn {*/
+/*    color: #f0f0f0;*/
+/*    border: none;*/
+/*    font-size: 1.2rem;*/
+/*    padding: 5px 10px;*/
+/*    border-radius: 5px;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;*/
+/*}*/
 
-.back-btn:hover {
-    box-shadow: 0 2px 4px var(--shadow);
-    transform: translateY(-2px);
-}
-
-body.no-scroll {
-    overflow-y: hidden;
-}
+/*.back-btn:hover {*/
+/*    box-shadow: 0 2px 4px var(--shadow);*/
+/*    transform: translateY(-2px);*/
+/*}*/
 
 .message-log-username {
     margin: 0;
@@ -139,9 +140,16 @@ body.no-scroll {
     color: var(--text-color);
 }
 
-.message-log-content {
+.spacer {
     flex-grow: 1;
-    max-height: 700px;
+}
+
+.message-log-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 500px;
+    max-height: 650px;
     padding: 1rem;
     overflow-y: auto;
     background-color: var(--background);
@@ -222,32 +230,6 @@ body.no-scroll {
 .inbox-message-input:focus {
     border: none;
     box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
-}
-
-nav a {
-    display: inline-block;
-    margin-left: 1rem;
-    padding: 0.5rem 1rem;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: var(--text-color);
-    text-decoration: none;
-    border-radius: 8px;
-    background-color: var(--header-btn);
-    box-shadow: 0 2px 4px var(--shadow);
-    transition: all 0.5s ease;
-}
-
-nav a:hover {
-    color: #fff;
-    box-shadow: 0 4px 8px var(--shadow);
-    transform: translateY(-2px);
-}
-
-nav a:active {
-    background-color: var(--detail-color);
-    box-shadow: none;
-    transform: translateY(0);
 }
 
 .send-message-btn {

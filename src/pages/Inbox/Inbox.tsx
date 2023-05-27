@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './style.css';
 import Header from "../../common/Components/Header/Header.tsx";
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.tsx";
@@ -26,7 +26,11 @@ const Inbox : React.FC = () => {
     const [messageLog, setMessageLog] = useState<Array<MessageLogItem>>([]);
     const [messagedUser, setMessagedUser] = useState('');
     const [message, setMessage] = useState('');
-    const username = localStorage.getItem('username');
+    const [selectInbox, setSelectInbox] = useState<InboxItem | null>(null);
+
+    const messageLogContentRef = useRef<HTMLDivElement | null>(null);
+
+    const username = localStorage.getItem('username') || 'default_username';
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,28 +45,54 @@ const Inbox : React.FC = () => {
 
     }, []);
     const handleInboxItemClick = (item : InboxItem) => {
-        setMessageLog([]);
-        const fetchData = async () => {
-            const messageLogFetch = await getMessageLog(item.user);
-            if (messageLogFetch){
-                setMessagedUser(item.user);
-                setMessageLog(messageLogFetch);
-            }
-        }
-
-        fetchData();
-        setShowMessageLog(true);
+        setSelectInbox(item);
     };
+
+    useEffect(() => {
+        if (selectInbox){
+            const fetchData = async () => {
+                const messageLogFetch = await getMessageLog(selectInbox.user);
+                if (messageLogFetch){
+                    setMessageLog(messageLogFetch);
+                    setShowMessageLog(true);
+                    setMessagedUser(selectInbox.user);
+                } else {
+                    setShowMessageLog(false);
+                }
+            }
+            fetchData();
+        } else {
+            setShowMessageLog(false);
+        }
+    }, [selectInbox]);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (showMessageLog && selectInbox){
+            interval = setInterval(async () => {
+                const messageLogFetch = await getMessageLog(selectInbox.user);
+                if (messageLogFetch){
+                    setMessageLog(messageLogFetch);
+                }
+            }, 5000);
+        }
+        return () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+        };
+    }, [showMessageLog, selectInbox]);
 
     const handleSendMessage = () => {
         const postData = async () => {
             const postMessage = await sendMessage(messagedUser, message);
             if (postMessage){
+
                 setMessageLog(prev => [...prev, {
                     message_id: postMessage.message_id,
-                    sender: postMessage.sender,
-                    message: postMessage.message,
-                    timeSent: postMessage.timeSent
+                    sender: username,
+                    message: message,
+                    timeSent: new Date()
                 }]);
                 setMessage('');
             }
@@ -70,14 +100,12 @@ const Inbox : React.FC = () => {
         postData();
     }
 
-    setInterval(async () => {
-        if (showMessageLog){
-            const messageLogFetch = await getMessageLog(messagedUser);
-            if (messageLogFetch){
-                setMessageLog(messageLogFetch);
-            }
+    useEffect(() => {
+        if (messageLogContentRef.current) {
+            const { scrollHeight, clientHeight } = messageLogContentRef.current;
+            messageLogContentRef.current.scrollTop = scrollHeight - clientHeight;
         }
-    }, 5000);
+    }, [messageLog]);
 
     return (
         <>
@@ -100,13 +128,10 @@ const Inbox : React.FC = () => {
                 </div>
                 <div className={`message-log ${showMessageLog ? 'show' : ''}`}>
                     <div className="message-log-header">
-                        <button className="back-btn" onClick={() => {
-                            setShowMessageLog(false);
-                            setMessageLog([]);
-                        }}>&lt;</button>
                         <h3 className="message-log-username">{messagedUser}</h3>
                     </div>
-                    <div className="message-log-content">
+                    <div className="message-log-content" ref={messageLogContentRef}>
+                        <div className="spacer"></div>
                         {messageLog.map((item) => (
                             <div className={`message ${item.sender === username ? 'sent' : 'received'}`} key={item.message_id}>
                                 <div className="message-content">{item.message}<span className="message-time">{timeAgo(item.timeSent)}</span></div>
