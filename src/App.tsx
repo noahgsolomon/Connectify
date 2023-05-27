@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import {applyTheme} from "./util/userUtils.tsx";
 import UserRoutes from "./pages/user/UserRoutes.tsx";
 import {onlineHeartbeat} from "./util/api/userapi.tsx";
+import Inbox from "./pages/Inbox/Inbox.tsx";
 
 const App: React.FC = () => {
 
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/user/*" element={<UserRoutes />} />
+                <Route path="/inbox" element={<Inbox />} />
             </Routes>
         </BrowserRouter>
     );

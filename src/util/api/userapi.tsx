@@ -164,6 +164,35 @@ async function getFollowCount(user : string) {
     }
 }
 
+async function followEvent(user : string){
+    try{
+        const response = await fetch(`http://localhost:8080/${user}/follow`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
+        });
+        const responseBody = await response.text();
+        console.log(responseBody);
+    }catch (e) {
+        console.log(e);
+    }
+}
+
+async function unfollowEvent(user : string){
+    try{
+        const response = await fetch(`http://localhost:8080/${user}/unfollow`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
+        });
+        const responseBody = await response.text();
+        console.log(responseBody);
+    }catch (e) {
+        console.log(e);
+    }
+}
+
+
 async function friendsList(){
     try{
         const response = await fetch('http://localhost:8080/friends', {
@@ -226,5 +255,7 @@ export {
     getFollowCount,
     friendsList,
     updateTheme,
-    onlineHeartbeat
+    onlineHeartbeat,
+    followEvent,
+    unfollowEvent
 };

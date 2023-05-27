@@ -13,7 +13,7 @@ type ButtonWithNestedElements = Button & {
 };
 
 interface HeaderProps {
-    page: 'index' | 'dashboard' | 'search' | 'profile' | 'login' | 'signup';
+    page: 'index' | 'dashboard' | 'search' | 'profile' | 'login' | 'signup' | 'inbox'
 }
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
                 isReactNode: true
             },
             { href: "/search", className: "search-btn", label: "🔎" },
-            { href: "/#", className: "inbox-btn", label: "💬" },
+            { href: "/inbox", className: "inbox-btn", label: "💬" },
         ],
         search: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
@@ -48,7 +48,17 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
         ],
         signup: [
             { href: "/login", className: "login-btn", label: "🔑 login" }
-        ]
+        ],
+        inbox: [
+            { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
+            { href: "/profile", className: "profile-btn", label: emoji },
+            {
+                href: "#",
+                className: "notification-container",
+                label: <NotificationButton />,
+                isReactNode: true
+            }
+            ]
     };
 
     function renderButton(button: Button | ButtonWithNestedElements, index: number) {

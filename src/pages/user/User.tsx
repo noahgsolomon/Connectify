@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
-import {fetchUserProfile} from "../../util/api/userapi.tsx";
+import {fetchUserProfile, followEvent, unfollowEvent} from "../../util/api/userapi.tsx";
 import SlideMessage from "../../util/status.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
+import {sendMessage} from "../../util/api/inboxapi.tsx";
 
 const User : React.FC = () => {
 
@@ -18,7 +19,8 @@ const User : React.FC = () => {
         profilePic: "",
         online: "",
         followers: 0,
-        following: 0
+        following: 0,
+        follows: false
     });
 
     // const [message, setMessage] = useState('');
@@ -31,6 +33,8 @@ const User : React.FC = () => {
     let { username } = useParams();
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [page, setPage] = useState<Array<number>>([0])
+    const [isUserMe, setIsUserMe] = useState(false);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const handleScroll = async () => {
@@ -85,10 +89,56 @@ const User : React.FC = () => {
             fetchUserDetails();
     }, []);
 
+    useEffect(() => {
+        if (user === localStorage.getItem('username')){
+            setIsUserMe(true);
+        }
+
+    }, [user]);
+
+    const followBtnText = userProfile.follows ? 'Unfollow' : 'Follow';
+
+    const followBtnStyle = {
+        backgroundColor: userProfile.follows ? 'var(--emoji)' : 'var(--detail-color)',
+        color: userProfile.follows ? 'var(--text-color)' : '#f5f5f5'
+    };
+
+    const handleFollowClick = () => {
+      const postData = async () => {
+          if (userProfile.follows){
+              await unfollowEvent(user);
+              setUserProfile(prevState => ({...prevState, follows: false, followers: prevState.followers - 1}));
+          }
+          else {
+              await followEvent(user);
+                setUserProfile(prevState => ({...prevState, follows: true, followers: prevState.followers + 1}));
+          }
+      }
+
+      postData();
+
+    };
+
+    const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage(e.target.value);
+    }
+
+    const handleMessageSend = () => {
+        const postData = async () => {
+            const messageSent = await sendMessage(user, message);
+            if (messageSent){
+                setSlideMessage({ message: 'Message sent', color: 'green', messageKey: Math.random(), duration: 3000});
+                setMessage('');
+            }
+        }
+
+        postData();
+    }
+
     return (
         <>
         <div className={`page ${(userLoaded)? '' : 'hidden'}`}>
-        <Header page={"profile"}/>
+            <Header page={"profile"}/>
             <div className="profile-container">
                 <div className="profile-card">
                     <div className="profile-info">
@@ -105,22 +155,28 @@ const User : React.FC = () => {
                             <span className="followers-count">{userProfile.followers} followers</span>
                             <span className="following-count">{userProfile.following} following</span>
                         </div>
-                        <button className="follow-btn">Unfollow</button>
-                        <div className="message-user">
-                            <label>
-                                <input type="text" className="message-bar" placeholder="Send message..."/>
-                            </label>
-                            <button className="send-message-btn">Send</button>
-                        </div>
+                        {!isUserMe &&
+                            <>
+                                <button className="follow-btn" onClick={handleFollowClick} style={followBtnStyle}>{followBtnText}</button>
+                                <div className="message-user">
+                                    <label>
+                                        <input type="text" className="message-bar" value={message} onChange={handleMessageChange} placeholder="Send message..."/>
+                                    </label>
+                                    <button className="send-message-btn-user" onClick={handleMessageSend}>Send</button>
+                                </div>
+                            </>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-        <div className={'user-post-container'}>
-            <div className={'post-wrapper'}>
-                <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={user}/>
+        {userLoaded &&
+            <div className={'user-post-container'}>
+                <div className={'post-wrapper'}>
+                    <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={user}/>
+                </div>
             </div>
-        </div>
+        }
             {slideMessage && <SlideMessage message={slideMessage.message} color={slideMessage.color} messageKey={slideMessage.messageKey} duration={slideMessage.duration}/>}
         </>
     );

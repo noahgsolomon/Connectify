@@ -48,7 +48,9 @@ const sendMessage = async (user : string, message : string) => {
             body: JSON.stringify(model)
         });
 
-        return await response.text();
+        if (response.ok){
+            return await response.text();
+        }
 
     } catch (error) {
         console.error(error);

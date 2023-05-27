@@ -104,7 +104,7 @@
     transform: translateY(-2px);
 }
 
-.send-message-btn {
+.send-message-btn-user {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -123,18 +123,18 @@
     box-shadow: 0 4px 8px var(--shadow);
 }
 
-.send-message-btn::before {
+.send-message-btn-user::before {
     content: "✉️";
     margin-right: 0.5rem;
 }
 
-.send-message-btn:hover {
+.send-message-btn-user:hover {
     background-color: var(--btn-hover);
     box-shadow: 0 6px 10px var(--shadow);
     transform: translateY(-2px);
 }
 
-.send-message-btn:active {
+.send-message-btn-user:active {
     background-color: var(--btn-focus);
     box-shadow: none;
     transform: translateY(0);

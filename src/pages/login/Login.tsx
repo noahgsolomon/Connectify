@@ -41,6 +41,7 @@ const Login: React.FC = () => {
             localStorage.setItem('username', username);
             localStorage.setItem('theme', response.theme);
             localStorage.setItem('emoji', response.emoji);
+            localStorage.setItem('username', response.username);
 
             setSlideMessage({ message: response.message, color: response.color, messageKey: Math.random() });
             applyTheme();
