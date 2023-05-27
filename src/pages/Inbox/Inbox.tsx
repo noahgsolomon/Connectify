@@ -94,11 +94,27 @@ const Inbox : React.FC = () => {
                     message: message,
                     timeSent: new Date()
                 }]);
+
                 setMessage('');
             }
         }
         postData();
     }
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            const fetchData = async () => {
+                const inboxes = await getInbox();
+                if (inboxes){
+                    setInboxItems(inboxes);
+                }
+            }
+
+            fetchData();
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
     useEffect(() => {
         if (messageLogContentRef.current) {
