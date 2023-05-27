@@ -100,6 +100,10 @@
     box-shadow: -6px 0 12px var(--shadow);
 }
 
+.message-log.show {
+    display: block;
+}
+
 .message-log-header {
     display: flex;
     align-items: center;
@@ -220,14 +224,45 @@ body.no-scroll {
     box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
 }
 
-.send-message-btn {
+nav a {
+    display: inline-block;
+    margin-left: 1rem;
     padding: 0.5rem 1rem;
-    font-size: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: all 0.5s ease;
+}
+
+nav a:hover {
     color: #fff;
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+nav a:active {
+    background-color: var(--detail-color);
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.send-message-btn {
+    display: inline-block;
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #f5f5f5;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: var(--header-btn);
     border: none;
-    border-radius: 5px;
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: all 0.5s ease;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .send-message-btn:hover {
@@ -237,7 +272,6 @@ body.no-scroll {
 }
 
 .send-message-btn:active {
-    background-color: var(--btn-focus);
     box-shadow: none;
     transform: translateY(0);
 }

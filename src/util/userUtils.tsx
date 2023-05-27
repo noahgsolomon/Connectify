@@ -97,7 +97,8 @@ function applyTheme() {
 
 function timeAgo(date : Date) {
     const now = new Date();
-    const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000);
+    const dated = new Date(date);
+    const secondsAgo = Math.floor((now.getTime() - dated.getTime()) / 1000);
     const minutesAgo = Math.floor(secondsAgo / 60);
     const hoursAgo = Math.floor(minutesAgo / 60);
     const daysAgo = Math.floor(hoursAgo / 24);

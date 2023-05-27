@@ -7,9 +7,8 @@ const getInbox = async () => {
                 "Authorization": `Bearer ${jwtToken}`}
         });
 
-        const responseBody = await response.text();
         if (response.ok) {
-            return responseBody;
+            return await response.json();
         } else {
             console.log('error');
         }
@@ -27,7 +26,9 @@ const getMessageLog = async (user : string) => {
                 "Authorization": `Bearer ${jwtToken}`}
         });
 
-        return await response.text();
+        if (response.ok){
+            return await response.json();
+        }
 
     } catch (error) {
         console.error(error);
@@ -49,7 +50,7 @@ const sendMessage = async (user : string, message : string) => {
         });
 
         if (response.ok){
-            return await response.text();
+            return await response.json();
         }
 
     } catch (error) {
