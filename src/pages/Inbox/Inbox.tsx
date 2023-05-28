@@ -3,6 +3,7 @@ import './style.css';
 import Header from "../../common/Components/Header/Header.tsx";
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.tsx";
 import {timeAgo} from "../../util/userUtils.tsx";
+import useAuthentication from "../../setup/useAuthentication.tsx";
 
 type InboxItem = {
     user: string,
@@ -19,8 +20,6 @@ type MessageLogItem = {
 }
 
 const Inbox : React.FC = () => {
-    // For simplicity, I'm using some static data for the inbox items.
-    // You should replace this with real data from your application.
     const [inboxItems, setInboxItems] = useState<Array<InboxItem>>([]);
     const [showMessageLog, setShowMessageLog] = useState(false);
     const [messageLog, setMessageLog] = useState<Array<MessageLogItem>>([]);
@@ -30,6 +29,8 @@ const Inbox : React.FC = () => {
 
     const messageLogContentRef = useRef<HTMLDivElement | null>(null);
 
+    useAuthentication();
+
     const username = localStorage.getItem('username') || 'default_username';
 
     useEffect(() => {
@@ -38,6 +39,9 @@ const Inbox : React.FC = () => {
             if (inboxes){
                 console.log(inboxes)
                 setInboxItems(inboxes);
+                if (inboxes.length > 0) {
+                    setSelectInbox(inboxes[0]);
+                }
             }
         }
 

@@ -262,6 +262,35 @@ nav a:active {
     animation: blink 0.3s linear infinite;
 }
 
+.online-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    background-color: #0fcc45;
+    border-radius: 50%;
+}
+
+.blink {
+    display: block;
+    width: 15px;
+    height: 15px;
+
+    background-color: #0fcc45;
+    opacity: 0.7;
+    border-radius: 50%;
+    animation: blink 3s linear infinite;
+}
+
+@keyframes blink {
+    100% { transform: scale(2, 2);
+        opacity: 0;
+    }
+}
+
 @keyframes blink {
     100% { transform: scale(2, 2);
         opacity: 0;

@@ -4,7 +4,8 @@
 }
 
 .inbox-panel {
-    background-color: var(--inbox-panel-bg);
+    border-right: 1px solid var(--border-color);
+    background-color: var(--background);
     width: 40%;
     height: 100vh;
     top: 0;

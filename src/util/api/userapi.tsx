@@ -77,12 +77,13 @@ async function profile()  {
                 "Authorization": `Bearer ${jwtToken}`}
         });
 
-        const responseBody = await response.text();
+
         if (response.ok) {
-            return responseBody;
+            return await response.json();
         }
     } catch (error) {
         console.log(error);
+        throw error;
     }
 }
 

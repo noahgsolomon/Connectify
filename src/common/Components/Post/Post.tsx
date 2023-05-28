@@ -82,7 +82,7 @@ interface PostListProps {
     lastDay: number;
     setCategory: React.Dispatch<React.SetStateAction<string>>;
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-    user: string;
+    user: string | null;
 }
 
 const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory, user }) => {

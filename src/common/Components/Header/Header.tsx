@@ -13,7 +13,7 @@ type ButtonWithNestedElements = Button & {
 };
 
 interface HeaderProps {
-    page: 'index' | 'dashboard' | 'search' | 'profile' | 'login' | 'signup' | 'inbox'
+    page: 'index' | 'dashboard' | 'search' | 'profile' | 'login' | 'signup' | 'inbox' | 'user'
 }
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
@@ -41,7 +41,8 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
         ],
         profile: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            { href: "/profile", className: "profile-btn", label: emoji },
+            { href: "/inbox", className: "inbox-btn", label: "💬" },
+            { href: "#", className: "settings-btn", label: "⚙️" },
         ],
         login: [
             { href: "/signup", className: "signup-btn", label: "📝 sign up" },
@@ -50,6 +51,16 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
             { href: "/login", className: "login-btn", label: "🔑 login" }
         ],
         inbox: [
+            { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
+            { href: "/profile", className: "profile-btn", label: emoji },
+            {
+                href: "#",
+                className: "notification-container",
+                label: <NotificationButton />,
+                isReactNode: true
+            }
+            ],
+        user: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
             { href: "/profile", className: "profile-btn", label: emoji },
             {

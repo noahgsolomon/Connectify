@@ -6,6 +6,7 @@ import {fetchUserProfile, followEvent, unfollowEvent} from "../../util/api/usera
 import SlideMessage from "../../util/status.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
 import {sendMessage} from "../../util/api/inboxapi.tsx";
+import useAuthentication from "../../setup/useAuthentication.tsx";
 
 const User : React.FC = () => {
 
@@ -33,8 +34,9 @@ const User : React.FC = () => {
     let { username } = useParams();
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [page, setPage] = useState<Array<number>>([0])
-    const [isUserMe, setIsUserMe] = useState(false);
     const [message, setMessage] = useState('');
+
+    useAuthentication();
 
     useEffect(() => {
         const handleScroll = async () => {
@@ -91,7 +93,7 @@ const User : React.FC = () => {
 
     useEffect(() => {
         if (user === localStorage.getItem('username')){
-            setIsUserMe(true);
+            navigate('/profile', { replace: true });
         }
 
     }, [user]);
@@ -138,12 +140,12 @@ const User : React.FC = () => {
     return (
         <>
         <div className={`page ${(userLoaded)? '' : 'hidden'}`}>
-            <Header page={"profile"}/>
-            <div className="profile-container">
-                <div className="profile-card">
-                    <div className="profile-info">
-                        <div className="profile-header">
-                            <div className="profile-emoji">{userProfile.profilePic}
+            <Header page={"user"}/>
+            <div className="user-container">
+                <div className="user-card">
+                    <div className="user-info">
+                        <div className="user-header">
+                            <div className="user-emoji">{userProfile.profilePic}
                                 {(userProfile.online.toLowerCase() === 'true') && <div className="online-indicator"><span className="blink"></span></div>}
                             </div>
                         </div>
@@ -155,17 +157,13 @@ const User : React.FC = () => {
                             <span className="followers-count">{userProfile.followers} followers</span>
                             <span className="following-count">{userProfile.following} following</span>
                         </div>
-                        {!isUserMe &&
-                            <>
-                                <button className="follow-btn" onClick={handleFollowClick} style={followBtnStyle}>{followBtnText}</button>
-                                <div className="message-user">
-                                    <label>
-                                        <input type="text" className="message-bar" value={message} onChange={handleMessageChange} placeholder="Send message..."/>
-                                    </label>
-                                    <button className="send-message-btn-user" onClick={handleMessageSend}>Send</button>
-                                </div>
-                            </>
-                        }
+                        <button className="follow-btn" onClick={handleFollowClick} style={followBtnStyle}>{followBtnText}</button>
+                        <div className="message-user">
+                            <label>
+                                <input type="text" className="message-bar" value={message} onChange={handleMessageChange} placeholder="Send message..."/>
+                            </label>
+                            <button className="send-message-btn-user" onClick={handleMessageSend}>Send</button>
+                        </div>
                     </div>
                 </div>
             </div>
