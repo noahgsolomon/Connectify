@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useAuthentication from "../../setup/useAuthentication.tsx";
-import {profile, updateTheme} from "../../util/api/userapi.tsx";
+import {profile, updateProfile, updateTheme} from "../../util/api/userapi.tsx";
 import Header from "../../common/Components/Header/Header.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
 import SlideMessage from "../../util/status.tsx";
@@ -96,6 +96,23 @@ const Profile: React.FC = () => {
         postData();
     }, [theme]);
 
+    const handleSubmitEdit = () => {
+        const postData = async () => {
+            const response = await updateProfile(myProfile.users.country, myProfile.users.bio, myProfile.users.cardColor, myProfile.users.backgroundColor, myProfile.users.profilePic);
+            if (response){
+                setSlideMessage({message: 'updated profile!', color: 'green', messageKey: Math.random()});
+                setEditMode(false);
+            }
+            else{
+                setSlideMessage({message: 'Unable to update profile', color: 'var(--error-color)', messageKey: Math.random()});
+                setEditMode(false);
+            }
+        }
+
+        postData();
+
+    }
+
 
     return (
         <>
@@ -140,7 +157,7 @@ const Profile: React.FC = () => {
                                 <span className="followers-count">{myProfile.followers} followers</span>
                                 <span className="following-count">{myProfile.following} following</span>
                             </div>
-                            <button className={`save-btn ${editMode ? 'show' : ''}`} onClick={() =>  setEditMode(false)}>✅</button>
+                            <button className={`save-btn ${editMode ? 'show' : ''}`} onClick={handleSubmitEdit}>✅</button>
                         </div>
                     </div>
                 </div>
