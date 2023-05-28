@@ -17,6 +17,7 @@ const Dashboard : React.FC = () => {
     const [displayFilter, setDisplayFilter] = useState(false);
     const [category, setCategory] = useState("")
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [refresh, setRefresh] = useState(false);
     const showContent = useAuthentication();
 
 
@@ -129,9 +130,9 @@ const Dashboard : React.FC = () => {
                         </div>
                     </div>
                     <div className="post-wrapper">
-                        <PostList setSlideMessage={setSlideMessage} editPost={false} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}/>
+                        <PostList refresh={refresh} setSlideMessage={setSlideMessage} editPost={false} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}/>
                     </div>
-                    <AddPost setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
+                    <AddPost setRefresh={setRefresh} setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
                 </main>
                 <div className="games-panel">
                     <div id="chess-game" className="game-item chess-game">

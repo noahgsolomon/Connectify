@@ -47,7 +47,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
     const [postDisplay, setPostDisplay] = useState(false);
 
     useEffect(() => {
-        if (!interactionsLoading && !commentsLoading){
+        if (!interactionsLoading && (!commentsLoading || editPost)){
             setPostDisplay(true);
         }
     }, [interactionsLoading, commentsLoading]);
@@ -86,9 +86,10 @@ interface PostListProps {
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
     user: string;
     editPost: boolean;
+    refresh: boolean;
 }
 
-const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory, user, editPost }) => {
+const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory, user, editPost, refresh }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState<Array<PostProps>>([]); // Specify type
@@ -145,7 +146,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
 
         }
 
-    },[lastDay, category]);
+    },[lastDay, category, refresh]);
 
 
 

@@ -165,7 +165,7 @@ const Profile: React.FC = () => {
             {userLoaded &&
                 <div className={'user-post-container'}>
                     <div className={'post-wrapper'}>
-                        <PostList setSlideMessage={setSlideMessage} editPost={true} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={localStorage.getItem('username') || ''}/>
+                        <PostList setSlideMessage={setSlideMessage} editPost={true} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={localStorage.getItem('username') || ''} refresh={false}/>
                     </div>
                 </div>
             }

@@ -6,9 +6,11 @@ type AddPostProps = {
     setDisplayModal : React.Dispatch<React.SetStateAction<boolean>>
     displayModal : boolean,
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
+    setRefresh : React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
-const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSlideMessage }) => {
+const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSlideMessage, setRefresh }) => {
 
 
     const modalContentRef = useRef<HTMLDivElement>(null);
@@ -48,6 +50,7 @@ const AddPost : React.FC<AddPostProps> = ({ setDisplayModal, displayModal, setSl
                     setSlideMessage({message: 'Uploaded post!', color: 'var(--slide-message-bg)', messageKey: Math.random()})
                     setSubmitBtnBg('green');
                     setSubmitBtnText('✅');
+                    setRefresh(prevState => !prevState);
                 }
                 else if (post.status === 'invalid') {
                     setSlideMessage({message: 'This content does adhere to our policies', color: 'var(--error-color)', messageKey: Math.random()})
