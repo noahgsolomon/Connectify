@@ -106,7 +106,7 @@ const getLikeBookmark = async (postId : number) => {
             const data = await response.json();
             return {
                 liked: data.liked,
-                bookmark: data.bookmark
+                bookmarked: data.bookmark
             };
         }
 

@@ -41,6 +41,12 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
         ],
         profile: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
+            {
+                href: "#",
+                className: "notification-container",
+                label: <NotificationButton />,
+                isReactNode: true
+            },
             { href: "/inbox", className: "inbox-btn", label: "💬" },
             { href: "#", className: "settings-btn", label: "⚙️" },
         ],

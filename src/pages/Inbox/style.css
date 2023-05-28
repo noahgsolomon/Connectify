@@ -1,13 +1,11 @@
 .chat-app {
     display: flex;
-    height: 100vh;
+    height: 100vh
 }
-
 .inbox-panel {
     border-right: 1px solid var(--border-color);
     background-color: var(--background);
     width: 40%;
-    height: 100vh;
     top: 0;
     left: 0;
     overflow-y: auto;
@@ -101,7 +99,6 @@
     display: none;
     flex-grow: 1;
     flex-direction: column;
-    height: 100vh;
     background-color: var(--background);
     box-shadow: -6px 0 12px var(--shadow);
 }

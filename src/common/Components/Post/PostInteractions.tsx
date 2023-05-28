@@ -6,70 +6,48 @@ type PostInteractionProps = {
     postId: number,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 const PostInteractions : React.FC<PostInteractionProps> = ({likes, postId, setLoading}) => {
 
-    const [liked, setLiked] = useState(false);
-    const [bookmarked, setBookmarked] = useState(false);
-    const likeText = liked ? '💖' : '❤';
-    const bookmarkText = bookmarked ? '📚' : '💾';
-
+    const [{liked, bookmarked}, setPostInteractions] = useState<{liked: boolean, bookmarked: boolean}>({liked: false, bookmarked: false});
     const [likeCount, setLikeCount] = useState(likes);
-    const [likeCountChanged, setLikeCountChanged] = useState(false);
-    const [fetched, setFetched] = useState(false);
 
-    const handleLikePress = () => {
-        setLiked(prevLiked => !prevLiked);
-        setLikeCountChanged(true);
+    const handleLikePress = async () => {
+        const newLikedState = !liked;
+        setPostInteractions(prevState => ({...prevState, liked: newLikedState}));
+        if (newLikedState) {
+            setLikeCount(prev => prev + 1);
+        } else {
+            setLikeCount(prev => prev - 1);
+        }
+        await addLikeBookmark(postId, newLikedState, bookmarked);
     };
 
-    const handleBookmarkPress = () => {
-        setBookmarked(prevBookmarked => !prevBookmarked);
+    const handleBookmarkPress = async () => {
+        const newBookmarkedState = !bookmarked;
+        setPostInteractions(prevState => ({...prevState, bookmarked: newBookmarkedState}));
+        await addLikeBookmark(postId, liked, newBookmarkedState);
     };
-
-    useEffect( () => {
-        if (fetched){
-            const postData = async () => {
-                await addLikeBookmark(postId, liked, bookmarked);
-            }
-            postData();
-        }
-
-
-    }, [liked, bookmarked]);
-
-    useEffect(() => {
-        if (likeCountChanged && fetched){
-            if (liked){
-                setLikeCount(likeCount + 1);
-            }
-            else setLikeCount(likeCount - 1);
-        }
-
-
-    }, [likeCountChanged, liked]);
 
     useEffect(() => {
         const fetchData = async () => {
             const postInteractions = await getLikeBookmark(postId);
 
             if (postInteractions){
-                setLiked(postInteractions.liked);
-                setBookmarked(postInteractions.bookmark);
+                setPostInteractions(postInteractions);
             }
-
-            setFetched(true);
             setLoading(false);
         }
 
         fetchData();
 
-    }, [postId]);
+    }, []);
 
     return (
         <>
         <div className="post-actions">
-            <button className={`like-btn ${liked ? 'like-btn-active' : 'like-btn-inactive'}`} onClick={handleLikePress}>{likeText}</button>
-            <button className={`bookmark-btn ${bookmarked ? 'bookmark-btn-active' : 'bookmark-btn-inactive'}`} onClick={handleBookmarkPress}>{bookmarkText}</button>
+            <button className={`like-btn ${liked ? 'like-btn-active' : 'like-btn-inactive'}`} onClick={handleLikePress}>{liked ? '💖' : '❤'}</button>
+            <button className={`bookmark-btn ${bookmarked ? 'bookmark-btn-active' : 'bookmark-btn-inactive'}`} onClick={handleBookmarkPress}>{bookmarked ? '📚' : '💾'}</button>
         </div>
     <div className="post-stats">
         <div className="like-count">{likeCount} likes</div>
