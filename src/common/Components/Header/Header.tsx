@@ -13,18 +13,18 @@ type ButtonWithNestedElements = Button & {
 };
 
 interface HeaderProps {
-    page: 'index' | 'dashboard' | 'search' | 'profile' | 'login' | 'signup' | 'inbox' | 'user'
+    page: 'app' | 'auth'
 }
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
     const emoji = localStorage.getItem('emoji') || "😀";
 
     const buttonConfigs: { [key in HeaderProps['page']]: (Button | ButtonWithNestedElements)[] } = {
-        index: [
+        auth: [
             { href: "/signup", className: "signup-btn", label: "📝 sign up" },
             { href: "/login", className: "login-btn", label: "🔑 login" },
         ],
-        dashboard: [
+        app: [
             { href: "/profile", className: "profile-btn", label: emoji },
             {
                 href: "#",
@@ -34,48 +34,8 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
             },
             { href: "/search", className: "search-btn", label: "🔎" },
             { href: "/inbox", className: "inbox-btn", label: "💬" },
-        ],
-        search: [
             { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            { href: "/profile", className: "profile-btn", label: emoji },
         ],
-        profile: [
-            { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            {
-                href: "#",
-                className: "notification-container",
-                label: <NotificationButton />,
-                isReactNode: true
-            },
-            { href: "/inbox", className: "inbox-btn", label: "💬" },
-            { href: "#", className: "settings-btn", label: "⚙️" },
-        ],
-        login: [
-            { href: "/signup", className: "signup-btn", label: "📝 sign up" },
-        ],
-        signup: [
-            { href: "/login", className: "login-btn", label: "🔑 login" }
-        ],
-        inbox: [
-            { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            { href: "/profile", className: "profile-btn", label: emoji },
-            {
-                href: "#",
-                className: "notification-container",
-                label: <NotificationButton />,
-                isReactNode: true
-            }
-            ],
-        user: [
-            { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
-            { href: "/profile", className: "profile-btn", label: emoji },
-            {
-                href: "#",
-                className: "notification-container",
-                label: <NotificationButton />,
-                isReactNode: true
-            }
-            ]
     };
 
     function renderButton(button: Button | ButtonWithNestedElements, index: number) {

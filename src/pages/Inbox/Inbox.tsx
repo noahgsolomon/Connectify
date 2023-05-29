@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './style.css';
-import Header from "../../common/Components/Header/Header.tsx";
 import {getInbox, getMessageLog, sendMessage} from "../../util/api/inboxapi.tsx";
 import {timeAgo} from "../../util/userUtils.tsx";
 import useAuthentication from "../../setup/useAuthentication.tsx";
@@ -129,7 +128,6 @@ const Inbox : React.FC = () => {
 
     return (
         <>
-            <Header page={'inbox'}/>
             <div className={'chat-app'}>
                 <div className="inbox-panel" style={{display: "block"}}>
                     <label className={'inbox-manage'}>

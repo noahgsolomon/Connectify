@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 const Home: React.FC = () => {
@@ -10,7 +9,6 @@ const Home: React.FC = () => {
 
     return(
         <div>
-            <Header page='index' />
             <main>
                 <section>
                     <h2>🎉 Welcome to Connectify! 🎉</h2>

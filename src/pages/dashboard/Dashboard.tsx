@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
@@ -107,7 +106,6 @@ const Dashboard : React.FC = () => {
 
     return (
         <div>
-            <Header page={"dashboard"}/>
             {(dropdownOpen || displayFilter) && <div className="overlay" onClick={handleOverlayClick}></div>}
             <div className="container">
                 <button className="add-post-btn" onClick={handleAddPost}>+</button>

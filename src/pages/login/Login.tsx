@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import './style.css';
-import Header from "../../common/Components/Header/Header.tsx";
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import {login} from "../../util/api/userapi.tsx";
 import SlideMessage from "../../util/status.tsx";
@@ -57,7 +56,6 @@ const Login: React.FC = () => {
 
     return (
         <div>
-            <Header page={'login'} />
             <div className="login-wrapper">
                 <div className="login-container">
                     <h2>Log In</h2>

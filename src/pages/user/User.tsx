@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import Header from "../../common/Components/Header/Header.tsx";
 import './style.css';
 import {fetchUserProfile, followEvent, unfollowEvent} from "../../util/api/userapi.tsx";
 import SlideMessage from "../../util/status.tsx";
@@ -142,7 +141,6 @@ const User : React.FC = () => {
     return (
         <>
         <div className={`page ${(userLoaded)? '' : 'hidden'}`}>
-            <Header page={"user"}/>
             <div className="user-container">
                 <div className="user-card">
                     <div className="user-info">

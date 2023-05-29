@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import {profile, updateProfile, updateTheme} from "../../util/api/userapi.tsx";
-import Header from "../../common/Components/Header/Header.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
 import SlideMessage from "../../util/status.tsx";
 
@@ -142,7 +141,6 @@ const Profile: React.FC = () => {
     return (
         <>
             <div className={`page ${(userLoaded)? '' : 'hidden'}`}>
-                <Header page={"profile"}/>
                 <div className="profile-container">
                     <div className="profile-card">
                         <button className="edit-btn show" onClick={() =>  setEditMode(true)}>Edit</button>

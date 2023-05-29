@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import './style.css'
-import Header from "../../common/Components/Header/Header.tsx";
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import {signUp} from "../../util/api/userapi.tsx";
 import SlideMessage from "../../util/status.tsx";
@@ -43,7 +42,6 @@ const Signup : React.FC = () => {
 
     return (
         <div>
-            <Header page={'signup'}/>
             <div className="signup-wrapper">
                 <div className="signup-container">
                     <h2>Sign Up</h2>
