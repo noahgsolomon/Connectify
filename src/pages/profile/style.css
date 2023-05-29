@@ -3,9 +3,7 @@
     position: relative;
 }
 
-.post-edit-btn,
-.post-del-btn,
-.post-save-btn,
+
 .edit-btn,
 .cancel-btn{
     display: none;
@@ -29,6 +27,26 @@
 
 .save-btn.show, .cancel-btn.show, .edit-btn.show{
     display: inline-flex;
+}
+
+.post-edit-btn,
+.post-del-btn,
+.post-save-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--detail-color);
+    padding: 0.5rem 1rem;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .post-edit-btn:hover,
@@ -136,6 +154,35 @@
 
 .profile-bio-edit {
     width: 40%;
+    height: 150px;
+}
+
+.content-text-area, .title-text-area {
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: all 0.3s ease;
+    resize: none;
+    width: 100%;
+}
+
+.content-text-area:focus, .title-text-area:focus {
+    border: none;
+    box-shadow: 0 0 5px var(--highlight-color), 0 2px 4px var(--shadow);
+}
+
+
+.title-text-area {
+    margin-bottom: 1rem;
+}
+
+.content-text-area {
     height: 150px;
 }
 

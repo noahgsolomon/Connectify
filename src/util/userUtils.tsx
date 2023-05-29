@@ -1,6 +1,6 @@
 
-function applyTheme() {
-    const theme = localStorage.getItem('theme');
+function applyTheme(theme = localStorage.getItem('theme')) {
+
     const root = document.documentElement;
 
     if (theme === 'light') {

@@ -234,12 +234,8 @@ const updatePost = async (id : number, body : string, title : string) => {
             body: JSON.stringify(model)
         });
 
-        const responseBody = await response.text();
-        const responseJson = JSON.parse(responseBody);
         if (response.ok) {
-            return responseBody;
-        }
-        if (responseJson.status === 'invalid') {
+            return  await response.json();
         }
     } catch (error) {
         console.error(error);

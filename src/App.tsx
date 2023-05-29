@@ -7,20 +7,32 @@ import Signup from "./pages/signup/Signup.tsx";
 import Dashboard from "./pages/dashboard/Dashboard.tsx";
 import {applyTheme} from "./util/userUtils.tsx";
 import UserRoutes from "./pages/user/UserRoutes.tsx";
-import {onlineHeartbeat} from "./util/api/userapi.tsx";
+import {getTheme, onlineHeartbeat} from "./util/api/userapi.tsx";
 import Inbox from "./pages/Inbox/Inbox.tsx";
 import Profile from "./pages/profile/Profile.tsx";
 
 const App: React.FC = () => {
 
-    setInterval(async () => {
-        await onlineHeartbeat();
-    }, 1000 * 60 * 2);
-
-    const theme = localStorage.getItem('theme');
     useEffect(() => {
-        applyTheme();
-    }, [theme]);
+        const heartbeat = setInterval(async () => {
+            await onlineHeartbeat();
+        }, 1000 * 60 * 2);
+
+        const fetchTheme = async () => {
+            const fetchedTheme = await getTheme();
+            if (fetchedTheme){
+                localStorage.setItem('theme', fetchedTheme);
+                console.log(fetchedTheme);
+                applyTheme(fetchedTheme);
+            }
+        }
+
+       fetchTheme();
+
+        return () => {
+            clearInterval(heartbeat);
+        }
+    }, []);
 
     return (
         <BrowserRouter>

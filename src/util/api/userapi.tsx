@@ -87,7 +87,7 @@ async function profile()  {
     }
 }
 
-const updateProfile = async (country : string, bio : string, cardColor : string, backgroundColor : string, profilePic : string) => {
+async function updateProfile(country : string, bio : string, cardColor : string, backgroundColor : string, profilePic : string){
     const model = {
         country: country,
         bio: bio,
@@ -131,37 +131,22 @@ async function fetchUsers() {
 }
 
 
-async function fetchUserProfile(user : string){
+async function fetchUserProfile(user : string) {
     try {
         const response = await fetch(`http://localhost:8080/${user}`, {
             method: "GET",
-            headers: {"Content-Type": "application/json",
-                "Authorization": `Bearer ${jwtToken}`}
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`
+            }
         });
 
-        if (response.ok){
+        if (response.ok) {
             return await response.json();
         }
-    } catch (error){
+    } catch (error) {
         console.log(error);
         throw error;
-    }
-}
-async function getFollowCount(user : string) {
-    try {
-        const response = await fetch(`http://localhost:8080/${user}/follow-count`, {
-            method: 'GET',
-            headers: {"Content-Type": "application/json",
-                "Authorization": `Bearer ${jwtToken}`}
-        });
-
-        const responseBody = await response.text();
-        if (response.ok) {
-            return JSON.parse(responseBody);
-        }
-    }
-    catch (e) {
-        console.log(e);
     }
 }
 
@@ -231,6 +216,23 @@ async function updateTheme(theme : Theme){
     }
 }
 
+async function getTheme() {
+    try{
+        const response = await fetch("http://localhost:8080/theme", {
+            method: "GET",
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`}
+        });
+
+        if (response.ok){
+            return await response.text();
+        }
+    }catch (e) {
+     console.log(e);
+     throw e;
+    }
+}
+
 async function onlineHeartbeat() {
     try{
         const response = await fetch("http://localhost:8080/online", {
@@ -253,9 +255,9 @@ export {
     fetchUsers,
     fetchUserProfile,
     signUp,
-    getFollowCount,
     friendsList,
     updateTheme,
+    getTheme,
     onlineHeartbeat,
     followEvent,
     unfollowEvent

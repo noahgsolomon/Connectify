@@ -123,7 +123,7 @@ const Profile: React.FC = () => {
                 setMyProfile({...myProfile, users:
                         {...myProfile.users, country: editedProfile.country, bio: editedProfile.bio, cardColor: editedProfile.cardColor,
                             backgroundColor: editedProfile.backgroundColor, profilePic: editedProfile.profilePic}});
-
+                localStorage.setItem('emoji', editedProfile.profilePic);
                 setSlideMessage({message: 'updated profile!', color: 'green', messageKey: Math.random()});
                 setEditMode(false);
             }

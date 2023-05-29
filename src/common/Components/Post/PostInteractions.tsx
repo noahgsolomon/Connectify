@@ -41,7 +41,7 @@ const PostInteractions : React.FC<PostInteractionProps> = ({likes, postId, setLo
 
         fetchData();
 
-    }, []);
+    }, [postId]);
 
     return (
         <>
