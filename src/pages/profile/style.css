@@ -236,3 +236,67 @@
 .dark-mode:focus{
     background-color: #FEFCD7;
 }
+
+.confirm-delete-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--notification-unread);
+    padding: 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: absolute;
+    z-index: 10;
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 100px;
+}
+
+.confirm-delete-container p {
+    color: var(--post-title-color);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.delete-container-buttons{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cancel-popup-btn,
+.delete-btn {
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin: 0.5rem;
+}
+
+.cancel-popup-btn:hover,
+.delete-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px var(--shadow);
+}
+
+.cancel-popup-btn:active,
+.delete-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.cancel-popup-btn {
+    background-color: var(--post-color);
+}
+
+.delete-btn {
+    background-color: #ff6961;
+}

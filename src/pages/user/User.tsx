@@ -35,6 +35,7 @@ const User : React.FC = () => {
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [page, setPage] = useState<Array<number>>([0])
     const [message, setMessage] = useState('');
+    const [refresh, setRefresh] = useState(false);
 
     useAuthentication();
 
@@ -85,6 +86,7 @@ const User : React.FC = () => {
                     console.log(profile);
                     setUserProfile(profile);
                     setUserLoaded(true);
+                    setRefresh(prevState => !prevState);
                 }
             };
 
@@ -171,7 +173,7 @@ const User : React.FC = () => {
         {userLoaded &&
             <div className={'user-post-container'}>
                 <div className={'post-wrapper'}>
-                    <PostList setSlideMessage={setSlideMessage} editPost={false} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={user} refresh={false}/>
+                    <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={user} refresh={refresh} setRefresh={setRefresh}/>
                 </div>
             </div>
         }

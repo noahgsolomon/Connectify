@@ -24,7 +24,8 @@ type PostProps = {
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     setPostDisplay: (value: boolean) => void,
     setCategory: React.Dispatch<React.SetStateAction<string>>,
-    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>,
+    setRefresh : React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 type Category = 'invalid' | 'technology' | 'travel' |
@@ -40,7 +41,10 @@ type Category = 'invalid' | 'technology' | 'travel' |
 const myUsername = localStorage.getItem('username');
 const Post : React.FC<PostProps> = ({ id, username, title,
                                         body, lastModifiedDate, category,
-                                        likes, setSlideMessage, setCategory, setSelectedCategory}) => {
+                                        likes, setSlideMessage,
+                                        setCategory,
+                                        setSelectedCategory, setRefresh
+}) => {
 
     const [interactionsLoading, setInteractionsLoading] = useState(true);
     const [commentsLoading, setCommentsLoading] = useState(true);
@@ -111,7 +115,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
                             postId={id} title={postTitle} content={postBody}
                             setSlideMessage={setSlideMessage} setTitle={setTitle}
                             setBody={setBody} setIsEditing={setIsEditing}
-                            isEditing={isEditing}/>
+                            isEditing={isEditing} setRefresh={setRefresh}/>
 
                 <CommentList postId={id} setSlideMessage={setSlideMessage} setLoading={setCommentsLoading}/>
             </>
@@ -128,10 +132,20 @@ interface PostListProps {
     setCategory: React.Dispatch<React.SetStateAction<string>>;
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
     user: string;
+    setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
     refresh: boolean;
 }
 
-const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, lastDay, setCategory, setSelectedCategory, user, refresh }) => {
+const PostList : React.FC<PostListProps> = ({ setSlideMessage,
+                                                page,
+                                                category,
+                                                lastDay,
+                                                setCategory,
+                                                setSelectedCategory,
+                                                user,
+                                                setRefresh,
+                                                refresh
+                                            }) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState<Array<PostProps>>([]); // Specify type
@@ -209,7 +223,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
         !emptyPosts ? (
         <div className={`post-container ${postTransition ? 'hide' : ''}`}>
             {posts.map((post, index) => (
-                <Post key={index} {...post} setSlideMessage={setSlideMessage} setCategory={setCategory} setSelectedCategory={setSelectedCategory}
+                <Post key={index} {...post} setSlideMessage={setSlideMessage} setCategory={setCategory} setSelectedCategory={setSelectedCategory} setRefresh={setRefresh}
                       setPostDisplay={(value) => { // Define a function called setPostDisplay that takes a boolean value as a parameter
                           setPostDisplays(prevState => { // Call setPostDisplays function with a callback function
                               return {...prevState, [post.id]: value}// Update the display setting for the post with post.id

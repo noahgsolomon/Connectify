@@ -130,7 +130,7 @@ const Dashboard : React.FC = () => {
                         </div>
                     </div>
                     <div className="post-wrapper">
-                        <PostList refresh={refresh} setSlideMessage={setSlideMessage} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}/>
+                        <PostList setRefresh={setRefresh} refresh={refresh} setSlideMessage={setSlideMessage} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}/>
                     </div>
                     <AddPost setRefresh={setRefresh} setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
                 </main>

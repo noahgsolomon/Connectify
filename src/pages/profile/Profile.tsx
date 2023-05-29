@@ -42,6 +42,7 @@ const Profile: React.FC = () => {
     const [editMode, setEditMode] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
     const [editedProfile, setEditedProfile] = useState({country: '', bio: '', cardColor: '', backgroundColor: '', profilePic: ''});
+    const [refresh, setRefresh] = useState(false);
     useAuthentication();
 
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
@@ -198,7 +199,7 @@ const Profile: React.FC = () => {
             {userLoaded &&
                 <div className={'user-post-container'}>
                     <div className={'post-wrapper'}>
-                        <PostList setSlideMessage={setSlideMessage} editPost={true} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={localStorage.getItem('username') || ''} refresh={false}/>
+                        <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={localStorage.getItem('username') || ''} refresh={refresh} setRefresh={setRefresh}/>
                     </div>
                 </div>
             }
