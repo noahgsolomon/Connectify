@@ -47,7 +47,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
     const [postDisplay, setPostDisplay] = useState(false);
 
     useEffect(() => {
-        if (!interactionsLoading && (!commentsLoading || editPost)){
+        if ((!interactionsLoading && !commentsLoading) || editPost){
             setPostDisplay(true);
         }
     }, [interactionsLoading, commentsLoading]);
@@ -143,7 +143,6 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage, page, category, l
                     setPostTransition(false);
                 }, 1000);
             }, 200);
-
         }
 
     },[lastDay, category, refresh]);

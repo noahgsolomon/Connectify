@@ -41,8 +41,29 @@ const Profile: React.FC = () => {
     const [page, setPage] = useState<Array<number>>([0])
     const [editMode, setEditMode] = useState(false);
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-
+    const [editedProfile, setEditedProfile] = useState({country: '', bio: '', cardColor: '', backgroundColor: '', profilePic: ''});
     useAuthentication();
+
+    const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
+        '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰',
+        '😗', '😙', '😚', '☺️', '🙂', '🤗', '🤩', '🤔', '🤨', '😐', '😑', '😶',
+        '🙄', '😏', '😣', '😥', '😮', '🤐', '😯', '😪', '😫', '😴', '😌', '😛',
+        '😜', '😝', '🤤', '😒', '😓', '😔', '😕', '🙃', '🤑', '😲', '☹️', '🙁', '😖',
+        '😞', '😟', '😤', '😢', '😭', '😦', '😧', '😨', '😩', '🤯', '😬', '😰', '😱',
+        '🥵', '🥶', '😳', '🤪', '😵', '😡', '😠', '🤬', '😷', '🤒', '🤕', '🤢', '🤮',
+        '🤧', '😇', '🤠', '🤡', '🥳', '🥴', '🥺', '🤥', '🤫', '🤭', '🧐', '🤓', '😈',
+        '👿', '👹', '👺', '💀', '👻', '👽', '🤖', '💩', '😺', '😸', '😹', '😻', '😼',
+        '😽', '🙀', '😿', '😾', '👶', '👧', '🧒', '👦', '👩', '🧑', '👨', '👵', '🧓',
+        '👴', '👲', '👳‍♀️', '👳‍♂️', '🧕', '🧔', '👱‍♂️', '👱‍♀️', '👨‍🦰', '👩‍🦰', '👨‍🦱', '👩‍🦱', '👨‍🦲',
+        '👩‍🦲', '👨‍🦳', '👩‍🦳', '🦸‍♀️', '🦸‍♂️', '🦹‍♀️', '🦹‍♂️', '👮‍♀️', '👮‍♂️', '👷‍♀️', '👷‍♂️', '💂‍♀️', '💂‍♂️', '🕵️‍♀️',
+        '🕵️‍','👩‍⚕️', '👨‍⚕️', '👩‍🌾', '👨‍🌾', '👩‍🍳', '👨‍🍳', '👩‍🎓', '👨‍🎓', '👩‍🎤', '👨‍🎤', '👩‍🏫', '👨‍🏫', '👩‍🏭',
+        '👨‍🏭', '👩‍💻', '👨‍💻', '👩‍💼', '👨‍💼', '👩‍🔧', '👨‍🔧', '👩‍🔬', '👨‍🔬', '👩‍🎨', '👨‍🎨', '👩‍🚒', '👨‍🚒', '👩‍✈️',
+        '👨‍✈️', '👩‍🚀', '👨‍🚀', '👩‍⚖️', '👨‍⚖️', '👰', '🤵', '👸', '🤴', '🤶', '🎅', '🧙‍♀️', '🧙‍♂️', '🧝‍♀️',
+        '🧝‍♂️', '🧛‍♀️', '🧛‍♂️', '🧟‍♀️', '🧟‍♂️', '🧞‍♀️', '🧞‍♂️', '🧜‍♀️', '🐨', '🐯', '🦁', '🐮', '🐷', '🐽',
+        '🐸', '🐵', '🙈', '🙉', '🙊', '🐒', '🐔', '🐧', '🐦', '🐤', '🐣', '🐥', '🦆', '🦢',
+        '🦅', '🦉', '🦚', '🦜', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐚',
+        '🐞', '🐜', '🦗', '🕷', '🕸', '🦂', '🦟', '🦠', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙',
+        '🦑', '🦐', '🦀', '🐡', '🐠'];
 
     useEffect(() => {
         const handleScroll = async () => {
@@ -68,10 +89,9 @@ const Profile: React.FC = () => {
     useEffect(() => {
         const fetchProfileDetails = async () => {
             const myProfile = await profile();
-            console.log(myProfile);
             if (myProfile){
-                console.log(myProfile);
                 setMyProfile(myProfile);
+                setEditedProfile({country: myProfile.users.country, bio: myProfile.users.bio, cardColor: myProfile.users.cardColor, backgroundColor: myProfile.users.backgroundColor, profilePic: myProfile.users.profilePic});
                 setUserLoaded(true);
             }
         };
@@ -98,8 +118,12 @@ const Profile: React.FC = () => {
 
     const handleSubmitEdit = () => {
         const postData = async () => {
-            const response = await updateProfile(myProfile.users.country, myProfile.users.bio, myProfile.users.cardColor, myProfile.users.backgroundColor, myProfile.users.profilePic);
+            const response = await updateProfile(editedProfile.country, editedProfile.bio, editedProfile.cardColor, editedProfile.backgroundColor,editedProfile.profilePic);
             if (response){
+                setMyProfile({...myProfile, users:
+                        {...myProfile.users, country: editedProfile.country, bio: editedProfile.bio, cardColor: editedProfile.cardColor,
+                            backgroundColor: editedProfile.backgroundColor, profilePic: editedProfile.profilePic}});
+
                 setSlideMessage({message: 'updated profile!', color: 'green', messageKey: Math.random()});
                 setEditMode(false);
             }
@@ -121,7 +145,12 @@ const Profile: React.FC = () => {
                 <div className="profile-container">
                     <div className="profile-card">
                         <button className="edit-btn show" onClick={() =>  setEditMode(true)}>Edit</button>
-                        <button className={`cancel-btn ${editMode ? 'show' : ''}`} onClick={() =>  setEditMode(false)}>Cancel</button>
+                        <button className={`cancel-btn ${editMode ? 'show' : ''}`}
+                                onClick={() =>  {
+                            setEditMode(false);
+                            setEditedProfile({country: myProfile.users.country, bio: myProfile.users.bio, cardColor: myProfile.users.cardColor, backgroundColor: myProfile.users.backgroundColor, profilePic: myProfile.users.profilePic})
+                            }
+                        }>Cancel</button>
                         <div className="theme-switch">
                             <button className="theme-btn light-mode" onClick={() => setTheme('light')}>
                                 🌞
@@ -132,13 +161,17 @@ const Profile: React.FC = () => {
                         </div>
                         <div className="profile-info">
                             <div className="profile-header">
-                                <div className="profile-emoji">{myProfile.users.profilePic}</div>
+                                <div className="profile-emoji" onClick={() => {
+                                    setEditedProfile(prev => ({...prev, profilePic: (emojiList[Math.floor(Math.random()*emojiList.length)])}));
+                                    }
+                                } style={{cursor: editMode ? 'pointer' : ''}}
+                                >{editMode ? editedProfile.profilePic : myProfile.users.profilePic}</div>
                             </div>
                             <h2 className="profile-name">{myProfile.users.username}</h2>
                             {editMode ?
                                     <textarea className="profile-country-edit"
-                                              value={myProfile.users.country}
-                                              onChange={e => setMyProfile(prev => ({...prev, users: {...prev.users, country: e.target.value}}))}
+                                              value={editedProfile.country}
+                                              onChange={e => setEditedProfile(prev => ({...prev, country: e.target.value}))}
                                     />
                                 :
                                 <p className="profile-country">Country: {myProfile.users.country}</p>
@@ -146,8 +179,8 @@ const Profile: React.FC = () => {
 
                             {editMode ?
                                     <textarea className="profile-bio-edit"
-                                              value={myProfile.users.bio}
-                                              onChange={e => setMyProfile(prev => ({...prev, users: {...prev.users, bio: e.target.value}}))}
+                                              value={editedProfile.bio}
+                                              onChange={e => setEditedProfile(prev => ({...prev, bio: e.target.value}))}
                                     />
                                 :
                                 <p className="profile-bio">{myProfile.users.bio}</p>
