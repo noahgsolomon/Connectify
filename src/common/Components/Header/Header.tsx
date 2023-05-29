@@ -32,9 +32,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
                 label: <NotificationButton />,
                 isReactNode: true
             },
-            { href: "/search", className: "search-btn", label: "🔎" },
             { href: "/inbox", className: "inbox-btn", label: "💬" },
-            { href: "/dashboard", className: "dashboard-btn", label: "🚀" },
         ],
     };
 
