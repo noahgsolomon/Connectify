@@ -12,8 +12,6 @@ type PostManagementProps = {
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     initialTitle: string;
     initialContent: string;
-    setLastModifiedDate: React.Dispatch<React.SetStateAction<string>>;
-    setCategory: React.Dispatch<React.SetStateAction<string>>;
     likes: number;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -29,8 +27,6 @@ const PostManagement: React.FC<PostManagementProps> = (
         setTitle,
         setBody,
         setSlideMessage,
-        setLastModifiedDate,
-        setCategory,
         likes,
         setRefresh,
     }) => {
@@ -44,11 +40,8 @@ const PostManagement: React.FC<PostManagementProps> = (
     const handleSaveClick = async () => {
         const updatedPost = await updatePost(postId, content, title);
         if (updatedPost) {
+            setRefresh(prevState => !prevState);
             setSlideMessage({message: "Updated post!", color: "green", messageKey: Math.random()});
-            setTitle(updatedPost.title);
-            setBody(updatedPost.body);
-            setLastModifiedDate(updatedPost.lastModifiedDate);
-            setCategory(updatedPost.category);
         } else {
             setSlideMessage({message: "Inappropriate Content!", color: "red", messageKey: Math.random()});
             setTitle(initialTitle);

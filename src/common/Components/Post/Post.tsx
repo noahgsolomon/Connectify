@@ -53,7 +53,6 @@ const Post : React.FC<PostProps> = ({ id, username, title,
     const [isEditing, setIsEditing] = useState(false);
     const [postTitle, setTitle] = useState(title);
     const [postBody, setBody] = useState(body);
-    const [postLastModifiedDate, setLastModifiedDate] = useState(lastModifiedDate);
 
 
 
@@ -100,7 +99,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
             </span>
             <div className="post-meta">
                 <Link to={`/user/${username}`} className={"author"}>{username}</Link>
-                <span className="date">{formatDateAndTime(postLastModifiedDate)}</span>
+                <span className="date">{formatDateAndTime(lastModifiedDate)}</span>
             </div>
             {!myPost ? (
                 <>
@@ -109,9 +108,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
                 </>
             ) : (
             <>
-                <PostManagement initialTitle={title} likes={likes}
-                            setLastModifiedDate={setLastModifiedDate}
-                            setCategory={setCategory} initialContent={body}
+                <PostManagement initialTitle={title} likes={likes} initialContent={body}
                             postId={id} title={postTitle} content={postBody}
                             setSlideMessage={setSlideMessage} setTitle={setTitle}
                             setBody={setBody} setIsEditing={setIsEditing}
