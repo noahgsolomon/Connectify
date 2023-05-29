@@ -1,5 +1,5 @@
 import {deletePost, updatePost} from "../../../util/api/postapi.tsx";
-import React, {useState} from "react";
+import React, {useEffect} from "react";
 
 type PostManagementProps = {
     postId: number;
@@ -14,6 +14,9 @@ type PostManagementProps = {
     initialContent: string;
     likes: number;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
+    setDeletePost : React.Dispatch<React.SetStateAction<boolean>> | null;
+    setDeletedPost : React.Dispatch<React.SetStateAction<boolean>> | null;
+    deletedPost: boolean;
 };
 const PostManagement: React.FC<PostManagementProps> = (
     {
@@ -29,9 +32,13 @@ const PostManagement: React.FC<PostManagementProps> = (
         setSlideMessage,
         likes,
         setRefresh,
+        setDeletePost,
+        setDeletedPost,
+        deletedPost,
     }) => {
 
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    if (setDeletePost === null) throw new Error("setDeletePost is null");
+    if (setDeletedPost === null) throw new Error("setDeletedPost is null");
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -51,44 +58,40 @@ const PostManagement: React.FC<PostManagementProps> = (
         setIsEditing(false);
     };
 
-    const handleConfirmDeleteClick = async () => {
-        setShowDeleteConfirmation(false);
-        const deletedPost = await deletePost(postId);
+    useEffect(() => {
         if (deletedPost) {
-            setRefresh(prevState => !prevState);
-            setSlideMessage({message: "Deleted post!", color: "green", messageKey: Math.random()});
-        } else {
-            setSlideMessage({message: "Failed to delete post!", color: "red", messageKey: Math.random()});
+            setDeletePost(false);
+            const removeData = async () => {
+                const deletedPost = await deletePost(postId);
+                console.log(deletedPost);
+                if (deletedPost) {
+                    setRefresh(prevState => !prevState);
+                    setSlideMessage({message: "Deleted post!", color: "green", messageKey: Math.random()});
+                } else {
+                    setSlideMessage({message: "Failed to delete post!", color: "red", messageKey: Math.random()});
+                }
+            }
+            removeData();
+
+            setDeletedPost(false);
         }
-    }
+    }, [deletedPost]);
 
     const renderDeleteConfirmation = () => {
-        if (showDeleteConfirmation) {
-            return (
-                <div className="confirm-delete-container">
-                    <p>Are you sure you want to delete this post?</p>
-                    <div className={'delete-container-buttons'}>
-                        <button className="cancel-popup-btn" onClick={() => setShowDeleteConfirmation(false)}>Cancel</button>
-                        <button className="delete-btn" onClick={handleConfirmDeleteClick}>🗑️</button>
-                    </div>
-                </div>
-            );
-        }
-        return null;
+        setDeletePost(true);
     };
 
     return (
         <>
-        {renderDeleteConfirmation()}
         <div className="post-actions">
             {isEditing ? (
                 <>
-                    <button className="post-del-btn" onClick={() => {setShowDeleteConfirmation(true)}}>🔥️</button>
+                    <button className="post-del-btn" onClick={renderDeleteConfirmation}>🔥️</button>
                     <button className="post-save-btn" onClick={handleSaveClick}>✅</button>
                 </>
             ) : (
                 <>
-                    <button className="post-del-btn" onClick={() => {setShowDeleteConfirmation(true)}}>🔥️</button>
+                    <button className="post-del-btn" onClick={renderDeleteConfirmation}>🔥️</button>
                     <button className="post-edit-btn" onClick={handleEditClick}>Edit</button>
                 </>
             )}

@@ -254,6 +254,7 @@ const deletePost = async (id : number) => {
 
         const responseBody = await response.text();
         if (response.ok) {
+            console.log('hiiii')
             return responseBody;
         }
     } catch (error) {

@@ -17,6 +17,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
+    const location = page === 'app' ? '/dashboard' : '/'
     const emoji = localStorage.getItem('emoji') || "😀";
 
     const buttonConfigs: { [key in HeaderProps['page']]: (Button | ButtonWithNestedElements)[] } = {
@@ -67,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
 
     return (
         <header>
-            <h1><Link to="/" className="logo">🌐 Connectify</Link></h1>
+            <h1><Link to={location} className="logo">🌐 Connectify</Link></h1>
             <nav>
                 {buttonConfigs[page].map(renderButton)}
             </nav>

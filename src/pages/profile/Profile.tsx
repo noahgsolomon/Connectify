@@ -42,6 +42,8 @@ const Profile: React.FC = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
     const [editedProfile, setEditedProfile] = useState({country: '', bio: '', cardColor: '', backgroundColor: '', profilePic: ''});
     const [refresh, setRefresh] = useState(false);
+    const [deletePost, setDeletePost] = useState(false);
+    const [deletedPost, setDeletedPost] = useState(false);
     useAuthentication();
 
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
@@ -195,11 +197,23 @@ const Profile: React.FC = () => {
                 </div>
             </div>
             {userLoaded &&
+                <>
                 <div className={'user-post-container'}>
                     <div className={'post-wrapper'}>
-                        <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={localStorage.getItem('username') || ''} refresh={refresh} setRefresh={setRefresh}/>
+                        <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory}
+                                  user={localStorage.getItem('username') || ''} refresh={refresh} setRefresh={setRefresh} setDeletedPost={setDeletedPost} setDeletePost={setDeletePost} deletedPost={deletedPost}/>
                     </div>
                 </div>
+                <div className="confirm-delete-container" style={{display: (deletePost ? 'flex' : 'none')}}>
+                    <div className="confirm-delete-popup">
+                        <h3>Are you sure you want to delete this post?</h3>
+                        <div className="confirm-delete-popup-buttons">
+                            <button className="cancel-popup-btn" onClick={() => setDeletePost(false)}>Cancel</button>
+                            <button className="delete-btn" onClick={() => setDeletedPost(true)}>🗑️ Delete</button>
+                        </div>
+                    </div>
+                </div>
+                </>
             }
             {slideMessage && <SlideMessage message={slideMessage.message} color={slideMessage.color} messageKey={slideMessage.messageKey} duration={slideMessage.duration}/>}
         </>

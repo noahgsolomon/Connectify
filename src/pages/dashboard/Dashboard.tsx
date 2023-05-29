@@ -17,6 +17,9 @@ const Dashboard : React.FC = () => {
     const [category, setCategory] = useState("")
     const [selectedCategory, setSelectedCategory] = useState("");
     const [refresh, setRefresh] = useState(false);
+    const [deletePost, setDeletePost] = useState(false);
+    const [deletedPost, setDeletedPost] = useState(false);
+
     const showContent = useAuthentication();
 
 
@@ -128,10 +131,21 @@ const Dashboard : React.FC = () => {
                         </div>
                     </div>
                     <div className="post-wrapper">
-                        <PostList setRefresh={setRefresh} refresh={refresh} setSlideMessage={setSlideMessage} category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}/>
+                        <PostList setRefresh={setRefresh} refresh={refresh} setSlideMessage={setSlideMessage}
+                                  category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}
+                        setDeletePost={setDeletePost} deletedPost={deletedPost} setDeletedPost={setDeletedPost}/>
                     </div>
                     <AddPost setRefresh={setRefresh} setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
                 </main>
+                <div className="confirm-delete-container" style={{display: (deletePost ? 'flex' : 'none')}}>
+                    <div className="confirm-delete-popup">
+                        <h3>Are you sure you want to delete this post?</h3>
+                        <div className="confirm-delete-popup-buttons">
+                            <button className="cancel-popup-btn" onClick={() => setDeletePost(false)}>Cancel</button>
+                            <button className="delete-btn" onClick={() => setDeletedPost(true)}>🗑️ Delete</button>
+                        </div>
+                    </div>
+                </div>
                 <div className="games-panel">
                     <div id="chess-game" className="game-item chess-game">
                         <h2 className="game-title">👑 Chess</h2>
@@ -160,23 +174,6 @@ const Dashboard : React.FC = () => {
                         <button className="game-join-btn">🕹️</button>
                     </div>
                 </div>
-                <aside className="inbox-panel">
-                    <label>
-                        <input type="text" className="inbox-search" placeholder="Search..."/>
-                    </label>
-                    <div className="inbox-items">
-                    </div>
-                    <div className="message-log" style={{"display": "none"}}>
-                        <div className="message-log-header">
-                            <button className="back-btn">&lt;</button>
-                            <h3 className="message-log-username"></h3>
-                        </div>
-                        <div className="message-log-content">
-                        </div>
-                        <div className="message-log-input">
-                        </div>
-                    </div>
-                </aside>
             </div>
             {slideMessage && <SlideMessage {...slideMessage} />}
         </div>
