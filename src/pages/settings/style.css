@@ -1,0 +1,68 @@
+.settings-card {
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 80%;
+    min-height: 500px;
+    margin: 0 auto;
+}
+
+.settings {
+    padding: 2rem;
+}
+
+.settings-title {
+    margin-left: 10%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.settings-subtitle {
+    margin-left: 10%;
+    font-size: 1.2rem;
+    color: gray;
+    margin-bottom: 2rem;
+}
+
+.settings-card {
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.settings-options {
+    padding: 2rem;
+    border-right: 1px solid gray;
+}
+
+.settings-option {
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.selected-option {
+    font-weight: bold;
+}
+
+.settings-content h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid gray;
+    border-radius: 4px;
+}

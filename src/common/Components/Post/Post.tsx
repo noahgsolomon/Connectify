@@ -10,6 +10,7 @@ import PostInteractions from "./PostInteractions.tsx";
 import {formatDateAndTime} from "../../../util/postUtils.tsx";
 import {Link} from "react-router-dom";
 import PostManagement from "./PostManagement.tsx";
+import PostListSkeleton from "./PostListSkeleton.tsx";
 
 
 type PostProps = {
@@ -23,8 +24,8 @@ type PostProps = {
     bookmarks: number,
     setSlideMessage: React.Dispatch<React.SetStateAction<{ message: string, color: string, messageKey: number, duration?: number } | null>>;
     setPostDisplay: (value: boolean) => void,
-    setCategory: React.Dispatch<React.SetStateAction<string>>,
-    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>,
+    setCategory: React.Dispatch<React.SetStateAction<string>> | null,
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>> | null,
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>,
     setDeletePost : React.Dispatch<React.SetStateAction<boolean>> | null
     setDeletedPost : React.Dispatch<React.SetStateAction<boolean>> | null,
@@ -62,6 +63,8 @@ const Post : React.FC<PostProps> = ({ id, username, title,
 
     const myPost = (myUsername === username);
 
+
+
     useEffect(() => {
         if ((!interactionsLoading && !commentsLoading) || myPost){
             setPostDisplay(true);
@@ -69,8 +72,11 @@ const Post : React.FC<PostProps> = ({ id, username, title,
     }, [interactionsLoading, commentsLoading]);
 
     const handleCategoryClick = () => {
-        setSelectedCategory(category.replaceAll('-', ' '));
-        setCategory(category);
+        if (setCategory !== null && setSelectedCategory !== null){
+            setSelectedCategory(category.replaceAll('-', ' '));
+            setCategory(category);
+        }
+
     };
 
     return (
@@ -131,8 +137,8 @@ interface PostListProps {
     page: Array<number>;
     category: string;
     lastDay: number;
-    setCategory: React.Dispatch<React.SetStateAction<string>>;
-    setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
+    setCategory: React.Dispatch<React.SetStateAction<string>> | null;
+    setSelectedCategory: React.Dispatch<React.SetStateAction<string>> | null;
     user: string;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
     setDeletePost : React.Dispatch<React.SetStateAction<boolean>> | null;
@@ -183,7 +189,6 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage,
     }, [page, init]);
 
     useEffect(() => {
-
         if (!init){
             setPostTransition(true);
 
@@ -208,7 +213,6 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage,
                 }, 1000);
             }, 200);
         }
-
     },[lastDay, category, refresh]);
 
 
@@ -220,11 +224,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage,
     }, [postDisplays]);
 
     if (isLoading || !allPostsLoaded) {
-        return (
-            <div className="loader loading-indicator" id="loader">
-                <span className="loader-blink"></span>
-            </div>
-        );
+        return <PostListSkeleton />;
     }
 
     return (

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import NotificationButton from "./NotificationButton.tsx";
+import ProfileButton from "./ProfileButton";
+
 interface Button {
     href: string;
     className: string;
@@ -18,7 +20,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ page }) => {
     const location = page === 'app' ? '/dashboard' : '/'
-    const emoji = localStorage.getItem('emoji') || "😀";
 
     const buttonConfigs: { [key in HeaderProps['page']]: (Button | ButtonWithNestedElements)[] } = {
         auth: [
@@ -26,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
             { href: "/login", className: "login-btn", label: "🔑 login" },
         ],
         app: [
-            { href: "/profile", className: "profile-btn", label: emoji },
+            { href: "#", className: "profile-btn-container", label: <ProfileButton />, isReactNode: true },
             {
                 href: "#",
                 className: "notification-container",
@@ -38,6 +39,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
     };
 
     function renderButton(button: Button | ButtonWithNestedElements, index: number) {
+
         if ('children' in button) {
             return (
                 <div key={index} className={button.className}>

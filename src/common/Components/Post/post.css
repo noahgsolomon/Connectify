@@ -17,6 +17,7 @@
     opacity: 1;
     visibility: visible;
     transition: 0.2s ease;
+    min-height: 800px;
 }
 
 .post-container.hide{
@@ -378,4 +379,63 @@
 .confirm-delete-popup-buttons .delete-btn::before {
     font-size: 1.2rem;
     margin-right: 0.5rem;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+    background-size: 1000px 100%;
+}
+
+.post.skeleton {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.skeleton-title,
+.skeleton-body,
+.skeleton-author,
+.skeleton-date,
+.skeleton-interactions,
+.skeleton-comments {
+    background-color: #ddd;
+    color: transparent;
+    border-radius: 4px;
+}
+
+.skeleton-title {
+    height: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-body {
+    height: 1rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.skeleton-author,
+.skeleton-date,
+.skeleton-interactions,
+.skeleton-comments {
+    height: 0.9rem;
+}
+
+.skeleton-author,
+.skeleton-date {
+    width: 50%;
 }

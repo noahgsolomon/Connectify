@@ -126,6 +126,14 @@ const Inbox : React.FC = () => {
         }
     }, [messageLog]);
 
+    const enterMessageSubmit = (event : React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            handleSendMessage();
+        }
+    }
+
     return (
         <>
             <div className={'chat-app'}>
@@ -159,7 +167,7 @@ const Inbox : React.FC = () => {
                     <div className="message-log-input">
                         <input type="text" className="inbox-message-input" value={message} onChange={
                             (e) => setMessage(e.target.value)
-                        } placeholder="Type your message..."/>
+                        } placeholder="Type your message..." onKeyDown={enterMessageSubmit}/>
                         <button className="send-message-btn" onClick={handleSendMessage}>Send</button>
                     </div>
                 </div>

@@ -22,7 +22,6 @@ const Dashboard : React.FC = () => {
 
     const showContent = useAuthentication();
 
-
     useEffect(() => {
         const handleScroll = async () => {
             const d = document.documentElement;
@@ -131,9 +130,12 @@ const Dashboard : React.FC = () => {
                         </div>
                     </div>
                     <div className="post-wrapper">
-                        <PostList setRefresh={setRefresh} refresh={refresh} setSlideMessage={setSlideMessage}
-                                  category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}
-                        setDeletePost={setDeletePost} deletedPost={deletedPost} setDeletedPost={setDeletedPost}/>
+                        <div className="post-wrapper">
+                            <PostList setRefresh={setRefresh} refresh={refresh} setSlideMessage={setSlideMessage}
+                                                                             category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}
+                                                                             setDeletePost={setDeletePost} deletedPost={deletedPost} setDeletedPost={setDeletedPost}/>
+                        </div>
+
                     </div>
                     <AddPost setRefresh={setRefresh} setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
                 </main>

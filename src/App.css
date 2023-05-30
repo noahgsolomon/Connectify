@@ -19,10 +19,6 @@ a {
     color: #333;
 }
 
-a:hover {
-    color: var(--detail-color);
-}
-
 .btn {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -62,13 +58,11 @@ nav a {
 }
 
 nav a:hover {
-    color: #fff;
     box-shadow: 0 4px 8px var(--shadow);
     transform: translateY(-2px);
 }
 
 nav a:active {
-    background-color: var(--detail-color);
     box-shadow: none;
     transform: translateY(0);
 }
@@ -141,7 +135,7 @@ nav a:active {
     transform: translateX(-50%);
     width: 280px;
     background-color: var(--header-btn);
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -205,6 +199,69 @@ nav a:active {
 .notification-timestamp {
     font-size: 0.8em;
     color: #999;
+}
+
+.profile-btn-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 6px;
+    padding: 15px;
+    z-index: 8000;
+    font-family: 'Roboto', sans-serif;
+    max-height: 400px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.profile-panel.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.profile-sub-btn, .settings-sub-btn{
+    text-align: center;
+    display: block;
+    padding: 12px;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    transition: 0.3s ease;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.profile-sub-btn{
+    background-color: var(--detail-color);
+    color: #f5f5f5;
+}
+.settings-sub-btn{
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.profile-sub-btn:hover, .settings-sub-btn:hover {
+    box-shadow: 0 6px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+.profile-sub-btn:active, .settings-sub-btn:active{
+    box-shadow: none;
+    transform: translateY(0);
+}
+.profile-sub-btn:last-child , .settings-sub-btn:last-child{
+    border-bottom: none;
 }
 
 .slide-message {
@@ -285,10 +342,19 @@ nav a:active {
     animation: blink 3s linear infinite;
 }
 
-@keyframes blink {
-    100% { transform: scale(2, 2);
-        opacity: 0;
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
     }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+    background-size: 1000px 100%;
 }
 
 @keyframes blink {

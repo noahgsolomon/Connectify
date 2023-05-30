@@ -33,8 +33,6 @@ const Profile: React.FC = () => {
         following: 0,
     });
 
-    const [category, setCategory] = useState("")
-    const [selectedCategory, setSelectedCategory] = useState("");
     const [userLoaded, setUserLoaded] = useState(false);
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [page, setPage] = useState<Array<number>>([0])
@@ -84,9 +82,6 @@ const Profile: React.FC = () => {
         };
 
     }, []);
-
-    console.log(category);
-    console.log(selectedCategory);
 
     useEffect(() => {
         const fetchProfileDetails = async () => {
@@ -200,7 +195,7 @@ const Profile: React.FC = () => {
                 <>
                 <div className={'user-post-container'}>
                     <div className={'post-wrapper'}>
-                        <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={setCategory} setSelectedCategory={setSelectedCategory}
+                        <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={null} setSelectedCategory={null}
                                   user={localStorage.getItem('username') || ''} refresh={refresh} setRefresh={setRefresh} setDeletedPost={setDeletedPost} setDeletePost={setDeletePost} deletedPost={deletedPost}/>
                     </div>
                 </div>
