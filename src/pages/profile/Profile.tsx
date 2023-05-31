@@ -37,7 +37,7 @@ const Profile: React.FC = () => {
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [page, setPage] = useState<Array<number>>([0])
     const [editMode, setEditMode] = useState(false);
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [editedProfile, setEditedProfile] = useState({country: '', bio: '', cardColor: '', backgroundColor: '', profilePic: ''});
     const [refresh, setRefresh] = useState(false);
     const [deletePost, setDeletePost] = useState(false);

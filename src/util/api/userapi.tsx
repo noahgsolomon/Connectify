@@ -109,6 +109,29 @@ async function updateProfile(country : string, bio : string, cardColor : string,
         }
     }catch (error){
         console.log(error);
+        throw error;
+    }
+}
+
+async function updateProfileSettings(firstName: string, lastName: string, email: string, profilePic: string){
+    const model = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        profilePic: profilePic
+    }
+    try{
+        const response = await fetch("http://localhost:8080/profile-settings", {
+            method: "PUT",
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`},
+            body: JSON.stringify(model)
+        });
+
+        return await response.json();
+    }catch (error){
+        console.log(error);
+        throw error;
     }
 }
 
@@ -252,6 +275,7 @@ export {
     profile,
     login,
     updateProfile,
+    updateProfileSettings,
     fetchUsers,
     fetchUserProfile,
     signUp,

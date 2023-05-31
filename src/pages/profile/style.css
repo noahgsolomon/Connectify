@@ -1,4 +1,9 @@
 
+::placeholder {
+    color: #aaaaaa;
+    opacity: 0.5;
+}
+
 .profile-card{
     position: relative;
 }
