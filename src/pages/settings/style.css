@@ -39,6 +39,16 @@
     border-right: 1px solid gray;
 }
 
+.settings-options button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+}
+
 .settings-option {
     cursor: pointer;
     margin-bottom: 1rem;
@@ -157,8 +167,37 @@
     background-color: #00D26A;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .settings-card {
+        width: 90%;
+    }
+
+    .settings,
+    .settings-title,
+    .settings-subtitle {
+        margin-left: 0;
+    }
+
     .input-group {
         flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .account-content {
+        display: block;
+    }
+
+    .profile-info {
+        margin-bottom: 2rem;
+        margin-right: 0;
+    }
+
+    .input-fields {
+        margin-top: 2rem;
+    }
+
+    .settings-options {
+        padding: 0.2rem;
+        border-right: 1px solid gray;
     }
 }

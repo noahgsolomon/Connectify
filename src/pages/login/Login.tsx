@@ -3,13 +3,11 @@ import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import {login} from "../../util/api/userapi.tsx";
 import SlideMessage from "../../util/status.tsx";
-import {useNavigate} from "react-router-dom";
 import {applyTheme} from "../../util/userUtils.tsx";
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
-    const navigate = useNavigate();
     const showContent = useAuthentication();
 
     if (!showContent){
@@ -44,7 +42,7 @@ const Login: React.FC = () => {
 
             setSlideMessage({ message: response.message, color: response.color, messageKey: Math.random() });
             applyTheme();
-            navigate('/dashboard');
+            window.location.href = '/dashboard';
         }
         else {
             setSlideMessage({ message: response.message, color: response.color, messageKey: Math.random() });

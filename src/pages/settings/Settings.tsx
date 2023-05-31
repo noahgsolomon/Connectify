@@ -34,7 +34,7 @@ const Settings: React.FC = () => {
         following: 0,
     });
 
-    const settingsOptions = ['account', 'password', 'notifications', 'help'];
+    const settingsOptions = ['account', 'password'];
 
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
         '🤣', '😃', '😄', '😅', '😆', '😉', '😊', '😋', '😎', '😍', '😘', '🥰',
@@ -126,7 +126,7 @@ const Settings: React.FC = () => {
                 }
                 setMyProfile({...myProfile, users:
                         {...myProfile.users, firstName: editedFirstName, lastName: editedLastName, profilePic: editedProfilePic}});
-                localStorage.setItem('emoji', editedProfile.profilePic);
+                localStorage.setItem('emoji', editedProfilePic);
             }
             else{
                 setSlideMessage({message: 'Unable to update profile', color: 'var(--error-color)', messageKey: Math.random()});
@@ -180,6 +180,15 @@ const Settings: React.FC = () => {
         );
     };
 
+    const handleLogoutClick = () => {
+        localStorage.removeItem('jwtToken');
+        window.location.href = '/';
+    }
+
+    const handleDeleteAccountClick = () => {
+
+    }
+
     return (
         <>
         <div className="settings">
@@ -196,6 +205,8 @@ const Settings: React.FC = () => {
                             {option}
                         </p>
                     ))}
+                    <button onClick={handleLogoutClick}>Logout</button>
+                    <button onClick={handleDeleteAccountClick}>Delete account</button>
                 </div>
                 <div className="settings-content">
                     {selectedSetting === 'account' && renderAccountContent()}
