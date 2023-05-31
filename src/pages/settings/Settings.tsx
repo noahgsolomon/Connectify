@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import {updateProfileSettings, updateTheme, profile} from "../../util/api/userapi.tsx";
+import {updateProfileSettings, updateTheme, profile, sendEmailChangeVerification} from "../../util/api/userapi.tsx";
 import {applyTheme} from "../../util/userUtils.tsx";
 import SlideMessage from "../../util/status.tsx";
 type UserType = 'USER' | 'ADMIN';
@@ -112,11 +112,21 @@ const Settings: React.FC = () => {
             const response = await updateProfileSettings(editedFirstName, editedLastName, editedEmail, editedProfilePic);
 
             if (response){
+                if (editedEmail !== myProfile.users.email){
+                    const emailChange = await sendEmailChangeVerification(editedEmail);
+                    if (emailChange.status === 'valid'){
+                        setSlideMessage({message: 'Verification email sent!', color: 'green', messageKey: Math.random()});
+                    }
+                    else if (emailChange.status === 'taken'){
+                        setSlideMessage({message: 'Email already in use', color: 'var(--error-color)', messageKey: Math.random()});
+                    }
+                }
+                else{
+                    setSlideMessage({message: 'updated profile!', color: 'green', messageKey: Math.random()});
+                }
                 setMyProfile({...myProfile, users:
-                        {...myProfile.users, firstName: editedFirstName, lastName: editedLastName,
-                            email: editedEmail, profilePic: editedProfilePic}});
+                        {...myProfile.users, firstName: editedFirstName, lastName: editedLastName, profilePic: editedProfilePic}});
                 localStorage.setItem('emoji', editedProfile.profilePic);
-                setSlideMessage({message: 'updated profile!', color: 'green', messageKey: Math.random()});
             }
             else{
                 setSlideMessage({message: 'Unable to update profile', color: 'var(--error-color)', messageKey: Math.random()});
@@ -129,7 +139,7 @@ const Settings: React.FC = () => {
     }
 
     const handleCancelEdit = () => {
-
+        setEditedProfile({firstName: '', lastName: '', email: '', profilePic: ''});
     }
 
 

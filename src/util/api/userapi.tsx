@@ -135,6 +135,25 @@ async function updateProfileSettings(firstName: string, lastName: string, email:
     }
 }
 
+const sendEmailChangeVerification = async (email: string) => {
+
+    try{
+
+        const response = await fetch("http://localhost:8080/profile-settings/email", {
+            method: 'PUT',
+            headers: {"Content-Type": "application/json",
+                "Authorization": `Bearer ${jwtToken}`},
+            body: email
+        });
+
+        return response.json();
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 async function fetchUsers() {
     try {
         const response = await fetch("http://localhost:8080/users", {
@@ -276,6 +295,7 @@ export {
     login,
     updateProfile,
     updateProfileSettings,
+    sendEmailChangeVerification,
     fetchUsers,
     fetchUserProfile,
     signUp,
