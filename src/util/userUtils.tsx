@@ -46,8 +46,11 @@ function applyTheme(theme = localStorage.getItem('theme')) {
         root.style.setProperty('--post-color', 'var(--post-color-light');
         root.style.setProperty('--notification-item', 'var(--notification-item-light');
         root.style.setProperty('--notification-unread', 'var(--notification-unread-light');
-
-
+        root.style.setProperty('--skeleton-background-1', 'var(--skeleton-background-1-light');
+        root.style.setProperty('--skeleton-background-2', 'var(--skeleton-background-2-light');
+        root.style.setProperty('--post-skeleton-background', 'var(--post-skeleton-background-light');
+        root.style.setProperty('--post-skeleton-border', 'var(--post-skeleton-border-light');
+        root.style.setProperty('--skeleton-elements', 'var(--skeleton-elements-light');
 
     } else {
         root.style.setProperty('--header', 'var(--dark-header)');
@@ -92,6 +95,11 @@ function applyTheme(theme = localStorage.getItem('theme')) {
         root.style.setProperty('--post-color', 'var(--post-color-dark');
         root.style.setProperty('--notification-item', 'var(--notification-item-dark');
         root.style.setProperty('--notification-unread', 'var(--notification-unread-dark');
+        root.style.setProperty('--skeleton-background-1', 'var(--skeleton-background-1-dark');
+        root.style.setProperty('--skeleton-background-2', 'var(--skeleton-background-2-dark');
+        root.style.setProperty('--post-skeleton-background', 'var(--post-skeleton-background-dark');
+        root.style.setProperty('--post-skeleton-border', 'var(--post-skeleton-border-dark');
+        root.style.setProperty('--skeleton-elements', 'var(--skeleton-elements-dark');
     }
 }
 

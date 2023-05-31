@@ -205,5 +205,25 @@
     --chess-border-dark: #20262d;
 
 
+    --skeleton-background-1: #eee;
+    --skeleton-background-1-light: #eee;
+    --skeleton-background-1-dark: #222;
+
+    --skeleton-background-2: #ddd;
+    --skeleton-background-2-light: #ddd;
+    --skeleton-background-2-dark: #333;
+
+    --post-skeleton-background: #eee;
+    --post-skeleton-background-light: #eee;
+    --post-skeleton-background-dark: #333;
+
+    --post-skeleton-border: #ddd;
+    --post-skeleton-border-light: #ddd;
+    --post-skeleton-border-dark: #222;
+
+    --skeleton-elements: #ddd;
+    --skeleton-elements-light: #ddd;
+    --skeleton-elements-dark: #222;
+
 
 }

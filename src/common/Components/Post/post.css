@@ -392,13 +392,13 @@
 
 .skeleton {
     animation: shimmer 2s infinite linear;
-    background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+    background: linear-gradient(to right, var(--skeleton-background-1) 8%, var(--skeleton-background-2) 18%, var(--skeleton-background-1) 33%);
     background-size: 1000px 100%;
 }
 
 .post.skeleton {
-    background-color: #eee;
-    border: 1px solid #ddd;
+    background-color: var(--post-skeleton-background);
+    border: 1px solid var(--post-skeleton-border);
     border-radius: 10px;
     padding: 2rem;
     margin-bottom: 1rem;
@@ -411,7 +411,7 @@
 .skeleton-date,
 .skeleton-interactions,
 .skeleton-comments {
-    background-color: #ddd;
+    background-color: var(--skeleton-elements);
     color: transparent;
     border-radius: 4px;
 }

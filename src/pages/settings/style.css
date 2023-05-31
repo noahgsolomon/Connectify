@@ -1,4 +1,5 @@
 .settings-card {
+    color: var(--text-color);
     display: flex;
     border: 1px solid gray;
     border-radius: 10px;
@@ -13,6 +14,7 @@
 }
 
 .settings-title {
+    color: var(--post-title-color);
     margin-left: 10%;
     font-size: 2rem;
     font-weight: bold;
@@ -46,6 +48,11 @@
     font-weight: bold;
 }
 
+.settings-content {
+    padding: 2rem;
+    flex-grow: 1;
+}
+
 .settings-content h2 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
@@ -53,16 +60,56 @@
 
 .input-group {
     margin-bottom: 1rem;
+    flex: 0 0 48%;
+    max-width: 300px;
 }
 
 .input-group label {
+    font-weight: bold;
     display: block;
     margin-bottom: 0.5rem;
 }
 
 .input-group input {
+    color: var(--text-color);
     width: 100%;
+    background-color: var(--input-bg);
     padding: 0.5rem;
     border: 1px solid gray;
     border-radius: 4px;
+}
+
+.account-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-info {
+    flex: 1;
+    margin-right: 2rem;
+}
+
+.input-fields {
+    flex: 2;
+}
+
+.profile-emoji{
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.profile-emoji:hover {
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.profile-emoji:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .input-group {
+        flex: 0 0 100%;
+    }
 }
