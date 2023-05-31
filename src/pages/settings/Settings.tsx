@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import {updateProfileSettings, updateTheme, profile, sendEmailChangeVerification} from "../../util/api/userapi.tsx";
+import {
+    updateProfileSettings,
+    updateTheme,
+    profile,
+    sendEmailChangeVerification,
+    deleteAccount
+} from "../../util/api/userapi.tsx";
 import {applyTheme} from "../../util/userUtils.tsx";
 import SlideMessage from "../../util/status.tsx";
 type UserType = 'USER' | 'ADMIN';
@@ -12,6 +18,8 @@ const Settings: React.FC = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
     const [slideMessage, setSlideMessage] = useState<{ message: string, color: string, messageKey: number, duration?: number } | null>(null);
     const [editedProfile, setEditedProfile] = useState({firstName: '', lastName: '', email: '', profilePic: ''});
+    const [logout, setLogout] = useState(false);
+    const [deleteUser, setDeleteUser] = useState(false);
 
     const [myProfile, setMyProfile] = useState({
         users: {
@@ -180,15 +188,6 @@ const Settings: React.FC = () => {
         );
     };
 
-    const handleLogoutClick = () => {
-        localStorage.removeItem('jwtToken');
-        window.location.href = '/';
-    }
-
-    const handleDeleteAccountClick = () => {
-
-    }
-
     return (
         <>
         <div className="settings">
@@ -205,11 +204,52 @@ const Settings: React.FC = () => {
                             {option}
                         </p>
                     ))}
-                    <button onClick={handleLogoutClick}>Logout</button>
-                    <button onClick={handleDeleteAccountClick}>Delete account</button>
+                    <button className={'logout-btn'} onClick={() => {setLogout(true)}}>Logout</button>
+                    <button className={'delete-account-btn'} onClick={() => {setDeleteUser(true)}}>Delete account</button>
                 </div>
                 <div className="settings-content">
                     {selectedSetting === 'account' && renderAccountContent()}
+                </div>
+            </div>
+        </div>
+        <div className="confirm-delete-container" style={{display: ((deleteUser) || (logout) ? 'flex' : 'none')}}>
+            <div className="confirm-delete-popup">
+                <h3>Are you sure you want to {deleteUser ? 'delete your account' : 'log out'}?</h3>
+                <div className="confirm-delete-popup-buttons">
+                    <button className="cancel-popup-btn" onClick={() => {
+                        setDeleteUser(false);
+                        setLogout(false);
+                    }}>Cancel</button>
+                    <button className="delete-btn" onClick={() => {
+                        if (logout){
+                            setEditedProfile({...editedProfile, profilePic: '👋'});
+                            setSlideMessage({message: 'See you around! :(', color: 'green', messageKey: Math.random()});
+
+                            setTimeout(() => {
+                                localStorage.removeItem('jwtToken');
+                                window.location.href = '/';
+                            }, 2000);
+
+                            setLogout(false);
+                        }
+                        else if (deleteUser){
+                            const deleteData = async () => {
+                                const deleteAccountRequest = await deleteAccount();
+                                if (deleteAccountRequest){
+                                    setSlideMessage({message: 'Account deleted. Sad to see u go! :(', color: 'green', messageKey: Math.random()});
+                                    setEditedProfile({...editedProfile, profilePic: '😭'});
+                                    setTimeout(() => {
+                                        localStorage.removeItem('jwtToken');
+                                        window.location.href = '/';
+                                    }, 2000);
+                                }
+                            }
+
+                            deleteData();
+                            setDeleteUser(false);
+
+                        }
+                    }}>🗑️ {deleteUser ? 'Delete' : 'Logout'}</button>
                 </div>
             </div>
         </div>

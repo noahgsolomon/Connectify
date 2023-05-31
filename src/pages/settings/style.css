@@ -6,7 +6,14 @@
     overflow: hidden;
     width: 60%;
     min-height: 500px;
+    box-shadow: 0 2px 4px var(--shadow);
     margin: 0 auto;
+    transition: 0.3s ease;
+}
+
+.settings-card:hover{
+    box-shadow: 0 6px 8px var(--shadow);
+    transform: translateY(-2px);
 }
 
 .settings {
@@ -37,16 +44,6 @@
 .settings-options {
     padding: 2rem;
     border-right: 1px solid gray;
-}
-
-.settings-options button {
-    display: block;
-    margin-top: 20px;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
 }
 
 .settings-option {
@@ -167,15 +164,121 @@
     background-color: #00D26A;
 }
 
+.confirm-delete-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--overlay-bg);
+    display: flex;
+    justify-content: center;
+    z-index: 9999;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+.confirm-delete-popup {
+    width: 400px;
+    background: var(--background);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px var(--overlay-bg);
+    font-family: 'Roboto', sans-serif;
+    animation: slideUp 0.5s;
+}
+
+.confirm-delete-popup h3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    color: var(--text-color);
+}
+
+.confirm-delete-popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.confirm-delete-popup-buttons button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px var(--shadow);
+    font-size: 1.2rem;
+}
+
+.confirm-delete-popup-buttons button:hover{
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.confirm-delete-popup-buttons button:active{
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.confirm-delete-popup-buttons .cancel-popup-btn {
+    background: var(--header);
+    color: var(--text-color);
+}
+
+.confirm-delete-popup-buttons .delete-btn {
+    background: var(--error-color);
+    color: #f5f5f5;
+}
+
+.confirm-delete-popup-buttons .delete-btn::before {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.logout-btn, .delete-account-btn{
+    margin-top: 20px;
+    cursor: pointer;
+    border: none;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: all 0.5s ease;
+}
+
+.logout-btn:hover, .delete-account-btn:hover{
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.logout-btn:active, .delete-account-btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.delete-account-btn{
+    background-color: var(--error-color);
+}
+
 @media (max-width: 900px) {
     .settings-card {
         width: 90%;
     }
 
-    .settings,
+
     .settings-title,
     .settings-subtitle {
-        margin-left: 0;
+        margin-left: 5%;
     }
 
     .input-group {

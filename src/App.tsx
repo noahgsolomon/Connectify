@@ -16,24 +16,27 @@ import Header from "./common/Components/Header/Header.tsx";
 const App: React.FC = () => {
 
     useEffect(() => {
-        const heartbeat = setInterval(async () => {
-            await onlineHeartbeat();
-        }, 1000 * 60 * 2);
+        if (localStorage.getItem('jwtToken')){
+            const heartbeat = setInterval(async () => {
+                await onlineHeartbeat();
+            }, 1000 * 60 * 2);
 
-        const fetchTheme = async () => {
-            const fetchedTheme = await getTheme();
-            if (fetchedTheme){
-                localStorage.setItem('theme', fetchedTheme);
-                console.log(fetchedTheme);
-                applyTheme(fetchedTheme);
+            const fetchTheme = async () => {
+                const fetchedTheme = await getTheme();
+                if (fetchedTheme){
+                    localStorage.setItem('theme', fetchedTheme);
+                    console.log(fetchedTheme);
+                    applyTheme(fetchedTheme);
+                }
+            }
+
+            fetchTheme();
+
+            return () => {
+                clearInterval(heartbeat);
             }
         }
 
-       fetchTheme();
-
-        return () => {
-            clearInterval(heartbeat);
-        }
     }, []);
 
     return (

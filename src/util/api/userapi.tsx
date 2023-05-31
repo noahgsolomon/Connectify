@@ -290,6 +290,24 @@ async function onlineHeartbeat() {
     }
 }
 
+async function deleteAccount() {
+    try{
+        const response = await fetch("http://localhost:8080/delete-account", {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwtToken}
+        });
+
+        if (response.ok){
+            return await response.text();
+        }
+
+    } catch(e){
+        console.log(e);
+        throw e;
+    }
+}
+
 export {
     profile,
     login,
@@ -304,5 +322,6 @@ export {
     getTheme,
     onlineHeartbeat,
     followEvent,
-    unfollowEvent
+    unfollowEvent,
+    deleteAccount
 };
