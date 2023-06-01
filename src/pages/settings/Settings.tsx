@@ -204,8 +204,10 @@ const Settings: React.FC = () => {
                             {option}
                         </p>
                     ))}
-                    <button className={'logout-btn'} onClick={() => {setLogout(true)}}>Logout</button>
-                    <button className={'delete-account-btn'} onClick={() => {setDeleteUser(true)}}>Delete account</button>
+                    <div className={'exit-buttons'}>
+                        <button className={'logout-btn'} onClick={() => {setLogout(true)}}>Logout</button>
+                        <button className={'delete-account-btn'} onClick={() => {setDeleteUser(true)}}>Delete account</button>
+                    </div>
                 </div>
                 <div className="settings-content">
                     {selectedSetting === 'account' && renderAccountContent()}
@@ -223,7 +225,7 @@ const Settings: React.FC = () => {
                     <button className="delete-btn" onClick={() => {
                         if (logout){
                             setEditedProfile({...editedProfile, profilePic: '👋'});
-                            setSlideMessage({message: 'See you around! :(', color: 'green', messageKey: Math.random()});
+                            setSlideMessage({message: 'See you around!', color: 'green', messageKey: Math.random()});
 
                             setTimeout(() => {
                                 localStorage.removeItem('jwtToken');
@@ -236,7 +238,7 @@ const Settings: React.FC = () => {
                             const deleteData = async () => {
                                 const deleteAccountRequest = await deleteAccount();
                                 if (deleteAccountRequest){
-                                    setSlideMessage({message: 'Account deleted. Sad to see u go! :(', color: 'green', messageKey: Math.random()});
+                                    setSlideMessage({message: 'Account deleted. Sad to see u go!', color: 'green', messageKey: Math.random()});
                                     setEditedProfile({...editedProfile, profilePic: '😭'});
                                     setTimeout(() => {
                                         localStorage.removeItem('jwtToken');

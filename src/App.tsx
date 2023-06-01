@@ -12,6 +12,7 @@ import Inbox from "./pages/Inbox/Inbox.tsx";
 import Profile from "./pages/profile/Profile.tsx";
 import Settings from "./pages/settings/Settings.tsx";
 import Header from "./common/Components/Header/Header.tsx";
+import Chess from "./pages/chess/Chess.tsx";
 
 const App: React.FC = () => {
 
@@ -54,6 +55,7 @@ const App: React.FC = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/inbox" element={<Inbox />} />
                     <Route path="/settings" element={<Settings />} />
+                    <Route path="/chess" element={<Chess />}/>
                 </Route>
             </Routes>
         </BrowserRouter>

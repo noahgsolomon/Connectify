@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import './style.css';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import PostList from "../../common/Components/Post/Post.tsx";
@@ -19,7 +20,7 @@ const Dashboard : React.FC = () => {
     const [refresh, setRefresh] = useState(false);
     const [deletePost, setDeletePost] = useState(false);
     const [deletedPost, setDeletedPost] = useState(false);
-
+    const navigate = useNavigate();
     const showContent = useAuthentication();
 
     useEffect(() => {
@@ -155,7 +156,7 @@ const Dashboard : React.FC = () => {
                         <div className="game-meta">
                             <span className="players">2 Players</span>
                         </div>
-                        <button className="game-join-btn">🕹️</button>
+                        <button className="game-join-btn" onClick={() => navigate('/chess')}>🕹️</button>
                     </div>
 
                     <div id="trivia-game" className="game-item trivia-game">
