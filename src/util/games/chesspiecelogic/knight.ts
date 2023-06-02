@@ -5,12 +5,10 @@ type Piece = {
 };
 
 type Tile = {
-    piece: Piece;
+    piece: Piece | null;
     color: string;
     id: number;
 };
-
-type BoardState = Array<{ tile: Tile; piece: Piece }>;
 
 function isOffBoard(fromTile: number, toTile: number): boolean {
     const fromColumn = (fromTile - 1) % 8;
@@ -18,16 +16,16 @@ function isOffBoard(fromTile: number, toTile: number): boolean {
     return Math.abs(fromColumn - toColumn) > 2;
 }
 
-function isFriendlyPiece(fromTile: number, toTile: number, boardState: BoardState): boolean {
-    const piece = boardState[toTile] && boardState[toTile].tile.piece;
-    const currentColor = boardState[fromTile] && boardState[fromTile].tile.color;
+function isFriendlyPiece(fromTile: number, toTile: number, boardState: Tile[]): boolean {
+    const piece = boardState[toTile] && boardState[toTile].piece;
+    const currentColor = boardState[fromTile] && boardState[fromTile].piece?.team;
     if (piece) {
         return piece.team === currentColor;
     }
     return false;
 }
 
-export function getValidMoves(fromTile: number, boardState: BoardState): number[] {
+export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
     const currentTile = Number(fromTile);
     const knightMoves = [-17, -15, -10, -6, 6, 10, 15, 17];
     const possibleMoves: number[] = [];

@@ -1,23 +1,22 @@
 import { getValidMoves as getRookMoves } from './rook';
 import { getValidMoves as getBishopMoves } from './bishop';
 
+type Team = 'WHITE' | 'BLACK' | '';
+
 type Piece = {
     moved: boolean;
     type: string;
-    team: string;
+    team: Team;
 };
 
 type Tile = {
-    piece: Piece;
+    piece: Piece | null;
     color: string;
     id: number;
 };
-
-type BoardState = Array<{ tile: Tile; piece: Piece }>;
-
-export function getValidMoves(fromTile: number, boardState: BoardState): number[] {
-    const piece = boardState[fromTile]?.tile.piece;
-    if (!piece || piece.type !== 'queen') {
+export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
+    const piece = boardState[fromTile].piece;
+    if (!piece || piece.type !== 'QUEEN') {
         console.error('Not a queen');
         return [];
     }

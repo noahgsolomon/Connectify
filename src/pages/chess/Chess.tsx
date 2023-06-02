@@ -58,7 +58,7 @@ const Chess: React.FC = () => {
     return (
         <div className="content">
             <div className="chess-board">
-                <Chessboard userColor={'WHITE'}/>
+                <Chessboard myTeam={'WHITE'}/>
             </div>
             <div className="friends-panel">
                 <input type="text" className="friends-search" placeholder="Search..." onChange={handleSearch}/>

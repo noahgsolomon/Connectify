@@ -16,6 +16,7 @@
 }
 
 .tile {
+    cursor: default;
     display: flex;
     border: 1px solid var(--chess-border);
     align-items: center;

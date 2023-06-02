@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import {getChessSessionWithId} from "../../util/games/chessapi.tsx";
 import Chessboard from "../../common/Components/Game/Chessboard.tsx";
+import './style.css';
 
 const ChessGame: React.FC = () => {
     useAuthentication();
@@ -32,7 +33,7 @@ const ChessGame: React.FC = () => {
         <div className="content">
             <div className="player top-player"></div>
             <div className="chess-board">
-                {(color ==='WHITE' || color === 'BLACK') ? <Chessboard userColor={color}/> : <p>Waiting for opponent...</p>}
+                {(color ==='WHITE' || color === 'BLACK') ? <Chessboard myTeam={color}/> : <p>Waiting for opponent...</p>}
             </div>
             <div className="bottom-wrapper">
                 <div className="player bottom-player"></div>

@@ -5,16 +5,14 @@ type Piece = {
 };
 
 type Tile = {
-    piece: Piece;
+    piece: Piece | null;
     color: string;
     id: number;
 };
 
-type BoardState = Array<{ tile: Tile; piece: Piece }>;
-
-export function getValidMoves(fromTile: number, boardState: BoardState): number[] {
+export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
     const moves: number[] = [];
-    const piece = boardState[fromTile]?.tile.piece;
+    const piece = boardState[fromTile]?.piece;
     if (!piece || (piece.type !== 'rook' && piece.type !== 'queen')) {
         console.error('Not a rook or queen');
         return moves;
@@ -36,8 +34,9 @@ export function getValidMoves(fromTile: number, boardState: BoardState): number[
             }
 
             // Check if the tile is valid and if it's empty or occupied by an opponent
-            if (boardState[nextTile]?.tile.piece) {
-                if (boardState[nextTile]?.piece.team !== piece.team) {
+            const nextTilePiece = boardState[nextTile]?.piece;
+            if (nextTilePiece) {
+                if (nextTilePiece.team !== piece.team) {
                     moves.push(nextTile); // Can capture the opponent's piece
                 }
                 break; // Cannot move further in this direction

@@ -77,7 +77,7 @@ async function postMove(sessionId: number, fromPos: number, toPos: number, piece
     return responseBody;
 }
 
-async function updateGameStatus(sessionId: string, gameStatus: string) {
+async function updateGameStatus(sessionId: number, gameStatus: string) {
 
     const response = await fetch(`http://localhost:8080/chess/game-status/${sessionId}`, {
         method: 'PUT',

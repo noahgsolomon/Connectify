@@ -5,19 +5,18 @@ type Piece = {
 };
 
 type Tile = {
-    piece: Piece;
+    piece: Piece | null;
     color: string;
     id: number;
 };
 
-type BoardState = Array<{ tile: Tile; piece: Piece }>;
 
-export function getValidMoves(fromTile: number, boardState: BoardState): number[] {
+export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
     const moves: number[] = [];
     const fromTileNumber = Number(fromTile);
-    const piece = boardState[fromTileNumber].tile.piece;
+    const piece = boardState[fromTileNumber]?.piece;
 
-    if (piece.type !== "bishop" && piece.type !== "queen") {
+    if (piece && piece.type !== "bishop" && piece.type !== "queen") {
         console.error("Not a bishop or queen");
         return moves;
     }
@@ -36,7 +35,8 @@ export function getValidMoves(fromTile: number, boardState: BoardState): number[
             }
 
             if (boardState[nextTile]) {
-                if (boardState[nextTile].tile.piece.team !== piece.team) {
+                const nextTilePiece = boardState[nextTile]?.piece;
+                if (nextTilePiece && piece && nextTilePiece.team !== piece.team) {
                     moves.push(nextTile);
                 }
                 break;
