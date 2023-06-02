@@ -1,5 +1,37 @@
 import React, {useEffect, useState} from "react";
 
+
+import whitequeen from '../../../pages/chess/assets/whitequeen.png';
+import whiteking from '../../../pages/chess/assets/whiteking.png';
+import whitebishop from '../../../pages/chess/assets/whitebishop.png';
+import whiteknight from '../../../pages/chess/assets/whiteknight.png';
+import whiterook from '../../../pages/chess/assets/whiterook.png';
+import whitepawn from '../../../pages/chess/assets/whitepawn.png';
+import blackqueen from '../../../pages/chess/assets/blackqueen.png';
+import blackking from '../../../pages/chess/assets/blackking.png';
+import blackbishop from '../../../pages/chess/assets/blackbishop.png';
+import blackknight from '../../../pages/chess/assets/blackknight.png';
+import blackrook from '../../../pages/chess/assets/blackrook.png';
+import blackpawn from '../../../pages/chess/assets/blackpawn.png';
+
+const pieceImageMap: Record<string, any> = {
+    whitequeen,
+    whiteking,
+    whitebishop,
+    whiteknight,
+    whiterook,
+    whitepawn,
+    blackqueen,
+    blackking,
+    blackbishop,
+    blackknight,
+    blackrook,
+    blackpawn
+};
+
+console.log(whiteking);
+console.log(pieceImageMap['whiteking']);
+
 type ChessboardProps = {
     userColor?: string;
 }
@@ -117,7 +149,39 @@ const Chessboard: React.FC<ChessboardProps> = ({ userColor = '' }) => {
     //     setChessboard(board);
     // }, []);
 
-
+    function getPieceImage(team: Team, piece: PieceType) {
+        if (team === 'WHITE') {
+            switch (piece) {
+                case 'QUEEN':
+                    return whitequeen;
+                case 'KING':
+                    return whiteking;
+                case 'BISHOP':
+                    return whitebishop;
+                case 'KNIGHT':
+                    return whiteknight;
+                case 'ROOK':
+                    return whiterook;
+                case 'PAWN':
+                    return whitepawn;
+            }
+        } else if (team === 'BLACK') {
+            switch (piece) {
+                case 'QUEEN':
+                    return blackqueen;
+                case 'KING':
+                    return blackking;
+                case 'BISHOP':
+                    return blackbishop;
+                case 'KNIGHT':
+                    return blackknight;
+                case 'ROOK':
+                    return blackrook;
+                case 'PAWN':
+                    return blackpawn;
+            }
+        }
+    }
 
     return (
         <>
@@ -142,7 +206,10 @@ const Chessboard: React.FC<ChessboardProps> = ({ userColor = '' }) => {
                             data-piece-type={getPieceType(tile.piece.type)}
                             data-team={getPieceTeam(tile.piece.type)}
                         >
-                            <img src={`src/pages/chess/assets/${(tile.piece.team)}${tile.piece.type}.png`}  alt={`${tile.piece.team} ${getPieceType(tile.piece.type)}`}/>
+                            <img
+                                src={getPieceImage(tile.piece.team, tile.piece.type)}
+                                alt={`${tile.piece.team} ${getPieceType(tile.piece.type)}`}
+                            />
                         </div>
                     }
                 </div>

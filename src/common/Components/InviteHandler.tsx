@@ -12,9 +12,11 @@ const InviteHandler: React.FC<{invite: {inviter: string}, setInvite: Function}> 
                 onAccept={async () => {
                     const session = await createSession(invite.inviter);
                     if (session){
-                        window.location.href = '/chess-live/' + session;
                         await deleteGameInvite(invite.inviter);
-                        setInvite({inviter: ''})
+                        setInvite({inviter: ''});
+                        localStorage.setItem('opponent', invite.inviter);
+                        window.location.href = '/chess-live/' + session;
+
                     }
                 }}
                 onDecline={async () => {

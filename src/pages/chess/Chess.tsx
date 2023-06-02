@@ -35,6 +35,7 @@ const Chess: React.FC = () => {
                 const chessSessionFetch = await getChessSession(username.slice(3));
                 if (chessSessionFetch){
                     await deleteGameInvite(localStorage.getItem('username') || 'null');
+                    localStorage.setItem('opponent', username.slice(3));
                     navigate('/chess-live/' + chessSessionFetch.id);
                 }
             }, 2000);
