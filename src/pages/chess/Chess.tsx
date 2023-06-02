@@ -4,59 +4,15 @@ import './style.css'
 import {getChessSession} from "../../util/games/chessapi.tsx";
 import {deleteGameInvite, sendGameInvite} from "../../util/games/gameinviteapi.tsx";
 import {useNavigate} from "react-router-dom";
+import Chessboard from "../../common/Components/Game/Chessboard.tsx";
 
 
 const Chess: React.FC = () => {
     const [friends, setFriends] = useState<Array<{username: string, profilePic: string, online: string}>>([]);
     const [search, setSearch] = useState('');
-    const [chessboard, setChessboard] = useState<Array<{piece: string, color: string}>>([]);
     const [activeInvite, setActiveInvite] = useState<{username: string}>({username: ''});
     const [inviteBtn, setInviteBtn] = useState('Invite');
     const navigate = useNavigate();
-    function getPieceType(piece: string) {
-        if (piece === '♜' || piece === '♖') {
-            return 'rook';
-        } else if (piece === '♞' || piece === '♘') {
-            return 'knight';
-        } else if (piece === '♝' || piece === '♗') {
-            return 'bishop';
-        } else if (piece === '♛' || piece === '♕') {
-            return 'queen';
-        } else if (piece === '♚' || piece === '♔') {
-            return 'king';
-        } else if (piece === '♟' || piece === '♙') {
-            return 'pawn';
-        } else {
-            return '';
-        }
-    }
-
-    function getPieceTeam(piece: string) {
-        return (piece === '♔' || piece === '♕' || piece === '♖' ||
-            piece === '♗' || piece === '♘' || piece === '♙') ?
-            'white' : 'black';
-    }
-
-    const pieces = [
-        '♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜',
-        '♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟',
-        '',   '',   '',   '',   '',   '',   '',   '',
-        '',   '',   '',   '',   '',   '',   '',   '',
-        '',   '',   '',   '',   '',   '',   '',   '',
-        '',   '',   '',   '',   '',   '',   '',   '',
-        '♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙',
-        '♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖'
-    ];
-
-    useEffect(() => {
-        let board = [];
-        for (let i = 0; i < 64; i++) {
-            const isLight = (Math.floor(i / 8) % 2 === 0) ? (i % 2 === 0) : (i % 2 === 1);
-            const piece = pieces[i];
-            board.push({piece: piece, color: isLight ? 'light' : 'dark'});
-        }
-        setChessboard(board);
-    }, []);
 
     useEffect(() => {
         const fetchFriends = async () => {
@@ -101,32 +57,7 @@ const Chess: React.FC = () => {
     return (
         <div className="content">
             <div className="chess-board">
-                {chessboard.map((tile, i) => (
-                    <div
-                        key={i}
-                        id={`tile-${i + 1}`}
-                        className={`tile ${tile.color}`}
-                        data-color={tile.color}
-                        data-num={i + 1}
-                        data-piece={tile.piece ? getPieceType(tile.piece) : ''}
-                        data-team={tile.piece ? getPieceTeam(tile.piece) : ''}
-                        style={{
-                            backgroundColor: `var(--${tile.color}-tile)`,
-                            cursor: tile.piece ? 'pointer' : 'default'
-                        }}
-                    >
-                        {tile.piece &&
-                            <div
-                                data-moved="false"
-                                className="piece"
-                                data-piece-type={getPieceType(tile.piece)}
-                                data-team={getPieceTeam(tile.piece)}
-                            >
-                                <img src={`src/pages/chess/assets/${getPieceTeam(tile.piece)}${getPieceType(tile.piece)}.png`}  alt={`${getPieceTeam(tile.piece)} ${getPieceType(tile.piece)}`}/>
-                            </div>
-                        }
-                    </div>
-                ))}
+                <Chessboard userColor={'WHITE'}/>
             </div>
             <div className="friends-panel">
                 <input type="text" className="friends-search" placeholder="Search..." onChange={handleSearch}/>
