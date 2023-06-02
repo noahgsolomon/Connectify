@@ -1,6 +1,5 @@
 
 .invite-message {
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -18,14 +17,20 @@
 }
 
 .invite-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 400px;
-    background: var(--light-tile);
+    height: 200px;
+    background: var(--dark-tile);
     padding: 20px;
     border-radius: 20px;
     text-align: center;
     box-shadow: 0 10px 20px var(--shadow);
     font-family: 'Roboto', sans-serif;
     animation: slideUp 0.5s;
+    z-index: 9999;
 }
 
 @keyframes slideUp {
@@ -34,9 +39,16 @@
 }
 
 .invite-game-header {
-    font-size: 20px;
-    color: #333;
+    font-size: 2rem;
+    color: var(--post-title-color);
     margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.invite-buttons{
+    display: flex;
+    justify-content: space-between;
+    margin: 35px 50px;
 }
 
 .invite-accept {
@@ -60,6 +72,10 @@
     background: var(--puzzle-join-btn);
     transform: translateY(-3px);
     box-shadow: 0 4px 10px var(--shadow);
+}
+
+.invite-text{
+    color: var(--text-color);
 }
 
 .invite-decline {

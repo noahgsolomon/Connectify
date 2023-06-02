@@ -2,3 +2,15 @@
 @import "../../common/Components/Post/post.css";
 @import '../../common/css/gameinvite.css';
 @import '../../common/css/var.css';
+
+.user-online-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    background-color: #0fcc45;
+    border-radius: 50%;
+}

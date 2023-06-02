@@ -19,20 +19,25 @@ async function createSession(opponent : string) {
 }
 
 async function getChessSession(opponent : string) {
-    const response = await fetch(`http://localhost:8080/chess/session`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + jwtToken
-        },
-        body: opponent
-    });
-    const responseBody = await response.text();
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    try{
+        const response = await fetch(`http://localhost:8080/chess/session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwtToken
+            },
+            body: opponent
+        });
+
+        if (response.ok) {
+            return await response.json();
+        }
+
+    } catch (e) {
+        console.log(e);
     }
 
-    return responseBody;
+
 }
 
 async function getChessSessionWithId(sessionId: number) {
@@ -43,12 +48,10 @@ async function getChessSessionWithId(sessionId: number) {
             'Authorization': 'Bearer ' + jwtToken
         }
     });
-    const responseBody = await response.text();
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.ok) {
+        return await response.json();
     }
 
-    return JSON.parse(responseBody);
 }
 
 async function postMove(sessionId: number, fromPos: number, toPos: number, piece: string){

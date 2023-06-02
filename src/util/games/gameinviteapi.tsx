@@ -6,12 +6,12 @@ async function getGameInvites(){
             headers: {"Content-Type": "application/json",
                 "Authorization": `Bearer ${jwtToken}`}
         });
-        const responseBody = await response.text();
         if (response.ok){
-            return JSON.parse(responseBody);
+            return response.json();
         }
     }catch (e) {
         console.log(e);
+        throw e;
     }
 }
 

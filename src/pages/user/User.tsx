@@ -138,7 +138,7 @@ const User : React.FC = () => {
                     <div className="user-info">
                         <div className="user-header">
                             <div className="user-emoji">{userProfile.profilePic}
-                                {(userProfile.online.toLowerCase() === 'true') && <div className="online-indicator"><span className="blink"></span></div>}
+                                {(userProfile.online.toLowerCase() === 'true') && <div className="user-online-indicator"><span className="blink"></span></div>}
                             </div>
                         </div>
                         <h2 className="profile-name">{userProfile.username}</h2>
