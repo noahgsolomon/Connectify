@@ -277,13 +277,16 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
         let hypotheticalBoardState = JSON.parse(JSON.stringify(chessboard)) as Tile[];
 
-        hypotheticalBoardState[toTile].piece = hypotheticalBoardState[fromTile].piece;
+        const fromTileIndex = hypotheticalBoardState.findIndex(tile => tile.id === fromTile);
+        const toTileIndex = hypotheticalBoardState.findIndex(tile => tile.id === toTile);
 
-        hypotheticalBoardState[fromTile].piece = null;
+        hypotheticalBoardState[toTileIndex].piece = hypotheticalBoardState[fromTileIndex].piece;
 
-        let kingPosition = chessboard.findIndex(({piece}) => piece && piece.type === 'KING' && piece.team === myTeam);
+        hypotheticalBoardState[fromTileIndex].piece = null;
 
-        let kingTile = boardState[kingPosition];
+        let kingPosition = hypotheticalBoardState.findIndex(({piece}) => piece && piece.type === 'KING' && piece.team === myTeam);
+
+        let kingTile = hypotheticalBoardState[kingPosition];
 
         if (isKingInCheck(myTeam, hypotheticalBoardState)) {
             console.log('cant move there')
@@ -330,10 +333,10 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     function canCastle(fromTile: number, toTile: number, boardState: Tile[]) {
         const from = Number(fromTile);
         const to = Number(toTile);
-        const king = boardState[from];
+
+        const king = boardState[boardState.findIndex(tile => tile.id === from)];
 
         if (!king.piece){
-            console.log('you shouldnt be calling can castle u have no king in the from position')
             return;
         }
 
