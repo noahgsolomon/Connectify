@@ -20,6 +20,7 @@ import blackknight from '../../../pages/chess/assets/blackknight.png';
 import blackrook from '../../../pages/chess/assets/blackrook.png';
 import blackpawn from '../../../pages/chess/assets/blackpawn.png';
 import {getChessSessionWithId, postMove} from "../../../util/games/chessapi.tsx";
+import {useNavigate} from "react-router-dom";
 
 type ChessboardProps = {
     myTeam: Team,
@@ -68,7 +69,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     const [chessSession, setChessSession] = useState<ChessSession | null>(null);
     const [turn, setTurn] = useState<Team>('WHITE');
     const [latestMove, setLatestMove] = useState<{startPosition: number, endPosition: number} | null>(null);
-
+    const navigate = useNavigate();
     function getPieceType(piece: string) : PieceType{
         if (piece === '♜' || piece === '♖') {
             return 'ROOK';
@@ -224,10 +225,18 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                         validMoves = getPawnValidMoves(boardState[i].id, boardState);
                         break;
                 }
+                console.log(validMoves);
                 for (let move of validMoves) {
-                    let hypotheticalBoardState = JSON.parse(JSON.stringify(chessboard)) as Tile[];
-                    hypotheticalBoardState[move] = hypotheticalBoardState[i];
-                    hypotheticalBoardState[i].piece = null;
+                    let hypotheticalBoardState = JSON.parse(JSON.stringify(boardState)) as Tile[];
+
+                    const movingTileIndex = hypotheticalBoardState.findIndex(tile => tile.id === boardState[i].id);
+                    const destinationTileIndex = hypotheticalBoardState.findIndex(tile => tile.id === move);
+
+                    if (movingTileIndex !== -1 && destinationTileIndex !== -1) {
+                        hypotheticalBoardState[destinationTileIndex].piece = hypotheticalBoardState[movingTileIndex].piece;
+                        hypotheticalBoardState[movingTileIndex].piece = null;
+                    }
+
                     if (!isKingInCheck(team, hypotheticalBoardState)) {
                         return false;
                     }
@@ -244,13 +253,11 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
             throw new Error(`No King found for team ${team}`);
         }
         let kingPosition = kingTile.id;
-        console.log('is king in check king position: ' + kingPosition);
         const opposingTeam = team === 'WHITE' ? 'BLACK' : 'WHITE';
 
         for (let i = 0; i < boardState.length; i++) {
             let validMoves;
             if (boardState[i] && boardState[i].piece?.team === opposingTeam) {
-                console.log(i);
                 if (boardState[i].piece?.type === 'KNIGHT'){
                     validMoves = getKnightValidMoves(boardState[i].id, boardState);
                 } else if (boardState[i].piece?.type === 'BISHOP'){
@@ -259,7 +266,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                     validMoves = getPawnValidMoves(boardState[i].id, boardState);
                 }else if (boardState[i].piece?.type === 'QUEEN'){
                     validMoves = getQueenValidMoves(boardState[i].id, boardState);
-                    console.log(validMoves);
                 } else if (boardState[i].piece?.type === 'ROOK'){
                     validMoves = getRookValidMoves(boardState[i].id, boardState);
                 }
@@ -352,7 +358,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                                 return tile;
                             }
                         });
-                        console.log(intermediateBoardState);
                         if (isKingInCheck(king.piece.team, intermediateBoardState)) {
                             return false;
                         }
@@ -405,6 +410,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
         if (fromIndex >= 0 && toIndex >= 0) {
             newChessBoard[toIndex].piece = newChessBoard[fromIndex].piece;
             if (newChessBoard[toIndex].piece) {
+                // @ts-ignore
                 newChessBoard[toIndex].piece.moved = true;
             }
             newChessBoard[fromIndex].piece = null;
@@ -427,6 +433,12 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                         newChessBoard[rookIndex].piece = null;
                     }
                 }
+            }
+
+            console.log(isCheckmate(newChessBoard[toIndex].piece?.team === 'WHITE' ? 'BLACK' : 'WHITE', newChessBoard));
+
+            if (isCheckmate(newChessBoard[toIndex].piece?.team === 'WHITE' ? 'BLACK' : 'WHITE', newChessBoard)) {
+                navigate('/chess');
             }
 
         }
