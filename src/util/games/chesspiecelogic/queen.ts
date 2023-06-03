@@ -14,8 +14,9 @@ type Tile = {
     color: string;
     id: number;
 };
+
 export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
-    const piece = boardState[fromTile].piece;
+    const piece = boardState[boardState.findIndex(tile => tile.id === fromTile)].piece;
     if (!piece || piece.type !== 'QUEEN') {
         console.error('Not a queen');
         return [];

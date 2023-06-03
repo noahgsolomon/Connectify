@@ -11,10 +11,11 @@ type Tile = {
 };
 
 export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
+    fromTile = Number(fromTile);
     const moves: number[] = [];
-    const fromTileRow = Math.floor(fromTile / 8) + 1; // calculate row based on 0 index
+    const fromTileRow = Math.floor(fromTile / 8); // 0-indexed row
 
-    const piece = boardState[fromTile]?.piece;
+    const piece = boardState[boardState.findIndex(tile => tile.id === fromTile)]?.piece;
     if (!piece) {
         console.error('No piece');
         return moves;
@@ -28,14 +29,16 @@ export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
 
     // Check one step forward
     let oneStepForward = fromTile + (8 * direction);
-    if (oneStepForward >= 0 && oneStepForward < 64 && !(boardState[oneStepForward]?.piece)) {
+    let oneStepForwardTile = boardState[boardState.findIndex(tile => tile.id === oneStepForward)];
+    if (oneStepForward >= 0 && oneStepForward < 64 && !(oneStepForwardTile?.piece)) {
         moves.push(oneStepForward);
     }
 
     // Check two steps forward for the first move
-    if ((piece.team === 'WHITE' && fromTileRow === 7) || (piece.team === 'BLACK' && fromTileRow === 2)) {
+    if (!piece.moved && ((piece.team === 'WHITE' && fromTileRow === 6) || (piece.team === 'BLACK' && fromTileRow === 1))) {
         let twoStepsForward = fromTile + (16 * direction);
-        if (twoStepsForward >= 0 && twoStepsForward < 64 && !(boardState[twoStepsForward]?.piece)) {
+        let twoStepsForwardTile = boardState[boardState.findIndex(tile => tile.id === twoStepsForward)];
+        if (twoStepsForward >= 0 && twoStepsForward < 64 && !(twoStepsForwardTile?.piece)) {
             moves.push(twoStepsForward);
         }
     }
@@ -43,7 +46,8 @@ export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
     // Check diagonal moves for capturing
     const diagonals = [fromTile + (7 * direction), fromTile + (9 * direction)];
     diagonals.forEach(diagonal => {
-        if (diagonal >= 0 && diagonal < 64 && boardState[diagonal]?.piece?.team !== piece.team) {
+        let diagonalTile = boardState[boardState.findIndex(tile => tile.id === diagonal)];
+        if (diagonal >= 0 && diagonal < 64 && diagonalTile?.piece?.team !== piece.team && diagonalTile?.piece !== null) {
             moves.push(diagonal);
         }
     });

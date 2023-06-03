@@ -10,43 +10,49 @@ type Tile = {
     id: number;
 };
 
-
 export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
     const moves: number[] = [];
-    const fromTileNumber = Number(fromTile);
-    const piece = boardState[fromTileNumber]?.piece;
+    const fromTileNumber = fromTile;
+    const piece = boardState[boardState.findIndex(tile => tile.id === fromTileNumber)]?.piece;
 
-    if (piece && piece.type !== "bishop" && piece.type !== "queen") {
+    if (!piece || (piece.type !== "BISHOP" && piece.type !== "QUEEN")) {
         console.error("Not a bishop or queen");
         return moves;
     }
 
     const directions = [-9, -7, 7, 9];
     directions.forEach((direction) => {
-        let nextTile = fromTileNumber + direction;
-        while (nextTile >= 1 && nextTile <= 64) {
-            const fromTileRow = Math.floor((fromTileNumber - 1) / 8) + 1;
-            const fromTileCol = ((fromTileNumber - 1) % 8) + 1;
-            const nextTileRow = Math.floor((nextTile - 1) / 8) + 1;
-            const nextTileCol = ((nextTile - 1) % 8) + 1;
+        let nextTileId = fromTileNumber + direction;
+        let nextTileIndex = boardState.findIndex(tile => tile.id === nextTileId);
+
+        while (nextTileId >= 0 && nextTileId <= 63) {
+            const fromTileRow = Math.floor(fromTileNumber / 8);
+            const fromTileCol = fromTileNumber % 8;
+            const nextTileRow = Math.floor(nextTileId / 8);
+            const nextTileCol = nextTileId % 8;
 
             if (Math.abs(fromTileRow - nextTileRow) !== Math.abs(fromTileCol - nextTileCol)) {
                 break;
             }
 
-            if (boardState[nextTile]) {
-                const nextTilePiece = boardState[nextTile]?.piece;
-                if (nextTilePiece && piece && nextTilePiece.team !== piece.team) {
-                    moves.push(nextTile);
+            const nextTilePiece = boardState[nextTileIndex]?.piece;
+
+            if (nextTilePiece) {
+                if (nextTilePiece.team === piece.team) {
+                    break;
+                } else {
+                    moves.push(nextTileId);
+                    break;
                 }
-                break;
             } else {
-                moves.push(nextTile);
+                moves.push(nextTileId);
             }
 
-            nextTile += direction;
+            nextTileId += direction;
+            nextTileIndex = boardState.findIndex(tile => tile.id === nextTileId);
         }
     });
 
+    console.log(moves);
     return moves;
 }

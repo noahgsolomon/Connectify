@@ -132,7 +132,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
         else{
             let isLight = true;
             let board: Tile[] = [];
-            for (let i = 0; i < 64; i++) {
+            for (let i = 0; i <= 63; i++) {
                 const piece:Piece = {
                     moved: false,
                     type: getPieceType(pieces[i]),
@@ -195,6 +195,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
             console.log(recentMove);
             movePiece(recentMove.startPosition, recentMove.endPosition);
             setLatestMove({startPosition: recentMove.startPosition, endPosition: recentMove.endPosition});
+            setTurn(chessSession.turn);
         }
 
     }, [chessSession]);
@@ -396,10 +397,20 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     }
 
     const movePiece = (fromTile: number, toTile: number) => {
+        const fromTileNumber = Number(fromTile);
+        const toTileNumber = Number(toTile);
         const newChessBoard = JSON.parse(JSON.stringify(chessboard)) as Tile[];
+        const fromIndex = newChessBoard.findIndex(tile => tile.id === fromTileNumber);
+        const toIndex = newChessBoard.findIndex(tile => tile.id === toTileNumber);
 
-        newChessBoard[toTile].piece = newChessBoard[fromTile].piece;
-        newChessBoard[fromTile].piece = null;
+        console.log(`fromTile: ${fromTileNumber}, toTile: ${toTileNumber}`);
+        console.log(`fromIndex: ${fromIndex}, toIndex: ${toIndex}`);
+
+        if (fromIndex >= 0 && toIndex >= 0) {
+            newChessBoard[toIndex].piece = newChessBoard[fromIndex].piece;
+            newChessBoard[fromIndex].piece = null;
+        }
+
         console.log(newChessBoard);
         setChessboard(newChessBoard);
     }
@@ -510,16 +521,13 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
     return (
         <>
-        {chessboard.map((tile, i) => (
+        {chessboard.map((tile) => (
                 <div onClick={() => handleClickTile(tile)}
-                    key={i}
-                    id={`tile-${i + 1}`}
+                    key={tile.id}
                     className={`tile ${tile.color}`}
-                    data-color={tile.color}
-                    data-num={i + 1}
                     style={{
                         backgroundColor: (selectedTile?.id === tile.id) ? 'red' : `var(--${tile.color}-tile)`,
-                        cursor: tile.piece?.type !== '' ? 'pointer' : 'default'
+                        cursor: tile.piece ? 'pointer' : 'default'
                     }}
                 >
                     {tile.piece &&

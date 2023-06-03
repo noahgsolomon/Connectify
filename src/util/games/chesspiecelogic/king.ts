@@ -10,16 +10,18 @@ type Tile = {
     id: number;
 };
 
-
 function isOffBoard(fromTile: number, toTile: number): boolean {
-    const fromColumn = (fromTile - 1) % 8;
-    const toColumn = (toTile - 1) % 8;
+    const fromColumn = fromTile % 8;
+    const toColumn = toTile % 8;
     return Math.abs(fromColumn - toColumn) > 1;
 }
 
 function isFriendlyPiece(fromTile: number, toTile: number, boardState: Tile[]): boolean {
-    const piece = boardState[toTile] && boardState[toTile]?.piece;
-    const currentColor = boardState[fromTile].piece && piece && piece.team;
+    const fromTileIndex = boardState.findIndex(tile => tile.id === fromTile);
+    const toTileIndex = boardState.findIndex(tile => tile.id === toTile);
+
+    const piece = boardState[toTileIndex] && boardState[toTileIndex]?.piece;
+    const currentColor = boardState[fromTileIndex] && boardState[fromTileIndex].piece?.team;
     if (piece) {
         return piece.team === currentColor;
     }
@@ -27,23 +29,25 @@ function isFriendlyPiece(fromTile: number, toTile: number, boardState: Tile[]): 
 }
 
 export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
-    const currentTile = Number(fromTile);
     const kingMoves = [-9, -8, -7, -1, 1, 7, 8, 9];
     const possibleMoves: number[] = [];
 
     for (let move of kingMoves) {
-        const newTile = currentTile + move;
+        const newTile = fromTile + move;
+        const newTileIndex = boardState.findIndex(tile => tile.id === newTile);
 
         // Check if newTile is valid and not occupied by a friendly piece
         if (
-            newTile >= 1 &&
-            newTile <= 64 &&
-            !isOffBoard(currentTile, newTile) &&
-            !isFriendlyPiece(fromTile, newTile, boardState)
+            newTile >= 0 &&
+            newTile <= 63 &&
+            !isOffBoard(fromTile, newTile) &&
+            !isFriendlyPiece(fromTile, newTile, boardState) &&
+            newTileIndex !== -1
         ) {
             possibleMoves.push(newTile);
         }
     }
 
+    console.log(possibleMoves);
     return possibleMoves;
 }

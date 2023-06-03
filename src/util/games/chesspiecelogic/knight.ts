@@ -11,33 +11,33 @@ type Tile = {
 };
 
 function isOffBoard(fromTile: number, toTile: number): boolean {
-    const fromColumn = (fromTile - 1) % 8;
-    const toColumn = (toTile - 1) % 8;
-    return Math.abs(fromColumn - toColumn) > 2;
+    const fromColumn = fromTile % 8;
+    const toColumn = toTile % 8;
+    const columnDifference = Math.abs(fromColumn - toColumn);
+    return columnDifference > 2 || columnDifference === 0;
 }
 
 function isFriendlyPiece(fromTile: number, toTile: number, boardState: Tile[]): boolean {
-    const piece = boardState[toTile] && boardState[toTile].piece;
-    const currentColor = boardState[fromTile] && boardState[fromTile].piece?.team;
-    if (piece) {
-        return piece.team === currentColor;
+    const fromPiece = boardState[boardState.findIndex(tile => tile.id === fromTile)]?.piece;
+    const toPiece = boardState[boardState.findIndex(tile => tile.id === toTile)]?.piece;
+    if (toPiece) {
+        return toPiece.team === fromPiece?.team;
     }
     return false;
 }
 
 export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
-    const currentTile = Number(fromTile);
     const knightMoves = [-17, -15, -10, -6, 6, 10, 15, 17];
     const possibleMoves: number[] = [];
 
     for (let move of knightMoves) {
-        const newTile = currentTile + move;
+        const newTile = fromTile + move;
 
         // Check if newTile is valid and not occupied by a friendly piece
         if (
-            newTile >= 1 &&
-            newTile <= 64 &&
-            !isOffBoard(currentTile, newTile) &&
+            newTile >= 0 &&
+            newTile <= 63 &&
+            !isOffBoard(fromTile, newTile) &&
             !isFriendlyPiece(fromTile, newTile, boardState)
         ) {
             possibleMoves.push(newTile);
