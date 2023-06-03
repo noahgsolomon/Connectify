@@ -332,7 +332,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
         const king = boardState[boardState.findIndex(tile => tile.id === from)];
 
-        if (!king || !king.piece){
+        if (!king || !king.piece || king.piece.moved){
             return;
         }
 
@@ -404,6 +404,9 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
         if (fromIndex >= 0 && toIndex >= 0) {
             newChessBoard[toIndex].piece = newChessBoard[fromIndex].piece;
+            if (newChessBoard[toIndex].piece) {
+                newChessBoard[toIndex].piece.moved = true;
+            }
             newChessBoard[fromIndex].piece = null;
 
             if (newChessBoard[toIndex].piece?.type === 'KING' && Math.abs(toTileNumber - fromTileNumber) === 2) {
