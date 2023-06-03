@@ -19,30 +19,10 @@ import blackbishop from '../../../pages/chess/assets/blackbishop.png';
 import blackknight from '../../../pages/chess/assets/blackknight.png';
 import blackrook from '../../../pages/chess/assets/blackrook.png';
 import blackpawn from '../../../pages/chess/assets/blackpawn.png';
-import {getChessSessionWithId, postMove, updateGameStatus} from "../../../util/games/chessapi.tsx";
-
-const pieceImageMap: Record<string, any> = {
-    whitequeen,
-    whiteking,
-    whitebishop,
-    whiteknight,
-    whiterook,
-    whitepawn,
-    blackqueen,
-    blackking,
-    blackbishop,
-    blackknight,
-    blackrook,
-    blackpawn
-};
-
-console.log(whiteking);
-console.log(pieceImageMap['whiteking']);
+import {getChessSessionWithId, postMove} from "../../../util/games/chessapi.tsx";
 
 type ChessboardProps = {
     myTeam: Team,
-    turn?: Team,
-    setTurn?: React.Dispatch<React.SetStateAction<Team>>;
     sessionId?: number
 }
 
@@ -81,13 +61,13 @@ type ChessSession = {
     updatedAt: Date
 }
 
-const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionId }) => {
+const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
+
     const [chessboard, setChessboard] = useState<Tile[]>([]);
-    const [selectedPiece, setSelectedPiece] = useState<null | Piece>(null);
     const [selectedTile, setSelectedTile] = useState<null | Tile>(null);
     const [chessSession, setChessSession] = useState<ChessSession | null>(null);
-    const otherTeam = myTeam === 'WHITE' ? 'BLACK' : 'WHITE';
-
+    const [turn, setTurn] = useState<Team>('WHITE');
+    const [latestMove, setLatestMove] = useState<{startPosition: number, endPosition: number} | null>(null);
     function getPieceType(piece: string) : PieceType{
         if (piece === '♜' || piece === '♖') {
             return 'ROOK';
@@ -130,82 +110,91 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
         if (myTeam && myTeam.toUpperCase() === 'BLACK') {
             let isLight = true;
             let board: Tile[] = [];
-            for (let i = 64; i >= 1; i--) {
+            for (let i = 63; i >= 0; i--) {
                 isLight = !isLight;
-                if (i % 8 === 0) {
+                if ((i + 1) % 8 === 0) {
                     isLight = !isLight;
                 }
                 const piece:Piece = {
                     moved: false,
-                    type: getPieceType(pieces[i - 1]),
-                    team: getPieceTeam(pieces[i - 1]),
+                    type: getPieceType(pieces[i]),
+                    team: getPieceTeam(pieces[i]),
                 };
                 const tile: Tile = {
                     id: i,
                     color: isLight ? 'light' : 'dark',
-                    piece: piece
+                    piece: piece.type === '' ? null : piece
                 };
                 board.push(tile);
             }
             setChessboard(board);
         }
         else{
-            let isLight = false;
+            let isLight = true;
             let board: Tile[] = [];
-            for (let i = 1; i <= 64; i++) {
+            for (let i = 0; i < 64; i++) {
                 const piece:Piece = {
                     moved: false,
-                    type: getPieceType(pieces[i - 1]),
-                    team: getPieceTeam(pieces[i - 1]),
+                    type: getPieceType(pieces[i]),
+                    team: getPieceTeam(pieces[i]),
                 };
                 const tile: Tile = {
                     id: i,
                     color: isLight ? 'light' : 'dark',
-                    piece: piece
+                    piece: piece.type === '' ? null : piece
                 };
                 board.push(tile);
                 isLight = !isLight;
-                if (i % 8 === 0) {
+                if ((i + 1) % 8 === 0) {
                     isLight = !isLight;
                 }
             }
             setChessboard(board);
         }
 
+    }, [myTeam]);
+
+    useEffect(() => {
+        if (!sessionId) {
+            return;
+        }
+
+        console.log(latestMove);
+
         const boardUpdateInterval = setInterval(() => {
-            if (!sessionId) {
-                return;
-            }
             const fetchData = async () => {
                 const newSessionState = await getChessSessionWithId(sessionId);
-                if (newSessionState) {
+
+                console.log(newSessionState);
+                console.log(latestMove);
+
+                if (
+                    newSessionState &&
+                    (
+                        newSessionState.recentMove.startPosition !== latestMove?.startPosition ||
+                        newSessionState.recentMove.endPosition !== latestMove?.endPosition
+                    )
+                ) {
                     setChessSession(newSessionState);
                 }
-            }
+            };
 
             fetchData();
-
-        }, 1000);
+        }, 3000);
 
         return () => clearInterval(boardUpdateInterval);
-    }, [myTeam]);
+    }, [sessionId, latestMove]);
 
     useEffect(() => {
         if (chessSession === null || !setTurn) {
             return;
         }
 
-        setTurn(chessSession.turn);
         if (chessSession.recentMove) {
             const recentMove = chessSession.recentMove;
-            const newBoard = [...chessboard];
-            newBoard[recentMove.startPosition - 1].piece = null;
-            newBoard[recentMove.endPosition - 1].piece = {
-                moved: true,
-                type: recentMove.piece,
-                team: chessSession.turn
-            };
-            setChessboard(newBoard);
+            console.log(recentMove);
+            movePiece(recentMove.startPosition, recentMove.endPosition);
+            setLatestMove({startPosition: recentMove.startPosition, endPosition: recentMove.endPosition});
         }
 
     }, [chessSession]);
@@ -240,7 +229,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
                         break;
                 }
                 for (let move of validMoves) {
-                    let hypotheticalBoardState = { ...boardState };
+                    let hypotheticalBoardState = JSON.parse(JSON.stringify(chessboard)) as Tile[];
                     hypotheticalBoardState[move] = hypotheticalBoardState[i];
                     hypotheticalBoardState[i].piece = null;
                     if (!isKingInCheck(team, hypotheticalBoardState)) {
@@ -285,9 +274,9 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
 
     function canMove(fromTile: number, toTile: number, pieceType: PieceType, boardState: Tile[]) {
 
-        let hypotheticalBoardState = { ...boardState };
+        let hypotheticalBoardState = JSON.parse(JSON.stringify(chessboard)) as Tile[];
 
-        hypotheticalBoardState[toTile] = hypotheticalBoardState[fromTile];
+        hypotheticalBoardState[toTile].piece = hypotheticalBoardState[fromTile].piece;
 
         hypotheticalBoardState[fromTile].piece = null;
 
@@ -296,7 +285,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
         let kingTile = boardState[kingPosition];
 
         if (isKingInCheck(myTeam, hypotheticalBoardState)) {
-            // kingTile.style.backgroundColor = '#de4848';
             console.log('cant move there')
             return false;
         }
@@ -407,17 +395,25 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
         return false;
     }
 
+    const movePiece = (fromTile: number, toTile: number) => {
+        const newChessBoard = JSON.parse(JSON.stringify(chessboard)) as Tile[];
+
+        newChessBoard[toTile].piece = newChessBoard[fromTile].piece;
+        newChessBoard[fromTile].piece = null;
+        console.log(newChessBoard);
+        setChessboard(newChessBoard);
+    }
+
     const handleClickTile = async (tile: Tile) => {
-        if (!turn || turn.toUpperCase() !== myTeam.toUpperCase() || !sessionId || !setTurn){
+
+        if (!sessionId || myTeam !== turn){
             return;
         }
-        console.log(tile);
-        if (tile.piece && !selectedPiece) {
-            if (tile.piece.team.toUpperCase() !== turn) {
+        if (tile.piece && !selectedTile?.piece) {
+            if (tile.piece.team !== turn) {
                 return;
             }
 
-            setSelectedPiece(tile.piece);
             setSelectedTile(tile);
         }
         else {
@@ -426,58 +422,40 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
             if (!selectedTile){
                 return;
             }
-            if (selectedPiece && (tile.piece === null || (tile.piece.team !== selectedPiece.team))
-                && canMove(selectedTile.id, tile.id, selectedPiece.type, chessboard)) {
+            if (selectedTile.piece){
+                console.log(selectedTile.piece.type);
+            console.log(canMove(selectedTile.id, tile.id, selectedTile.piece.type, chessboard));
+            }
+            if (selectedTile.piece && (tile.piece === null || (tile.piece.team !== selectedTile.piece.team))
+                && canMove(selectedTile.id, tile.id, selectedTile.piece.type, chessboard)) {
 
                 if (tile.piece) {
                         //update moved status of piece
                 }
 
-                if (selectedPiece.type.toUpperCase() === 'PAWN'){
-                    if (selectedPiece.team.toUpperCase() === 'WHITE'){
-                        if (tile.id <= 8){
+                if (selectedTile.piece.type.toUpperCase() === 'PAWN'){
+                    if (selectedTile.piece.team.toUpperCase() === 'WHITE'){
+                        if (tile.id <= 7){
                             //Promotion logic for white pawn
-                            setSelectedPiece({...selectedPiece, type: 'QUEEN'});
+                            setSelectedTile({...selectedTile, piece: {type: 'QUEEN', team: 'WHITE', moved: true}});
                         }
                     }
-                    else if (selectedPiece.team.toUpperCase() === 'BLACK'){
-                        if (tile.id >= 57){
+                    else if (selectedTile.piece.team.toUpperCase() === 'BLACK'){
+                        if (tile.id >= 56){
                             //Promotion logic for black pawn
-                            setSelectedPiece({...selectedPiece, type: 'QUEEN'});
+                            setSelectedTile({...selectedTile, piece: {type: 'QUEEN', team: 'BLACK', moved: true}});
                         }
                     }
                 }
 
-                await postMove(sessionId, selectedTile.id, tile.id, selectedPiece.type);
-
-                const hypotheticalBoardState = {...chessboard};
-                hypotheticalBoardState[tile.id].piece = hypotheticalBoardState[selectedTile.id].piece;
-                hypotheticalBoardState[selectedTile.id].piece = null;
-
-                if (isCheckmate(otherTeam, hypotheticalBoardState)) {
-                    console.log("Checkmate! " + myTeam + " won!");
-                    await updateGameStatus(sessionId, `${myTeam.toUpperCase()}_WON`);
-                    // setGameStatus(`${myTeam.toUpperCase()}_WON`);
-
-                    if (myTeam === 'WHITE'){
-                        // setGameResultText('👑White won by checkmate!👑');
-                    }
-                    else if (myTeam === 'BLACK'){
-                        // setGameResultText('👑Black won by checkmate!👑');
-                    }
-
-                }
+                await postMove(sessionId, selectedTile.id, tile.id, selectedTile.piece.type);
 
                 setSelectedTile(null);
-                setSelectedPiece(null);
-            } else if (tile.piece && selectedPiece && tile.piece.team === selectedPiece.team && tile.id !== selectedTile.id) {
-                setSelectedTile(tile);
-                setSelectedPiece(tile.piece);
+            } else if (tile.id === selectedTile.id) {
+                setSelectedTile(null);
             }
-            //if the same tile is clicked again
-            else if (selectedTile === tile) {
-                setSelectedTile(null);
-                setSelectedPiece(null);
+            else if (selectedTile.piece && tile.piece && tile.piece.team === selectedTile.piece.team) {
+                setSelectedTile(tile);
             }
         }
     };
@@ -507,6 +485,8 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
                     return whiterook;
                 case 'PAWN':
                     return whitepawn;
+                default:
+                    return null;
             }
         } else if (team === 'BLACK') {
             switch (piece) {
@@ -522,6 +502,8 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
                     return blackrook;
                 case 'PAWN':
                     return blackpawn;
+                default:
+                    return null;
             }
         }
     }
@@ -535,14 +517,12 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, turn, setTurn, sessionI
                     className={`tile ${tile.color}`}
                     data-color={tile.color}
                     data-num={i + 1}
-                    data-piece={tile.piece?.type}
-                    data-team={tile.piece?.team}
                     style={{
-                        backgroundColor: `var(--${tile.color}-tile)`,
+                        backgroundColor: (selectedTile?.id === tile.id) ? 'red' : `var(--${tile.color}-tile)`,
                         cursor: tile.piece?.type !== '' ? 'pointer' : 'default'
                     }}
                 >
-                    {tile.piece !== null &&
+                    {tile.piece &&
                         <div
                             data-moved="false"
                             className="piece"

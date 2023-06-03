@@ -1,24 +1,29 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import useAuthentication from "../../setup/useAuthentication.tsx";
 import {getChessSessionWithId} from "../../util/games/chessapi.tsx";
 import Chessboard from "../../common/Components/Game/Chessboard.tsx";
 import './style.css';
 
 const ChessGame: React.FC = () => {
-    useAuthentication();
-    let { session } = useParams<{ session: string }>();
-    const [color, setColor] = useState('');
 
-    const [myTurn, setMyTurn] = useState<boolean>(false);
+    const [color, setColor] = useState('');
+    useAuthentication();
+
+    const navigate = useNavigate();
+
+    let { session } = useParams<{ session: string }>();
+    let sessionId = parseInt(session || '0');
+    if (!session){
+        navigate('/chess');
+    }
 
     useEffect(() => {
         const fetchSession = async () => {
-            const sessionData = await getChessSessionWithId(parseInt(session || '0'));
+            const sessionData = await getChessSessionWithId(sessionId);
             if (sessionData){
                 if (sessionData.whitePlayer === localStorage.getItem('username')){
                     setColor('WHITE');
-                    setMyTurn(true);
                 } else if (sessionData.blackPlayer === localStorage.getItem('username')){
                     setColor('BLACK');
                 }
@@ -33,7 +38,7 @@ const ChessGame: React.FC = () => {
         <div className="content">
             <div className="player top-player"></div>
             <div className="chess-board">
-                {(color ==='WHITE' || color === 'BLACK') ? <Chessboard myTeam={color}/> : <p>Waiting for opponent...</p>}
+                {(color ==='WHITE' || color === 'BLACK') ? <Chessboard myTeam={color} sessionId={sessionId}/> : <p>Waiting for opponent...</p>}
             </div>
             <div className="bottom-wrapper">
                 <div className="player bottom-player"></div>

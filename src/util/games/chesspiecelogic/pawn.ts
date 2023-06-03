@@ -12,43 +12,42 @@ type Tile = {
 
 export function getValidMoves(fromTile: number, boardState: Tile[]): number[] {
     const moves: number[] = [];
-    const fromTileNumber = Number(fromTile);
-    const fromTileRow = Math.floor((fromTileNumber - 1) / 8) + 1;
-    // const fromTileCol = ((fromTileNumber - 1) % 8) + 1;
+    const fromTileRow = Math.floor(fromTile / 8) + 1; // calculate row based on 0 index
 
-    const piece = boardState[fromTileNumber] && boardState[fromTileNumber].piece;
-    if (!piece){
+    const piece = boardState[fromTile]?.piece;
+    if (!piece) {
         console.error('No piece');
         return moves;
     }
-    if (piece.type !== 'pawn') {
+    if (piece.type !== 'PAWN') {
         console.error('Not a pawn');
         return moves;
     }
 
-    const direction = piece.team === 'white' ? -1 : 1;
+    const direction = piece.team === 'WHITE' ? -1 : 1;
 
     // Check one step forward
-    let oneStepForward = fromTileNumber + (8 * direction);
-    if (oneStepForward >= 1 && oneStepForward <= 64 && !(boardState[oneStepForward] && boardState[oneStepForward].piece)) {
+    let oneStepForward = fromTile + (8 * direction);
+    if (oneStepForward >= 0 && oneStepForward < 64 && !(boardState[oneStepForward]?.piece)) {
         moves.push(oneStepForward);
     }
 
     // Check two steps forward for the first move
-    if ((piece.team === 'white' && fromTileRow === 7) || (piece.team === 'black' && fromTileRow === 2)) {
-        let twoStepsForward = fromTileNumber + (16 * direction);
-        if (twoStepsForward >= 1 && twoStepsForward <= 64 && !(boardState[twoStepsForward] && boardState[twoStepsForward].piece)) {
+    if ((piece.team === 'WHITE' && fromTileRow === 7) || (piece.team === 'BLACK' && fromTileRow === 2)) {
+        let twoStepsForward = fromTile + (16 * direction);
+        if (twoStepsForward >= 0 && twoStepsForward < 64 && !(boardState[twoStepsForward]?.piece)) {
             moves.push(twoStepsForward);
         }
     }
 
     // Check diagonal moves for capturing
-    const diagonals = [fromTileNumber + (7 * direction), fromTileNumber + (9 * direction)];
+    const diagonals = [fromTile + (7 * direction), fromTile + (9 * direction)];
     diagonals.forEach(diagonal => {
-        if (diagonal >= 1 && diagonal <= 64 && boardState[diagonal] && boardState[diagonal].piece && boardState[diagonal].piece?.team !== piece.team) {
+        if (diagonal >= 0 && diagonal < 64 && boardState[diagonal]?.piece?.team !== piece.team) {
             moves.push(diagonal);
         }
     });
+
     console.log(moves);
     return moves;
 }
