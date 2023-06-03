@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import useAuthentication from "../../setup/useAuthentication.tsx";
-import {getChessSessionWithId} from "../../util/games/chessapi.tsx";
+import {chessHeartbeat, getChessSessionWithId} from "../../util/games/chessapi.tsx";
 import Chessboard from "../../common/Components/Game/Chessboard.tsx";
 import './style.css';
 
@@ -19,6 +19,8 @@ const ChessGame: React.FC = () => {
     }
 
     useEffect(() => {
+
+        chessHeartbeat(sessionId);
         const fetchSession = async () => {
             const sessionData = await getChessSessionWithId(sessionId);
             if (sessionData){
@@ -30,7 +32,13 @@ const ChessGame: React.FC = () => {
             }
         }
 
+        const sendChessHeartbeat = setInterval(async () => {
+            await chessHeartbeat(sessionId);
+        }, 60000);
+
         fetchSession();
+
+        return () => clearInterval(sendChessHeartbeat);
 
     }, [session]);
 

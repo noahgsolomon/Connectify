@@ -36,8 +36,25 @@ async function getChessSession(opponent : string) {
     } catch (e) {
         console.log(e);
     }
+}
 
+async function chessHeartbeat(sessionId: number) {
+    try {
 
+        const response = await fetch(`http://localhost:8080/chess/heart-beat/${sessionId}`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json',
+                'Authorization': 'Bearer ' + jwtToken}
+        });
+
+        if (response.ok){
+            return await response.text();
+        }
+
+    }catch (e) {
+        console.log(e);
+        throw e;
+    }
 }
 
 async function getChessSessionWithId(sessionId: number) {
@@ -123,5 +140,6 @@ export {
     getChessSessionWithId,
     postMove,
     updateGameStatus,
-    deleteChessSession
+    deleteChessSession,
+    chessHeartbeat
 }

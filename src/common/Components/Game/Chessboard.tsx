@@ -68,7 +68,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     const [chessSession, setChessSession] = useState<ChessSession | null>(null);
     const [turn, setTurn] = useState<Team>('WHITE');
     const [latestMove, setLatestMove] = useState<{startPosition: number, endPosition: number} | null>(null);
-    const [kingChecked, setKingChecked] = useState(false);
 
     function getPieceType(piece: string) : PieceType{
         if (piece === '♜' || piece === '♖') {
@@ -198,7 +197,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     }, [chessSession]);
 
 
-
     function isCheckmate(team: Team, boardState: Tile[]) {
         for (let i = 0; i < boardState.length; i++) {
             if (boardState[i].piece === null){
@@ -296,16 +294,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
 
         if (isKingInCheck(myTeam, hypotheticalBoardState)) {
-            setKingChecked(true);
             return false;
-        }
-        else {
-            if (kingTile.color === 'light'){
-                setKingChecked(false);
-            }
-            else {
-               setKingChecked(false);
-            }
         }
 
 
@@ -343,31 +332,27 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
         const king = boardState[boardState.findIndex(tile => tile.id === from)];
 
-        if (!king.piece){
+        if (!king || !king.piece){
             return;
-        }
-
-        if (king?.piece.moved || isKingInCheck(king?.piece.team, boardState)) {
-            return false;
         }
 
         if (to === from + 2) {
 
-            const rook = boardState[from + 3].piece;
+            const rook = boardState.find(tile => tile.id === from + 3)?.piece;
             if (rook && rook.type === 'ROOK' && !rook.moved) {
-                if (!boardState[from + 1] && !boardState[from + 2]) {
+                if (!boardState.find(tile => tile.id === from + 1)?.piece && !boardState.find(tile => tile.id === from + 2)?.piece) {
                     for (let i = 0; i <= 2; i++) {
                         const intermediatePosition = from + i;
-                        const intermediateBoardState = boardState.map((tile, i) => {
-                            if (i === from) {
-                                tile.piece = null;
-                                return tile;
-                            } else if (i === intermediatePosition) {
-                                return king;
+                        const intermediateBoardState = boardState.map((tile) => {
+                            if (tile.id === intermediatePosition) {
+                                return {...tile, piece: king.piece};
+                            } else if (tile.id === from) {
+                                return {...tile, piece: null};
                             } else {
                                 return tile;
                             }
                         });
+                        console.log(intermediateBoardState);
                         if (isKingInCheck(king.piece.team, intermediateBoardState)) {
                             return false;
                         }
@@ -379,17 +364,19 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
 
         if (to === from - 2) {
 
-            const rook = boardState[from - 4].piece;
+            const rook = boardState.find(tile => tile.id === from - 4)?.piece;
             if (rook && rook.type === 'ROOK' && !rook.moved) {
-                if (!boardState[from - 1] && !boardState[from - 2] && !boardState[from - 3]) {
+                if (!boardState.find(tile => tile.id === from - 1)?.piece &&
+                    !boardState.find(tile => tile.id === from - 2)?.piece &&
+                    !boardState.find(tile => tile.id === from - 3)?.piece) {
                     for (let i = 0; i >= -2; i--) {
                         const intermediatePosition = from + i;
-                        const intermediateBoardState = boardState.map((tile, i) => {
-                            if (i === from) {
-                                tile.piece = null;
-                                return tile;
-                            } else if (i === intermediatePosition) {
-                                return king;
+                        const intermediateBoardState = boardState.map((tile) => {
+                            if (tile.id === intermediatePosition) {
+                                return {...tile, piece: king.piece};
+                            }
+                            else if (tile.id === from) {
+                                return {...tile, piece: null};
                             } else {
                                 return tile;
                             }
@@ -418,6 +405,27 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
         if (fromIndex >= 0 && toIndex >= 0) {
             newChessBoard[toIndex].piece = newChessBoard[fromIndex].piece;
             newChessBoard[fromIndex].piece = null;
+
+            if (newChessBoard[toIndex].piece?.type === 'KING' && Math.abs(toTileNumber - fromTileNumber) === 2) {
+                // If the king moved two squares to the right
+                if (toTileNumber - fromTileNumber > 0) {
+                    const rookIndex = newChessBoard.findIndex(tile => tile.id === fromTileNumber + 3);
+                    const newRookIndex = newChessBoard.findIndex(tile => tile.id === fromTileNumber + 1);
+                    if (rookIndex >= 0 && newRookIndex >= 0) {
+                        newChessBoard[newRookIndex].piece = newChessBoard[rookIndex].piece;
+                        newChessBoard[rookIndex].piece = null;
+                    }
+                    // If the king moved two squares to the left
+                } else {
+                    const rookIndex = newChessBoard.findIndex(tile => tile.id === fromTileNumber - 4);
+                    const newRookIndex = newChessBoard.findIndex(tile => tile.id === fromTileNumber - 1);
+                    if (rookIndex >= 0 && newRookIndex >= 0) {
+                        newChessBoard[newRookIndex].piece = newChessBoard[rookIndex].piece;
+                        newChessBoard[rookIndex].piece = null;
+                    }
+                }
+            }
+
         }
 
 
@@ -549,7 +557,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                             data-team={getPieceTeam(tile.piece.type)}
                         >
                             <img
-                                src={getPieceImage(tile.piece.team, tile.piece.type)}
+                                src={getPieceImage(tile.piece.team, tile.piece.type) || ''}
                                 alt={`${tile.piece.team} ${getPieceType(tile.piece.type)}`}
                             />
                         </div>
