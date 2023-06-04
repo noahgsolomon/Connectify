@@ -58,7 +58,7 @@
     border: none;
     outline: transparent;
     text-align: center;
-    z-index: 7001;
+    z-index: 6000;
 }
 
 .dropdown-title {
@@ -100,7 +100,7 @@
     opacity: 0;
     transition: 0.2s ease;
     list-style-type: none;
-    z-index: 7002;
+    z-index: 6000;
 }
 
 .dropdown-options.show {
@@ -145,7 +145,7 @@
     border: none;
     outline: transparent;
     text-align: center;
-    z-index: 7001;
+    z-index: 6002;
     user-select: none;
     margin: 8px;
 }
@@ -325,9 +325,11 @@
     position: fixed;
     top: 0;
     left: 0;
+    background-color: var(--overlay-bg);
     width: 100%;
     height: 100%;
-    z-index: 7000;
+    z-index: 9999;
+    transition: all 0.3s ease;
 }
 
 .games-panel {

@@ -124,14 +124,9 @@ async function deleteChessSession(sessionId: number){
         }
     });
 
-    const responseBody = await response.text();
-    console.log(responseBody);
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    if (response.ok) {
+        return await response.text();
     }
-
-    return responseBody;
 }
 
 async function deleteUserChessSessions(user: string){

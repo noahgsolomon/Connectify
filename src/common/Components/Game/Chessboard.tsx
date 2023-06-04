@@ -19,12 +19,14 @@ import blackbishop from '../../../pages/chess/assets/blackbishop.png';
 import blackknight from '../../../pages/chess/assets/blackknight.png';
 import blackrook from '../../../pages/chess/assets/blackrook.png';
 import blackpawn from '../../../pages/chess/assets/blackpawn.png';
-import {deleteChessSession, getChessSessionWithId, postMove} from "../../../util/games/chessapi.tsx";
+import {deleteChessSession, getChessSessionWithId, postMove, updateGameStatus} from "../../../util/games/chessapi.tsx";
 import {useNavigate} from "react-router-dom";
 
 type ChessboardProps = {
     myTeam: Team,
-    sessionId?: number
+    sessionId?: number,
+    setGameResult?: (result: string) => void
+    setShowGameResult?: (show: boolean) => void
 }
 
 type PieceType = 'KNIGHT' | 'BISHOP' | 'ROOK' | 'QUEEN' | 'KING' | 'PAWN' | '';
@@ -43,7 +45,7 @@ type Tile = {
     id: number
 }
 
-type GameStatus = 'IN_PROGRESS' | 'WHITE_WON' | 'BLACK_WON' | 'STALEMATE' | 'DRAW';
+type GameStatus = 'IN_PROGRESS' | 'WHITE_WON' | 'BLACK_WON' | 'STALEMATE' | 'DRAW' | 'WHITE_WON_BY_RESIGNATION' | 'BLACK_WON_BY_RESIGNATION' | 'WHITE_WON_BY_REGISTRATION' | 'BLACK_WON_BY_REGISTRATION';
 
 type ChessSession = {
     id: number,
@@ -62,7 +64,7 @@ type ChessSession = {
     updatedAt: Date
 }
 
-const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
+const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId, setShowGameResult, setGameResult }) => {
 
     const [chessboard, setChessboard] = useState<Tile[]>([]);
     const [selectedTile, setSelectedTile] = useState<null | Tile>(null);
@@ -70,6 +72,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     const [turn, setTurn] = useState<Team>('WHITE');
     const [latestMove, setLatestMove] = useState<{startPosition: number, endPosition: number} | null>(null);
     const navigate = useNavigate();
+
     function getPieceType(piece: string) : PieceType{
         if (piece === '♜' || piece === '♖') {
             return 'ROOK';
@@ -157,7 +160,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     }, [myTeam]);
 
     useEffect(() => {
-        if (!sessionId) {
+        if (!sessionId || !setGameResult || !setShowGameResult) {
             return;
         }
 
@@ -166,7 +169,18 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
             const fetchData = async () => {
                 const newSessionState = await getChessSessionWithId(sessionId);
 
-                if (
+                if (!newSessionState){
+                    clearInterval(boardUpdateInterval);
+                    navigate('/chess');
+                }
+                if (newSessionState && newSessionState.gameStatus !== 'IN_PROGRESS') {
+                    setGameResult(newSessionState.gameStatus);
+                    setShowGameResult(true);
+                    setTimeout(async () => {
+                        await deleteChessSession(sessionId);
+                    }, 2000);
+                }
+                else if (
                     newSessionState &&
                     (
                         newSessionState.recentMove.startPosition !== latestMove?.startPosition ||
@@ -174,9 +188,6 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                     )
                 ) {
                     setChessSession(newSessionState);
-                }
-                else if (!newSessionState){
-                    navigate('/chess');
                 }
             };
 
@@ -446,12 +457,7 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
             console.log(isCheckmate(newChessBoard[toIndex].piece?.team === 'WHITE' ? 'BLACK' : 'WHITE', newChessBoard));
 
             if (isCheckmate(newChessBoard[toIndex].piece?.team === 'WHITE' ? 'BLACK' : 'WHITE', newChessBoard)) {
-                deleteChessSession(sessionId).then(() => {
-                    console.log("Session deleted successfully");
-                    navigate('/chess');
-                }).catch((error) => {
-                    console.log("Failed to delete session", error);
-                });
+                updateGameStatus(sessionId, `${newChessBoard[toIndex].piece?.team}_WON`).then();
             }
         }
 
