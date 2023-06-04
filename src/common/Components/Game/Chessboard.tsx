@@ -19,7 +19,7 @@ import blackbishop from '../../../pages/chess/assets/blackbishop.png';
 import blackknight from '../../../pages/chess/assets/blackknight.png';
 import blackrook from '../../../pages/chess/assets/blackrook.png';
 import blackpawn from '../../../pages/chess/assets/blackpawn.png';
-import {getChessSessionWithId, postMove} from "../../../util/games/chessapi.tsx";
+import {deleteChessSession, getChessSessionWithId, postMove} from "../../../util/games/chessapi.tsx";
 import {useNavigate} from "react-router-dom";
 
 type ChessboardProps = {
@@ -174,6 +174,9 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
                     )
                 ) {
                     setChessSession(newSessionState);
+                }
+                else if (!newSessionState){
+                    navigate('/chess');
                 }
             };
 
@@ -399,6 +402,11 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
     }
 
     const movePiece = (fromTile: number, toTile: number) => {
+
+        if (!sessionId){
+            return;
+        }
+
         const fromTileNumber = Number(fromTile);
         const toTileNumber = Number(toTile);
         const newChessBoard = JSON.parse(JSON.stringify(chessboard)) as Tile[];
@@ -438,9 +446,13 @@ const Chessboard: React.FC<ChessboardProps> = ({ myTeam, sessionId }) => {
             console.log(isCheckmate(newChessBoard[toIndex].piece?.team === 'WHITE' ? 'BLACK' : 'WHITE', newChessBoard));
 
             if (isCheckmate(newChessBoard[toIndex].piece?.team === 'WHITE' ? 'BLACK' : 'WHITE', newChessBoard)) {
-                navigate('/chess');
+                deleteChessSession(sessionId).then(() => {
+                    console.log("Session deleted successfully");
+                    navigate('/chess');
+                }).catch((error) => {
+                    console.log("Failed to delete session", error);
+                });
             }
-
         }
 
 

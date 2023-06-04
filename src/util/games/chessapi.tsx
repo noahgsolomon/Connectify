@@ -134,6 +134,25 @@ async function deleteChessSession(sessionId: number){
     return responseBody;
 }
 
+async function deleteUserChessSessions(user: string){
+    const response = await fetch(`http://localhost:8080/chess/delete-user-sessions/${user}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwtToken
+        }
+    });
+
+    const responseBody = await response.text();
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return responseBody;
+}
+
+
 export {
     createSession,
     getChessSession,
@@ -141,5 +160,6 @@ export {
     postMove,
     updateGameStatus,
     deleteChessSession,
-    chessHeartbeat
+    chessHeartbeat,
+    deleteUserChessSessions
 }
