@@ -1,0 +1,243 @@
+
+.player {
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--light-tile);
+    border-radius: 15px;
+}
+
+.player span {
+    font-size: 1em;
+    text-align: center;
+}
+
+.top-player {
+    order: 1;
+}
+
+.content {
+    flex-direction: column;
+    align-items: center;
+}
+
+.chess-board-live {
+    margin: 0;
+    width: 80vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    order: 2;
+    max-width: 900px;
+}
+
+.bottom-wrapper {
+    order: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resign-btn {
+    background: #e34444;
+    color: white;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s ease;
+    overflow: hidden;
+    margin-left: 100px;
+}
+
+.resign-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+#resignConfirmationModal {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+#resignConfirmationModal .modal-content {
+    position: relative;
+    width: 400px;
+    background: var(--post-color);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    font-weight:bold;
+    color: var(--text-color);
+    animation: slideUp 0.5s;
+}
+
+.resign-buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.resign-buttons button {
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+    background-color: var(--header-btn);
+    box-shadow: 0 2px 4px var(--shadow);
+    transition: 0.3s ease;
+}
+
+.resign-buttons button:hover {
+    box-shadow: 0 4px 8px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.resign-buttons button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+#resignConfirmationModal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#resignConfirmationModal .close:hover,
+#resignConfirmationModal .close:focus {
+    color: #000000;
+    text-decoration: none;
+}
+
+#gameResultModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s;
+}
+
+.modal-content {
+    position: relative;
+    top: 25%;
+    background: var(--post-color);
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 20px var(--shadow);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    color: var(--text-color);
+    animation: slideUp 0.5s;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000000;
+    text-decoration: none;
+}
+
+#gameResultText {
+    margin-top: 20px;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 2px 2px rgba(0,0,0,0.1);
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes slideUp {
+    from {transform: translateY(20px);}
+    to {transform: translateY(0);}
+}
+
+@media (max-width: 1200px) {
+
+    .chess-board-live{
+        margin: 0;
+        width: 80vw;
+        height: 80vh;
+    }
+
+    img{
+        width: 52px;
+        height: auto;
+    }
+
+}
+
+@media (max-width: 800px) {
+    .chess-board-live {
+        width: 90vw;
+        height: 90vw;
+    }
+    img{
+        width: 48px;
+        height: auto;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .chess-board-live {
+        width: 100vw;
+        height: 130vw;
+    }
+
+    img{
+        width: 32px;
+        height: auto;
+    }
+
+
+    .tile {
+        font-size: 2.2rem;
+    }
+}

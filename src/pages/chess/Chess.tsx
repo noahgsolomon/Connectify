@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {friendsList} from "../../util/api/userapi.tsx";
-import './style.css'
+
 import {getChessSession} from "../../util/games/chessapi.tsx";
 import {deleteGameInvite, sendGameInvite} from "../../util/games/gameinviteapi.tsx";
 import {useNavigate} from "react-router-dom";
 import Chessboard from "../../common/Components/Game/Chessboard.tsx";
-
+import './style.css'
 
 const Chess: React.FC = () => {
     const [friends, setFriends] = useState<Array<{username: string, profilePic: string, online: string}>>([]);
