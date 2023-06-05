@@ -69,7 +69,7 @@ const ChessGame: React.FC = () => {
                 <button className="resign-btn" onClick={handleResignClick}>Resign 🏳️</button>
             </div>
             <div id="gameResultModal" className="modal" style={{display: showGameResult ? 'block' : 'none'}}>
-                <div className="modal-content">
+                <div className="modal-content-chess">
                     <span className="close">&times;</span>
                     <p id="gameResultText">{gameResult.replaceAll('_', ' ')}</p>
                 </div>
@@ -77,7 +77,7 @@ const ChessGame: React.FC = () => {
 
             <div id="resignConfirmationModal" className="modal"
                  style={{display: resignClicked ? 'block' : 'none'}}>
-                <div className="modal-content">
+                <div className="modal-content-chess">
                     <span className="close" onClick={() => setResignClicked(false)}>&times;</span>
                     <p>Are you sure you want to resign?</p>
                     <div className={'resign-buttons'}>

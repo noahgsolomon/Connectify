@@ -153,11 +153,12 @@
     animation: fadeIn 0.5s;
 }
 
-.modal-content {
+.modal-content-chess {
     position: relative;
     top: 25%;
     background: var(--post-color);
     width: 400px;
+    margin: 8% auto;
     padding: 40px;
     border-radius: 20px;
     text-align: center;

@@ -21,7 +21,7 @@
     bottom: 50px;
     left: 50px;
     transform: none;
-    z-index: 500;
+    z-index: 8000;
 }
 
 .add-post-btn:hover {
@@ -239,7 +239,7 @@
 
 .modal {
     position: fixed;
-    z-index: 9999;
+    z-index: 8300;
     left: 0;
     top: 0;
     width: 100%;
@@ -249,7 +249,7 @@
 }
 
 .modal-content {
-    background-color: var(--modal-bg);
+    background: var(--post-color);
     margin: 8% auto;
     padding: 20px;
     border-radius: 10px;
@@ -327,8 +327,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 9999;
-    transition: all 0.3s ease;
+    z-index: 3000;
 }
 
 .games-panel {
