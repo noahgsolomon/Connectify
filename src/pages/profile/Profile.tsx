@@ -7,6 +7,7 @@ import SlideMessage from "../../util/status.tsx";
 import '../user/style.css';
 import './style.css';
 import {applyTheme} from "../../util/userUtils.tsx";
+import {deletePost} from "../../util/api/postapi.tsx";
 
 
 type UserType = 'USER' | 'ADMIN'
@@ -40,8 +41,8 @@ const Profile: React.FC = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const [editedProfile, setEditedProfile] = useState({country: '', bio: '', cardColor: '', backgroundColor: '', profilePic: ''});
     const [refresh, setRefresh] = useState(false);
-    const [deletePost, setDeletePost] = useState(false);
-    const [deletedPost, setDeletedPost] = useState(false);
+    const [requestDeletePost, setDeletePost] = useState<{state: boolean, postId: number | null}>({state: false, postId: null});
+
     useAuthentication();
 
     const emojiList = ['🌞', '🌝', '🌛', '🌜', '🌚', '😀', '😁', '😂',
@@ -134,6 +135,25 @@ const Profile: React.FC = () => {
 
     }
 
+    const handleDeletePost = () => {
+        if (requestDeletePost.state){
+            const removeData = async () => {
+                if (requestDeletePost.postId !== null){
+                    const deletedPost = await deletePost(requestDeletePost.postId);
+                    console.log(deletedPost);
+                    if (deletedPost) {
+                        setRefresh(prevState => !prevState);
+                        setSlideMessage({message: "Deleted post!", color: "green", messageKey: Math.random()});
+                    } else {
+                        setSlideMessage({message: "Failed to delete post!", color: "red", messageKey: Math.random()});
+                    }
+                }
+            }
+            removeData();
+            setDeletePost({state: false, postId: null});
+        }
+    }
+
 
     return (
         <>
@@ -196,15 +216,15 @@ const Profile: React.FC = () => {
                 <div className={'user-post-container'}>
                     <div className={'post-wrapper'}>
                         <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={null} setSelectedCategory={null}
-                                  user={localStorage.getItem('username') || ''} refresh={refresh} setRefresh={setRefresh} setDeletedPost={setDeletedPost} setDeletePost={setDeletePost} deletedPost={deletedPost}/>
+                                  user={localStorage.getItem('username') || ''} refresh={refresh} setRefresh={setRefresh} setDeletePost={setDeletePost}/>
                     </div>
                 </div>
-                <div className="confirm-delete-container" style={{display: (deletePost ? 'flex' : 'none')}}>
+                <div className="confirm-delete-container" style={{display: (requestDeletePost.state ? 'flex' : 'none')}}>
                     <div className="confirm-delete-popup">
                         <h3>Are you sure you want to delete this post?</h3>
                         <div className="confirm-delete-popup-buttons">
-                            <button className="cancel-popup-btn" onClick={() => setDeletePost(false)}>Cancel</button>
-                            <button className="delete-btn" onClick={() => setDeletedPost(true)}>🗑️ Delete</button>
+                            <button className="cancel-popup-btn" onClick={() => setDeletePost({state: false, postId: null})}>Cancel</button>
+                            <button className="delete-btn" onClick={handleDeletePost}>🗑️ Delete</button>
                         </div>
                     </div>
                 </div>

@@ -27,7 +27,7 @@ type PostProps = {
     setCategory: React.Dispatch<React.SetStateAction<string>> | null,
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>> | null,
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>,
-    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>>;
+    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>> | null;
 }
 
 type Category = 'invalid' | 'technology' | 'travel' |
@@ -137,7 +137,7 @@ interface PostListProps {
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>> | null;
     user: string;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
-    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>>;
+    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>> | null;
     refresh: boolean;
 }
 

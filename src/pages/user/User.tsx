@@ -163,7 +163,7 @@ const User : React.FC = () => {
         {userLoaded &&
             <div className={'user-post-container'}>
                 <div className={'post-wrapper'}>
-                    <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={null} setSelectedCategory={null} user={user} refresh={refresh} setRefresh={setRefresh} deletedPost={false} setDeletePost={null} setDeletedPost={null}/>
+                    <PostList setSlideMessage={setSlideMessage} page={page} category={''} lastDay={365} setCategory={null} setSelectedCategory={null} user={user} refresh={refresh} setRefresh={setRefresh} setDeletePost={null}/>
                 </div>
             </div>
         }

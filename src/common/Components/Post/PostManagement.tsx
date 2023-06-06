@@ -14,7 +14,7 @@ type PostManagementProps = {
     initialContent: string;
     likes: number;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
-    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>>;
+    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>> | null;
 };
 const PostManagement: React.FC<PostManagementProps> = (
     {
