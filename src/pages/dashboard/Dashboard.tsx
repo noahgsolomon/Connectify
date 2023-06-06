@@ -6,6 +6,7 @@ import PostList from "../../common/Components/Post/Post.tsx";
 import SlideMessage from "../../util/status.tsx";
 import AddPost from "./AddPost.tsx";
 import Categories from "./Categories.tsx";
+import {deletePost} from "../../util/api/postapi.tsx";
 
 const Dashboard : React.FC = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,8 +19,7 @@ const Dashboard : React.FC = () => {
     const [category, setCategory] = useState("")
     const [selectedCategory, setSelectedCategory] = useState("");
     const [refresh, setRefresh] = useState(false);
-    const [deletePost, setDeletePost] = useState(false);
-    const [deletedPost, setDeletedPost] = useState(false);
+    const [requestDeletePost, setDeletePost] = useState<{state: boolean, postId: number | null}>({state: false, postId: null});
     const navigate = useNavigate();
     const showContent = useAuthentication();
 
@@ -105,6 +105,24 @@ const Dashboard : React.FC = () => {
         }
     }
 
+    const handleDeletePost = () => {
+        if (requestDeletePost.state){
+            const removeData = async () => {
+                if (requestDeletePost.postId !== null){
+                    const deletedPost = await deletePost(requestDeletePost.postId);
+                    console.log(deletedPost);
+                    if (deletedPost) {
+                        setRefresh(prevState => !prevState);
+                        setSlideMessage({message: "Deleted post!", color: "green", messageKey: Math.random()});
+                    } else {
+                        setSlideMessage({message: "Failed to delete post!", color: "red", messageKey: Math.random()});
+                    }
+                }
+            }
+            removeData();
+            setDeletePost({state: false, postId: null});
+        }
+    }
 
 
     return (
@@ -134,18 +152,18 @@ const Dashboard : React.FC = () => {
                         <div className="post-wrapper">
                             <PostList setRefresh={setRefresh} refresh={refresh} setSlideMessage={setSlideMessage}
                                                                              category={category} lastDay={lastDay} page={page} setCategory={setCategory} setSelectedCategory={setSelectedCategory} user={''}
-                                                                             setDeletePost={setDeletePost} deletedPost={deletedPost} setDeletedPost={setDeletedPost}/>
+                                                                             setDeletePost={setDeletePost}/>
                         </div>
 
                     </div>
                     <AddPost setRefresh={setRefresh} setDisplayModal={setDisplayModal} displayModal={displayModal} setSlideMessage={setSlideMessage}/>
                 </main>
-                <div className="confirm-delete-container" style={{display: (deletePost ? 'flex' : 'none')}}>
+                <div className="confirm-delete-container" style={{display: (requestDeletePost.state ? 'flex' : 'none')}}>
                     <div className="confirm-delete-popup">
                         <h3>Are you sure you want to delete this post?</h3>
                         <div className="confirm-delete-popup-buttons">
-                            <button className="cancel-popup-btn" onClick={() => setDeletePost(false)}>Cancel</button>
-                            <button className="delete-btn" onClick={() => setDeletedPost(true)}>🗑️ Delete</button>
+                            <button className="cancel-popup-btn" onClick={() => setDeletePost({state: false, postId: null})}>Cancel</button>
+                            <button className="delete-btn" onClick={handleDeletePost}>🗑️ Delete</button>
                         </div>
                     </div>
                 </div>

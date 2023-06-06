@@ -1,5 +1,5 @@
-import {deletePost, updatePost} from "../../../util/api/postapi.tsx";
-import React, {useEffect} from "react";
+import {updatePost} from "../../../util/api/postapi.tsx";
+import React from "react";
 
 type PostManagementProps = {
     postId: number;
@@ -14,9 +14,7 @@ type PostManagementProps = {
     initialContent: string;
     likes: number;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
-    setDeletePost : React.Dispatch<React.SetStateAction<boolean>> | null;
-    setDeletedPost : React.Dispatch<React.SetStateAction<boolean>> | null;
-    deletedPost: boolean;
+    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>>;
 };
 const PostManagement: React.FC<PostManagementProps> = (
     {
@@ -33,12 +31,10 @@ const PostManagement: React.FC<PostManagementProps> = (
         likes,
         setRefresh,
         setDeletePost,
-        setDeletedPost,
-        deletedPost,
     }) => {
 
+
     if (setDeletePost === null) throw new Error("setDeletePost is null");
-    if (setDeletedPost === null) throw new Error("setDeletedPost is null");
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -58,27 +54,8 @@ const PostManagement: React.FC<PostManagementProps> = (
         setIsEditing(false);
     };
 
-    useEffect(() => {
-        if (deletedPost) {
-            setDeletePost(false);
-            const removeData = async () => {
-                const deletedPost = await deletePost(postId);
-                console.log(deletedPost);
-                if (deletedPost) {
-                    setRefresh(prevState => !prevState);
-                    setSlideMessage({message: "Deleted post!", color: "green", messageKey: Math.random()});
-                } else {
-                    setSlideMessage({message: "Failed to delete post!", color: "red", messageKey: Math.random()});
-                }
-            }
-            removeData();
-
-            setDeletedPost(false);
-        }
-    }, [deletedPost]);
-
     const renderDeleteConfirmation = () => {
-        setDeletePost(true);
+        setDeletePost({state: true, postId: postId});
     };
 
     return (

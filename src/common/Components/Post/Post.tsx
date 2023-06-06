@@ -27,9 +27,7 @@ type PostProps = {
     setCategory: React.Dispatch<React.SetStateAction<string>> | null,
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>> | null,
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>,
-    setDeletePost : React.Dispatch<React.SetStateAction<boolean>> | null
-    setDeletedPost : React.Dispatch<React.SetStateAction<boolean>> | null,
-    deletedPost: boolean
+    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>>;
 }
 
 type Category = 'invalid' | 'technology' | 'travel' |
@@ -48,7 +46,6 @@ const Post : React.FC<PostProps> = ({ id, username, title,
                                         likes, setSlideMessage,
                                         setCategory,
                                         setSelectedCategory, setRefresh, setDeletePost
-                                        , deletedPost, setDeletedPost
 }) => {
 
     const [interactionsLoading, setInteractionsLoading] = useState(true);
@@ -122,8 +119,7 @@ const Post : React.FC<PostProps> = ({ id, username, title,
                             postId={id} title={postTitle} content={postBody}
                             setSlideMessage={setSlideMessage} setTitle={setTitle}
                             setBody={setBody} setIsEditing={setIsEditing}
-                            isEditing={isEditing} setRefresh={setRefresh} setDeletePost={setDeletePost}
-                                deletedPost={deletedPost} setDeletedPost={setDeletedPost}/>
+                            isEditing={isEditing} setRefresh={setRefresh} setDeletePost={setDeletePost}/>
 
                 <CommentList postId={id} setSlideMessage={setSlideMessage} setLoading={setCommentsLoading}/>
             </>
@@ -141,10 +137,8 @@ interface PostListProps {
     setSelectedCategory: React.Dispatch<React.SetStateAction<string>> | null;
     user: string;
     setRefresh : React.Dispatch<React.SetStateAction<boolean>>;
-    setDeletePost : React.Dispatch<React.SetStateAction<boolean>> | null;
-    setDeletedPost : React.Dispatch<React.SetStateAction<boolean>> | null;
+    setDeletePost : React.Dispatch<React.SetStateAction<{ state: boolean, postId: number | null }>>;
     refresh: boolean;
-    deletedPost: boolean;
 }
 
 const PostList : React.FC<PostListProps> = ({ setSlideMessage,
@@ -156,9 +150,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage,
                                                 user,
                                                 setRefresh,
                                                 setDeletePost,
-                                                setDeletedPost,
-                                                refresh,
-                                                deletedPost
+                                                refresh
                                             }) => {
 
     const [isLoading, setIsLoading] = useState(true);
@@ -232,7 +224,7 @@ const PostList : React.FC<PostListProps> = ({ setSlideMessage,
         <div className={`post-container ${postTransition ? 'hide' : ''}`}>
             {posts.map((post, index) => (
                 <Post key={index} {...post} setSlideMessage={setSlideMessage} setCategory={setCategory} setSelectedCategory={setSelectedCategory} setRefresh={setRefresh}
-                      setDeletePost={setDeletePost} deletedPost={deletedPost} setDeletedPost={setDeletedPost} setPostDisplay={(value) => { // Define a function called setPostDisplay that takes a boolean value as a parameter
+                      setDeletePost={setDeletePost} setPostDisplay={(value) => { // Define a function called setPostDisplay that takes a boolean value as a parameter
                           setPostDisplays(prevState => { // Call setPostDisplays function with a callback function
                               return {...prevState, [post.id]: value}// Update the display setting for the post with post.id
                           });
