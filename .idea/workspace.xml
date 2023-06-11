@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8291379b-d79c-48c5-a3e1-4a9169952e1d" name="Changes" comment="moving to monorepo for Connectify">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mediafront.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/notification" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2OqtpvkYNCTKfYSEg1SRydnmtfm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "javascript.nodejs.core.library.configured.version": "18.16.0",
+    "javascript.nodejs.core.library.typings.version": "18.16.0",
+    "last_opened_file_path": "C:/Users/noahs/Connectify/frontend/frontend",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Users\\noahs\\Connectify\\frontend\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\noahs\Connectify\frontend\frontend" />
+      <recent name="C:\Users\noahs\Connectify\frontend\src\util\games\chesspiecelogic" />
+      <recent name="C:\Users\noahs\Connectify\frontend\src\pages\chess" />
+      <recent name="C:\Users\noahs\Connectify\frontend\pages\games\chess\assets" />
+      <recent name="C:\Users\noahs\Connectify\frontend\pages\games\chess\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\noahs\Connectify\frontend" />
+      <recent name="C:\Users\noahs\Connectify\frontend\backend" />
+      <recent name="C:\Users\noahs\Connectify\frontend\frontend" />
+      <recent name="C:\Users\noahs\Connectify\frontend\src\pages\chess" />
+      <recent name="C:\Users\noahs\Connectify\frontend\src\pages\chess\chessgame" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="C:\Users\noahs\Connectify\frontend\util\api\notificationapi.js" />
+      <recent name="C:\Users\noahs\Connectify\frontend\util\api\inboxapi.js" />
+      <recent name="C:\Users\noahs\Connectify\frontend\util\postapi.js" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SocialMediaSystemApplication">
+    <configuration name="chess.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/frontend/pages/games/chess/chess.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="dashboard.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/frontend/pages/dashboard/dashboard.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/frontend/pages/index/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="login.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/frontend/pages/login/login.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="profile.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/frontend/pages/profile/profile.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="user.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63343/frontend/pages/user/user.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="SocialMediaSystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="connectify" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.connectify.SocialMediaSystemApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.dashboard.html" />
+        <item itemvalue="JavaScript Debug.login.html" />
+        <item itemvalue="JavaScript Debug.user.html" />
+        <item itemvalue="JavaScript Debug.chess.html" />
+        <item itemvalue="JavaScript Debug.profile.html" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8291379b-d79c-48c5-a3e1-4a9169952e1d" name="Changes" comment="" />
+      <created>1682300133939</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682300133939</updated>
+      <workItem from="1682300133951" duration="6236000" />
+      <workItem from="1682364808189" duration="11151000" />
+      <workItem from="1682380733620" duration="9637000" />
+      <workItem from="1682460235844" duration="3510000" />
+      <workItem from="1682471411579" duration="1112000" />
+      <workItem from="1682545545170" duration="8980000" />
+      <workItem from="1682610066320" duration="13846000" />
+      <workItem from="1682684263067" duration="22107000" />
+      <workItem from="1682777927371" duration="11942000" />
+      <workItem from="1682875954400" duration="4104000" />
+      <workItem from="1682956593902" duration="11049000" />
+      <workItem from="1683044286854" duration="14218000" />
+      <workItem from="1683062363053" duration="9099000" />
+      <workItem from="1683134508954" duration="31982000" />
+      <workItem from="1683220318327" duration="3400000" />
+      <workItem from="1683233523516" duration="19522000" />
+      <workItem from="1683339456325" duration="140000" />
+      <workItem from="1683339636303" duration="111000" />
+      <workItem from="1683399772833" duration="13584000" />
+      <workItem from="1683471622358" duration="12218000" />
+      <workItem from="1683570123901" duration="9246000" />
+      <workItem from="1683689991322" duration="3492000" />
+      <workItem from="1683693920510" duration="4382000" />
+      <workItem from="1683698377188" duration="757000" />
+      <workItem from="1683744834991" duration="28785000" />
+      <workItem from="1683821162741" duration="25058000" />
+      <workItem from="1683859764793" duration="1222000" />
+      <workItem from="1683897128140" duration="24424000" />
+      <workItem from="1684003616676" duration="1473000" />
+      <workItem from="1684007287078" duration="2380000" />
+      <workItem from="1684026427758" duration="2743000" />
+      <workItem from="1684029554269" duration="685000" />
+      <workItem from="1684082402688" duration="15001000" />
+      <workItem from="1684163638085" duration="8523000" />
+      <workItem from="1684174691348" duration="137000" />
+      <workItem from="1684175926499" duration="149000" />
+      <workItem from="1684189888729" duration="9183000" />
+      <workItem from="1684276228377" duration="4684000" />
+      <workItem from="1684285934671" duration="442000" />
+      <workItem from="1684337926767" duration="6959000" />
+      <workItem from="1684344968434" duration="261000" />
+      <workItem from="1684345556286" duration="1071000" />
+      <workItem from="1684382505160" duration="1719000" />
+      <workItem from="1684419818625" duration="25104000" />
+      <workItem from="1684458269670" duration="1077000" />
+      <workItem from="1684499918061" duration="1184000" />
+      <workItem from="1684516216802" duration="26000" />
+      <workItem from="1684602111375" duration="40122000" />
+      <workItem from="1684689749436" duration="5061000" />
+      <workItem from="1684702547783" duration="12492000" />
+      <workItem from="1684768306405" duration="1752000" />
+      <workItem from="1684779899799" duration="2954000" />
+      <workItem from="1684812328702" duration="9376000" />
+      <workItem from="1684940840780" duration="67000" />
+      <workItem from="1684944062848" duration="30699000" />
+      <workItem from="1685027167093" duration="35250000" />
+      <workItem from="1685078372159" duration="110000" />
+      <workItem from="1685078526126" duration="375000" />
+      <workItem from="1685078950295" duration="186000" />
+      <workItem from="1685114067458" duration="29317000" />
+      <workItem from="1685202330063" duration="29435000" />
+      <workItem from="1685321118562" duration="12238000" />
+      <workItem from="1685373298298" duration="23246000" />
+      <workItem from="1685566112394" duration="614000" />
+      <workItem from="1685567779611" duration="25394000" />
+      <workItem from="1685675352124" duration="20175000" />
+      <workItem from="1685796149537" duration="134000" />
+      <workItem from="1685796353337" duration="17533000" />
+      <workItem from="1685821898390" duration="232000" />
+      <workItem from="1685824405749" duration="18995000" />
+      <workItem from="1685928773793" duration="11272000" />
+      <workItem from="1686495031664" duration="406000" />
+      <workItem from="1686495499982" duration="1230000" />
+    </task>
+    <task id="LOCAL-00096" summary="tap category to sort by category">
+      <created>1685130353511</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1685130353511</updated>
+    </task>
+    <task id="LOCAL-00097" summary="user base">
+      <created>1685136429111</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1685136429111</updated>
+    </task>
+    <task id="LOCAL-00098" summary="fixed the weirdest css container bug ive ever seen (?)">
+      <created>1685136995713</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1685136995713</updated>
+    </task>
+    <task id="LOCAL-00099" summary="dumbass bug fix + post transitions.">
+      <created>1685140212919</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1685140212919</updated>
+    </task>
+    <task id="LOCAL-00100" summary="no posts here screen">
+      <created>1685141002292</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1685141002292</updated>
+    </task>
+    <task id="LOCAL-00101" summary="theme color for filter panel fix.">
+      <created>1685141462317</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1685141462317</updated>
+    </task>
+    <task id="LOCAL-00102" summary="online, user page with posts, missing follow unfollow function with send message functionality missing too.">
+      <created>1685156872148</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1685156872149</updated>
+    </task>
+    <task id="LOCAL-00103" summary="finished base for user, and working on inbox">
+      <created>1685211005239</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1685211005239</updated>
+    </task>
+    <task id="LOCAL-00104" summary="sending messages">
+      <created>1685217786037</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1685217786038</updated>
+    </task>
+    <task id="LOCAL-00105" summary="fixed not unmounting error with set interval and finished message log basically">
+      <created>1685220938059</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1685220938059</updated>
+    </task>
+    <task id="LOCAL-00106" summary="inbox updates lol last one">
+      <created>1685222131327</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1685222131327</updated>
+    </task>
+    <task id="LOCAL-00107" summary="themes work and almost finished base profile.">
+      <created>1685237472841</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1685237472841</updated>
+    </task>
+    <task id="LOCAL-00108" summary="finished edit profile form. Now, onto edit post form">
+      <created>1685237708562</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1685237708562</updated>
+    </task>
+    <task id="LOCAL-00109" summary="beginning custom post form for profile section. Need to manipulate post interactions to go from like and bookmark to edit and delete. And when clicked adding save options, and manipulating body and title to pre-populated text areas">
+      <created>1685293931295</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1685293931295</updated>
+    </task>
+    <task id="LOCAL-00110" summary="Added post add refresh post feed.">
+      <created>1685296577544</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1685296577544</updated>
+    </task>
+    <task id="LOCAL-00111" summary="profile editing fixed.">
+      <created>1685324140959</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1685324140960</updated>
+    </task>
+    <task id="LOCAL-00112" summary="post edit functionality in all locations where the post is the users">
+      <created>1685330546482</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1685330546482</updated>
+    </task>
+    <task id="LOCAL-00113" summary="full deleting functionality!">
+      <created>1685333398448</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1685333398448</updated>
+    </task>
+    <task id="LOCAL-00114" summary="standardized post refreshing for adding, updating, deleting posts.">
+      <created>1685377824517</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1685377824519</updated>
+    </task>
+    <task id="LOCAL-00115" summary="standardized header.">
+      <created>1685389174355</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1685389174356</updated>
+    </task>
+    <task id="LOCAL-00116" summary="new less redundant header">
+      <created>1685389305145</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1685389305145</updated>
+    </task>
+    <task id="LOCAL-00117" summary="fixed delete post to become modal.">
+      <created>1685392991496</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1685392991496</updated>
+    </task>
+    <task id="LOCAL-00118" summary="post load, set category optional, settings start">
+      <created>1685491184175</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1685491184180</updated>
+    </task>
+    <task id="LOCAL-00119" summary="additional settings iterations">
+      <created>1685492997718</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1685492997718</updated>
+    </task>
+    <task id="LOCAL-00120" summary="settings account functionality. need to allow change password, require email authentication before changing as well">
+      <created>1685498101346</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1685498101346</updated>
+    </task>
+    <task id="LOCAL-00121" summary="email re-verification implementation to change email.">
+      <created>1685571936171</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1685571936171</updated>
+    </task>
+    <task id="LOCAL-00122" summary="refresh page on logout and login. Kinda shaking off the prior logged in details and shaking on the new details. Like this better than manually doing everything that would be done on refresh">
+      <created>1685573588217</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1685573588218</updated>
+    </task>
+    <task id="LOCAL-00123" summary="delete account functionality">
+      <created>1685576199659</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1685576199660</updated>
+    </task>
+    <task id="LOCAL-00124" summary="chess base. a lot of stuff to do...">
+      <created>1685583384109</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1685583384109</updated>
+    </task>
+    <task id="LOCAL-00125" summary="chess beginnning. Jesus">
+      <created>1685664158334</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1685664158334</updated>
+    </task>
+    <task id="LOCAL-00126" summary="board for white and for black">
+      <created>1685714837342</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1685714837343</updated>
+    </task>
+    <task id="LOCAL-00127" summary="piece logic added, and img rendering fixed">
+      <created>1685719102865</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1685719102865</updated>
+    </task>
+    <task id="LOCAL-00128" summary="most post move logic. lawd have mercy">
+      <created>1685731736551</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1685731736551</updated>
+    </task>
+    <task id="LOCAL-00129" summary="board posts but not working turn transfer or same board tiles">
+      <created>1685808290149</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1685808290150</updated>
+    </task>
+    <task id="LOCAL-00130" summary="all pieces move proper. Now, to implement check functionality">
+      <created>1685814583579</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1685814583580</updated>
+    </task>
+    <task id="LOCAL-00131" summary="converting to new index of id">
+      <created>1685815763942</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1685815763942</updated>
+    </task>
+    <task id="LOCAL-00132" summary="check works">
+      <created>1685828315099</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1685828315100</updated>
+    </task>
+    <task id="LOCAL-00133" summary="castling now works. Just checkmate now and it's done">
+      <created>1685831144128</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1685831144128</updated>
+    </task>
+    <task id="LOCAL-00134" summary="castling final fix">
+      <created>1685831770184</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1685831770184</updated>
+    </task>
+    <task id="LOCAL-00135" summary="checkmate backs out of game. Now, need to add deleting session handling and checkmate modal, plus design the player elements above and below board, and add resign functionality :)">
+      <created>1685833452011</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1685833452012</updated>
+    </task>
+    <task id="LOCAL-00136" summary="chess session deletion cases (minus resign)">
+      <created>1685899758515</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1685899758515</updated>
+    </task>
+    <task id="LOCAL-00137" summary="resign modal">
+      <created>1685903224411</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1685903224411</updated>
+    </task>
+    <task id="LOCAL-00138" summary="finished chess :)">
+      <created>1685907141935</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1685907141935</updated>
+    </task>
+    <task id="LOCAL-00139" summary="final little change b4 production ..?">
+      <created>1685907278051</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1685907278051</updated>
+    </task>
+    <task id="LOCAL-00140" summary="post modal fix and separation from chess modal">
+      <created>1685929906481</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1685929906481</updated>
+    </task>
+    <task id="LOCAL-00141" summary="bug fix: improper slide message z-index">
+      <created>1686007459650</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1686007459650</updated>
+    </task>
+    <task id="LOCAL-00142" summary="fixed bug where delete post deleted every post lol. This happened initially because it was handled in PostManagement.tsx inside a useEffect, which calls a reload, which reloads all posts which in effect reloads all post management components on posts which fire the delete post while the deletePost state was still set to true. Weird edge case">
+      <created>1686010316155</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1686010316155</updated>
+    </task>
+    <task id="LOCAL-00143" summary="had to make these changes to user and profile too.">
+      <created>1686011200781</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1686011200781</updated>
+    </task>
+    <task id="LOCAL-00144" summary="moving to monorepo for Connectify">
+      <created>1686496555469</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1686496555470</updated>
+    </task>
+    <option name="localTasksCounter" value="145" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="settings account functionality. need to allow change password, require email authentication before changing as well" />
+    <MESSAGE value="email re-verification implementation to change email." />
+    <MESSAGE value="refresh page on logout and login. Kinda shaking off the prior logged in details and shaking on the new details. Like this better than manually doing everything that would be done on refresh" />
+    <MESSAGE value="delete account functionality" />
+    <MESSAGE value="chess base. a lot of stuff to do..." />
+    <MESSAGE value="chess beginnning. Jesus" />
+    <MESSAGE value="board for white and for black" />
+    <MESSAGE value="piece logic added, and img rendering fixed" />
+    <MESSAGE value="most post move logic. lawd have mercy" />
+    <MESSAGE value="board posts but not working turn transfer or same board tiles" />
+    <MESSAGE value="all pieces move proper. Now, to implement check functionality" />
+    <MESSAGE value="converting to new index of id" />
+    <MESSAGE value="check works" />
+    <MESSAGE value="castling now works. Just checkmate now and it's done" />
+    <MESSAGE value="castling final fix" />
+    <MESSAGE value="checkmate backs out of game. Now, need to add deleting session handling and checkmate modal, plus design the player elements above and below board, and add resign functionality :)" />
+    <MESSAGE value="chess session deletion cases (minus resign)" />
+    <MESSAGE value="resign modal" />
+    <MESSAGE value="finished chess :)" />
+    <MESSAGE value="final little change b4 production ..?" />
+    <MESSAGE value="post modal fix and separation from chess modal" />
+    <MESSAGE value="bug fix: improper slide message z-index" />
+    <MESSAGE value="fixed bug where delete post deleted every post lol. This happened initially because it was handled in PostManagement.tsx inside a useEffect, which calls a reload, which reloads all posts which in effect reloads all post management components on posts which fire the delete post while the deletePost state was still set to true. Weird edge case" />
+    <MESSAGE value="had to make these changes to user and profile too." />
+    <MESSAGE value="moving to monorepo for Connectify" />
+    <option name="LAST_COMMIT_MESSAGE" value="moving to monorepo for Connectify" />
+  </component>
+</project>
