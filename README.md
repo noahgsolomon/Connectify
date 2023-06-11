@@ -1,8 +1,7 @@
-# Connectify Frontend
-
+# Connectify
 current lines of code: 8048
 
-This repository houses the frontend for Connectify, a diverse social media and gaming platform. It provides the user interface to interact with the extensive features and services offered by Connectify.
+Connectify is a social media and gaming platform. It provides the user interface to interact with the extensive features and services offered by Connectify.
 
 ## 🎉Live Application🎉
 
@@ -34,20 +33,11 @@ Connectify currently supports the following features:
 
 Connectify frontend is developed using:
 
-- JavaScript
-- HTML
+- React
+- TypeScript
 - CSS
+- Java Spring Framework
 
-The application is deployed on Firebase, ensuring a reliable and robust hosting solution.
-
-## Getting Started
-
-To get a hands-on experience with the Connectify frontend, clone this repository and deploy it on your preferred server. Make sure to install the necessary dependencies.
-
-Note: The user interface and features may undergo changes and improvements over time and might not be fully documented in this README file.
-
-## Future Developments
-
-More features and improvements are being actively worked on, including the full integration of the backend's inbox system, profile system, and the inclusion of more games. Stay tuned for more updates!
+hosted on firebase
 
 Feel free to provide feedback and contribute to the project.
