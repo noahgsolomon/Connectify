@@ -7,9 +7,9 @@ Connectify is a social media and gaming platform. It provides the user interface
 
 You can interact with Connectify on [connectifyapp.web.app](https://connectifyapp.web.app)
 
-![image](https://github.com/noahgsolomon/connectify-frontend/assets/111200060/cf84ae2e-5457-4047-96de-aefab74dce29)
-![image](https://github.com/noahgsolomon/connectify-frontend/assets/111200060/fadf3b7d-4204-499a-a322-8e23665c0bef)
-![image](https://github.com/noahgsolomon/connectify-frontend/assets/111200060/8a41591a-47e5-42f0-9ba5-1a1cf097541e)
+![image](https://github.com/noahgsolomon/Connectify/assets/111200060/2da2a1e1-c800-400b-8585-4fd70d8ee967)
+![image](https://github.com/noahgsolomon/Connectify/assets/111200060/220e1168-b816-4980-8cd4-c831e959c74c)
+
 
 ## Features
 
