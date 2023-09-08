@@ -1,5 +1,5 @@
 # Connectify
-current lines of code: 10,256
+**NO LONGER ACTIVE** 
 
 Connectify is a social media and gaming platform. It provides the user interface to interact with the extensive features and services offered by Connectify.
 
